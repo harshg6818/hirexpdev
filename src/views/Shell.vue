@@ -1,19 +1,17 @@
 <template>
-  <!-- <div class="white shell-container" data-sticky-container> -->
-  <div>
+  <v-app>
     <navbar
       @searchEmployees="searchEmployees = true;"
     ></navbar>
-    <!-- <sidebar /> -->
-    <!-- <main class="custom-content" :class="{'content-sidebarOpen': sidebarOpen }"> -->
-    <SearchEmployees
-      :show-search="searchEmployees"
-      @closeSearch="searchEmployees = false;"
-    >
-    </SearchEmployees>
-    <main class="content-sidebarOpen"
+    <v-main
       :class="searchEmployees ? 'freeze-main' : ''"
     >
+      <SearchEmployees
+        :show-search="searchEmployees"
+        @closeSearch="searchEmployees = false;"
+      >
+      </SearchEmployees>
+      <!-- <main class="content-sidebarOpen"> -->
       <v-snackbar
         :timeout="6000"
         :color="snackbar.color"
@@ -22,30 +20,27 @@
         v-model="snackbar.show"
       >
         {{ snackbar.text }}
-        <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
+        <v-btn dark @click.native="snackbar.show = false">Close</v-btn>
       </v-snackbar>
       <router-view />
-    </main>
-    <!-- <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
-    </v-footer> -->
-  </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 // import Vue from 'vue';
 import { mapState } from 'vuex';
-import { VSnackbar } from 'vuetify';
+// import { VSnackbar } from 'vuetify';
 import Navbar from './navbar/Navbar';
-import Sidebar from './sidebar/Sidebar';
+// import Sidebar from './sidebar/Sidebar';
 import SearchEmployees from './navbar/search-employees';
 
 export default {
   name: 'shell',
   components: {
-    VSnackbar,
+    // VSnackbar,
     Navbar,
-    Sidebar,
+    // Sidebar,
     SearchEmployees
   },
   data () {
@@ -135,7 +130,7 @@ export default {
 </style>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Work+Sans:100,300,400,500,700,900&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Work+Sans:100,300,400,500,700,900&display=swap');
 .anychart-credits-text {
   display:none!important;
 }
@@ -1429,7 +1424,7 @@ body, .application {
 
 
 .fas, .mdi {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 
 @media only screen and (min-width: 1264px) {

@@ -9,7 +9,7 @@
           v-model="snackbar.show"
         >
           {{ snackbar.text }}
-        <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
+        <v-btn dark @click.native="snackbar.show = false">Close</v-btn>
     </v-snackbar>
     <v-layout class="login-carousel">
         <v-carousel :cycle="this.autoPlay" class="login-carousel" style="width:33%; position:absolute; height:100% !important;">
@@ -36,7 +36,7 @@
     <v-layout >
       <v-container class="login-page" style="">
         <v-container style="padding-bottom:0">
-          <v-btn style = "text-transform:none; position:absolute; top:2%; right:3%;" color="#888" target="_blank" to="/support" flat > Need help&nbsp;?</v-btn>
+          <v-btn style = "text-transform:none; position:absolute; top:2%; right:3%;" color="#888" target="_blank" to="/support" > Need help&nbsp;?</v-btn>
 
           <v-layout sm12>
             <v-flex text-sm-center text-xs-center sm12>
@@ -88,13 +88,13 @@
                       class="white--text elevation-0" @click="login" >Login</v-btn>
                     </v-flex>
                     <v-flex class="py-2" text-sm-center text-xs-center sm12 xs12>
-                       <span  class=" w-100" text-xs-center text-sm-center>Did you <a style="font-weight:400; font-size:14px; color:#ce2230" :loading="disabled" :disabled="disabled"
-                      flat @click="fpToggle">Forgot your password?</a></span>
+                      <span  class=" w-100" text-xs-center text-sm-center>Did you <a style="font-weight:400; font-size:14px; color:#ce2230" :loading="disabled" :disabled="disabled"
+                      @click="fpToggle">Forgot your password?</a></span>
                       <!-- <span  style="font-size:14px; height:50px; font-weight:bold; width:88%;" :loading="disabled" :disabled="disabled"
-                       class="#f44336--text elevation-0  w-100 pb-2" @click="fpToggle "><a style="color:#f44336"> Forgot your Password?</a></span> -->
-                     </v-flex>
+                      class="#f44336--text elevation-0  w-100 pb-2" @click="fpToggle "><a style="color:#f44336"> Forgot your Password?</a></span> -->
+                    </v-flex>
                     <v-flex class="showinmobile"  text-sm-center sm12 xs12>
-                      <v-btn flat style="color:#777777; font-size:14px" color="#f1f1f1" class="ma-0" to="/Request-demo">Request for Demo</v-btn>
+                      <v-btn style="color:#777777; font-size:14px" color="#f1f1f1" class="ma-0" to="/Request-demo">Request for Demo</v-btn>
                     </v-flex>
                   </v-layout>
               </form>
@@ -116,7 +116,7 @@
                     class="white--text" @click="forgot" >Send password reset link</v-btn>
                   </v-flex>
                   <v-flex text-sm-left sm6 text-xs-center xs12>
-                    <v-btn style="font-size:14px" text-sm-left text-xs-center color="#3f6ad8" flat @click="fpToggle">Login</v-btn>
+                    <v-btn style="font-size:14px" text-sm-left text-xs-center color="#3f6ad8" @click="fpToggle">Login</v-btn>
                   </v-flex>
                 </v-layout>
               </form>

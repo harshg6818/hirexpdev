@@ -8,7 +8,7 @@
       v-model="snackbar.show"
     >
       {{ snackbar.text }}
-      <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
+      <v-btn dark text @click.native="snackbar.show = false">Close</v-btn>
     </v-snackbar>
     <v-layout class="login-carousel">
         <v-carousel :cycle="this.autoPlay" class="login-carousel" style="width:33%; position:absolute; height:100% !important;">
@@ -88,7 +88,7 @@
                       class="white--text elevation-0" @click="ResetPassword" >Reset password</v-btn>
                     </v-flex>
                     <v-flex text-sm-left text-xs-center>
-                      <v-btn style="font-size:14px; color:var(--v-primary-base) !important;" flat class="ma-0" to="/login">Login</v-btn>
+                      <v-btn style="font-size:14px; color:var(--v-primary-base) !important;" text class="ma-0" to="/login">Login</v-btn>
                     </v-flex>
                   </v-layout>
                   <v-layout>

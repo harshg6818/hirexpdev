@@ -13,7 +13,7 @@
             <p style="margin-bottom:0;">We can't find the page you're looking for.</p>
             <p style="">You can either return to the previous page or visit our homepage or contact our support team.</p>
             <v-btn small target="_blank" to="/" color="primary" style="text-transform: capitalize; ">Visit Homepage</v-btn>
-            <v-btn flat outline small target="_blank" to="/support" color="primary" style="text-transform: capitalize; ">Contact Us</v-btn>
+            <v-btn outline small target="_blank" to="/support" color="primary" style="text-transform: capitalize; ">Contact Us</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

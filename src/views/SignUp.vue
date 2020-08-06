@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="amara-requestDemo" row wrap w-100>
+  <div class="amara-requestDemo flex-row flex-wrap w-100" >
     <v-snackbar :timeout="6000"
       :color="snackbar.color"
       :multi-line="snackbar.mode === 'multi-line'"
@@ -7,25 +7,25 @@
       v-model="snackbar.show"
     >
       {{ snackbar.text }}
-      <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
+      <v-btn dark text @click.native="snackbar.show = false">Close</v-btn>
     </v-snackbar>
-    <v-layout>
+    <div>
       <v-container class="demo-page">
-        <v-btn style = "text-transform:none; position:absolute; top:2%; right:3%;" color="#888" target="_blank" to="/support" flat > Need help&nbsp;?</v-btn>
+        <v-btn style = "text-transform:none; position:absolute; top:2%; right:3%;" color="#888" target="_blank" to="/support" text > Need help&nbsp;?</v-btn>
         <v-container style="padding-bottom:0">
           <img class="logo-login" src="@/assets/logo/image.png" alt />
         </v-container>
 
         <v-container>
-          <v-layout row wrap align-center>
+          <div class="flex-row flex-wrap align-center">
             <v-container style="border-bottom:1px solid #e9ecef; padding:0 0 5px 0;">
               <span class="w-100 pb-2" style="font-size: 1.5rem; opacity:0.6; ">Request a demo</span>
               <br />
             </v-container>
             <v-flex>
-               <!-- <form  class="forms_form" v-on:submit.prevent="sendRequest"> -->
+              <!-- <form  class="forms_form" v-on:submit.prevent="sendRequest"> -->
               <form class="forms_form" v-on:submit.prevent="sendRequest" >
-                <v-layout row wrap mt-2>
+                <div class="d-flex flex-row flex-wrap mt-2">
                   <v-flex sm6 xs12 pr-2>
                     <div class="forms_field">
                       <v-text-field
@@ -87,8 +87,8 @@
                       ></v-select>
                     </div>
                   </v-flex>
-                  <v-layout w-100 row wrap reverse>
-                    <v-flex text-sm-right text-xs-center>
+                  <div class="w-100 flex-row flex-wrap-reverse">
+                    <v-flex class="text-right text-center">
                       <v-text-field
                         v-model="contactSales.requester_message"
                         v-validate="'required'"
@@ -98,9 +98,9 @@
                         multi-line
                       ></v-text-field>
                     </v-flex>
-                  </v-layout>
-                  <v-layout row wrap reverse>
-                    <v-flex text-sm-right text-xs-center sm6 xs12>
+                  </div>
+                  <div class="w-100 d-flex flex-row-reverse flex-wrap">
+                    <v-flex class="text-sm-right text-center" sm6 xs12>
                       <vue-recaptcha
                         ref="recaptcha"
                         @verify="onCaptchaVerified"
@@ -110,55 +110,56 @@
                       ></vue-recaptcha>
                       <v-btn color="primary" class="white--text elevation-0" @click="validateDetails() ">Submit Request</v-btn>
                     </v-flex>
-                    <v-flex class="showinmobile"  text-sm-left sm6 xs12>
-                      <v-btn flat style="color:var(--v-primary-base) !important; font-size:14px" color="#f1f1f1" class="ma-0" to="/login">Login</v-btn>
+                    <v-flex class="showinmobile text-sm-left" sm6 xs12>
+                      <v-btn text style="color:var(--v-primary-base) !important; font-size:14px" color="#f1f1f1" class="ma-0" to="/login">Login</v-btn>
                     </v-flex>
-                  </v-layout>
-                </v-layout>
+                  </div>
+                </div>
               </form>
             </v-flex>
-          </v-layout>
+          </div>
         </v-container>
-        <v-layout class="demo-bottom" pt-3  row wrap reverse>
-          <v-flex class="hideinmobile" sm4  text-xs-right>
-            Made with <span ><v-icon style="font-size:12px; padding-bottom:2px;" class="red--text">fas fa-heart</v-icon></span> in India
+        <div class="demo-bottom d-flex flex-wrap flex-row-reverse pt-3">
+          <v-flex class="hideinmobile text-right" sm4>
+            Made with
+              <span>
+                <v-icon style="font-size:12px; padding-bottom:2px;" class="red--text">fas fa-heart</v-icon>
+              </span>
+            in India
           </v-flex>
-          <v-flex sm4 xs12  text-xs-center class="amaraDoc">
+          <v-flex sm4 xs12 class="amaraDoc text-center">
             <a target="_blank" href="https://www.amara.ai/"> Home</a>
-            <!-- &nbsp; &#8226; &nbsp;<a href=""> Privacy Policy</a>
-            &nbsp; &#8226; &nbsp;<a href="">Terms of Use</a> -->
           </v-flex>
-
-          <v-flex sm4 xs12 text-sm-left text-xs-center>
+          <v-flex sm4 xs12 class="text-xs-center text-xs-left">
             Powered by <a  target="_blank" href="https://www.hirexp.com/"><img height="13" src="https://hirexp.com/img/logo-dark.png" alt=""></a>
           </v-flex>
-        </v-layout>
+        </div>
       </v-container>
-    </v-layout>
-    <v-layout class="login-carousel">
-      <v-carousel :cycle="this.autoPlay" class="login-carousel" style="width:33%; position:absolute; right:0; height: 100% !important;">
+    </div>
+    <div class="login-carousel">
+      <v-carousel :cycle="autoPlay" class="login-carousel" style="width:33%; position:absolute; right:0; height: 100% !important;">
         <v-carousel-item @mouseover="autoPlay = false" @mouseleave="autoPlay = true"  style="height:100% !important"  v-for="(item,i) in items"
           :key="i"
           :src="item.src"
         >
-        <v-layout row
+        <div row
           class="fill-height"
           align="center"
           justify="center"
         >
           <div class="carousel-heading">{{ item.heading }}</div>
           <div class="carousel-text">{{ item.text }}</div>
-        </v-layout>
-          <v-layout class="demo-carousel-request-button"  >
+        </div>
+          <div class="demo-carousel-request-button"  >
             <v-flex text-sm-right text-xs-center>
               <v-btn style="font-size:14px; color:var(--v-primary-base) !important;" color="#f1f1f1" class="ma-0" to="/login">Login</v-btn>
             </v-flex>
-          </v-layout>
+          </div>
         </v-carousel-item>
       </v-carousel>
-    </v-layout>
+    </div>
     <v-container>
-      <V-layout>
+      <div>
         <div class="successful-server-response-wrapper" v-cloak>
           <div
             v-show="sucessfulServerResponse"
@@ -166,9 +167,9 @@
           >{{sucessfulServerResponse}}
           </div>
         </div>
-      </V-layout>
+      </div>
     </v-container>
-  </v-layout>
+  </div>
 </template>
 
 <script>
@@ -440,19 +441,19 @@ export default {
       padding-left: 0 !important;
     }
   }
-  .layout.row.wrap.demo-bottom {
+  .demo-bottom {
     position: fixed;
     bottom: 0;
     left: 10px;
     width: 65% !important;
   }
   @media only screen and (max-width: 1000px) {
-    .layout.row.wrap.demo-bottom {
+    .demo-bottom {
       width: 97% !important;
     }
   }
   @media only screen and (max-width: 624px) {
-    .layout.row.wrap.demo-bottom {
+    .demo-bottom {
       position: static;
     }
   }

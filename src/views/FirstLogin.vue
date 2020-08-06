@@ -8,7 +8,7 @@
       v-model="snackbar.show"
     >
       {{ snackbar.text }}
-      <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
+      <v-btn dark @click.native="snackbar.show = false">Close</v-btn>
     </v-snackbar>
     <div v-if="user !== null">
       <v-layout align-v="center" align-h="center">

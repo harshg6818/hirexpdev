@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="amara-requestDemo" row wrap w-100>
+  <div class="amara-requestDemo flex-row flex-wrap w-100">
     <v-snackbar :timeout="6000"
       :color="snackbar.color"
       :multi-line="snackbar.mode === 'multi-line'"
@@ -7,24 +7,24 @@
       v-model="snackbar.show"
     >
       {{ snackbar.text }}
-      <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
+      <v-btn dark text @click.native="snackbar.show = false">Close</v-btn>
     </v-snackbar>
-    <v-layout>
+    <div>
       <v-container class="demo-page">
         <v-container style="padding-bottom:0">
           <img class="logo-login" src="@/assets/logo/image.png" alt />
         </v-container>
 
         <v-container>
-          <v-layout row wrap align-center>
+          <div class="flex-row row wrap align-center">
             <v-container style="border-bottom:1px solid #e9ecef; padding:0 0 5px 0;">
               <span class="w-100 pb-2" style="font-size: 1.5rem; opacity:0.6; ">Support</span>
               <br />
             </v-container>
             <v-flex>
-               <!-- <form  class="forms_form" v-on:submit.prevent="sendRequest"> -->
+              <!-- <form  class="forms_form" v-on:submit.prevent="sendRequest"> -->
               <form class="forms_form" v-on:submit.prevent="sendRequest" >
-                <v-layout row wrap mt-2>
+                <div class="d-flex flex-row flex-wrap mt-2">
                   <v-flex sm6 xs12 pr-2>
                     <div class="forms_field">
                       <v-text-field
@@ -44,7 +44,6 @@
                         :error-messages="errors.collect('contact number')"
                         required
                       ></v-text-field>
-
                     </div>
                   </v-flex>
                   <v-flex class="request-demo-inputfield" sm6 xs12 pl-2>
@@ -68,7 +67,7 @@
                       ></v-select>
                     </div>
                   </v-flex>
-                  <v-layout w-100 row wrap reverse>
+                  <div class="w-100 flex-row-reverse flex-wrap">
                     <v-flex text-sm-right text-xs-center>
                       <v-text-field
                         v-model="description"
@@ -79,9 +78,9 @@
                         multi-line
                       ></v-text-field>
                     </v-flex>
-                  </v-layout>
-                  <v-layout row wrap reverse>
-                    <v-flex text-sm-right text-xs-center>
+                  </div>
+                  <div class="w-100 flex-row-reverse flex-wrap">
+                    <v-flex class="text-sm-right text-center">
                       <vue-recaptcha
                         ref="recaptcha"
                         @verify="onCaptchaVerified"
@@ -91,50 +90,51 @@
                       ></vue-recaptcha>
                       <v-btn color="primary" class="white--text elevation-0"   @click="validateDetails()">Submit</v-btn>
                     </v-flex>
-                  </v-layout>
-                </v-layout>
+                  </div>
+                </div>
               </form>
             </v-flex>
-          </v-layout>
+          </div>
         </v-container>
-        <v-layout class="support-bottom" pt-3  row wrap reverse>
-          <v-flex class="hideinmobile" sm4  text-xs-right>
-            Made with <span ><v-icon style="font-size:12px; padding-bottom:2px;" class="red--text">fas fa-heart</v-icon></span> in India
+        <div class="support-bottom d-flex flex-wrap flex-row-reverse pt-3">
+          <v-flex class="hideinmobile text-right" sm4>
+            Made with
+              <span>
+                <v-icon style="font-size:12px; padding-bottom:2px;" class="red--text">fas fa-heart</v-icon>
+              </span>
+            in India
           </v-flex>
-          <v-flex sm4 xs12  text-xs-center class="amaraDoc">
+          <v-flex sm4 xs12 class="amaraDoc text-center">
             <a target="_blank" href="https://www.amara.ai/"> Home</a>
-            <!-- &nbsp; &#8226; &nbsp;<a href=""> Privacy Policy</a>
-            &nbsp; &#8226; &nbsp;<a href="">Terms of Use</a> -->
           </v-flex>
-
-          <v-flex sm4 xs12 text-sm-left text-xs-center>
-            Powered by <a target="_blank" href="https://www.hirexp.com/"><img height="13" src="https://hirexp.com/img/logo-dark.png" alt=""></a>
+          <v-flex sm4 xs12 class="text-xs-center text-xs-left">
+            Powered by <a  target="_blank" href="https://www.hirexp.com/"><img height="13" src="https://hirexp.com/img/logo-dark.png" alt=""></a>
           </v-flex>
-        </v-layout>
+        </div>
       </v-container>
-    </v-layout>
-    <v-layout class="login-carousel">
+    </div>
+    <div class="login-carousel">
       <v-carousel :cycle="this.autoPlay"  class="login-carousel" style="width:33%; position:absolute; right:0; height: 100% !important;">
         <v-carousel-item @mouseover="autoPlay = false" @mouseleave="autoPlay = true"  style="height:100% !important"  v-for="(item,i) in items"
           :key="i"
           :src="item.src"
         >
-        <v-layout row
-          class="fill-height"
+        <div
+          class="fill-height flex-row"
           align="center"
           justify="center"
         >
           <div class="carousel-heading">{{ item.heading }}</div>
           <div class="carousel-text">{{ item.text }}</div>
-        </v-layout>
-          <v-layout class="demo-carousel-request-button"  >
+        </div>
+          <div class="demo-carousel-request-button"  >
             <v-flex text-sm-right text-xs-center>
               <v-btn style="font-size:14px; color:var(--v-primary-base) !important;" color="#f1f1f1" class="ma-0" to="/login">Login</v-btn>
             </v-flex>
-          </v-layout>
+          </div>
         </v-carousel-item>
       </v-carousel>
-    </v-layout>
+    </div>
     <v-container>
       <V-layout>
         <div class="successful-server-response-wrapper" v-cloak>
@@ -146,11 +146,11 @@
         </div>
       </V-layout>
     </v-container>
-  </v-layout>
+  </div>
 </template>
 
 <script>
-import Vue from 'vue';
+// import Vue from 'vue';
 import axios from 'axios';
 import { mapState } from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
@@ -217,7 +217,6 @@ export default {
         text: 'Other'
       }],
       valid: true,
-      name: '',
       email: '',
       password: '',
       passwordConfirmation: '',
@@ -411,19 +410,19 @@ export default {
       padding-left: 0 !important;
     }
   }
-  .layout.row.wrap.support-bottom {
+  .support-bottom {
     position: fixed;
     bottom: 0;
     left: 10px;
     width: 65% !important;
   }
   @media only screen and (max-width: 1000px) {
-    .layout.row.wrap.support-bottom {
+    .support-bottom {
       width: 97% !important;
     }
   }
   @media only screen and (max-width: 624px) {
-    .layout.row.wrap.support-bottom {
+    .support-bottom {
       position: static;
     }
   }

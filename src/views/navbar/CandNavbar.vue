@@ -17,7 +17,7 @@
             <span class="pt-5">{{user.user_first_name}}</span>
             <v-menu bottom left offset-y class="mt-2">
               <!-- <span>{{user.name}}</span> -->
-              <v-btn slot="activator" fab flat>
+              <v-btn slot="activator" fab>
                 <v-avatar class="cursor-pointer"
                   size="45"
                   color="grey lighten-4" >

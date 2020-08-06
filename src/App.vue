@@ -58,4 +58,7 @@ export default {
 .grecaptcha-badge {
   display: none !important;
 }
+.w-100 {
+  width: 100%;
+}
 </style>

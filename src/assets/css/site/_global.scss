@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 html {
   --bg: #ffffff;
   // --bg-panel: #f2f4ff;
@@ -8,17 +9,22 @@ html {
   --color-text: #212121;
   --text-weight: 400;
   --color-palceholder: #4a5568;
+  --heading-size: 16px;
+  --content-size: 14px;
+}
+
+* {
+  // font-size: var(--content-size) !important;
+  font-weight: var(--text-weight);
 }
 
 main, body,
 .application {
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
   font-family: 'Roboto',sans-serif !important;
-  background-color: var(--bg);
-  --heading-size: 16px;
-  --content-size: 14px;
-  height: 100vh;
+  // background-color: var(--bg);
+  // height: 100vh;
   scroll-behavior: smooth;
+  font-weight: 400;
 }
 
 .box-container {
@@ -28,9 +34,9 @@ main, body,
   box-shadow: 0px 3px 20px #0000000b !important;
 }
 
-.v-btn {
-  text-transform: initial !important;
-}
+// .v-btn {
+//   text-transform: initial !important;
+// }
 
 // animations
 .zoom-in {
