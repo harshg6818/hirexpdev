@@ -42,7 +42,7 @@ export default {
       fill: false,
       type: 'trend',
       autoLineWidth: false
-    }
+    };
   }
-}
+};
 </script>

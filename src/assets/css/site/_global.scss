@@ -1,0 +1,75 @@
+html {
+  --bg: #ffffff;
+  // --bg-panel: #f2f4ff;
+  --bg-panel: #f1f5f8;
+  --primary-dark: #4c3e9d;
+  --color-headings: #4c3e9d;
+  --heading-weight: 600;
+  --color-text: #212121;
+  --text-weight: 400;
+  --color-palceholder: #4a5568;
+}
+
+main, body,
+.application {
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+  font-family: 'Roboto',sans-serif !important;
+  background-color: var(--bg);
+  --heading-size: 16px;
+  --content-size: 14px;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+.box-container {
+  background-color: var(--bg) !important;
+  border-radius: 0.375rem !important;
+  position: relative !important;
+  box-shadow: 0px 3px 20px #0000000b !important;
+}
+
+.v-btn {
+  text-transform: initial !important;
+}
+
+// animations
+.zoom-in {
+  transition-property: background-color,
+    border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --transform-translate-x: 0;
+  --transform-translate-y: 0;
+  --transform-rotate: 0;
+  --transform-skew-x: 0;
+  --transform-skew-y: 0;
+  --transform-scale-x: 1;
+  --transform-scale-y: 1;
+  transform: translateX(var(--transform-translate-x)) translateY(var(--transform-translate-y)) rotate(var(--transform-rotate)) skewX(var(--transform-skew-x)) skewY(var(--transform-skew-y)) scaleX(var(--transform-scale-x)) scaleY(var(--transform-scale-y));
+  cursor: pointer;
+
+  &:hover {
+    --transform-scale-x: 1.05;
+    --transform-scale-y: 1.05;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+// html[data-theme='dark'] {
+//   --bg: #333333;
+//   --bg-panel: #434343;
+//   --color-headings: #3694FF;
+//   --color-text: #B5B5B5;
+// }
+
+// html[data-theme='dark'] {
+//   --bg: #333333;
+//   --bg-panel: #434343;
+//   --color-headings: #3694FF;
+//   --color-text: #ffffff;
+// }
+
+// box-shadow: 20px 20px 20px rgba(29, 36, 56, 0.05),
+//     -20px -20px 20px rgba(255, 255, 255, 0.5),
+//     6px 6px 6px rgba(29, 36, 56, 0.05),
+//     -6px -6px 6px rgba(255, 255, 255, 0.5);
