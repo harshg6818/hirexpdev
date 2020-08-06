@@ -54,7 +54,7 @@
                   <div class="login-input-field d-flex flex-wrap">
                     <v-flex px-1>
                       <v-text-field
-                      :autofocos="false"
+                      :autofocos="true"
                       placeholder=""
                       prepend-icon="fas fa-user"
                       label="Email"
@@ -65,8 +65,8 @@
                     </v-flex>
                     <v-flex px-1>
                       <v-text-field
-                        :autofocos="false"
-                        placeholder=" "
+                        :autofocos="true"
+                        placeholder=""
                         prepend-icon="fas fa-lock"
                         :append-icon="e1 ? 'fas fa-eye-slash' : 'fas fa-eye'"
                         @click:append="(e1 = !e1)"
