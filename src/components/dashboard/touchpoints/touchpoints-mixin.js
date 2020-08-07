@@ -7,7 +7,7 @@ const computed = {
 };
 
 const methods = {
-  getStages() {
+  getStages () {
     this.table.loading = true;
     // if (this.dashboardFilters && Object.keys(this.dashboardFilters).length > 0) {
     //   this.filters.selected = this.dashboardFilters.filters;
@@ -25,7 +25,7 @@ const methods = {
     // });
     this.npsBreakdown = [];
     axios.get(`${process.env.VUE_APP_API_URL}stage/list?fields=id,title,status,stageIndex,createdAt,drivers_analysis,mood_analysis,stage_participation_stats,stage_nps_breakdown,driver_analysis_delta`, {
-      params: queryParams,
+      params: queryParams
     }).then((response) => {
       this.table.loading = false;
       // this.config.initialLoading = false;
@@ -44,15 +44,15 @@ const methods = {
       this.$store.dispatch('updateSnackbar', {
         color: 'error',
         show: true,
-        text: 'Unable to fetch touchpoints, Please try again later!',
+        text: 'Unable to fetch touchpoints, Please try again later!'
       });
       throw new Error(response);
     });
-  },
+  }
 };
 
 export default {
   props,
   computed,
-  methods,
+  methods
 };

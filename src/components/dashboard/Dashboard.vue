@@ -165,21 +165,21 @@
         <touchpoint-Anaysis></touchpoint-Anaysis>
       </div>
 
-      <!-- <div
+      <div
         class="disengaged-snapshot"
         v-if="activeTab === 'disengaged-snapshot'"
       >
-        <DisengagedSnapshot></DisengagedSnapshot>
+        <disengaged-Snapshot></disengaged-Snapshot>
       </div>
 
       <div
         class="disengaged-emp-to-meet"
         v-if="activeTab === 'disengaged-emp-to-meet'"
       >
-        <DisengagedEmpToMeet></DisengagedEmpToMeet>
+        <disengaged-EmpToMeet></disengaged-EmpToMeet>
       </div>
 
-      <div
+      <!-- <div
         class="disengaged-sentiment-analysis"
         v-if="activeTab === 'disengaged-sentiment-analysis'"
       >
@@ -233,8 +233,8 @@ import EmployeeVibes from '../analytics/milestones/EmployeeVibes';
 import TouchpointSnapshot from './touchpoints/snapshot';
 import TouchpointAnaysis from './touchpoints/analysis';
 
-// import DisengagedSnapshot from './disengaged/snapshot';
-// import DisengagedEmpToMeet from './disengaged/emp-to-meet';
+import DisengagedSnapshot from './disengaged/snapshot';
+import DisengagedEmpToMeet from './disengaged/emp-to-meet';
 // import DisengagedSentimentAnalysis from './disengaged/sentiment-analysis';
 
 // import TextAnalysis from './txt-analysis/analysis';
@@ -252,9 +252,9 @@ export default {
     DriverEngagement,
     EmployeeVibes,
     TouchpointSnapshot,
-    TouchpointAnaysis
-    // DisengagedSnapshot,
-    // DisengagedEmpToMeet,
+    TouchpointAnaysis,
+    DisengagedSnapshot,
+    DisengagedEmpToMeet
     // DisengagedSentimentAnalysis,
     // TextAnalysis,
     // AnonymousSnapshot,
