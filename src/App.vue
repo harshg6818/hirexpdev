@@ -55,10 +55,16 @@ export default {
 
 <style lang="scss">
 @import './assets/css/app.scss';
+// hide recaptcha
 .grecaptcha-badge {
   display: none !important;
 }
+// custom classes
 .w-100 {
   width: 100%;
+}
+// override vuetify classes
+.v-btn {
+  text-transform: capitalize !important;
 }
 </style>

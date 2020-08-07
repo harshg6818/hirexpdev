@@ -99,7 +99,7 @@
                       <v-btn
                         color="primary"
                         small
-                        outline
+                        outlined
                       >View Profile
                       </v-btn>
                     </v-list-item-title>
@@ -232,7 +232,7 @@ export default {
   },
   methods: {
     logout () {
-      this.$http.post(`${process.env.API_URL}logout`).then((response) => {
+      axios.post(`${process.env.API_URL}logout`).then((response) => {
         if (response && response.data.status === 200) {
           this.$store.dispatch('deleteSession');
           this.$router.push('/');
