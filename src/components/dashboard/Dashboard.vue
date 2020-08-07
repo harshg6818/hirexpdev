@@ -151,21 +151,21 @@
         </div>
       </div>
 
-      <!-- <div
+      <div
         class="touchpoints-snapshot"
         v-if="activeTab === 'touchpoints-snapshot'"
       >
-        <TouchpointSnapshot></TouchpointSnapshot>
+        <touchpoint-snapshot></touchpoint-snapshot>
       </div>
 
       <div
         class="touchpoints-analysis"
         v-if="activeTab === 'touchpoints-analysis'"
       >
-        <TouchpointAnaysis></TouchpointAnaysis>
+        <touchpoint-Anaysis></touchpoint-Anaysis>
       </div>
 
-      <div
+      <!-- <div
         class="disengaged-snapshot"
         v-if="activeTab === 'disengaged-snapshot'"
       >
@@ -230,8 +230,8 @@ import ParticipationAnalysis from '../analytics/milestones/ParticipationAnalysis
 import DriverEngagement from '../analytics/milestones/DriverEngagement';
 import EmployeeVibes from '../analytics/milestones/EmployeeVibes';
 
-// import TouchpointSnapshot from './touchpoints/snapshot';
-// import TouchpointAnaysis from './touchpoints/analysis';
+import TouchpointSnapshot from './touchpoints/snapshot';
+import TouchpointAnaysis from './touchpoints/analysis';
 
 // import DisengagedSnapshot from './disengaged/snapshot';
 // import DisengagedEmpToMeet from './disengaged/emp-to-meet';
@@ -250,9 +250,9 @@ export default {
     DashboardFilters,
     ParticipationAnalysis,
     DriverEngagement,
-    EmployeeVibes
-    // TouchpointSnapshot,
-    // TouchpointAnaysis,
+    EmployeeVibes,
+    TouchpointSnapshot,
+    TouchpointAnaysis
     // DisengagedSnapshot,
     // DisengagedEmpToMeet,
     // DisengagedSentimentAnalysis,
