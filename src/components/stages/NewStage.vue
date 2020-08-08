@@ -331,6 +331,9 @@
 </template>
 
 <script>
+/* eslint-disable vue/no-side-effects-in-computed-properties */
+/* eslint-disable vue/return-in-computed-property */
+
 import { mapState, mapActions } from 'vuex';
 // import { ContentLoader } from 'vue-content-loader';
 import dayjs from 'dayjs';
@@ -338,7 +341,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import axios from 'axios';
 import newSurvey from './NewSurvey';
 import audienceList from './stageAudience';
-import preview from './stagePreview';
+// import preview from './stagePreview';
 
 // import {
 //   VCheckbox,
@@ -360,10 +363,10 @@ export default {
     // VAutocomplete,
     // VTooltip,
     newSurvey,
-    audienceList,
-    preview
+    audienceList
+    // preview
   },
-  data() {
+  data () {
     return {
       unlockStepper: false,
       audienceSource: null,
@@ -371,14 +374,14 @@ export default {
         title: '',
         description: '',
         questions: [],
-        type: '',
+        type: ''
       },
       validate: {
         step1: true,
         step2: true,
         step3: true,
         step4: true,
-        step5: true,
+        step5: true
       },
       newStage: {
         time: '',
@@ -389,20 +392,20 @@ export default {
         audience: {},
         survey: {
           id: null,
-          title: 'No question set',
+          title: 'No question set'
         },
         triggerTimeDuration: 3,
         triggerTimeUnit: 'weeks',
         triggerTimeReference: 'joining_date',
         triggerTimeIn: '+',
         triggerDate: new Date().toISOString().substr(0, 10),
-        triggerTime: new Date().toISOString().substr(11, 5),
+        triggerTime: new Date().toISOString().substr(11, 5)
       },
       searchMemberSync: null,
-      validate: {
-        step1: true,
-        step2: true,
-      },
+      // validate: {
+      //   step1: true,
+      //   step2: true
+      // },
       config: {
         panel: [true, true, true, true],
         searchMember: '',
@@ -419,27 +422,27 @@ export default {
         tabs: [{
           title: 'About the touchpoint',
           value: 'summary',
-          count: 0,
+          count: 0
         }, {
           title: 'Design touchpoint',
           value: 'survey',
-          count: 1,
+          count: 1
         }, {
           title: 'Select audience',
           value: 'audience',
-          count: 2,
+          count: 2
         }, {
           title: 'Configuration',
           value: 'configure',
-          count: 3,
-        }],
+          count: 3
+        }]
       },
       filters: {
         default: {},
-        main: {},
+        main: {}
       },
       pagination: {
-        rowsPerPage: 10,
+        rowsPerPage: 10
       },
       table: {
         loading: true,
@@ -447,42 +450,42 @@ export default {
         headers: [{
           text: 'Member Details',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Mood',
           align: 'left',
-          sortable: false,
+          sortable: false
         }],
         notificationsHeaders: [{
           text: 'Member Details',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Notifications',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Reports',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Actions',
           align: 'left',
-          sortable: false,
-        }],
+          sortable: false
+        }]
       },
       timeUnits: [{
         text: 'Days',
-        value: 'days',
+        value: 'days'
       }, {
         text: 'Weeks',
-        value: 'weeks',
+        value: 'weeks'
       }, {
         text: 'Months',
-        value: 'months',
+        value: 'months'
       }, {
         text: 'Years',
-        value: 'years',
+        value: 'years'
       }],
       list: {
         employees: [],
@@ -490,63 +493,63 @@ export default {
         timeDuration: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
         timeIn: [{
           text: 'Before',
-          value: '-',
+          value: '-'
         }, {
           text: 'After',
-          value: '+',
+          value: '+'
         }],
         timeRef: [{
           text: 'Joining date',
-          value: 'joining_date',
+          value: 'joining_date'
         }, {
           text: 'Offer date',
-          value: 'offer_date',
+          value: 'offer_date'
         }],
         timeUnit: [{
           text: 'Days',
-          value: 'days',
+          value: 'days'
         }, {
           text: 'Weeks',
-          value: 'weeks',
+          value: 'weeks'
         }, {
           text: 'Months',
-          value: 'months',
+          value: 'months'
         }, {
           text: 'Years',
-          value: 'years',
+          value: 'years'
         }],
         timeReferences: [{
           text: 'After Joining Date',
-          value: 'joining_date',
-        }],
+          value: 'joining_date'
+        }]
       },
       dialogs: {
         newQuestion: false,
         question_bank: false,
-        campaign: false,
-      },
+        campaign: false
+      }
     };
   },
   computed: {
     ...mapState({
       stagesOrder: state => state.stages,
       user: state => state.user,
-      users(state) {
+      users (state) {
         const adminUsers = state.companyUsersList;
         // this.$lodash.remove((v) => {
         //
         // })
         return adminUsers;
       },
-      adminUsers(state) {
+      adminUsers (state) {
         const adminUsers = state.companyAdminsList;
         return adminUsers;
-      },
+      }
     }),
-    triggerTimeAuto() {
+    triggerTimeAuto () {
       const final = {
         timeIn: '',
-        timeRef: this.newStage.triggerTimeReference.replace('_', ' '),
+        timeRef: this.newStage.triggerTimeReference.replace('_', ' ')
       };
       if (this.newStage.triggerTimeIn === '-') {
         final.timeIn = 'before';
@@ -556,7 +559,7 @@ export default {
 
       return `${this.newStage.triggerTimeDuration} ${this.newStage.triggerTimeUnit} ${final.timeIn} ${final.timeRef}`;
     },
-    updateTriggerTimeIn() {
+    updateTriggerTimeIn () {
       if (this.newStage.triggerTimeReference === 'joining_date') {
         this.newStage.triggerTimeIn = '+';
       } else if (this.newStage.triggerTimeReference === 'before_exitDate') {
@@ -564,17 +567,17 @@ export default {
       } else if (this.newStage.triggerTimeReference === 'after_exitDate') {
         this.newStage.triggerTimeIn = '+';
       }
-    },
+    }
   },
   methods: {
     ...mapActions(['getCompanyUsers', 'getAdminList']),
     allowedStep: m => m % 5 === 0,
-    goBack() {
+    goBack () {
       this.$router.push({
-          path: '/settings?activeTab=milestones',
+        path: '/settings?activeTab=milestones'
       });
     },
-    discard() {
+    discard () {
       if (this.newStage.id) {
         // delete stage
         axios.delete(`${process.env.VUE_APP_API_URL}stage/delete?stage_id=${this.newStage.id}`).then((response) => {
@@ -583,14 +586,14 @@ export default {
               this.$store.dispatch('updateSnackbar', {
                 color: 'success',
                 show: true,
-                text: 'Touchpoint discarded successfully!',
+                text: 'Touchpoint discarded successfully!'
               });
               this.goBack();
             } else {
               this.$store.dispatch('updateSnackbar', {
                 color: 'error',
                 show: true,
-                text: 'Unable to discard touchpoint, Please try again later!',
+                text: 'Unable to discard touchpoint, Please try again later!'
               });
             }
             // this.templates = response.data.data;
@@ -599,7 +602,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to discard touchpoint, Please try again later!',
+            text: 'Unable to discard touchpoint, Please try again later!'
           });
           throw new Error(response);
         });
@@ -607,7 +610,7 @@ export default {
         this.goBack();
       }
     },
-    updateTimeUnitList() {
+    updateTimeUnitList () {
       if (this.newStage.triggerTimeDuration === 1) {
         this.timeUnits = JSON.parse(JSON.stringify(this.list.timeUnit));
         this.$lodash.each(this.timeUnits, (unit) => {
@@ -617,13 +620,13 @@ export default {
         this.timeUnits = this.list.timeUnit;
       }
     },
-    proceed() {
+    proceed () {
       if (this.newStage.title && this.newStage.triggerTimeDuration && this.newStage.triggerTimeUnit) {
         this.unlockStepper = true;
         this.saveStage(true, true);
       }
     },
-    previous() {
+    previous () {
       if (this.$route.params && this.$route.params.stageId) {
         this.getStage(this.$route.params.stageId);
       }
@@ -657,7 +660,7 @@ export default {
         this.config.activeTab = 'summary';
       }
     },
-    next(continueFlag) {
+    next (continueFlag) {
       if (this.config.activeTab === 'summary') {
         this.saveStage(false, continueFlag);
       } else if (this.config.activeTab === 'survey') {
@@ -667,7 +670,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             show: true,
             text: 'Please design your touchpoint!',
-            color: 'error',
+            color: 'error'
           });
         }
       } else if (this.config.activeTab === 'audience') {
@@ -678,7 +681,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             show: true,
             text: 'Please select audience for your touchpoint!',
-            color: 'error',
+            color: 'error'
           });
         }
       } else if (this.config.activeTab === 'configure') {
@@ -689,27 +692,27 @@ export default {
             this.$store.dispatch('updateSnackbar', {
               show: true,
               text: 'Please fill the mandatory details!',
-              color: 'error',
+              color: 'error'
             });
           }
         });
       }
     },
-    capitaliseCampaignTitle() {
+    capitaliseCampaignTitle () {
       this.newStage.title = this.newStage.title.charAt(0).toUpperCase() + this.newStage.title.slice(1);
     },
-    checkLength() {
+    checkLength () {
       if (this.newStage.title.length > 40) {
 
       }
     },
-    openFilePicker(type) {
-        this.$refs[type].click();
+    openFilePicker (type) {
+      this.$refs[type].click();
     },
-    triggerUpdate() {
+    triggerUpdate () {
       this.$refs.audienceList.getTeam();
     },
-    removeMember(index) {
+    removeMember (index) {
       this.newStage.notifications.splice(index, 1);
     },
     // validateDetails() {
@@ -739,7 +742,7 @@ export default {
     //     }
     //   });
     // },
-    saveStage(editFlag, continueFlag) {
+    saveStage (editFlag, continueFlag) {
       if (this.config.activeTab === 'summary') {
         if (!this.newStage.id) {
           this.createStage();
@@ -756,7 +759,7 @@ export default {
         this.updateStage(continueFlag);
       }
     },
-    createStage() {
+    createStage () {
       this.config.savingStage = true;
       const newStageData = {
         title: this.newStage.title,
@@ -765,7 +768,7 @@ export default {
         triggerTimeUnit: this.newStage.triggerTimeUnit,
         triggerTimeDuration: this.newStage.triggerTimeIn ? `${this.newStage.triggerTimeIn}${this.newStage.triggerTimeDuration}` : this.newStage.triggerTimeDuration,
         // triggerTimeIn: this.newStage.triggerTimeIn,
-        triggerTimeReference: this.newStage.triggerTimeReference,
+        triggerTimeReference: this.newStage.triggerTimeReference
       };
       axios.post(`${process.env.VUE_APP_API_URL}stage/add`, newStageData).then((response) => {
         this.config.savingStage = false;
@@ -773,7 +776,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'success',
             show: true,
-            text: 'Stage created successfully!',
+            text: 'Stage created successfully!'
           });
           if (this.newStage.addAt) {
             // Add add the specified index
@@ -784,7 +787,7 @@ export default {
             if (response.data.message) {
               this.config.activeTab = 'survey';
               this.$router.push({
-                path: `/lifecycle/edit/${response.data.message}`,
+                path: `/lifecycle/edit/${response.data.message}`
               });
               this.getStage(response.data.message);
               setTimeout(() => {
@@ -799,7 +802,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to create stage, Please try again later!',
+            text: 'Unable to create stage, Please try again later!'
           });
         }
       }, (response) => {
@@ -807,12 +810,12 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to create stage, Please try again later!',
+          text: 'Unable to create stage, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    updateStage(continueFlag) {
+    updateStage (continueFlag) {
       this.config.savingStage = true;
       let newStageData = {};
       if (this.config.activeTab === 'summary') {
@@ -823,15 +826,15 @@ export default {
           triggerTimeUnit: this.newStage.triggerTimeUnit,
           triggerTimeDuration: this.newStage.triggerTimeIn ? `${this.newStage.triggerTimeIn}${this.newStage.triggerTimeDuration}` : this.newStage.triggerTimeDuration,
           // triggerTimeIn: this.newStage.triggerTimeIn,
-          triggerTimeReference: this.newStage.triggerTimeReference,
+          triggerTimeReference: this.newStage.triggerTimeReference
         };
       } else if (this.config.activeTab === 'survey') {
         newStageData = {
-          survey_id: this.$refs.survey.newSurvey.id,
+          survey_id: this.$refs.survey.newSurvey.id
         };
       } else if (this.config.activeTab === 'audience') {
         newStageData = {
-          audience: JSON.parse(JSON.stringify(this.$refs.audienceList.newStage.audience)),
+          audience: JSON.parse(JSON.stringify(this.$refs.audienceList.newStage.audience))
         };
         this.$lodash.each(newStageData.audience, (v, k) => {
           if (v.length) {
@@ -843,7 +846,7 @@ export default {
         newStageData = {
           status: 'live',
           chatFromUser_id: this.newStage.chatFromUser,
-          notifications: this.newStage.notifications,
+          notifications: this.newStage.notifications
         };
       }
       axios.patch(`${process.env.VUE_APP_API_URL}stage/update/${this.newStage.id}`, newStageData).then((response) => {
@@ -852,7 +855,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'success',
             show: true,
-            text: 'Stage updated successfully!',
+            text: 'Stage updated successfully!'
           });
           this.unlockStepper = true;
           if (continueFlag) {
@@ -895,7 +898,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to update stage, Please try again later!',
+            text: 'Unable to update stage, Please try again later!'
           });
         }
       }, (response) => {
@@ -903,17 +906,17 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to update stage, Please try again later!',
+          text: 'Unable to update stage, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    getSurvey(id) {
+    getSurvey (id) {
       const queryParams = {
-        fields: 'title,type,description,company,createdAt,createdBy,lastUpdated,interactions',
+        fields: 'title,type,description,company,createdAt,createdBy,lastUpdated,interactions'
       };
       axios.get(`${process.env.VUE_APP_API_URL}survey/${id}/details`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.config.initialLoading = false;
         if (response && response.data) {
@@ -924,12 +927,12 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch survey, Please try again later!',
+          text: 'Unable to fetch survey, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    updateSurvey(continueFlag) {
+    updateSurvey (continueFlag) {
       this.$refs.survey.newSurvey.title = this.newStage.title;
       if (this.$refs.survey.newSurvey.id) {
         axios.patch(`${process.env.VUE_APP_API_URL}survey/update/${this.$refs.survey.newSurvey.id}`, this.$refs.survey.newSurvey).then((response) => {
@@ -938,7 +941,7 @@ export default {
             this.$store.dispatch('updateSnackbar', {
               color: 'success',
               show: true,
-              text: 'Survey updated successfully!',
+              text: 'Survey updated successfully!'
             });
             // this.getStage(this.newStage.id);
             this.config.activeTab = 'audience';
@@ -957,20 +960,20 @@ export default {
             this.$store.dispatch('updateSnackbar', {
               color: 'error',
               show: true,
-              text: 'Unable to update survey, Please try again later!',
+              text: 'Unable to update survey, Please try again later!'
             });
           }
         }, (response) => {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to update survey, Please try again later!',
+            text: 'Unable to update survey, Please try again later!'
           });
           throw new Error(response);
         });
       }
     },
-    createSurvey(continueFlag) {
+    createSurvey (continueFlag) {
       this.$refs.survey.newSurvey.title = this.newStage.title;
       axios.post(`${process.env.VUE_APP_API_URL}survey/add`, this.$refs.survey.newSurvey).then((response) => {
         this.refreshing = false;
@@ -978,7 +981,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'success',
             show: true,
-            text: 'Survey created successfully!',
+            text: 'Survey created successfully!'
           });
           this.$refs.survey.newSurvey.id = response.data.survey_id;
           this.updateStage(continueFlag);
@@ -987,14 +990,14 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to create survey, Please try again later!',
+            text: 'Unable to create survey, Please try again later!'
           });
         }
       }, (response) => {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to create survey, Please try again later!',
+          text: 'Unable to create survey, Please try again later!'
         });
         throw new Error(response);
       });
@@ -1039,27 +1042,27 @@ export default {
     //     throw new Error(response);
     //   });
     // },
-    saveOrder(order) {
+    saveOrder (order) {
       axios.patch(`${process.env.VUE_APP_API_URL}stage/update_stage_timeline`, { stage_timeline: order })
         .then((response) => {
           this.config.activeTab = 'survey';
           this.$router.push({
-            path: `/lifecycle/edit/${this.newStage.id}`,
+            path: `/lifecycle/edit/${this.newStage.id}`
           });
         }, (response) => {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to create stage, Please try again later!',
+            text: 'Unable to create stage, Please try again later!'
           });
           throw new Error(response);
         });
     },
-    getAvatar(c) {
+    getAvatar (c) {
       const avt = `${c.first_name.charAt(0)}${c.last_name.charAt(0)}`;
       return avt.toUpperCase();
     },
-    getName(key) {
+    getName (key) {
       let name;
       switch (key) {
         case 'currentPosition':
@@ -1071,12 +1074,12 @@ export default {
       }
       return name;
     },
-    getStage(id) {
+    getStage (id) {
       const queryParams = {
-        fields: 'title,type,status,survey,survey_title,chatFromUser,notifications,stage_details,audience,triggerTimeDuration,triggerTimeUnit,triggerTimeReference,triggerDateTime,stageType',
+        fields: 'title,type,status,survey,survey_title,chatFromUser,notifications,stage_details,audience,triggerTimeDuration,triggerTimeUnit,triggerTimeReference,triggerDateTime,stageType'
       };
       axios.get(`${process.env.VUE_APP_API_URL}stage/${id}/details`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.config.initialLoading = false;
         if (response && response.data) {
@@ -1092,23 +1095,23 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch stage, Please try again later!',
+          text: 'Unable to fetch stage, Please try again later!'
         });
         throw new Error(response);
       });
-    },
+    }
   },
   watch: {
     pagination: {
-      handler() {
+      handler () {
         if (!this.config.initialLoading) {
           this.$refs.audienceList.getTeam();
         }
       },
-      deep: true,
+      deep: true
     },
     config: {
-      handler() {
+      handler () {
         if (this.config.searchMember) {
           this.config.searchMember.reports = true;
           this.config.searchMember.notifications = true;
@@ -1119,10 +1122,10 @@ export default {
           }, 50);
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
-  beforeMount() {
+  beforeMount () {
     // switch (this.$route.path) {
     //   case '/lifecycle/new':
     //     this.config.stageType = 'lifecycle';
@@ -1134,16 +1137,16 @@ export default {
     //   default:
     // }
     this.config.stageType = 'lifecycle';
-      this.newStage.stageType = 'lifecycle';
-      if (this.$route.query && this.$route.query.addAt) {
-        this.newStage.addAt = parseInt(this.$route.query.addAt, 10);
-      }
+    this.newStage.stageType = 'lifecycle';
+    if (this.$route.query && this.$route.query.addAt) {
+      this.newStage.addAt = parseInt(this.$route.query.addAt, 10);
+    }
     if (this.$route.params && this.$route.params.stageId) {
       this.getStage(this.$route.params.stageId);
     }
     this.getAdminList();
     this.getCompanyUsers();
-  },
+  }
 };
 </script>
 

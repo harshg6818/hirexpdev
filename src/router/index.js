@@ -52,34 +52,33 @@ const routes = [
     meta: {
       requiresAuth: true
     },
-    children: [{
-      path: '',
-      name: 'Dashboard',
-      component: () => import(/* webpackChunkName: "Dashboard" */ '@/components/dashboard/Dashboard')
-    }, {
-      path: 'lifecycle',
-      component: SubShell,
-      children: [{
-        path: '',
-        name: 'Lifecycle',
-        component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/Lifecycles')
-      },
+    children: [
       {
-        path: 'new',
-        name: 'NewLifecycle',
-        component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/NewStage')
+        path: '',
+        name: 'Dashboard',
+        component: () => import(/* webpackChunkName: "Dashboard" */ '@/components/dashboard/Dashboard')
+      }, {
+        path: 'lifecycle',
+        component: SubShell,
+        children: [{
+          path: '',
+          name: 'Lifecycle',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/Lifecycles')
+        }, {
+          path: 'new',
+          name: 'NewLifecycle',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/NewStage')
+        }, {
+          path: 'edit/:stageId',
+          name: 'EditLifecycle',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/NewStage')
+        }, {
+          path: 'view/:stageId',
+          name: 'ViewLifecycle',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/ViewStage')
+        }]
       }
-      //  {
-      //   path: 'edit/:stageId',
-      //   name: 'EditLifecycle',
-      //   component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/NewStage')
-      // }, {
-      //   path: 'view/:stageId',
-      //   name: 'ViewLifecycle',
-      //   component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/ViewStage')
-      //   }
-      ]
-    }]
+    ]
   }
 ];
 

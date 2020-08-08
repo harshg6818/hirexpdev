@@ -204,14 +204,14 @@
 </template>
 
 <script>
-import Vue from 'vue';
+// import Vue from 'vue';
 import { mapState } from 'vuex';
-import { ContentLoader } from 'vue-content-loader';
+// import { ContentLoader } from 'vue-content-loader';
 import axios from 'axios';
-import { VChip, VMenu, VCheckbox, VTooltip } from 'vuetify';
-import VDateRange from 'vuetify-daterange-picker';
+// import { VChip, VMenu, VCheckbox, VTooltip } from 'vuetify';
+// import VDateRange from 'vuetify-daterange-picker';
 import dayjs from 'dayjs';
-import 'vuetify-daterange-picker/dist/vuetify-daterange-picker.css';
+// import 'vuetify-daterange-picker/dist/vuetify-daterange-picker.css';
 
 import ParticipationAnalysis from '../analytics/milestones/ParticipationAnalysis';
 import DriverEngagement from '../analytics/milestones/MilestoneDriverEngagement';
@@ -220,23 +220,23 @@ import EmployeesToMeet from '../analytics/EmployeesToMeet';
 
 import DeleteStage from './dialogs/DeleteStage';
 
-Vue.use(VDateRange);
+// Vue.use(VDateRange);
 
 export default {
   name: 'dashboard',
   components: {
-    ContentLoader,
-    VChip,
-    VMenu,
+    // ContentLoader,
+    // VChip,
+    // VMenu,
     ParticipationAnalysis,
     DriverEngagement,
     QuestionAnalysis,
     DeleteStage,
-    VCheckbox,
-    VTooltip,
-    EmployeesToMeet,
+    // VCheckbox,
+    // VTooltip,
+    EmployeesToMeet
   },
-  data() {
+  data () {
     return {
       showFilter: false,
       dateRangeOptions: {
@@ -250,47 +250,47 @@ export default {
             label: 'All time',
             range: [
               undefined,
-              undefined,
-            ],
+              undefined
+            ]
           },
           {
             label: 'This Week',
             range: [
               dayjs().subtract(7, 'day').format(),
-              dayjs().format(),
-            ],
+              dayjs().format()
+            ]
           },
           {
             label: 'Last 30 Days',
             range: [
               dayjs().subtract(1, 'month').format(),
-              dayjs().format(),
-            ],
-          },
+              dayjs().format()
+            ]
+          }
         ],
         dateRange: {
           startDate: dayjs().format('DD/MM'),
-          endDate: dayjs().format('DD/MM'),
-        },
+          endDate: dayjs().format('DD/MM')
+        }
       },
       list: {
         departments: [],
         location: [],
         benchmarks: [{
           title: 'Strategy',
-          value: '8.9',
+          value: '8.9'
         }, {
           title: 'Growth',
-          value: '8',
+          value: '8'
         }, {
           title: 'Other',
-          value: '10',
-        }],
+          value: '10'
+        }]
       },
       filters: {
         default: {},
         selected: {},
-        main: {},
+        main: {}
       },
       config: {
         panel: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
@@ -302,29 +302,29 @@ export default {
             title: 'Delete',
             icon: 'fas fa-trash',
             dialog: 'DeleteStage',
-            action: this.openDialog,
-          },
+            action: this.openDialog
+          }
         ],
         activeTab: 'tab-overview',
         tabs: [
           {
             title: 'Overview',
-            value: 'overview',
+            value: 'overview'
           // }, {
           //   title: 'Key Drivers',
           //   value: 'key-drivers',
           }, {
             title: 'Disengaged Employees',
             value: 'need-to-meet',
-            count: 0,
-          },
-        ],
+            count: 0
+          }
+        ]
       },
-      stage: {},
+      stage: {}
     };
   },
   computed: {
-    formattedRange() {
+    formattedRange () {
       let time = '';
       if (!this.dateRangeOptions.startDate && !this.dateRangeOptions.endDate) {
         time = 'All Time';
@@ -333,7 +333,7 @@ export default {
       }
       return time;
     },
-    checkForFilters() {
+    checkForFilters () {
       let applied = false;
       this.$lodash.each(this.filters.selected, (v) => {
         if (v.length > 0) {
@@ -347,22 +347,22 @@ export default {
     },
     ...mapState({
       user: state => state.user,
-      dashboardFilters: state => state.dashboardFilters,
-    }),
+      dashboardFilters: state => state.dashboardFilters
+    })
   },
   methods: {
-    applyfilter() {
+    applyfilter () {
       this.filterApplied = true;
       this.triggerUpdate(this.$route.params.stageId);
     },
-    goBack() {
+    goBack () {
       this.$router.push({
-        path: '/?activeTab=stages',
+        path: '/?activeTab=stages'
       });
       // this.$router.go(-1);
     },
-    addRef(val) {
-      this.$router.push({ query: {activeTab: val}});
+    addRef (val) {
+      this.$router.push({ query: { activeTab: val } });
 
       switch (val) {
         case 'need-to-meet':
@@ -371,31 +371,31 @@ export default {
         default:
       }
     },
-    resetStage() {
+    resetStage () {
       this.filters.selected = JSON.parse(JSON.stringify(this.filters.main));
       this.dateRangeOptions.startDate = undefined;
       this.dateRangeOptions.endDate = undefined;
       this.triggerUpdate(this.$route.params.stageId);
     },
-    triggerUpdate(id) {
+    triggerUpdate (id) {
       // this.getStage(id);
       const dashboardFilters = {
         dateRangeOptions: this.dateRangeOptions,
-        filters: this.filters.selected,
+        filters: this.filters.selected
       };
       this.$store.dispatch('updateFilters', dashboardFilters);
       this.showFilter = false;
       this.getDashboardReport(id);
       // this.getDisengagedEmployeesDashboard(this.$route.params.stageId);
     },
-    getDisengagedEmployeesDashboard() {
+    getDisengagedEmployeesDashboard () {
       setTimeout(() => {
         if (this.$refs.EmployeesToMeet) {
           this.$refs.EmployeesToMeet.getOverview();
         }
       }, 100);
     },
-    getFilters() {
+    getFilters () {
       axios.get(`${process.env.VUE_APP_API_URL}company/${this.user.company}/dashboard_filters`).then((response) => {
         if (response && response.data && response.data.queryset_filters_options) {
           this.config.initialLoadingFilters = false;
@@ -413,17 +413,17 @@ export default {
         }
       });
     },
-    updateDate(date) {
+    updateDate (date) {
       if (date) {
         this.dateRangeOptions.startDate = date[0];
         this.dateRangeOptions.endDate = date[1];
         this.triggerUpdate(this.$route.params.stageId);
       }
     },
-    triggerTimeAuto(s) {
+    triggerTimeAuto (s) {
       const final = {
         timeIn: '',
-        timeRef: s.triggerTimeReference.replace('_', ' '),
+        timeRef: s.triggerTimeReference.replace('_', ' ')
       };
       if (s.triggerTimeIn === '-') {
         final.timeIn = 'before';
@@ -433,35 +433,35 @@ export default {
 
       return `${s.triggerTimeDuration} ${s.triggerTimeUnit} ${final.timeIn} ${final.timeRef}`;
     },
-    openDialog(type) {
+    openDialog (type) {
       if (type && this.$refs[type]) {
         this.$refs[type].open = true;
         this.$refs[type].candidate = this.candidate;
       }
     },
-    getDashboardReport(id) {
+    getDashboardReport (id) {
       const that = this;
       if (this.$refs.DriverEngagement) {
         this.$refs.DriverEngagement.report = {};
       }
       let queryParams = {
         initiated_date_start: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.startDate).format('YYYY-MM-DD') : undefined,
-        initiated_date_end: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.endDate).format('YYYY-MM-DD') : undefined,
+        initiated_date_end: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.endDate).format('YYYY-MM-DD') : undefined
       };
       this.$lodash.each(this.filters.selected, (v, k) => {
         if (v.length > 0) {
           queryParams[`user__profile__${k}__in`] = v.join();
         }
       });
-      let temp = {
-        fields: 'stage_participation_stats,monthwise_engagement_vs_mood_trend,disengaged_employees_stats,driver_breakdown,mood_analysis,title,survey',
+      const temp = {
+        fields: 'stage_participation_stats,monthwise_engagement_vs_mood_trend,disengaged_employees_stats,driver_breakdown,mood_analysis,title,survey'
       };
       queryParams = {
         ...queryParams,
-        ...temp,
+        ...temp
       };
       axios.get(`${process.env.VUE_APP_API_URL}stage/${id}/details`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.config.initialLoading = false;
         if (response && response.data) {
@@ -475,8 +475,8 @@ export default {
             this.$refs.ParticipationAnalysis.report.engagement_score = response.data.engagement_score ? response.data.engagement_score : null;
             this.$refs.ParticipationAnalysis.report.employee_vibe = response.data.mood_analysis ? response.data.mood_analysis.stage_mood_average : null;
 
-            if (response.data.chat_participation_stats || response.data.disengaged_employees_stats
-            || response.data.drivers_analysis || response.data.mood_analysis) {
+            if (response.data.chat_participation_stats || response.data.disengaged_employees_stats ||
+            response.data.drivers_analysis || response.data.mood_analysis) {
               this.$refs.ParticipationAnalysis.report.stats = true;
             }
             if (response.data.daily_engagement_stats) {
@@ -493,8 +493,8 @@ export default {
           if (this.$refs && this.$refs.DriverEngagement) {
             this.$refs.DriverEngagement.config.initialLoading = false;
             if (response.data.driver_breakdown && response.data.driver_breakdown.length > 0) {
-              let temp = JSON.parse(JSON.stringify(response.data.driver_breakdown));
-              let temp2 = [];
+              const temp = JSON.parse(JSON.stringify(response.data.driver_breakdown));
+              const temp2 = [];
               let total = 0;
               this.$lodash.each(temp, (v) => {
                 total += v.average;
@@ -504,10 +504,10 @@ export default {
                 name: 'Driver Framework',
                 title: '',
                 value: (total / temp.length).toFixed(1),
-                fill: "#fff",
+                fill: '#fff',
                 label: {
-                  fontColor: "#2a333d",
-                  fontWeight: "bold"
+                  fontColor: '#2a333d',
+                  fontWeight: 'bold'
                 }
               });
               this.$lodash.each(temp, (v) => {
@@ -519,8 +519,8 @@ export default {
                   parent: 'Driver Framework',
                   fill: that.getRandomColor(v.driver),
                   label: {
-                    fontWeight: "bold",
-                    fontSize: '15px',
+                    fontWeight: 'bold',
+                    fontSize: '15px'
                   }
                 });
                 this.$lodash.each(v.sub_drivers, (p, k) => {
@@ -531,14 +531,14 @@ export default {
                     value: p.toFixed(1),
                     parent: v.driver,
                     label: {
-                      fontWeight: "bold",
-                      fontSize: '15px',
+                      fontWeight: 'bold',
+                      fontSize: '15px'
                     }
                   });
                 });
               });
               this.$refs.DriverEngagement.report = {
-                company_drivers_breakdown: temp2,
+                company_drivers_breakdown: temp2
               };
               this.$refs.DriverEngagement.generateDriverFramework(response.data.driver_breakdown);
 
@@ -553,12 +553,12 @@ export default {
 
             if (response.data.monthwise_engagement_vs_mood_trend) {
               this.$refs.DriverEngagement.generateLineGraph(response.data.monthwise_engagement_vs_mood_trend);
-              this.$refs.DriverEngagement.report.monthwise_engagement_vs_mood_trend = response.data.monthwise_engagement_vs_mood_trend
+              this.$refs.DriverEngagement.report.monthwise_engagement_vs_mood_trend = response.data.monthwise_engagement_vs_mood_trend;
             }
 
             if (response.data.mood_analysis && response.data.mood_analysis.stage_mood_average) {
-              let temp = JSON.parse(JSON.stringify(response.data.mood_analysis));
-              let temp2 = [];
+              const temp = JSON.parse(JSON.stringify(response.data.mood_analysis));
+              const temp2 = [];
               let total = 1;
               this.$lodash.each(temp.stage_mood_breakdown, (v, i) => {
                 total += v;
@@ -567,7 +567,7 @@ export default {
                 temp2.push({
                   mood: i,
                   value: v,
-                  percent: ((v / total) * 100).toFixed(0),
+                  percent: ((v / total) * 100).toFixed(0)
                 });
               });
               temp.company_mood_breakdown = temp2;
@@ -581,12 +581,12 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch details, Please try again later!',
+          text: 'Unable to fetch details, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    getRandomColor(driver) {
+    getRandomColor (driver) {
       let color = 'lightgrey';
       const colors = [
         '#eadf59',
@@ -595,8 +595,7 @@ export default {
         '#ffa8a8',
         '#b56fea',
         '#0f4c1c',
-        '#918ce7',
-        ,
+        '#918ce7'
       ];
       color = colors[Math.floor(Math.random() * colors.length)];
       if (driver) {
@@ -622,16 +621,16 @@ export default {
         }
       }
       return color;
-    },
+    }
   },
   watch: {
-    $route() {
+    $route () {
       if (this.$route.query && this.$route.query.activeTab) {
         this.config.activeTab = `tab-${this.$route.query.activeTab}`;
       }
-    },
+    }
   },
-  beforeMount() {
+  beforeMount () {
     if (this.dashboardFilters && Object.keys(this.dashboardFilters.filters).length > 0) {
       this.filters.selected = this.dashboardFilters.filters;
       this.dateRangeOptions = this.dashboardFilters.dateRangeOptions;
@@ -645,7 +644,7 @@ export default {
       this.config.activeTab = `tab-${this.$route.query.activeTab}`;
       this.addRef(this.$route.query.activeTab);
     }
-  },
+  }
 };
 </script>
 

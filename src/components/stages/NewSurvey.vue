@@ -136,14 +136,15 @@
                 <span>Select question type or question to create survey.</span>
                 </v-card>
 
-                <Container group-name="1"
+                <!-- <Container group-name="1"
                 class="pt-4"
                 @drop="onDrop($event)"
                 :drag-end="onDragEnd"
                 :get-child-payload="getIPayload"
                 drag-handle-selector=".handle"
                 >
-                <Draggable v-for="(q, qi) in newSurvey.interactions" :key="qi">
+                <Draggable v-for="(q, qi) in newSurvey.interactions" :key="qi"> -->
+                  <draggable v-for="(q, qi) in newSurvey.interactions" :key="qi" group="people" @start="drag=true" @end="drag=false">
                     <v-card height="220" class="draggable-item text-xs-center pt-5 ma-5 elevation-0"
                     v-show="drag.startDragging && !drag.droppingNow &&
                     newSurvey.interactions.length === 0"
@@ -930,8 +931,8 @@
                         </v-card>
                     </v-flex>
                     </div>
-                </Draggable>
-                </Container>
+                </draggable>
+                <!-- </Container> -->
               </v-flex>
             </v-layout>
           </v-card>
@@ -949,8 +950,8 @@
 /* eslint-disable max-len */
 /* eslint-disable quotes */
 import { mapState, mapActions } from 'vuex';
-
-import { Container, Draggable } from 'vue-smooth-dnd';
+import draggable from 'vuedraggable';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 
 // import { ContentLoader } from 'vue-content-loader';
 import dayjs from 'dayjs';
@@ -971,9 +972,10 @@ dayjs.extend(relativeTime);
 export default {
   name: 'uploadEmployees',
   components: {
+    draggable,
     // ContentLoader,
-    Container,
-    Draggable,
+    // Container,
+    // Draggable,
     // VCheckbox,
     // VAlert,
     // VAvatar,

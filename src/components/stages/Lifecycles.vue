@@ -315,7 +315,7 @@ export default {
     // VAlert,
     // VChip,
     DeleteStage,
-    EmployeesList,
+    EmployeesList
     // dayjs
   },
   data () {

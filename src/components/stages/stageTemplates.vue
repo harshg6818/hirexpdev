@@ -53,7 +53,7 @@
                   <v-flex xs12 style="height:100%">
                     <v-layout v-if="table.stage && table.stage.length > 0" style="height:100%">
                       <v-flex xs4 class="list-sections">
-                        <div v-for="(campaign, ci) in table.stage" class="pa-3 cursor-pointer"
+                        <div v-for="(campaign, ci) in table.stage" class="pa-3 cursor-pointer" :key="ci"
                         :class="activeCategory === ci ? 'active-campaign' : ''"
                         @click="getQuestions(campaign.stage_details.survey, ci)">
                           <strong> {{campaign.stage_details.title}} </strong> <br/>
@@ -98,8 +98,8 @@
                             </v-flex>
                             <v-flex xs1>
                               <v-tooltip bottom>
-                                <v-icon class="grey--text" slot="activator" style="margin-top:5px;margin-left:10px"> 
-                                  {{questionIcon(question.type)}} 
+                                <v-icon class="grey--text" slot="activator" style="margin-top:5px;margin-left:10px">
+                                  {{questionIcon(question.type)}}
                                 </v-icon>
                                 <span> {{question.type}} </span>
                               </v-tooltip>
@@ -150,73 +150,73 @@
 </template>
 
 <script>
-import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VTooltip } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VTooltip } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { mapState } from 'vuex';
 import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import VueContentLoading from 'vue-content-loading';
 import { ContentLoader } from 'vue-content-loader';
 
 export default {
   name: 'NewQuestion',
   components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSlider,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VPagination,
-    VCheckbox,
-    VTooltip,
-    VueContentLoading,
-    ContentLoader,
+    // VAlert,
+    // VMenu,
+    // VTextarea,
+    // VSlider,
+    // VSelect,
+    // Container,
+    // Draggable,
+    // VChip,
+    // VPagination,
+    // VCheckbox,
+    // VTooltip,
+    // VueContentLoading,
+    ContentLoader
   },
-  data() {
+  data () {
     return {
-        allSelected: false,
-        activeCategory: null,
-        filters: {
-          default: {},
-          selected: {},
-          main: {},
-        },
-        campaignQuestions: [],
-        dialogs: {
-          newQuestion: false,
-          question_bank: false,
-          campaign: false,
-        },
-        selectedQuestions: {},
-        table: {
-          searchString: '',
-          totalStage: 0,
-          loading: true,
-          stage: [],
-        },
-        config: {
-          filter: false,
-          panel: [true, true, true],
-          initialLoading: true,
-          initialLoadingQuestions: true,
-          initialLoadingFilters: true,
-        },
-        pagination: {
-          rowsPerPage: 5,
-          page: 1,
-          length: 1,
-        },
+      allSelected: false,
+      activeCategory: null,
+      filters: {
+        default: {},
+        selected: {},
+        main: {}
+      },
+      campaignQuestions: [],
+      dialogs: {
+        newQuestion: false,
+        question_bank: false,
+        campaign: false
+      },
+      selectedQuestions: {},
+      table: {
+        searchString: '',
+        totalStage: 0,
+        loading: true,
+        stage: []
+      },
+      config: {
+        filter: false,
+        panel: [true, true, true],
+        initialLoading: true,
+        initialLoadingQuestions: true,
+        initialLoadingFilters: true
+      },
+      pagination: {
+        rowsPerPage: 5,
+        page: 1,
+        length: 1
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    questionIcon(type) {
+    questionIcon (type) {
       let icon = '';
       if (type === 'scale') {
         icon = 'fas fa-arrows-alt-h';
@@ -229,30 +229,30 @@ export default {
       }
       return icon;
     },
-    toggleAll(ev) {
+    toggleAll (ev) {
       if (!ev) {
         this.selectedQuestions = {};
         this.campaignQuestions = [];
         this.allSelected = false;
       } else {
-        this.$nextTick(function a() {
+        this.$nextTick(function a () {
           this.selectedQuestions = {};
           this.campaignQuestions = [];
           this.allSelected = true;
           this.$lodash.each(this.table.questions, (ques, index) => {
             this.selectedQuestions[ques.interaction_id] = true;
-            let questionCopy = JSON.parse(JSON.stringify(ques));
+            const questionCopy = JSON.parse(JSON.stringify(ques));
             // questionCopy.msg = questionCopy.questions;
-            if (questionCopy.type === "text") {
+            if (questionCopy.type === 'text') {
               questionCopy.img = 'fas fa-align-left';
               questionCopy.title = 'Text';
-            } else if (questionCopy.type === "textInput") {
+            } else if (questionCopy.type === 'textInput') {
               questionCopy.img = 'fas fa-keyboard';
               questionCopy.title = 'Input From User';
-            } else if (questionCopy.type === "scale") {
+            } else if (questionCopy.type === 'scale') {
               questionCopy.img = 'fas fa-arrows-alt-h';
               questionCopy.title = 'Number Scale';
-            } else if (questionCopy.type === "closeEnded") {
+            } else if (questionCopy.type === 'closeEnded') {
               questionCopy.img = 'fas fa-reply-all';
               questionCopy.title = 'Yes/No (Close Ended)';
             }
@@ -261,8 +261,8 @@ export default {
         });
       }
     },
-    getFilters() {
-        axios.get(`${process.env.VUE_APP_API_URL}stage/filters`).then((response) => {
+    getFilters () {
+      axios.get(`${process.env.VUE_APP_API_URL}stage/filters`).then((response) => {
         if (response && response.data && response.data.queryset_filters_options) {
           this.config.initialLoadingFilters = false;
           this.filters.default = response.data.queryset_filters_options;
@@ -279,22 +279,22 @@ export default {
         }
       });
     },
-    overallPartcipation(t) {
+    overallPartcipation (t) {
       let overallPercentage = 0;
       if (t.total_sessions) {
         overallPercentage = (t.completed_sessions / t.total_sessions) * 100;
       }
       return overallPercentage;
     },
-    getCampaigns(searchString) {
-       this.config.initialLoading = true;
+    getCampaigns (searchString) {
+      this.config.initialLoading = true;
       const queryParams = {
         count: 'true',
         // page_limit: 30,
         page_offset: this.pagination.page || 1,
         raw_search_string: searchString,
         type__in: 'lifecycle',
-        include_all_stages: true,
+        include_all_stages: true
       };
       this.$lodash.each(this.filters.selected, (v, k) => {
         if (v.length > 0) {
@@ -302,7 +302,7 @@ export default {
         }
       });
       axios.get(`${process.env.VUE_APP_API_URL}stage/list`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.config.initialLoading = false;
         if (response && response.data && response.data.data) {
@@ -319,23 +319,23 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch touchpoints, Please try again later!',
+          text: 'Unable to fetch touchpoints, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    getQuestions(campaignId, index) {
+    getQuestions (campaignId, index) {
       this.activeCategory = index;
       this.config.initialLoadingQuestions = true;
       const queryParams = {
-        fields: 'title,type,description,company,createdAt,createdBy,lastUpdated,interactions',
+        fields: 'title,type,description,company,createdAt,createdBy,lastUpdated,interactions'
       };
       axios.get(`${process.env.VUE_APP_API_URL}survey/${campaignId}/details`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.config.initialLoadingQuestions = false;
         if (response && response.data) {
-          this.$nextTick(function a() {
+          this.$nextTick(function a () {
             this.table.questions = response.data.interactions;
             // this.table.totalItems = response.data.total_count;
             // this.pagination.length = Math.ceil(this.table.totalItems / this.pagination.rowsPerPage);
@@ -347,28 +347,28 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch questions, Please try again later!',
+          text: 'Unable to fetch questions, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    updateQuestions(question) {
+    updateQuestions (question) {
       const match = this.$lodash.findIndex(this.campaignQuestions, (ques) =>
         ques.interaction_id === question.interaction_id);
       if (match <= -1) {
         if (this.selectedQuestions[question.interaction_id]) {
-          let questionCopy = JSON.parse(JSON.stringify(question));
+          const questionCopy = JSON.parse(JSON.stringify(question));
           // questionCopy.msg = questionCopy.questions;
-          if (questionCopy.type === "text") {
+          if (questionCopy.type === 'text') {
             questionCopy.img = 'fas fa-align-left';
             questionCopy.title = 'Text';
-          } else if (questionCopy.type === "textInput") {
+          } else if (questionCopy.type === 'textInput') {
             questionCopy.img = 'fas fa-keyboard';
             questionCopy.title = 'Input From User';
-          } else if (questionCopy.type === "scale") {
+          } else if (questionCopy.type === 'scale') {
             questionCopy.img = 'fas fa-arrows-alt-h';
             questionCopy.title = 'Number Scale';
-          } else if (questionCopy.type === "closeEnded") {
+          } else if (questionCopy.type === 'closeEnded') {
             questionCopy.img = 'fas fa-reply-all';
             questionCopy.title = 'Yes/No (Close Ended)';
           }
@@ -385,7 +385,7 @@ export default {
         }
       }
     },
-    addQuestions() {
+    addQuestions () {
       if (this.$parent && this.$parent.newSurvey) {
         this.$lodash.each(this.campaignQuestions, (ques, index) => {
           if (ques.interaction_id) {
@@ -393,26 +393,26 @@ export default {
           }
           this.$parent.newSurvey.interactions.push(ques);
         });
-        this.selectedQuestions= {};
+        this.selectedQuestions = {};
         this.campaignQuestions = [];
         this.dialogs.campaign = false;
       }
     },
-    closeModal() {
-      this.selectedQuestions= {};
+    closeModal () {
+      this.selectedQuestions = {};
       this.campaignQuestions = [];
-      this.dialogs.campaign=false;
-    },
+      this.dialogs.campaign = false;
+    }
   },
-  created() {
+  created () {
     // if (this.$parent && this.$parent.newSurvey) {
     //   this.campaignQuestions = this.$parent.newSurvey.interactions;
     // }
     // this.getFilters();
     // this.getCampaigns();
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 

@@ -186,15 +186,15 @@
       </v-layout>
     </div>
 
-  </div>    
+  </div>
 </template>
 
 <script>
-import { VAlert, VMenu, VTextarea, VSelect } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VTextarea, VSelect } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { mapState } from 'vuex';
-import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import axios from 'axios';
+// import VueContentLoading from 'vue-content-loading';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -203,42 +203,42 @@ dayjs.extend(relativeTime);
 export default {
   name: 'NewQuestion',
   components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSelect,
-    Container,
-    VueContentLoading,
-    dayjs,
+    // VAlert,
+    // VMenu,
+    // VTextarea,
+    // VSelect,
+    // Container,
+    // VueContentLoading,
+    // dayjs,
   },
-  data() {
+  data () {
     return {
       newStage: {},
       menu: {
-        date: false,
-      },
+        date: false
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    edit(tab) {
+    edit (tab) {
       if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent && this.$parent.$parent.$parent.config) {
         this.$parent.$parent.$parent.config.activeTab = tab;
       }
     },
-    formattedDate() {
+    formattedDate () {
       return dayjs(this.newStage.schedule_end_at).endOf('day').format('YYYY-MM-DD');
     },
-    scheduleCampaign() {
+    scheduleCampaign () {
       if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent) {
         this.$parent.$parent.$parent.scheduleCampaign();
       }
     },
-    activateCampaign() {
+    activateCampaign () {
       if (this.newStage.schedule_end_at) {
         if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent) {
           this.$parent.$parent.$parent.newStage.schedule_end_at = dayjs(`${this.newStage.schedule_end_at}`).format('YYYY-MM-DD');
@@ -248,29 +248,29 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Please fill campaign completion time!',
+          text: 'Please fill campaign completion time!'
         });
       }
     },
-    testCampaign() {
+    testCampaign () {
       this.$refs.testCampaign.dialogs.testCampaign = true;
       // if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent) {
       //   this.$parent.$parent.$parent.activateCampaign();
       // }
-    },
+    }
   },
-  created() {
+  created () {
     if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent && this.$parent.$parent.$parent.newStage) {
       this.newStage = this.$parent.$parent.$parent.newStage;
-      if (this.$parent.$parent.$parent.$refs.survey && this.$parent.$parent.$parent.$refs.survey.newSurvey && 
+      if (this.$parent.$parent.$parent.$refs.survey && this.$parent.$parent.$parent.$refs.survey.newSurvey &&
       this.$parent.$parent.$parent.$refs.survey.newSurvey.interactions) {
         this.newStage.questions = this.$parent.$parent.$parent.$refs.survey.newSurvey.interactions;
         this.newStage.schedule_end_at = this.$parent.$parent.$parent.newStage.schedule_end_at;
       }
     }
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 

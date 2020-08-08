@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import customParseFormat from 'dayjs-ext/plugin/customParseFormat';
 import VuetifyDaterangePicker from 'vuetify-daterange-picker';
 import 'vuetify-daterange-picker/dist/vuetify-daterange-picker.css';
 import App from './App.vue';
@@ -24,6 +25,7 @@ Object.defineProperty(Vue.prototype, 'dayjs', {
   value: dayjs
 });
 dayjs.extend(relativeTime);
+dayjs.extend(customParseFormat);
 Vue.use(VuetifyDaterangePicker);
 Vue.use(VeeValidate);
 

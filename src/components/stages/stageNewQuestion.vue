@@ -715,34 +715,34 @@
 /* eslint-disable max-len */
 /* eslint-disable max-len */
 /* eslint-disable max-len */
-import { VAlert, VMenu, VTextarea, VSelect, VChip } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VTextarea, VSelect, VChip } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { mapState } from 'vuex';
 import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import VueContentLoading from 'vue-content-loading';
 
 export default {
   name: 'NewQuestion',
   components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VueContentLoading,
+    // VAlert,
+    // VMenu,
+    // VTextarea,
+    // VSelect,
+    // Container,
+    // Draggable,
+    // VChip,
+    // VueContentLoading,
   },
-  data() {
+  data () {
     return {
       dialogs: {
         newQuestion: false,
         questionBank: false,
-        campaigns: false,
+        campaigns: false
       },
       selectedQuesType: {},
       config: {
-        initialLoading: false,
+        initialLoading: false
       },
       editFlag: false,
       questionIndex: null,
@@ -755,26 +755,26 @@ export default {
         title: '',
         description: '',
         questions: [],
-        type: '',
-      },
+        type: ''
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    getRoles() {
+    getRoles () {
       axios.get(`${process.env.VUE_APP_API_URL}driver/framework`).then((response) => {
         // this.config.initialLoading = false;
         if (response && response.data) {
-          this.$nextTick(function a() {
+          this.$nextTick(function a () {
             this.roleList = response.data;
             this.$lodash.each(this.roleList, (subDrivers, driver) => {
               this.drivers.push({
                 name: driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2'),
-                value: driver,
+                value: driver
               });
             });
             this.$forceUpdate();
@@ -785,34 +785,34 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch roles, Please try again later!',
+          text: 'Unable to fetch roles, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    getSubDrivers(selectedDriver) {
+    getSubDrivers (selectedDriver) {
       this.$lodash.each(this.roleList, (subDrivers, driver) => {
         if (selectedDriver === driver) {
           this.subDrivers = [];
           this.$lodash.each(subDrivers, (subDriver) => {
             this.subDrivers.push({
               name: subDriver.replace(/([a-z0-9])([A-Z])/g, '$1 $2'),
-              value: subDriver,
+              value: subDriver
             });
           });
         }
       });
     },
-    getRoleName(role) {
+    getRoleName (role) {
       let roleName = '';
       roleName = role.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
       return roleName;
     },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    deleteReply(index, qi, oi) {
+    deleteReply (index, qi, oi) {
       if (this.newSurvey.questions[index].msg[qi].quickReplies &&
       this.newSurvey.questions[index].msg[qi].quickReplies.length > 1) {
         this.newSurvey.questions[index].msg[qi].quickReplies.splice(oi, 1);
@@ -820,11 +820,11 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'info',
           show: true,
-          text: 'At least one reply is required!',
+          text: 'At least one reply is required!'
         });
       }
     },
-    addCard(index) {
+    addCard (index) {
       this.newSurvey.questions[index].msg.push({
         imgUrl: '',
         text: '',
@@ -832,20 +832,20 @@ export default {
         quickReplies: [
           {
             title: 'Yes',
-            postback: 'Good to know!',
+            postback: 'Good to know!'
           }, {
             title: 'No',
-            postback: 'That\'s sad',
-          },
-        ],
+            postback: 'That\'s sad'
+          }
+        ]
       });
     },
-    addReplies(index, qi, text) {
+    addReplies (index, qi, text) {
       this.selectedQuesType.msg[qi].quickReplies.push({
-        title: `${text} #${this.selectedQuesType.msg[qi].quickReplies.length + 1}`,
+        title: `${text} #${this.selectedQuesType.msg[qi].quickReplies.length + 1}`
       });
     },
-    validateDetails() {
+    validateDetails () {
       this.$validator.validateAll().then((res) => {
         if (res) {
           if (this.selectedQuesType && this.selectedQuesType[0] && this.selectedQuesType[0].type !== 'textInput') {
@@ -859,7 +859,7 @@ export default {
               this.$store.dispatch('updateSnackbar', {
                 color: 'error',
                 show: true,
-                text: 'Fill all the mandatory fields!',
+                text: 'Fill all the mandatory fields!'
               });
             }
           } else {
@@ -873,12 +873,12 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Fill all the mandatory fields!',
+            text: 'Fill all the mandatory fields!'
           });
         }
       });
     },
-    addQuestion() {
+    addQuestion () {
       if (this.$parent && this.$parent.newSurvey) {
         // let temp = JSON.parse(JSON.stringify(this.$parent.newSurvey.interactions));
         // temp.push(this.selectedQuesType['0']);
@@ -888,7 +888,7 @@ export default {
         this.dialogs.newQuestion = false;
       }
     },
-    updateQuestion() {
+    updateQuestion () {
       if (this.$parent && this.$parent.newSurvey) {
         this.$parent.$nextTick(() => {
           this.$parent.newSurvey.interactions[this.questionIndex] = JSON.parse(JSON.stringify(this.selectedQuesType['0']));
@@ -900,10 +900,10 @@ export default {
         });
       }
     },
-    update() {},
+    update () {}
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 

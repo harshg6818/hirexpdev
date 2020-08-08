@@ -113,7 +113,7 @@
                 <td class="text-xs-left" v-show="!props.item.email">
                   --
                 </td>
-                
+
                 <td class="text-xs-left" v-show="props.item.phone || props.item.phoneNumber">
                   {{props.item.phone || props.item.phoneNumber}}
                 </td>
@@ -126,7 +126,7 @@
                 </td>
               </tr>
             </template>
-            
+
             <v-card slot="no-data" class="elevation-0 text-xs-center" min-height="60vh">
               <v-card-title primary-title class="justify-center">
                 <v-layout row wrap>
@@ -147,85 +147,87 @@
 </template>
 
 <script>
-import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VAvatar } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
-import { ContentLoader } from 'vue-content-loader';
+// import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VAvatar } from 'vuetify';
+
+// import { Container, Draggable } from 'vue-smooth-dnd';
+
+// import { ContentLoader } from 'vue-content-loader';
 import { mapState } from 'vuex';
 import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import VueContentLoading from 'vue-content-loading';
 
 export default {
   name: 'NewQuestion',
   components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSlider,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VPagination,
-    VCheckbox,
-    VueContentLoading,
-    VAvatar,
-    ContentLoader,
+    // VAlert,
+    // VMenu,
+    // VTextarea,
+    // VSlider,
+    // VSelect,
+    // Container,
+    // Draggable,
+    // VChip,
+    // VPagination,
+    // VCheckbox,
+    // VueContentLoading,
+    // VAvatar,
+    // ContentLoader
   },
-  data() {
+  data () {
     return {
-        showCheckBoxes: true,
-        allSelected: false,
-        filters: {
-          default: {},
-          selected: {},
-          main: {},
-        },
-        selectedAudience: {},
-        newStage: {
-          audience: {},
-          totalAudienceCount: null,
-        },
-        table: {
-          searchString: '',
-          totalAudienceCount: 0,
-          loading: true,
-          audience: [],
-          // headers: [],
-          headers: [{
-              text: 'Name',
-              align: 'left',
-              sortable: false,
-          }, {
-              text: 'Email',
-              align: 'left',
-              sortable: false,
-          }, {
-              text: 'Phone Number',
-              align: 'left',
-              sortable: false,
-          }, {
-              text: 'Gender',
-              align: 'left',
-              sortable: false,
-          }],
-        },
-        config: {
-          filter: false,
-          panel: [true, true, true, true],
-          initialLoading: false,
-          initialLoadingFilters: true,
-        },
-        pagination: {
-          rowsPerPage: 10,
-          page: 1,
-        },
+      showCheckBoxes: true,
+      allSelected: false,
+      filters: {
+        default: {},
+        selected: {},
+        main: {}
+      },
+      selectedAudience: {},
+      newStage: {
+        audience: {},
+        totalAudienceCount: null
+      },
+      table: {
+        searchString: '',
+        totalAudienceCount: 0,
+        loading: true,
+        audience: [],
+        // headers: [],
+        headers: [{
+          text: 'Name',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Email',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Phone Number',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Gender',
+          align: 'left',
+          sortable: false
+        }]
+      },
+      config: {
+        filter: false,
+        panel: [true, true, true, true],
+        initialLoading: false,
+        initialLoadingFilters: true
+      },
+      pagination: {
+        rowsPerPage: 10,
+        page: 1
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
+      user: state => state.user
     }),
-    filtersApplied() {
+    filtersApplied () {
       let applied = false;
       this.$lodash.each(this.newStage.audience, (v) => {
         if (v.length > 0) {
@@ -233,10 +235,10 @@ export default {
         }
       });
       return applied;
-    },
+    }
   },
   methods: {
-    getFilters() {
+    getFilters () {
       axios.get(`${process.env.VUE_APP_API_URL}users/filters`).then((response) => {
         if (response && response.data && response.data.queryset_filters_options) {
           this.config.initialLoadingFilters = false;
@@ -254,20 +256,20 @@ export default {
         }
       });
     },
-    triggerUpdate() {
+    triggerUpdate () {
       this.getTeam();
     },
-    resetFilters() {
+    resetFilters () {
       this.newStage.audience = JSON.parse(JSON.stringify(this.filters.main));
       this.getTeam();
     },
-    getTeam(searchString) {
+    getTeam (searchString) {
       this.config.initialLoading = true;
       const queryParams = {
         count: 'true',
         page_limit: this.pagination.rowsPerPage,
         page_offset: this.pagination.page || 1,
-        raw_search_string: searchString,
+        raw_search_string: searchString
       };
       this.$lodash.each(this.newStage.audience, (v, k) => {
         if (v.length > 0) {
@@ -275,7 +277,7 @@ export default {
         }
       });
       axios.get(`${process.env.VUE_APP_API_URL}users/list`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.table.loading = false;
         this.config.initialLoading = false;
@@ -290,23 +292,23 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch team, Please try again later!',
+          text: 'Unable to fetch team, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    updateSelectedAudience(emp, ev) {
+    updateSelectedAudience (emp, ev) {
       let temp = JSON.parse(JSON.stringify(this.selectedAudience));
-      // const match = this.$lodash.findIndex(this.selectedAudience, (employee) => 
+      // const match = this.$lodash.findIndex(this.selectedAudience, (employee) =>
       //   employee.id === emp.id);
       if (ev && !temp[emp.id]) {
         const newAudience = {
-          [emp.id]: emp,
-        }
+          [emp.id]: emp
+        };
         temp = {
           ...temp,
-          ...newAudience,
-        }
+          ...newAudience
+        };
       } else if (!ev && this.selectedAudience[emp.id]) {
         delete temp[emp.id];
       }
@@ -318,33 +320,33 @@ export default {
       }
       // this.$store.dispatch('updateSelectedCandidatesWithData', temp);
     },
-    update() {
+    update () {
       if (this.allSelected) {
         this.toggleAll(false);
         this.toggleAll(true);
       }
     },
-    toggleAll(ev) {
+    toggleAll (ev) {
       if (!ev) {
         this.selectedAudience = {};
         this.allSelected = false;
       } else {
-        this.$nextTick(function a() {
+        this.$nextTick(function a () {
           this.selectedAudience = {};
           this.allSelected = true;
           this.$lodash.each(this.table.audience, emp => {
             const newAudience = {
-              [emp.id]: emp,
+              [emp.id]: emp
             };
             this.selectedAudience = {
               ...this.selectedAudience,
-              ...newAudience,
+              ...newAudience
             };
           });
         });
       }
     },
-    getName(key) {
+    getName (key) {
       let name;
       switch (key) {
         case 'currentPosition':
@@ -356,18 +358,18 @@ export default {
       }
       return name;
     },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    getColor(e) {
+    getColor (e) {
       let color = '#0d2c8d';
       if (e.gender && e.gender === 'female') {
         color = 'pink';
       }
       return color;
     },
-    getAvatar(c) {
+    getAvatar (c) {
       let name = '';
       let avt = '';
       if (c.user_display_name) {
@@ -382,19 +384,19 @@ export default {
         avt = `${c.first_name ? c.first_name.charAt(0) : ''}${c.last_name.charAt(0)}`;
       }
       return avt.toUpperCase();
-    },
+    }
   },
   watch: {
     pagination: {
-      handler() {
+      handler () {
         if (!this.config.initialLoading) {
           this.getTeam();
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
-  created() {
+  created () {
     // if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent && this.$parent.$parent.$parent.newStage) {
     //   this.table.audience = this.$parent.$parent.$parent.newStage.audience;
     //   this.table.totalAudienceCount = this.$parent.$parent.$parent.newStage.totalAudienceCount;
@@ -404,8 +406,8 @@ export default {
     //   }
     // }
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 
