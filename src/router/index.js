@@ -122,6 +122,22 @@ const routes = [
           name: 'ViewAdhoc',
           component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/ViewAdhoc')
         }]
+      }, {
+        path: 'question-sets',
+        component: SubShell,
+        children: [{
+          path: '',
+          name: 'Surveys',
+          component: () => import(/* webpackChunkName: "Surveys" */ '@/components/surveys/Surveys')
+        }, {
+          path: 'new',
+          name: 'NewSurvey',
+          component: () => import(/* webpackChunkName: "Surveys" */ '@/components/surveys/NewSurvey')
+        }, {
+          path: 'edit/:surveyId',
+          name: 'EditSurvey',
+          component: () => import(/* webpackChunkName: "Surveys" */ '@/components/surveys/NewSurvey')
+        }]
       }
     ]
   }
