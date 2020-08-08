@@ -86,14 +86,12 @@ const routes = [
           component: () => import(/* webpackChunkName: "Exit" */ '@/components/exit/NewExitTouchpoint')
         }, {
           path: 'edit/:stageId',
-          component: () =>
-            import(/* webpackChunkName: "Exit" */ '@/components/exit/NewExitTouchpoint'),
-          name: 'EditExitTouchpoint'
+          name: 'EditExitTouchpoint',
+          component: () => import(/* webpackChunkName: "Exit" */ '@/components/exit/NewExitTouchpoint')
         }, {
           path: 'view/:stageId',
-          component: () =>
-            import(/* webpackChunkName: "Exit" */ '@/components/exit/ViewStage'),
-          name: 'ViewExitTouchpoint'
+          name: 'ViewExitTouchpoint',
+          component: () => import(/* webpackChunkName: "Exit" */ '@/components/exit/ViewStage')
         }]
       }, {
         path: 'driver',
@@ -113,21 +111,17 @@ const routes = [
         },
         {
           path: 'new',
-          component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/NewAdhoc'),
-          name: 'NewAdhoc'
+          name: 'NewAdhoc',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/NewAdhoc')
         }, {
           path: 'edit/:stageId',
-          component: () =>
-            import(/* webpackChunkName: "Stages" */ '@/components/adhoc/NewAdhoc'),
-          name: 'EditAdhoc'
-        }
-        //   {
-        //   path: 'view/:stageId',
-        //   component: () =>
-        //     import(/* webpackChunkName: "Stages" */ '@/components/adhoc/ViewAdhoc'),
-        //   name: 'ViewAdhoc'
-        // }]
-        ]
+          name: 'EditAdhoc',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/NewAdhoc')
+        }, {
+          path: 'view/:stageId',
+          name: 'ViewAdhoc',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/ViewAdhoc')
+        }]
       }
     ]
   }
