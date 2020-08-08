@@ -179,21 +179,21 @@
         <disengaged-EmpToMeet></disengaged-EmpToMeet>
       </div>
 
-      <!-- <div
+      <div
         class="disengaged-sentiment-analysis"
         v-if="activeTab === 'disengaged-sentiment-analysis'"
       >
-        <DisengagedSentimentAnalysis></DisengagedSentimentAnalysis>
+        <disengaged-SentimentAnalysis></disengaged-SentimentAnalysis>
       </div>
 
       <div
         class="txt-analysis"
         v-if="activeTab === 'txt-analysis'"
       >
-        <TextAnalysis></TextAnalysis>
+        <text-Analysis></text-Analysis>
       </div>
 
-      <div
+      <!--<div
         class="anonymous-snapshot"
         v-if="activeTab === 'anonymous-snapshot'"
       >
@@ -235,9 +235,9 @@ import TouchpointAnaysis from './touchpoints/analysis';
 
 import DisengagedSnapshot from './disengaged/snapshot';
 import DisengagedEmpToMeet from './disengaged/emp-to-meet';
-// import DisengagedSentimentAnalysis from './disengaged/sentiment-analysis';
+import DisengagedSentimentAnalysis from './disengaged/sentiment-analysis';
 
-// import TextAnalysis from './txt-analysis/analysis';
+import TextAnalysis from './txt-analysis/analysis';
 
 // import AnonymousSnapshot from './anonymous/anonymous-snapshot';+
 // import AnonymousMessage from './anonymous/anonymous-message';
@@ -254,9 +254,9 @@ export default {
     TouchpointSnapshot,
     TouchpointAnaysis,
     DisengagedSnapshot,
-    DisengagedEmpToMeet
-    // DisengagedSentimentAnalysis,
-    // TextAnalysis,
+    DisengagedEmpToMeet,
+    DisengagedSentimentAnalysis,
+    TextAnalysis
     // AnonymousSnapshot,
     // AnonymousMessage,
   },

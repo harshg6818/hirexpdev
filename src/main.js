@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import VuetifyDaterangePicker from 'vuetify-daterange-picker';
 import 'vuetify-daterange-picker/dist/vuetify-daterange-picker.css';
 import App from './App.vue';
@@ -22,7 +23,7 @@ if (localStorage.getItem('CHATBOT_USER')) {
 Object.defineProperty(Vue.prototype, 'dayjs', {
   value: dayjs
 });
-
+dayjs.extend(relativeTime);
 Vue.use(VuetifyDaterangePicker);
 Vue.use(VeeValidate);
 
