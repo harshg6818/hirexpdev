@@ -103,6 +103,32 @@ const routes = [
           name: 'Driver',
           component: () => import(/* webpackChunkName: "Stages" */ '@/components/driver/Driver')
         }]
+      }, {
+        path: 'ad-hoc',
+        component: SubShell,
+        children: [{
+          path: '',
+          name: 'Adhoc',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/Adhoc')
+        }
+        // {
+        //   path: 'new',
+        //   component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/NewAdhoc'),
+        //   name: 'NewAdhoc'
+        // },
+        // {
+        //   path: 'edit/:stageId',
+        //   component: () =>
+        //     import(/* webpackChunkName: "Stages" */ '@/components/adhoc/NewAdhoc'),
+        //   name: 'EditAdhoc'
+        // },
+        // {
+        //   path: 'view/:stageId',
+        //   component: () =>
+        //     import(/* webpackChunkName: "Stages" */ '@/components/adhoc/ViewAdhoc'),
+        //   name: 'ViewAdhoc'
+        // }
+        ]
       }
     ]
   }
