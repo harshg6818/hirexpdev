@@ -95,6 +95,14 @@ const routes = [
             import(/* webpackChunkName: "Exit" */ '@/components/exit/ViewStage'),
           name: 'ViewExitTouchpoint'
         }]
+      }, {
+        path: 'driver',
+        component: SubShell,
+        children: [{
+          path: 'view/:driver',
+          name: 'Driver',
+          component: () => import(/* webpackChunkName: "Stages" */ '@/components/driver/Driver')
+        }]
       }
     ]
   }
