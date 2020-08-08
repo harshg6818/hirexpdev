@@ -276,12 +276,12 @@ import { ContentLoader } from 'vue-content-loader';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {
-  VCheckbox,
-  VTooltip,
-  VAlert,
-  VPagination,
-} from 'vuetify';
+// import {
+//   VCheckbox,
+//   VTooltip,
+//   VAlert,
+//   VPagination
+// } from 'vuetify';
 import DeleteStage from './dialogs/DeleteStage';
 import EmployeesList from '../analytics/EmployeesList';
 
@@ -291,25 +291,25 @@ export default {
   name: 'stage',
   components: {
     ContentLoader,
-    VCheckbox,
-    VTooltip,
-    VAlert,
+    // VCheckbox,
+    // VTooltip,
+    // VAlert,
     DeleteStage,
-    VPagination,
-    dayjs,
-    EmployeesList,
+    // VPagination,
+    // dayjs,
+    EmployeesList
   },
-  data() {
+  data () {
     return {
       filters: {
         default: {},
         selected: {},
-        main: {},
+        main: {}
       },
       pagination: {
         rowsPerPage: 8,
         page: 1,
-        length: 1,
+        length: 1
       },
       table: {
         searchString: '',
@@ -319,36 +319,36 @@ export default {
         headers: [{
           text: 'touchpoint Name',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Average Mood',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Last Triggered',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Sent',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Opened',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Not Opened',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Replied',
           align: 'left',
-          sortable: false,
+          sortable: false
         }, {
           text: 'Actions',
           align: 'left',
-          sortable: false,
-        }],
+          sortable: false
+        }]
       },
       config: {
         filter: false,
@@ -365,22 +365,22 @@ export default {
             title: 'Edit',
             icon: 'fas fa-edit',
             dialog: 'edit',
-            action: this.editStage,
+            action: this.editStage
           // }, {
           //   title: 'Delete',
           //   icon: 'fas fa-trash',
           //   dialog: 'deleteStage',
           //   action: this.openDialog,
-          },
-        ],
-      },
+          }
+        ]
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
+      user: state => state.user
     }),
-    checkForFilters() {
+    checkForFilters () {
       let applied = false;
       this.$lodash.each(this.filters.selected, (v) => {
         if (v.length > 0) {
@@ -388,16 +388,16 @@ export default {
         }
       });
       return applied;
-    },
+    }
   },
   methods: {
-    editStage(s) {
+    editStage (s) {
       this.$router.push(`${this.$route.path}/edit/${s.id}`);
     },
-    triggerTimeAuto(s) {
+    triggerTimeAuto (s) {
       const final = {
         timeIn: '',
-        timeRef: s.triggerTimeReference.replace('_', ' '),
+        timeRef: s.triggerTimeReference.replace('_', ' ')
       };
       if (s.triggerTimeIn === '-') {
         final.timeIn = 'before';
@@ -407,7 +407,7 @@ export default {
 
       return `${s.triggerTimeDuration} ${s.triggerTimeUnit} ${final.timeIn} ${final.timeRef}`;
     },
-    openDialog(filters, title, sessions) {
+    openDialog (filters, title, sessions) {
       if (!this.activeDriver) {
         this.$refs.EmployeesList.config.initialLoading = true;
         this.$refs.EmployeesList.open = true;
@@ -423,21 +423,21 @@ export default {
     //     this.$refs[type].stage = data;
     //   }
     // },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    search(string) {
+    search (string) {
       clearTimeout(this.timeout);
       // Make a new timeout set to go off in 800ms
       this.timeout = setTimeout(() => {
         this.getStages(string);
       }, 500);
     },
-    viewStage(s) {
+    viewStage (s) {
       this.$router.push(`${this.$route.path}/view/${s.id}`);
     },
-    getName(key) {
+    getName (key) {
       let name;
       switch (key) {
         case 'createdBy__email':
@@ -457,7 +457,7 @@ export default {
       }
       return name;
     },
-    getStages(searchString) {
+    getStages (searchString) {
       this.config.initialLoading = true;
       const queryParams = {
         count: 'true',
@@ -465,7 +465,7 @@ export default {
         page_limit: 30,
         page_offset: this.pagination.page || 1,
         raw_search_string: searchString,
-        stageType__in: this.$route.path === '/lifecycle' ? 'lifecycle' : 'adhoc',
+        stageType__in: this.$route.path === '/lifecycle' ? 'lifecycle' : 'adhoc'
       };
       this.$lodash.each(this.filters.selected, (v, k) => {
         if (v.length > 0) {
@@ -473,7 +473,7 @@ export default {
         }
       });
       axios.get(`${process.env.VUE_APP_API_URL}stage/list`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.config.initialLoading = false;
         if (response && response.data) {
@@ -486,23 +486,23 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch stage, Please try again later!',
+          text: 'Unable to fetch stage, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    triggerUpdate() {
+    triggerUpdate () {
       this.getStages();
     },
-    resetFilters() {
+    resetFilters () {
       this.filters.selected = JSON.parse(JSON.stringify(this.filters.main));
       this.getStages();
     },
-    getAvatar(c) {
+    getAvatar (c) {
       const avt = `${c.first_name.charAt(0)}${c.last_name.charAt(0)}`;
       return avt.toUpperCase();
     },
-    getRandomColor() {
+    getRandomColor () {
       const colors = [
         'pink',
         'purple',
@@ -515,11 +515,11 @@ export default {
         'lime',
         'deep-orange',
         'brown',
-        'blue',
+        'blue'
       ];
       return colors[Math.floor(Math.random() * colors.length)];
     },
-    getFilters() {
+    getFilters () {
       axios.get(`${process.env.VUE_APP_API_URL}stage/filters`).then((response) => {
         if (response && response.data && response.data.queryset_filters_options) {
           this.config.initialLoadingFilters = false;
@@ -537,19 +537,19 @@ export default {
         }
       });
     },
-    update() {},
+    update () {}
   },
   watch: {
     pagination: {
-      handler() {
+      handler () {
         if (!this.config.initialLoading) {
           this.getStages();
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
-  mounted() {
+  mounted () {
     this.config.initialLoading = true;
     if (this.$route && this.$route.query && Object.keys(this.$route.query).length > 0) {
       const temp = {};
@@ -565,7 +565,7 @@ export default {
     }
     this.getFilters();
     this.getStages();
-  },
+  }
 };
 </script>
 

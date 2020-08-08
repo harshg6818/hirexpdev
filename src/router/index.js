@@ -77,6 +77,24 @@ const routes = [
           name: 'ViewLifecycle',
           component: () => import(/* webpackChunkName: "Stages" */ '@/components/stages/ViewStage')
         }]
+      }, {
+        path: 'exit',
+        component: SubShell,
+        children: [{
+          path: 'new',
+          name: 'NewExitTouchpoint',
+          component: () => import(/* webpackChunkName: "Exit" */ '@/components/exit/NewExitTouchpoint')
+        }, {
+          path: 'edit/:stageId',
+          component: () =>
+            import(/* webpackChunkName: "Exit" */ '@/components/exit/NewExitTouchpoint'),
+          name: 'EditExitTouchpoint'
+        }, {
+          path: 'view/:stageId',
+          component: () =>
+            import(/* webpackChunkName: "Exit" */ '@/components/exit/ViewStage'),
+          name: 'ViewExitTouchpoint'
+        }]
       }
     ]
   }

@@ -53,16 +53,16 @@ export default {
 
   components: {
     anonymousMessage,
-    anonymousSnapshot,
+    anonymousSnapshot
   },
 
-  data() {
+  data () {
     return {
-      activeAnonymousView: 'snapshot',
+      activeAnonymousView: 'snapshot'
     };
   },
 
-  beforeMount() {
+  beforeMount () {
     if (this.activeAnonymousView === 'message') {
       this.loadAnonymousUsersList();
     }
@@ -72,18 +72,18 @@ export default {
   },
 
   watch: {
-    activeAnonymousView() {
+    activeAnonymousView () {
       if (this.activeAnonymousView === 'message') {
         this.loadAnonymousUsersList();
       }
       if (this.activeAnonymousView === 'snapshot') {
         this.loadAnonymousSnapshot();
       }
-    },
+    }
   },
 
   methods: {
-    loadAnonymousSnapshot() {
+    loadAnonymousSnapshot () {
       const that = this;
       setTimeout(() => {
         if (that.$refs && that.$refs.anonymousSnapshot) {
@@ -91,15 +91,15 @@ export default {
         }
       }, 100);
     },
-    loadAnonymousUsersList() {
+    loadAnonymousUsersList () {
       const that = this;
       setTimeout(() => {
         if (that.$refs && that.$refs.anonymousMessage) {
           that.$refs.anonymousMessage.getAnonymousAnalysis();
         }
       }, 100);
-    },
-  },
+    }
+  }
 };
 </script>
 
