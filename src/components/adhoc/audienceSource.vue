@@ -301,29 +301,29 @@
 </template>
 
 <script>
-import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { mapState } from 'vuex';
-import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import axios from 'axios';
+// import VueContentLoading from 'vue-content-loading';
 import PapaParse from 'papaparse';
 
 export default {
   name: 'NewQuestion',
-  components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSlider,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VPagination,
-    VCheckbox,
-    VueContentLoading,
-  },
-  data() {
+  // components: {
+  //   VAlert,
+  //   VMenu,
+  //   VTextarea,
+  //   VSlider,
+  //   VSelect,
+  //   Container,
+  //   Draggable,
+  //   VChip,
+  //   VPagination,
+  //   VCheckbox,
+  //   VueContentLoading,
+  // },
+  data () {
     return {
       items: [
         { title: 'location' },
@@ -346,19 +346,19 @@ export default {
         { title: 'hr_manager' },
         { title: 'high_potential_emp' },
         { title: 'site' },
-        { title: 'custom_field' },
+        { title: 'custom_field' }
       ],
       filters: {
         default: {},
         selected: {},
-        main: {},
+        main: {}
       },
       open: false,
       table: {
         searchString: '',
         totalStage: 0,
         loading: true,
-        stage: [],
+        stage: []
       },
       config: {
         filter: false,
@@ -366,41 +366,41 @@ export default {
         initialLoading: true,
         initialLoadingFilters: true,
         refreshing: false,
-        uploadStarted: false,
+        uploadStarted: false
       },
       pagination: {
         rowsPerPage: 5,
         page: 1,
-        length: 1,
+        length: 1
       },
       rawCSV: [],
       rawCSVName: '',
       row: {
         value: [],
-        selected: 0,
+        selected: 0
       },
       mapHeadings: {},
       customFields: [],
       headings: [],
       audienceSource: null,
       csvUploadStep: 1,
-      dialog3: false,
+      dialog3: false
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    getFieldsLabel(field) {
+    getFieldsLabel (field) {
       const c = field.replace(/_/g, ' ');
       return c;
     },
-    getMapHeadings() {
+    getMapHeadings () {
       return this.mapHeadings;
     },
-    addCustomField(i) {
+    addCustomField (i) {
       if (i.title !== 'custom_field') {
         const temp = {
           [i.title]: {
@@ -408,12 +408,12 @@ export default {
             required: false,
             backend: i.title,
             index: -1,
-            custom: true,
-          },
+            custom: true
+          }
         };
         this.mapHeadings = {
           ...this.mapHeadings,
-          ...temp,
+          ...temp
         };
       } else {
         const cname = this.customFields.length + 1;
@@ -422,26 +422,26 @@ export default {
           required: false,
           backend: `Custom Field ${cname}`,
           index: -1,
-          custom: true,
+          custom: true
         };
         this.customFields.push(t);
       }
     },
-    updateIndexCustomField(h) {
+    updateIndexCustomField (h) {
       this.$lodash.each(this.rawCSV[0], (val, key) => {
         if (val === this.customFields[h].name) {
           this.customFields[h].index = key;
         }
       });
     },
-    onClickDeleteCustom(item) {
+    onClickDeleteCustom (item) {
       delete this.mapHeadings[item.backend];
       this.$forceUpdate();
     },
-    onClickDeleteCustomFields(idx) {
+    onClickDeleteCustomFields (idx) {
       this.customFields.splice(idx, 1);
     },
-    selectAudienceSource(source) {
+    selectAudienceSource (source) {
       this.audienceSource = source;
       this.$nextTick(() => {
         if (source !== 'csv') {
@@ -463,36 +463,36 @@ export default {
         }
       });
     },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    reset() {
+    reset () {
       document.getElementById('candidateUploader').value = '';
       this.rawCSV = [];
     },
-    openFilePicker(type) {
+    openFilePicker (type) {
       this.$refs[type].click();
     },
-    filesChange(fileList) {
+    filesChange (fileList) {
       if (!fileList.length) return;
       // this.isSaving = true;
       // this.isInitial = false;
       const that = this;
       if (fileList[0]) {
         PapaParse.parse(fileList[0], {
-          complete(results) {
+          complete (results) {
             if (results.data) {
               that.rawCSVName = fileList[0].name;
               that.rawCSV = results.data;
               that.mapFields();
               that.$parent.$refs.audienceList.selectedAudience = {};
             }
-          },
+          }
         });
       }
     },
-    mapFields() {
+    mapFields () {
       setTimeout(() => {
         if (this.row.value.length > 0) {
           this.row.selected = this.rawCSV.indexOf(this.row.value);
@@ -507,32 +507,32 @@ export default {
             name: '',
             required: true,
             backend: 'First name',
-            index: -1,
+            index: -1
           },
           last_name: {
             name: '',
             required: true,
             backend: 'Last name',
-            index: -1,
+            index: -1
           },
           email: {
             name: '',
             required: false,
             backend: 'Email',
-            index: -1,
+            index: -1
           },
           phone: {
             name: '',
             required: false,
             backend: 'Phone number',
-            index: -1,
+            index: -1
           },
           gender: {
             name: '',
             required: false,
             backend: 'Gender',
-            index: -1,
-          },
+            index: -1
+          }
         };
         this.$lodash.each(firstRow, (v, k) => {
           if (this.mapHeadings[v.trim()]) {
@@ -540,20 +540,20 @@ export default {
             this.mapHeadings[v.trim()].index = k;
           }
         });
-        // this.getOnboardingPlans(); 
+        // this.getOnboardingPlans();
         // this.getProjects();
         this.e1 = 3;
         document.getElementById('candidateUploader').value = '';
       }, 200);
     },
-    updateIndex(obj) {
+    updateIndex (obj) {
       setTimeout(() => {
         /* eslint-disable no-param-reassign */
         obj.index = this.row.value.indexOf(obj.name);
         /* eslint-enable no-param-reassign */
       }, 100);
     },
-    continueUploading() {
+    continueUploading () {
       let mappingCompleted = true;
       this.$lodash.each(this.mapHeadings, (h) => {
         if (!this.rawCSV[1][h.index]) {
@@ -566,11 +566,11 @@ export default {
         this.startUploading();
       }
     },
-    startUploading() {
-      if (this.$parent
-        && this.$parent.$refs
-        && this.$parent.$refs.audienceList
-        && this.$parent.$refs.audienceList) {
+    startUploading () {
+      if (this.$parent &&
+        this.$parent.$refs &&
+        this.$parent.$refs.audienceList &&
+        this.$parent.$refs.audienceList) {
         this.$parent.$refs.audienceList.config.initialLoading = true;
       }
       let validationFlag = false;
@@ -588,7 +588,7 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'You have to select the mandatory fields!',
+          text: 'You have to select the mandatory fields!'
         });
       } else {
         const formattedData = [];
@@ -602,11 +602,11 @@ export default {
                 let temp = {};
                 this.$lodash.each(this.customFields, (val) => {
                   const t = {
-                    [val.backend]: this.rawCSV[1][val.index],
+                    [val.backend]: this.rawCSV[1][val.index]
                   };
                   temp = {
                     ...temp,
-                    ...t,
+                    ...t
                   };
                 });
                 newEntry.custom_field = temp;
@@ -618,10 +618,10 @@ export default {
             formattedData[formattedData.length - 1].index = formattedData.length;
           }
         });
-        if (this.$parent
-            && this.$parent.$refs
-            && this.$parent.$refs.audienceList
-            && this.$parent.$refs.audienceList) {
+        if (this.$parent &&
+            this.$parent.$refs &&
+            this.$parent.$refs.audienceList &&
+            this.$parent.$refs.audienceList) {
           this.$parent.$refs.audienceList.config.initialLoading = false;
           // this.$parent.$refs.audienceList.table.headers = this.rawCSV[this.row.selected];
           this.$parent.$refs.audienceList.table.audience = formattedData;
@@ -680,7 +680,7 @@ export default {
         // });
       }
     },
-    closeModal() {
+    closeModal () {
       if (this.$parent) {
         this.$parent.audienceSource = this.audienceSource;
       }
@@ -689,14 +689,14 @@ export default {
       // }
       this.open = false;
       this.audienceSource = null;
-    },
+    }
   },
   watch: {
   },
-  created() {
+  created () {
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 

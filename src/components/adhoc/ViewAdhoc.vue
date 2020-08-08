@@ -207,9 +207,9 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import { ContentLoader } from 'vue-content-loader';
+// import { ContentLoader } from 'vue-content-loader';
 import axios from 'axios';
-import { VChip, VMenu, VCheckbox, VAvatar, VTooltip } from 'vuetify';
+// import { VChip, VMenu, VCheckbox, VAvatar, VTooltip } from 'vuetify';
 import VDateRange from 'vuetify-daterange-picker';
 import dayjs from 'dayjs';
 import 'vuetify-daterange-picker/dist/vuetify-daterange-picker.css';
@@ -232,24 +232,24 @@ Vue.use(VDateRange);
 export default {
   name: 'dashboard',
   components: {
-    ContentLoader,
-    VChip,
-    VMenu,
-    VAvatar,
-    VTooltip,
-    VCheckbox,
+    // ContentLoader,
+    // VChip,
+    // VMenu,
+    // VAvatar,
+    // VTooltip,
+    // VCheckbox,
     OverviewReport,
     QuestionsReport,
     RecipientsReport,
     Followup,
-    distributionsReport,
+    distributionsReport
     // QuestionAnalysis,
     // CampaignOverview,
     // CampaignAnalysis,
     // DailyResponseReport,
     // ResponseBreakdown,
   },
-  data() {
+  data () {
     return {
       downloadResponseLoader: false,
       scheduleEndDate: dayjs().format('YYYY-MM-DD'),
@@ -258,14 +258,14 @@ export default {
       stageReportsCount: {
         overview_count: 0,
         questions_count: 0,
-        recipients_count: 0,
+        recipients_count: 0
       },
       pagination: {
-        rowsPerPage: 10,
+        rowsPerPage: 10
       },
       chatCompleted: '',
       menu: {
-        date: false,
+        date: false
       },
       dateRangeOptions: {
         startDate: undefined,
@@ -276,12 +276,12 @@ export default {
         dateRange: {
           // startDate: dayjs().format('DD/MM'),
           // endDate: dayjs().format('DD/MM'),
-        },
+        }
       },
       filters: {
         default: {},
         selected: {},
-        main: {},
+        main: {}
       },
       config: {
         initialLoading: true,
@@ -291,7 +291,7 @@ export default {
           {
             title: 'Overview',
             value: 'overview',
-            icon: 'fas fa-chart-bar',
+            icon: 'fas fa-chart-bar'
           // }, {
           //   title: 'Questions',
           //   value: 'questions',
@@ -299,19 +299,19 @@ export default {
           }, {
             title: 'Recipients',
             value: 'recipients',
-            icon: 'fas fa-users',
+            icon: 'fas fa-users'
           }, {
             title: 'Chat survey settings',
             value: 'followups',
-            icon: 'fas fa-bullhorn',
-          },
-        ],
+            icon: 'fas fa-bullhorn'
+          }
+        ]
       },
-      stage: {},
+      stage: {}
     };
   },
   computed: {
-    formattedRange() {
+    formattedRange () {
       let time = '';
       if (!this.dateRangeOptions.startDate && !this.dateRangeOptions.endDate) {
         time = 'All Time';
@@ -321,30 +321,30 @@ export default {
       return time;
     },
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    goBack() {
+    goBack () {
       this.$router.push({
-        path: '/ad-hoc',
+        path: '/ad-hoc'
       });
     },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    getLogoUrl(pet) {
+    getLogoUrl (pet) {
       const images = require.context('@/assets/logo', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    createGroup() {
+    createGroup () {
 
     },
-    editCampaign(s) {
+    editCampaign (s) {
       this.$router.push(`/ad-hoc/edit/${s.stage_id}`);
     },
-    getColor(status) {
+    getColor (status) {
       let color = 'grey';
       if (status === 'draft') {
         color = 'grey';
@@ -357,7 +357,7 @@ export default {
       }
       return color;
     },
-    campaignCategories(category) {
+    campaignCategories (category) {
       let campaignCateogry = 'Employee engagement';
       if (category === 'employee_engagement') {
         campaignCateogry = 'Employee engagement';
@@ -370,10 +370,10 @@ export default {
       }
       return campaignCateogry;
     },
-    formattedDate(date) {
+    formattedDate (date) {
       return dayjs(date).format('DD MMM YYYY');
     },
-    changeTab() {
+    changeTab () {
       setTimeout(() => {
         if (this.config.activeTab === 'tab-overview') {
           this.$nextTick(() => {
@@ -401,9 +401,10 @@ export default {
         }
       }, 100);
     },
-    getStage(id) {
+    getStage (id) {
+      // eslint-disable-next-line no-unused-vars
       const queryParams = {
-          sections: 'stage_id,group_id,summary,interactions,recipients,distributions,schedule_end_at',
+        sections: 'stage_id,group_id,summary,interactions,recipients,distributions,schedule_end_at'
       };
       axios.get(`${process.env.VUE_APP_ADHOC_API_URL}stage/detail?stage_id=${id}`).then((response) => {
         this.config.initialLoading = false;
@@ -446,17 +447,17 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch stage details, Please try again later!',
+          text: 'Unable to fetch stage details, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    saveCampaign(id) {
+    saveCampaign (id) {
       if (id) {
         axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/create`, {
           stage_id: id,
           summary: {
-            schedule_end_at: this.scheduleEndDate.concat(' 23:59'),
+            schedule_end_at: this.scheduleEndDate.concat(' 23:59')
           }
         }).then((response) => {
           if (response && response.data) {
@@ -466,13 +467,13 @@ export default {
               this.$store.dispatch('updateSnackbar', {
                 color: 'success',
                 show: true,
-                text: 'Campaign updated successfully!',
+                text: 'Campaign updated successfully!'
               });
             } else {
               this.$store.dispatch('updateSnackbar', {
                 color: 'error',
                 show: true,
-                text: 'Unable to save campaign, Please try again later!',
+                text: 'Unable to save campaign, Please try again later!'
               });
             }
             // this.templates = response.data.data;
@@ -481,13 +482,13 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to draft campaign, Please try again later!',
+            text: 'Unable to draft campaign, Please try again later!'
           });
           throw new Error(response);
         });
       }
     },
-    getFilters() {
+    getFilters () {
       axios.get(`${process.env.VUE_APP_ADHOC_API_URL}company/${this.user.company}/dashboard_filters`).then((response) => {
         if (response && response.data && response.data.queryset_filters_options) {
           this.config.initialLoadingFilters = false;
@@ -504,7 +505,7 @@ export default {
         }
       });
     },
-    downloadResponse() {
+    downloadResponse () {
       this.downloadResponseLoader = true;
       axios.post(`${process.env.VUE_APP_ADHOC_API_URL}reports/${this.$route.params.stageId}/download_responses?response_type=sync`).then((response) => {
         if (response && response.status === 200) {
@@ -512,7 +513,7 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'success',
             show: true,
-            text: 'Response downloaded successfully',
+            text: 'Response downloaded successfully'
           });
           this.downloadResponseLoader = false;
         }
@@ -520,14 +521,14 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to download response , Please try again later!',
+          text: 'Unable to download response , Please try again later!'
         });
         throw new Error(response);
       });
-    },
+    }
   },
   watch: {
-    $route() {
+    $route () {
       if (this.$route.query && this.$route.query.activeTab) {
         this.config.activeTab = `tab-${this.$route.query.activeTab}`;
         if (this.$route.params && this.$route.params.stageId) {
@@ -536,18 +537,18 @@ export default {
       } else if (this.$route.params.stageId) {
         this.getStage(this.$route.params.stageId);
       }
-    },
+    }
   },
-  beforeMount() {
+  beforeMount () {
     if (this.$route.query && this.$route.query.activeTab) {
       this.config.activeTab = `tab-${this.$route.query.activeTab}`;
-       if (this.$route.params && this.$route.params.stageId) {
+      if (this.$route.params && this.$route.params.stageId) {
         this.getStage(this.$route.params.stageId);
       }
     } else if (this.$route.params.stageId) {
       this.getStage(this.$route.params.stageId);
     }
-  },
+  }
 };
 </script>
 

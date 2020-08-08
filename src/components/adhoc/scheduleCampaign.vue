@@ -113,7 +113,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import axios from 'axios';
+// import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -121,13 +121,13 @@ dayjs.extend(relativeTime);
 
 export default {
   name: 'confirm',
-  components: {
-    dayjs,
-  },
-  data() {
+  // components: {
+  //   dayjs,
+  // },
+  data () {
     return {
       dialogs: {
-        scheduleCampaign: false,
+        scheduleCampaign: false
       },
       schedule: null,
       triggerSchedule: false,
@@ -138,24 +138,24 @@ export default {
       menu: {
         date: false,
         start_time: false,
-        end_time: false,
-      },
+        end_time: false
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
+      user: state => state.user
     }),
-    formattedDate() {
+    formattedDate () {
       return dayjs(this.triggerDate).format('DD MMM YYYY');
-    },
+    }
   },
   methods: {
     allowedStep: m => m % 5 === 0,
-    round(date, duration, method) {
+    round (date, duration, method) {
       return dayjs(Math[method]((+date) / (+duration)) * (+duration));
     },
-    confirm() {
+    confirm () {
       this.$validator.validateAll().then((res) => {
         if (res) {
           // if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent &&
@@ -174,22 +174,22 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Please fill schedule date and time!',
+            text: 'Please fill schedule date and time!'
           });
         }
       });
     },
-    updateSchedule(time) {
+    updateSchedule (time) {
       this.schedule = time;
     },
-    proceed() {
+    proceed () {
       if (this.triggerDate && this.triggerTime) {
         this.triggerSchedule = true;
       }
-    },
+    }
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 

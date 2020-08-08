@@ -12,7 +12,7 @@
           <h2>
             Test Campaign
           </h2>
-          
+
           <v-layout mx-0 mt-2 row wrap style="height:250px">
             <div class="pa-5" v-if="!testSentFlag" style="width:100%">
               <h3 class="mb-3">
@@ -134,7 +134,6 @@
                 </v-layout>
               </span>
 
-
               <span v-if="!distributionsEnabled.email && distributionsEnabled.sms">
                   <v-layout>
                   <v-flex xs5>
@@ -220,7 +219,7 @@
               Send another Test
             </v-btn>
           </v-flex>
-          
+
           <v-flex text-xs-right xs6 class="ml-4">
             <v-btn class="red--text" @click.stop="closeModal()"
             style="left:-10px;position:relative;">
@@ -233,110 +232,110 @@
 </template>
 
 <script>
-import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VTooltip } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VTooltip } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { mapState } from 'vuex';
 import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import VueContentLoading from 'vue-content-loading';
 
 export default {
   name: 'NewQuestion',
-  components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSlider,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VPagination,
-    VCheckbox,
-    VTooltip,
-    VueContentLoading,
-  },
-  data() {
+  // components: {
+  //   VAlert,
+  //   VMenu,
+  //   VTextarea,
+  //   VSlider,
+  //   VSelect,
+  //   Container,
+  //   Draggable,
+  //   VChip,
+  //   VPagination,
+  //   VCheckbox,
+  //   VTooltip,
+  //   VueContentLoading
+  // },
+  data () {
     return {
-        testRecipient: {},
-        distributions: {},
-        distributionsEnabled: {},
-        dialogs: {
-          testCampaign: false,
-        },
-        testSentFlag: false,
-        group_id: null,
+      testRecipient: {},
+      distributions: {},
+      distributionsEnabled: {},
+      dialogs: {
+        testCampaign: false
+      },
+      testSentFlag: false,
+      group_id: null
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    resetTest() {
+    resetTest () {
       this.testSentFlag = false;
       this.testRecipient = {};
     },
-    closeModal() {
+    closeModal () {
       this.dialogs.testCampaign = false;
       this.testSentFlag = false;
       this.testRecipient = {};
     },
-    validateCampaign() {
+    validateCampaign () {
       const temp = {
         email: this.testRecipient.email,
         phone: this.testRecipient.phone,
         first_name: this.testRecipient.first_name,
         last_name: this.testRecipient.last_name,
         stage_id: this.stage_id,
-        group_id: this.group_id,
+        group_id: this.group_id
       };
       this.$validator.validateAll().then((res) => {
         if (res) {
-        axios.post(`${process.env.VUE_APP_ADHOC_API_URL}session/validate_test`, temp).then((response) => {
-          if (response && response.data) {
-            if (response.data) {
+          axios.post(`${process.env.VUE_APP_ADHOC_API_URL}session/validate_test`, temp).then((response) => {
+            if (response && response.data) {
+              if (response.data) {
               // this.$store.dispatch('updateSnackbar', {
               //   color: 'success',
               //   show: true,
               //   text: 'Test campaign sent successfully!',
               // });
-              this.testCampaign();
-              //this.dialogs.testCampaign=false;
-            } else {
-              this.$store.dispatch('updateSnackbar', {
-                color: 'error',
-                show: true,
-                text: 'Unable to send test, Please try again later!',
-              });
-            }
+                this.testCampaign();
+              // this.dialogs.testCampaign=false;
+              } else {
+                this.$store.dispatch('updateSnackbar', {
+                  color: 'error',
+                  show: true,
+                  text: 'Unable to send test, Please try again later!'
+                });
+              }
             // this.templates = response.data.data;
-          }
-        }, (response) => {
-          this.$store.dispatch('updateSnackbar', {
-            color: 'error',
-            show: true,
-            text: 'Unable to send test, Please try again later!',
+            }
+          }, (response) => {
+            this.$store.dispatch('updateSnackbar', {
+              color: 'error',
+              show: true,
+              text: 'Unable to send test, Please try again later!'
+            });
+            throw new Error(response);
           });
-          throw new Error(response);
-        });
         } else {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Fill all the mandatory fields!',
+            text: 'Fill all the mandatory fields!'
           });
         }
       });
     },
-    testCampaign() {
+    testCampaign () {
       const temp = {
         first_name: this.testRecipient.first_name,
         last_name: this.testRecipient.last_name,
         email: this.testRecipient.email,
         phone: this.testRecipient.phone,
         stage_id: this.stage_id,
-        group_id: this.group_id,
+        group_id: this.group_id
       };
       axios.post(`${process.env.VUE_APP_ADHOC_API_URL}session/trigger_test`, temp).then((response) => {
         if (response && response.data) {
@@ -344,7 +343,7 @@ export default {
             this.$store.dispatch('updateSnackbar', {
               color: 'success',
               show: true,
-              text: 'Test sent successfully!',
+              text: 'Test sent successfully!'
             });
             this.testSentFlag = true;
             // this.dialogs.testCampaign=false;
@@ -352,7 +351,7 @@ export default {
             this.$store.dispatch('updateSnackbar', {
               color: 'error',
               show: true,
-              text: 'Unable to send test, Please try again later!',
+              text: 'Unable to send test, Please try again later!'
             });
           }
           // this.templates = response.data.data;
@@ -361,13 +360,13 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to send test, Please try again later!',
+          text: 'Unable to send test, Please try again later!'
         });
         throw new Error(response);
       });
-    },
+    }
   },
-  created() {
+  created () {
     if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent &&
         this.$parent.$parent.$parent.$parent &&
         this.$parent.$parent.$parent.$parent.newCampaign) {
@@ -376,8 +375,8 @@ export default {
       this.stage_id = this.$parent.$parent.$parent.$parent.newCampaign.stage_id;
     }
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 

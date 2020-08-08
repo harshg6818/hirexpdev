@@ -85,7 +85,6 @@
                   <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
                   <h2 class="headline">Welcome {{user.company_name}}!</h2>
                   <p class="subheading grey--text">You haven’t created any surveys yet. Create your first survey!</p>
-                  
                 </v-flex>
               </v-layout>
             </v-card-title>
@@ -246,7 +245,6 @@
                         {{t.title}}
                       </p>
 
-                      
                     <!--</v-flex>-->
 
                   </v-layout>
@@ -256,7 +254,7 @@
                   </span>
                 </v-flex>
                 <v-flex xs1 class="stages-analysis analysis" style="text-align:center;">
-                     <!-- <v-icon small :color="getColor(t.status)" style="font-size:12px">
+                    <!-- <v-icon small :color="getColor(t.status)" style="font-size:12px">
                         fas fa-circle
                       </v-icon> -->
                       <!-- &nbsp;
@@ -330,8 +328,8 @@
                         </v-btn>
                         <v-list>
                           <v-list-tile
-                            v-if="item.title !== 'Archived' || (item.title === 'Archived' && (t.status === 'active' || t.status === 'completed'))"
                             v-for="(item, index) in config.actions"
+                            v-if="item.title !== 'Archived' || (item.title === 'Archived' && (t.status === 'active' || t.status === 'completed'))"
                             :key="index"
                             @click="item.action(t)"
                             :class="item.dialog === 'edit' && t.status !== 'draft'
@@ -383,7 +381,6 @@
       <!--<v-layout row wrap v-show="table.totalItems > 0" v-if="$route.path === '/ad-hoc'">-->
     </v-layout>
 
-
     <!--<EmployeesList ref="EmployeesList" />-->
   </div>
 </template>
@@ -394,42 +391,42 @@ import { ContentLoader } from 'vue-content-loader';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {
-  VCheckbox,
-  VTooltip,
-  VAlert,
-  VPagination,
-  VChip,
-} from 'vuetify';
+// import {
+//   VCheckbox,
+//   VTooltip,
+//   VAlert,
+//   VPagination,
+//   VChip
+// } from 'vuetify';
 // import EmployeesList from '../analytics/EmployeesList';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 dayjs.extend(relativeTime);
 
 export default {
   name: 'stage',
   components: {
-    ContentLoader,
-    VCheckbox,
-    VTooltip,
-    VAlert,
-    VPagination,
-    VChip,
-    dayjs,
+    ContentLoader
+    // VCheckbox,
+    // VTooltip,
+    // VAlert,
+    // VPagination,
+    // VChip,
+    // dayjs
     // EmployeesList,
   },
-  data() {
+  data () {
     return {
       dropDown: false,
       filters: {
         default: {},
         selected: {},
-        main: {},
+        main: {}
       },
       pagination: {
         rowsPerPage: 10,
         page: 1,
-        length: 1,
+        length: 1
       },
       activeStatus: null,
       stages_count: {
@@ -437,7 +434,7 @@ export default {
         draft: 0,
         completed: 0,
         closed: 0,
-        all: 0,
+        all: 0
       },
       allSelected: false,
       selectedCampaigns: {},
@@ -446,7 +443,7 @@ export default {
         totalCount: 0,
         totalItems: 0,
         loading: true,
-        stage: [],
+        stage: []
       },
       config: {
         filter: false,
@@ -454,50 +451,50 @@ export default {
         panel: [true, true, true],
         initialLoading: true,
         initialLoadingFilters: true,
-        tabs: [ 
+        tabs: [
           {
             title: 'All',
             value: 'all',
-            count: 0,
+            count: 0
           }, {
             title: 'Active',
             value: 'active',
-            count: 0,
+            count: 0
           }, {
             title: 'Draft',
             value: 'draft',
-            count: 0,
+            count: 0
           }, {
             title: 'Completed',
             value: 'completed',
-            count: 0,
+            count: 0
           }, {
             title: 'Archived',
             value: 'archived',
-            count: 0,
-          },
+            count: 0
+          }
         ],
         actions: [
           {
             title: 'View Analysis ',
             icon: 'fas fa-chart-bar',
             dialog: 'view',
-            action: this.viewStage,
+            action: this.viewStage
           }, {
             title: 'Completed',
             icon: 'fas fa-play',
             dialog: 'completed',
-            action: this.completeStage,
+            action: this.completeStage
           }, {
             title: 'Resume',
             icon: 'fas fa-play',
             dialog: 'edit',
-            action: this.editStage,
+            action: this.editStage
           }, {
             title: 'Delete',
             icon: 'fas fa-trash',
             dialog: 'deleteStage',
-            action: this.deleteStage,
+            action: this.deleteStage
           // }, {
           //   title: 'Duplicate',
           //   icon: 'fas fa-copy',
@@ -511,53 +508,53 @@ export default {
             title: 'Archive',
             icon: 'fas fa-window-close',
             dialog: 'archive',
-            action: this.closeStage,
+            action: this.closeStage
           }, {
             title: 'Restore',
             icon: 'fas fa-window-close',
             dialog: 'restore',
-            action: this.restoreStage,
-          },
+            action: this.restoreStage
+          }
         ],
         bulkActions: [
           {
             title: 'Delete',
             icon: 'fas fa-trash',
-            action: this.deleteStages,
+            action: this.deleteStages
           }, {
             title: 'Close',
             icon: 'fas fa-window-close',
-            action: this.closeStages,
-          },
+            action: this.closeStages
+          }
         ],
         toolbarActions: [{
           title: 'Employee Touchpoints',
           icon: 'fas fa-sync',
           link: '',
-          condition: false,
+          condition: false
         }, {
           title: 'Support',
           icon: 'fas fa-life-ring',
           link: '/support-center',
-          condition: true,
+          condition: true
         }, {
           title: 'Settings',
           icon: 'fas fa-cog',
           link: '/settings',
-          condition: true,
+          condition: true
         }, {
           title: 'Logout',
           icon: 'fas fa-power-off',
-          condition: true,
-        }],
-      },
+          condition: true
+        }]
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
+      user: state => state.user
     }),
-    checkForFilters() {
+    checkForFilters () {
       let applied = false;
       this.$lodash.each(this.filters.selected, (v) => {
         if (v.length > 0) {
@@ -566,7 +563,7 @@ export default {
       });
       return applied;
     },
-    selectedCampaignsCount() {
+    selectedCampaignsCount () {
       let count = 0;
       this.$lodash.each(this.selectedCampaigns, (c, i) => {
         if (c) {
@@ -574,10 +571,10 @@ export default {
         }
       });
       return count;
-    },
+    }
   },
   methods: {
-    getColor(status) {
+    getColor (status) {
       let color = 'grey';
       if (status === 'draft') {
         color = 'grey';
@@ -590,7 +587,7 @@ export default {
       }
       return color;
     },
-    getColor1(status) {
+    getColor1 (status) {
       let color = 'grey';
       if (status === 'draft') {
         color = 'grey';
@@ -603,11 +600,11 @@ export default {
       }
       return color;
     },
-    getTabStyle() {
+    getTabStyle () {
       let style = 'border:2px solid;border-radius:.25rem;border-color:rgb(243, 241, 241)';
       if (status === 'draft') {
         style = 'border:2px solid;border-radius:.25rem;border-color:grey';
-        color = 'grey';
+        // color = 'grey';
       } else if (status === 'active') {
         style = 'border:2px solid;border-radius:.25rem;border-color:#4caf50';
       } else if (status === 'completed') {
@@ -617,34 +614,34 @@ export default {
       }
       return style;
     },
-    toggleAll(ev) {
+    toggleAll (ev) {
       if (!ev) {
         this.selectedCampaigns = {};
         this.allSelected = false;
       } else {
         this.selectedCampaigns = {};
         this.$lodash.each(this.table.stage, stage => {
-          let newCampaign = {
-            [stage.id]: stage,
+          const newCampaign = {
+            [stage.id]: stage
           };
           this.selectedCampaigns = {
             ...this.selectedCampaigns,
-            ...newCampaign,
+            ...newCampaign
           };
         });
         this.allSelected = true;
       }
     },
-    updateSelected(stage, ev) {
+    updateSelected (stage, ev) {
       let temp = JSON.parse(JSON.stringify(this.selectedCampaigns));
       if (ev && !temp[stage.id]) {
         const newStage = {
-          [stage.id]: stage,
-        }
+          [stage.id]: stage
+        };
         temp = {
           ...temp,
-          ...newStage,
-        }
+          ...newStage
+        };
       } else if (!ev && this.selectedCampaigns[stage.id]) {
         delete temp[stage.id];
         this.allSelected = false;
@@ -652,7 +649,7 @@ export default {
       this.selectedCampaigns = temp;
       // this.$store.dispatch('updateSelectedCandidatesWithData', temp);
     },
-    getFilterCount(status) {
+    getFilterCount (status) {
       let statusCount = 0;
       if (status) {
         this.$lodash.each(this.filters.default.status, v => {
@@ -667,7 +664,7 @@ export default {
       }
       return statusCount;
     },
-    takeAction(item) {
+    takeAction (item) {
       if (item.link) {
         this.$router.push(item.link);
       } else {
@@ -686,7 +683,7 @@ export default {
         }
       }
     },
-    logout() {
+    logout () {
       axios.post(`${process.env.VUE_APP_ADHOC_API_URL}logout`).then((response) => {
         if (response && response.data.status === 200) {
           this.$store.dispatch('deleteSession');
@@ -695,7 +692,7 @@ export default {
           this.$notify({
             group: 'foo',
             title: 'Error while logging out!',
-            type: 'warn',
+            type: 'warn'
           });
           this.$store.dispatch('deleteSession');
           this.$router.push('/login');
@@ -705,24 +702,24 @@ export default {
         this.$router.push('/login');
       });
     },
-    editStage(s) {
+    editStage (s) {
       this.$router.push(`${this.$route.path}/edit/${s.id}`);
     },
-    deleteStage(s) {
+    deleteStage (s) {
       axios.delete(`${process.env.VUE_APP_ADHOC_API_URL}stage/delete?stage_id=${s.id}`).then((response) => {
         if (response) {
           if (response.status === 204) {
             this.$store.dispatch('updateSnackbar', {
               color: 'success',
               show: true,
-              text: 'Campaign deleted successfully!',
+              text: 'Campaign deleted successfully!'
             });
             this.getStages();
           } else {
             this.$store.dispatch('updateSnackbar', {
               color: 'error',
               show: true,
-              text: 'Unable to delete campaign, Please try again later!',
+              text: 'Unable to delete campaign, Please try again later!'
             });
           }
         }
@@ -730,12 +727,12 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to delete campaign, Please try again later!',
+          text: 'Unable to delete campaign, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    duplicateStage(s) {
+    duplicateStage (s) {
       const newStageData = JSON.parse(JSON.stringify(s));
       newStageData.status = 'draft';
       delete newStageData.id;
@@ -748,14 +745,14 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'success',
             show: true,
-            text: 'Campaign duplicated successfully!',
+            text: 'Campaign duplicated successfully!'
           });
           this.getStages();
         } else {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to duplicate campaign, Please try again later!',
+            text: 'Unable to duplicate campaign, Please try again later!'
           });
         }
       }, (response) => {
@@ -763,16 +760,16 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to duplicate campaign, Please try again later!',
+          text: 'Unable to duplicate campaign, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    closeStage(s) {
+    closeStage (s) {
       axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/create`, {
-        'stage_id': s.id ? s.id : undefined,
-        'summary' : {
-          'status': 'archived',
+        stage_id: s.id ? s.id : undefined,
+        summary: {
+          status: 'archived'
         }
       }).then((response) => {
         // this.config.savingStage = false;
@@ -780,14 +777,14 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'success',
             show: true,
-            text: 'Campaign closed successfully!',
+            text: 'Campaign closed successfully!'
           });
           this.getStages();
         } else {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to close campaign, Please try again later!',
+            text: 'Unable to close campaign, Please try again later!'
           });
         }
       }, (response) => {
@@ -795,16 +792,16 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to close campaign, Please try again later!',
+          text: 'Unable to close campaign, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    completeStage(s) {
+    completeStage (s) {
       axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/create`, {
-        'stage_id': s.id ? s.id : undefined,
-        'summary' : {
-          'status': 'completed',
+        stage_id: s.id ? s.id : undefined,
+        summary: {
+          status: 'completed'
         }
       }).then((response) => {
         // this.config.savingStage = false;
@@ -812,14 +809,14 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'success',
             show: true,
-            text: 'Campaign completed successfully!',
+            text: 'Campaign completed successfully!'
           });
           this.getStages();
         } else {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to complete campaign, Please try again later!',
+            text: 'Unable to complete campaign, Please try again later!'
           });
         }
       }, (response) => {
@@ -827,16 +824,16 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to complete campaign, Please try again later!',
+          text: 'Unable to complete campaign, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    restoreStage(s) {
+    restoreStage (s) {
       axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/create`, {
-        'stage_id': s.id ? s.id : undefined,
-        'summary' : {
-          'status': 'active',
+        stage_id: s.id ? s.id : undefined,
+        summary: {
+          status: 'active'
         }
       }).then((response) => {
         // this.config.savingStage = false;
@@ -844,14 +841,14 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'success',
             show: true,
-            text: 'Campaign active successfully!',
+            text: 'Campaign active successfully!'
           });
           this.getStages();
         } else {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to active campaign, Please try again later!',
+            text: 'Unable to active campaign, Please try again later!'
           });
         }
       }, (response) => {
@@ -859,12 +856,12 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to active campaign, Please try again later!',
+          text: 'Unable to active campaign, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    closeStages() {
+    closeStages () {
       // axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/create`, {
       //   'stage_id': s.id ? s.id : undefined,
       //   'summary' : {
@@ -896,7 +893,7 @@ export default {
       //   throw new Error(response);
       // });
     },
-    deleteStages() {
+    deleteStages () {
       // axios.delete(`${process.env.VUE_APP_ADHOC_API_URL}stage/delete?stage_id=${s.id}`).then((response) => {
       //   if (response) {
       //     if (response.status === 204) {
@@ -923,10 +920,10 @@ export default {
       //   throw new Error(response);
       // });
     },
-    triggerTimeAuto(s) {
+    triggerTimeAuto (s) {
       const final = {
         timeIn: '',
-        timeRef: s.triggerTimeReference.replace('_', ' '),
+        timeRef: s.triggerTimeReference.replace('_', ' ')
       };
       if (s.triggerTimeIn === '-') {
         final.timeIn = 'before';
@@ -952,15 +949,15 @@ export default {
     //     this.$refs[type].stage = data;
     //   }
     // },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    getLogoUrl(pet) {
+    getLogoUrl (pet) {
       const images = require.context('@/assets/logo', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    search(string) {
+    search (string) {
       clearTimeout(this.timeout);
       // Make a new timeout set to go off in 800ms
       this.timeout = setTimeout(() => {
@@ -968,10 +965,10 @@ export default {
         this.getStages(string);
       }, 500);
     },
-    viewStage(s) {
+    viewStage (s) {
       this.$router.push(`${this.$route.path}/view/${s.id}`);
     },
-    getName(key) {
+    getName (key) {
       let name;
       switch (key) {
         case 'createdBy__email':
@@ -991,7 +988,7 @@ export default {
       }
       return name;
     },
-    getStages(searchString, status) {
+    getStages (searchString, status) {
       if (status && status !== 'all') {
         this.activeStatus = status;
       } else if (status === 'all') {
@@ -1005,7 +1002,7 @@ export default {
         raw_search_string: searchString,
         // stageType__in: this.$route.path === '/lifecycle' ? 'lifecycle' : 'adhoc',
         // stageType__in: 'adhoc',
-        status__in: this.activeStatus ? this.activeStatus : undefined,
+        status__in: this.activeStatus ? this.activeStatus : undefined
       };
       this.$lodash.each(this.filters.selected, (v, k) => {
         if (v.length > 0) {
@@ -1013,21 +1010,21 @@ export default {
         }
       });
       axios.get(`${process.env.VUE_APP_ADHOC_API_URL}stage/list`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.config.initialLoading = false;
         if (response && response.data && response.data.data) {
           this.stages_count = response.data.data.count;
-          this.stages_count.all = response.data.data.count && response.data.data.count.total ? response.data.data.count.total: 0;
+          this.stages_count.all = response.data.data.count && response.data.data.count.total ? response.data.data.count.total : 0;
           this.table.stage = response.data.data.stages;
-          this.table.totalCount = response.data.data.count && response.data.data.count.total ? response.data.data.count.total: 0;
+          this.table.totalCount = response.data.data.count && response.data.data.count.total ? response.data.data.count.total : 0;
           this.table.totalItems = response.data.data.total;
           this.pagination.length = Math.ceil(this.table.totalItems / this.pagination.rowsPerPage);
         } else {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to fetch campaigns, Please try again later!',
+            text: 'Unable to fetch campaigns, Please try again later!'
           });
           throw new Error(response);
         }
@@ -1036,23 +1033,23 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch campaigns, Please try again later!',
+          text: 'Unable to fetch campaigns, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    triggerUpdate() {
+    triggerUpdate () {
       this.getStages();
     },
-    resetFilters() {
+    resetFilters () {
       this.filters.selected = JSON.parse(JSON.stringify(this.filters.main));
       this.getStages();
     },
-    getAvatar(c) {
+    getAvatar (c) {
       const avt = `${c.first_name.charAt(0)}${c.last_name.charAt(0)}`;
       return avt.toUpperCase();
     },
-    getRandomColor() {
+    getRandomColor () {
       const colors = [
         'pink',
         'purple',
@@ -1065,11 +1062,11 @@ export default {
         'lime',
         'deep-orange',
         'brown',
-        'blue',
+        'blue'
       ];
       return colors[Math.floor(Math.random() * colors.length)];
     },
-    getFilters() {
+    getFilters () {
       axios.get(`${process.env.VUE_APP_ADHOC_API_URL}stage/filters`).then((response) => {
         if (response && response.data && response.data.queryset_filters_options) {
           this.config.initialLoadingFilters = false;
@@ -1087,7 +1084,7 @@ export default {
         }
       });
     },
-    update() {},
+    update () {}
   },
   watch: {
     // pagination: {
@@ -1099,7 +1096,7 @@ export default {
     //   deep: true,
     // },
   },
-  mounted() {
+  mounted () {
     this.config.initialLoading = true;
     if (this.$route && this.$route.query && Object.keys(this.$route.query).length > 0) {
       const temp = {};
@@ -1115,7 +1112,7 @@ export default {
     }
     this.getFilters();
     this.getStages();
-  },
+  }
 };
 </script>
 

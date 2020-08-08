@@ -11,7 +11,7 @@
               <h2> Please configure the invitations you want to send to your audience via {{distMedium.name}}. </h2>
             </v-flex>
             <v-flex xs1 text-xs-right>
-              <v-icon color="red" class="close-button" @click.stop="closeModal()"> fa fa-times 
+              <v-icon color="red" class="close-button" @click.stop="closeModal()"> fa fa-times
               </v-icon>
             </v-flex>
           </v-layout>-->
@@ -113,7 +113,7 @@
 
             <v-flex class="template-editor">
               <v-card style="border-color:#f3f1f1;height:100%;overflow-y:auto">
-                <div v-for="(group, gi) in newTemplate.fields"
+                <div v-for="(group, gi) in newTemplate.fields" :key="gi"
                 class="template-section"
                 :class="gi < newTemplate.fields.length - 1 ? 'b-bottom' : ''">
                   <v-layout xs12>
@@ -122,7 +122,7 @@
                     </v-flex>
                   </v-layout>
 
-                  <v-layout v-for="(field, fi) in group.data">
+                  <v-layout v-for="(field, fi) in group.data" :key="fi">
                     <v-flex xs12 v-if="field.type === 'textfield'">
                       <h4 class="pt-0 pb-3 template-field-label">
                         {{field.label}}
@@ -154,7 +154,7 @@
                             item-text="name"
                             item-value="value"
                             outline
-                            flat 
+                            flat
                             single-line
                             placeholder="Variables"
                             class="template-custom-field"
@@ -200,7 +200,7 @@
 
           <v-layout class="" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'sms'">
             <v-flex xs7></v-flex>
-            
+
             <v-flex xs4>
               <span> Select Template </span>
               <v-select
@@ -226,7 +226,7 @@
             <v-flex xs1></v-flex>
             <v-flex xs10 class="">
               <v-card style="border-color:#f3f1f1;height:100%;overflow-y:auto">
-                <div v-for="(group, gi) in newTemplate.fields"
+                <div v-for="(group, gi) in newTemplate.fields" :key="gi"
                 class="template-section"
                 :class="gi < newTemplate.fields.length - 1 ? 'b-bottom' : ''">
                   <v-layout xs12>
@@ -235,7 +235,7 @@
                     </v-flex>
                   </v-layout>
 
-                  <v-layout v-for="(field, fi) in group.data" style="height:calc(100% - 60px)">
+                  <v-layout v-for="(field, fi) in group.data" style="height:calc(100% - 60px)" :key="fi">
                     <v-flex xs12 v-if="field.type === 'textfield'">
                       <!-- <h4 class="pt-0 pb-3 template-field-label">
                         {{field.label}}
@@ -267,7 +267,7 @@
                             item-text="name"
                             item-value="value"
                             outline
-                            flat 
+                            flat
                             single-line
                             placeholder="Variables"
                             class="template-custom-field"
@@ -325,53 +325,54 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import Vue from 'vue';
+// import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { ContentLoader } from 'vue-content-loader';
 import { mapState } from 'vuex';
 import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import { Chrome, Material, Slider } from 'vue-color';
-import colorpicker from './colorpicker.vue';
+// import VueContentLoading from 'vue-content-loading';
+// import CKEditor from '@ckeditor/ckeditor5-vue';
+// import { Chrome, Material, Slider } from 'vue-color';
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import colorpicker from './colorpicker.vue';
+
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 
-Vue.use( CKEditor );
+// Vue.use(CKEditor);
 
 // CKEditor.replace('ck-editor');
 
 export default {
   name: 'NewQuestion',
   components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSlider,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VPagination,
-    VCheckbox,
-    VueContentLoading,
-    ContentLoader,
-    Chrome,
-    Material,
-    Slider,
-    colorpicker,
+    // VAlert,
+    // VMenu,
+    // VTextarea,
+    // VSlider,
+    // VSelect,
+    // Container,
+    // Draggable,
+    // VChip,
+    // VPagination,
+    // VCheckbox,
+    // VueContentLoading,
+    ContentLoader
+    // Chrome,
+    // Material,
+    // Slider,
+    // colorpicker
   },
-  data() {
+  data () {
     return {
       distMedium: null,
       dialogs: {
-        configuration: false,
+        configuration: false
       },
       config: {
         activeIndex: 0,
-        activeSubjectIndex: 0,
+        activeSubjectIndex: 0
       },
       templates: [],
       selected: [],
@@ -380,7 +381,8 @@ export default {
       html_content: '',
       tempContent: '',
       colorPickerMode: 'hexa',
-      editor: ClassicEditor,
+      // editor: ClassicEditor,
+      editor: '',
       editorData: '',
       editorConfig: {
         toolbar: {
@@ -395,7 +397,7 @@ export default {
             'numberedList',
             'blockQuote',
             'insertTable',
-            'insertMedia',
+            'insertMedia'
           ]
         }
       }
@@ -404,21 +406,21 @@ export default {
   computed: {
     ...mapState({
       user: state => state.user,
-      selectedTemplatePreview: state => state.EmailTemplate,
-    }),
+      selectedTemplatePreview: state => state.EmailTemplate
+    })
   },
   methods: {
-    getTemplates() {
+    getTemplates () {
       // selectedTemplatePreview[0].content.template_id
-        this.templates = [];
-        axios.get(`${process.env.VUE_APP_ADHOC_API_URL}templates/list?medium=${this.distMedium.logo}`).then((response) => {
-          if (response && response.data) {
-            this.templates = response.data.data;
-            this.templates = this.templates.reverse();
-            if (this.templates && (this.distMedium.logo === 'sms' || (this.distMedium.logo === 'email' && !this.selectedTemplatePreview))) {
-              this.selectedTemplate = this.templates[0].id;
-              this.updateSelectedTemplate();
-            } else if (this.distMedium.logo === 'email') {
+      this.templates = [];
+      axios.get(`${process.env.VUE_APP_ADHOC_API_URL}templates/list?medium=${this.distMedium.logo}`).then((response) => {
+        if (response && response.data) {
+          this.templates = response.data.data;
+          this.templates = this.templates.reverse();
+          if (this.templates && (this.distMedium.logo === 'sms' || (this.distMedium.logo === 'email' && !this.selectedTemplatePreview))) {
+            this.selectedTemplate = this.templates[0].id;
+            this.updateSelectedTemplate();
+          } else if (this.distMedium.logo === 'email') {
             let index = '';
             this.$lodash.each(response.data.data, (group, gi) => {
               if (group.id === this.selectedTemplatePreview.content.template_id) {
@@ -428,7 +430,7 @@ export default {
             if (this.templates) {
               this.selectedTemplate = this.templates[index].id;
               // console.log(this.$parent.$parent.$parent.$parent.newCampaign.distribution);
-              
+
               this.updateSelectedTemplate();
             }
           } else {
@@ -436,35 +438,34 @@ export default {
               this.selectedTemplate = this.templates[0].id;
               this.updateSelectedTemplate();
             }
-          } 
-            
           }
-        }, (response) => {
-          this.$store.dispatch('updateSnackbar', {
-            color: 'error',
-            show: true,
-            text: 'Unable to fetch templates, Please try again later!',
-          });
-          throw new Error(response);
+        }
+      }, (response) => {
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Unable to fetch templates, Please try again later!'
         });
+        throw new Error(response);
+      });
     },
-    togglePicker() {
+    togglePicker () {
       this.$lodash.each(this.$refs.colorpicker, (v, k) => {
         if (v.displayPicker) {
-          v.hidePicker()
+          v.hidePicker();
         } else {
           // v.showPicker();
         }
       });
       // if (this.$refs && this.$refs.colorpicker) {
-			//   this.$refs.colorpicker.displayPicker ? this.$refs.colorpicker.hidePicker() : this.$refs.colorpicker.showPicker();
+      //   this.$refs.colorpicker.displayPicker ? this.$refs.colorpicker.hidePicker() : this.$refs.colorpicker.showPicker();
       // }
-		},
-    saveTemplate() {
+    },
+    saveTemplate () {
       if (this.$parent && this.$parent.dialogs) {
         this.$parent.dialogs.configuration = false;
       }
-      let templateFields = {};
+      const templateFields = {};
 
       this.$lodash.each(this.newTemplate.fields, (group, gi) => {
         this.$lodash.each(group.data, (field, fi) => {
@@ -475,20 +476,20 @@ export default {
       if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent &&
         this.$parent.$parent.$parent.$parent &&
         this.$parent.$parent.$parent.$parent.newCampaign) {
-        let distributionData = {
+        const distributionData = {
           type: this.distMedium.logo,
           content: {
             // value: this.html_content,
             // fields: this.newTemplate.fields,
             fields: templateFields,
             template_id: this.newTemplate.id,
-            template_path: this.newTemplate.template_path,
+            template_path: this.newTemplate.template_path
           },
           status: 'draft',
           recipient_filters: [],
           trigger_time: undefined,
           is_enabled: true,
-          is_reminder: false,
+          is_reminder: false
         };
         this.$store.dispatch('updateEmail', distributionData);
         let campaignDistributionData = [];
@@ -512,77 +513,77 @@ export default {
       this.html_content = '';
       this.tempContent = '';
       this.dialogs.configuration = false;
-      
+
       // this.createTemplate();
     },
-    updateSelectedTemplate() {
+    updateSelectedTemplate () {
       this.$lodash.each(this.templates, template => {
         if (template.id === this.selectedTemplate) {
           // console.log(template);
           this.selectedTemplate = template;
           this.newTemplate = JSON.parse(JSON.stringify(this.selectedTemplate));
           if (this.$parent.$parent.$parent.$parent.newCampaign.distribution) {
-              this.$lodash.each(this.$parent.$parent.$parent.$parent.newCampaign.distribution, (dis, di) => {
-                // console.log(dis.type);
-                if (dis.type === 'email') {
-                  console.log(dis.content.fields);
+            this.$lodash.each(this.$parent.$parent.$parent.$parent.newCampaign.distribution, (dis, di) => {
+              // console.log(dis.type);
+              if (dis.type === 'email') {
+                console.log(dis.content.fields);
 
-                  this.$lodash.each(this.newTemplate.fields, (nt, n) => {
-                    if (nt.group === 'subject') {
-                      nt.data[0].value = dis.content.fields.subject;
+                this.$lodash.each(this.newTemplate.fields, (nt, n) => {
+                  if (nt.group === 'subject') {
+                    nt.data[0].value = dis.content.fields.subject;
                     console.log(dis.content.fields.di);
-                    }
-                    if (nt.group === 'Body') {
-                      nt.data[0].value = dis.content.fields.body;
+                  }
+                  if (nt.group === 'Body') {
+                    nt.data[0].value = dis.content.fields.body;
                     console.log(dis.content.fields.di);
-                    }
-                    if (nt.group === 'button') {
-                      this.$lodash.each(nt.data, (da, d) => {
-                        if (da.key === "action_button_text") {
-                          da.value = dis.content.fields.action_button_text;
-                        }
-                        if (da.key === "action_button_background_color") {
-                          da.value = dis.content.fields.action_button_background_color;
-                        }
-                        if (da.key === "action_button_font_color") {
-                          da.value = dis.content.fields.action_button_font_color;
-                        }
-                        });
-                    }
-                    if (nt.group === 'Header') {
-                      this.$lodash.each(nt.data, (da, d) => {
-                        if (da.key === "header_text") {
-                          da.value = dis.content.fields.header_text;
-                        }
-                        if (da.key === "header_background_color") {
-                          da.value = dis.content.fields.header_background_color;
-                        }
-                        if (da.key === "header_font_color") {
-                          da.value = dis.content.fields.header_font_color;
-                        }
-                      });
-                    }
-                  });
-                  // this.newTemplate.fields = dis.content.fields;
-                }
+                  }
+                  if (nt.group === 'button') {
+                    this.$lodash.each(nt.data, (da, d) => {
+                      if (da.key === 'action_button_text') {
+                        da.value = dis.content.fields.action_button_text;
+                      }
+                      if (da.key === 'action_button_background_color') {
+                        da.value = dis.content.fields.action_button_background_color;
+                      }
+                      if (da.key === 'action_button_font_color') {
+                        da.value = dis.content.fields.action_button_font_color;
+                      }
+                    });
+                  }
+                  if (nt.group === 'Header') {
+                    this.$lodash.each(nt.data, (da, d) => {
+                      if (da.key === 'header_text') {
+                        da.value = dis.content.fields.header_text;
+                      }
+                      if (da.key === 'header_background_color') {
+                        da.value = dis.content.fields.header_background_color;
+                      }
+                      if (da.key === 'header_font_color') {
+                        da.value = dis.content.fields.header_font_color;
+                      }
+                    });
+                  }
+                });
+                // this.newTemplate.fields = dis.content.fields;
+              }
             });
-            }
+          }
           // this.html_content = this.selectedTemplate.html_content;
           this.tempContent = this.selectedTemplate.html_content;
           this.updatePreview();
         }
       });
     },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    onEditorFocus(event) {
+    onEditorFocus (event) {
       // if (pell.getSelection()) {
       //   this.config.activeIndex = pell.getSelection().index;
       // }
     },
-    onEditorChange(event) {
+    onEditorChange (event) {
       this.updatePreview();
       // if (q.pell.getSelection()) {
       //   this.config.activeIndex = q.pell.getSelection().index;
@@ -608,7 +609,7 @@ export default {
     //     quill.value.substring(0, this.config.activeSubjectIndex) + p +
     //     quill.value.substring(this.config.activeSubjectIndex);
     // },
-    updatePreview() {
+    updatePreview () {
       let temp = this.tempContent;
       console.log(this.newTemplate.fields);
       this.$lodash.each(this.newTemplate.fields, (group, gi) => {
@@ -622,45 +623,45 @@ export default {
       });
       this.html_content = temp;
     },
-    closeModal() {
+    closeModal () {
       if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent &&
         this.$parent.$parent.$parent.$parent &&
         this.$parent.$parent.$parent.$parent.newCampaign) {
-          let match = -1;
-          this.$lodash.each(this.$parent.$parent.$parent.$parent.newCampaign.distribution, (data, index) => {
-            if (data.type === this.distMedium.logo) {
-              match = index;
-            }
-          });
-          if (match <= -1) {
-            this.$parent.distribution[this.distMedium.logo] = false;
-          } else {
-            this.$parent.$parent.$parent.$parent.newCampaign.distributionsEnabled[this.distMedium.logo] = true;
+        let match = -1;
+        this.$lodash.each(this.$parent.$parent.$parent.$parent.newCampaign.distribution, (data, index) => {
+          if (data.type === this.distMedium.logo) {
+            match = index;
           }
+        });
+        if (match <= -1) {
+          this.$parent.distribution[this.distMedium.logo] = false;
+        } else {
+          this.$parent.$parent.$parent.$parent.newCampaign.distributionsEnabled[this.distMedium.logo] = true;
+        }
       }
       this.distMedium = null;
-      this.dialogs.configuration=false;
-    },
+      this.dialogs.configuration = false;
+    }
   },
-  created() {
+  created () {
     // if (this.distMedium && this.distMedium.name) {
     //   this.getTemplates();
     // }
   },
   watch: {
-    distMedium() {
+    distMedium () {
       if (this.distMedium && this.distMedium.logo) {
         this.getTemplates();
       }
-    },
+    }
   },
-  beforeMount() {
+  beforeMount () {
     // if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent &&
     //   this.$parent.$parent.$parent.$parent &&
     //   this.$parent.$parent.$parent.$parent.newCampaign) {
-        
+
     // }
-  },
+  }
 };
 </script>
 
@@ -797,7 +798,7 @@ export default {
       .v-input__append-inner {
         margin-top:0px!important;
       }
-    } 
+    }
   }
 }
 .difm-menu-split {

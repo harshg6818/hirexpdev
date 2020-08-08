@@ -14,25 +14,23 @@
               <v-card style="border:none" class="elevation-0 interaction-card">
 
                 <v-layout row wrap grey lighten-5 class="drag-container">
-                  
-
                   <v-flex xs12>
-                    <V-layout>
+                    <div class="d-flex flex-row">
                       <v-flex xs8>
                         <h3 class="ml-4 mt-3" v-if="selectedQuesType"> {{selectedQuesType[0].title}} </h3>
                       </v-flex>
                       <v-flex xs4 >
                         <v-btn @click.stop="dialogs.newQuestion=false;" style="float:right" icon flat><v-icon style="font-size:12px;">fas fa-times</v-icon></v-btn>
                       </v-flex>
-                    </V-layout>
-                    
+                    </div>
                     <div v-for="(q, qi) in selectedQuesType" :key="qi" v-if="qi === '0'">
-                      <v-layout class="draggable-item">
+                      <div class="draggable-item d-flex flex-row">
                         <v-flex class="ma-4 action-card"
                         text-xs-center sm12>
-                          <v-layout column class="title text-capitalize">
+                          <!-- <v-layout column class="title text-capitalize"> -->
+                          <div class="title text-capitalize d-flex flex-column">
                             {{q.title}}
-                          </v-layout>
+                          </div>
 
                           <v-card class="mb-1 elevation-0">
                             <!-- <v-layout row wrap v-if="q.type !== 'text'">
@@ -107,7 +105,6 @@
                                   <v-flex xs10 text-xs-center class="mb-3"
                                   v-for="(r, ri) in q.msg[0].scale" :key="ri">
                                     <v-layout>
-                                      
                                       <v-flex xs3>
                                         <v-btn class="emoji-btn"
                                           slot="activator"
@@ -147,9 +144,9 @@
                                           label="Amara's response"
                                         ></v-text-field>
                                       </v-flex>
-                                      
+
                                     </v-layout>
-                                    
+
                                   </v-flex>
                                 </v-layout>
 
@@ -312,10 +309,10 @@
                                           </v-layout> -->
                                         </v-flex>
                                       </v-layout>
-                                      
+
                                       </v-card>
                                     </v-flex>
-                                    
+
                                   </v-layout>
                                   <v-btn style="float:right" @click="addOption()">
                                     Add options
@@ -824,37 +821,37 @@
 </template>
 
 <script>
-import { VAlert, VMenu, VSwitch, VTooltip, VTextarea, VCheckbox, VSelect, VChip } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VSwitch, VTooltip, VTextarea, VCheckbox, VSelect, VChip } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { mapState } from 'vuex';
-import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import axios from 'axios';
+// import VueContentLoading from 'vue-content-loading';
 
 export default {
   name: 'NewQuestion',
-  components: {
-    VSwitch,
-    VCheckbox,
-    VAlert,
-    VMenu,
-    VTooltip,
-    VTextarea,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VueContentLoading,
-  },
-  data() {
+  // components: {
+  //   VSwitch,
+  //   VCheckbox,
+  //   VAlert,
+  //   VMenu,
+  //   VTooltip,
+  //   VTextarea,
+  //   VSelect,
+  //   Container,
+  //   Draggable,
+  //   VChip,
+  //   VueContentLoading
+  // },
+  data () {
     return {
       dialogs: {
         newQuestion: false,
         questionBank: false,
-        campaigns: false,
+        campaigns: false
       },
       selectedQuesType: null,
       config: {
-        initialLoading: false,
+        initialLoading: false
       },
       multipleOption: [],
       editFlag: false,
@@ -864,61 +861,61 @@ export default {
       dataQ: this.$parent.multipleChoice[0].msg[0].quickReplies,
       roleList: [{
         title: 'Strategy',
-        value: 'strategy',
+        value: 'strategy'
       }, {
         title: 'Onboarding',
-        value: 'onboarding',
+        value: 'onboarding'
       }, {
         title: 'Culture',
-        value: 'culture',
+        value: 'culture'
       }, {
         title: 'Goal-Setting',
-        value: 'goalSetting',
+        value: 'goalSetting'
       }, {
         title: 'Organizational Fit',
-        value: 'organizationalFit',
+        value: 'organizationalFit'
       }, {
         title: 'Meaningful Work',
-        value: 'meaningfulWork',
+        value: 'meaningfulWork'
       }, {
         title: 'Transparency',
-        value: 'transparency',
+        value: 'transparency'
       }, {
         title: 'Training',
-        value: 'training',
+        value: 'training'
       }, {
         title: 'Reward',
-        value: 'reward',
+        value: 'reward'
       }, {
         title: 'Workload',
-        value: 'workload',
+        value: 'workload'
       }, {
         title: 'Accomplishment',
-        value: 'accomplishment',
+        value: 'accomplishment'
       }, {
         title: 'Management Support',
-        value: 'managementSupport',
+        value: 'managementSupport'
       }, {
         title: 'Growth',
-        value: 'growth',
+        value: 'growth'
       }, {
         title: 'Recognition',
-        value: 'recognition',
+        value: 'recognition'
       }, {
         title: 'Engagement',
-        value: 'engagement',
+        value: 'engagement'
       }, {
         title: 'Peer Relationship',
-        value: 'peerRelationship',
+        value: 'peerRelationship'
       }, {
         title: 'Environment',
-        value: 'environment',
+        value: 'environment'
       }, {
         title: 'Autonomy',
-        value: 'autonomy',
+        value: 'autonomy'
       }, {
         title: 'Freedom',
-        value: 'freedom',
+        value: 'freedom'
       // }, {
       //   title: 'Customer Focus',
       //   value: 'customerFocus',
@@ -945,21 +942,21 @@ export default {
         title: '',
         description: '',
         questions: [],
-        type: '',
-      },
+        type: ''
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    deleteReply(index, qi, oi) {
+    deleteReply (index, qi, oi) {
       if (this.newSurvey.questions[index].msg[qi].quickReplies &&
       this.newSurvey.questions[index].msg[qi].quickReplies.length > 1) {
         this.newSurvey.questions[index].msg[qi].quickReplies.splice(oi, 1);
@@ -967,11 +964,11 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'info',
           show: true,
-          text: 'At least one reply is required!',
+          text: 'At least one reply is required!'
         });
       }
     },
-    addCard(index) {
+    addCard (index) {
       this.newSurvey.questions[index].msg.push({
         imgUrl: '',
         text: '',
@@ -979,20 +976,20 @@ export default {
         quickReplies: [
           {
             title: 'Yes',
-            postback: 'Good to know!',
+            postback: 'Good to know!'
           }, {
             title: 'No',
-            postback: 'That\'s sad',
-          },
-        ],
+            postback: 'That\'s sad'
+          }
+        ]
       });
     },
-    addReplies(index, qi, text) {
+    addReplies (index, qi, text) {
       this.selectedQuesType.msg[qi].quickReplies.push({
-        title: `${text} #${this.selectedQuesType.msg[qi].quickReplies.length + 1}`,
+        title: `${text} #${this.selectedQuesType.msg[qi].quickReplies.length + 1}`
       });
     },
-    validateDetails() {
+    validateDetails () {
       this.$validator.validateAll().then((res) => {
         if (res) {
           if (this.editFlag && (this.questionIndex || this.questionIndex === 0)) {
@@ -1004,23 +1001,23 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Fill all the mandatory fields!',
-          })
+            text: 'Fill all the mandatory fields!'
+          });
         }
       });
     },
-    addOption() {
+    addOption () {
       if (this.selectedQuesType[0] && this.selectedQuesType[0].msg[0].quickReplies.length < 10) {
         this.selectedQuesType[0].msg[0].quickReplies.push({
           placeholder: 'Enter Choice',
           text: '',
           // value: 0,
           followup: false,
-          postback: 'Thank you for responding',
+          postback: 'Thank you for responding'
         });
       }
     },
-    deleteOption(QN) {
+    deleteOption (QN) {
       const temp = [];
       this.$lodash.each(this.selectedQuesType[0].msg[0].quickReplies, (t, ti) => {
         if (QN !== ti) {
@@ -1029,7 +1026,7 @@ export default {
       });
       this.selectedQuesType[0].msg[0].quickReplies = temp;
     },
-    addQuestion() {
+    addQuestion () {
       delete this.selectedQuesType[0].msg[0].viewScore;
       delete this.selectedQuesType[0].msg[0].askpostback;
       delete this.selectedQuesType[0].viewPostback;
@@ -1045,7 +1042,7 @@ export default {
         this.dialogs.newQuestion = false;
       }
     },
-    updateQuestion() {
+    updateQuestion () {
       if (this.$parent && this.$parent.newSurvey) {
         this.$parent.$nextTick(() => {
           this.$parent.newSurvey.interactions[this.questionIndex] = JSON.parse(JSON.stringify(this.selectedQuesType['0']));
@@ -1057,10 +1054,10 @@ export default {
         });
       }
     },
-    update() {},
+    update () {}
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 
@@ -1233,7 +1230,7 @@ export default {
       .v-input__append-inner {
         margin-top:0px!important;
       }
-    } 
+    }
   }
 }
 .MultiChoiceQue {
@@ -1246,6 +1243,6 @@ export default {
     padding-left: 5px;
   }
   }
-  
+
 }
 </style>

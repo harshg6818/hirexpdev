@@ -9,7 +9,7 @@
         </v-flex>
       </v-layout>
 
-      <v-layout class="mb-3 b-top pt-2" v-for="(medium, mi) in distributionMediums" row wrap style="border-color: #f3f1f1">
+      <v-layout class="mb-3 b-top pt-2" v-for="(medium, mi) in distributionMediums" row wrap style="border-color: #f3f1f1" :key="mi">
         <v-flex xs1></v-flex>
         <v-flex xs2 class="mr-2" text-xs-center>
           <v-icon large color="#4c3e9d" class="audience-icon"> {{medium.icon}} </v-icon>
@@ -59,35 +59,35 @@
 </template>
 
 <script>
-import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VSwitch } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VSwitch } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { mapState } from 'vuex';
-import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
-import PapaParse from 'papaparse';
+// import axios from 'axios';
+// import VueContentLoading from 'vue-content-loading';
+// import PapaParse from 'papaparse';
 import distributionConfiguration from './distributionConfiguration';
 
 export default {
   name: 'distributionMediums',
   components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSlider,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VPagination,
-    VCheckbox,
-    VSwitch,
-    VueContentLoading,
-    distributionConfiguration,
+    // VAlert,
+    // VMenu,
+    // VTextarea,
+    // VSlider,
+    // VSelect,
+    // Container,
+    // Draggable,
+    // VChip,
+    // VPagination,
+    // VCheckbox,
+    // VSwitch,
+    // VueContentLoading,
+    distributionConfiguration
   },
-  data() {
+  data () {
     return {
       dialogs: {
-        configuration: false,
+        configuration: false
       },
       distribution: {},
       distributionMediums: [{
@@ -96,42 +96,42 @@ export default {
         icon: 'flaticon-006-email',
         comingSoon: false,
         disabled: false,
-        description: 'Create custom email with the campaign link to encourage participation and also track responses.',
+        description: 'Create custom email with the campaign link to encourage participation and also track responses.'
       }, {
         name: 'SMS',
         logo: 'sms',
         icon: 'flaticon-003-chat-1',
         comingSoon: false,
         disabled: false,
-        description: 'Select SMS as a mode to drive participation by sending campaign link with personalized message.',
+        description: 'Select SMS as a mode to drive participation by sending campaign link with personalized message.'
       }, {
         name: 'Whats App',
         logo: 'whatsapp',
         icon: 'fab fa-whatsapp',
         comingSoon: true,
         disabled: true,
-        description: 'Encourage your employees to take part in the campaign, send them the link on WhatsApp.',
+        description: 'Encourage your employees to take part in the campaign, send them the link on WhatsApp.'
       }, {
         name: 'Slack',
         logo: 'slack',
         icon: 'fab fa-slack-hash',
         comingSoon: true,
         disabled: true,
-        description: 'Select Slack as a channel to inform employees about the campaign and they can access it directly from Slack.',
-      }],
+        description: 'Select Slack as a channel to inform employees about the campaign and they can access it directly from Slack.'
+      }]
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    configure(medium) {
+    configure (medium) {
       if (this.distribution[medium.logo]) {
         this.dialogs.configuration = true;
         if (this.$refs.distributionConfiguration) {
@@ -143,9 +143,9 @@ export default {
         this.$parent.$parent.$parent.newCampaign.distribution[medium.logo] = false;
       }
       // this.$refs.distributionConfiguration.configureDistributionMedium(medium);
-    },
+    }
   },
-  created() {
+  created () {
     if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent && this.$parent.$parent.$parent.newCampaign) {
       const newCampaign = this.$parent.$parent.$parent.newCampaign;
       const dist = {};
@@ -155,8 +155,8 @@ export default {
       this.distribution = dist;
     }
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 

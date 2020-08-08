@@ -109,7 +109,6 @@
 
       </v-layout>
 
-
       <!-- Summary view outside Stepper -->
       <v-layout row wrap v-show="!unlockStepper">
         <!-- <v-layout row wrap class="firstStep" style="position:absolute;top:5vh;left:4vw;width:100%; overflow-y:auto; "> -->
@@ -189,7 +188,6 @@
           <v-flex xs3></v-flex>
         </v-layout>
       </v-layout>
-
 
       <!-- Stepper Tabs content -->
       <v-layout row wrap v-show="unlockStepper">
@@ -313,7 +311,6 @@
                             </div>
                           </div>
                         </v-layout>
-                        
 
                         <!--<h3 class="subheading pt-2 mb-2 pl-1">Emoji scale</h3>-->
                         <v-layout  class="row wrap mt-0">
@@ -389,7 +386,6 @@
                           </div>
                         </v-layout>
 
-
                         <!--<h3 class="subheading mt-3 pt-3 pl-1"> <strong> Draft Amara's statement </strong></h3>-->
                         <!--<h2 class="grey--text subheading b-bottom pl-1">Choose a question type to add new question</h2>-->
                       </div>
@@ -403,13 +399,14 @@
                         <span>Select question type or question to create survey.</span>
                       </v-card>
 
-                      <Container group-name="1"
+                      <!-- <Container group-name="1"
                         @drop="onDrop($event)"
                         :drag-end="onDragEnd"
                         :get-child-payload="getIPayload"
                         drag-handle-selector=".handle"
                       >
-                        <Draggable v-for="(q, qi) in newSurvey.interactions" :key="qi">
+                        <Draggable v-for="(q, qi) in newSurvey.interactions" :key="qi"> -->
+                          <draggable v-for="(q, qi) in newSurvey.interactions" :key="qi" group="people" @start="drag=true" @end="drag=false">
                           <v-card height="220" class="draggable-item text-xs-center pt-5 ma-5 elevation-0"
                             v-show="drag.startDragging && !drag.droppingNow &&
                             newSurvey.interactions.length === 0"
@@ -1134,8 +1131,9 @@
                               </v-card>
                             </v-flex>
                           </div>
-                        </Draggable>
-                      </Container>
+                        </draggable>
+                        <!-- </Draggable>
+                      </Container> -->
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -1179,7 +1177,7 @@
             <v-card-text>
               <h2> Select icons </h2>
               <v-layout row wrap>
-                <v-card class="ma-4" v-for="(icon, index) in icons">
+                <v-card class="ma-4" v-for="(icon, key) in icons" :key="key">
                   <v-icon large color="#4c3e9d" class="pa-4 cursor-pointer" @click="newCampaign.logo = icon.icon;config.iconEditable=false;">
                     {{icon.icon}}
                   </v-icon>
@@ -1196,7 +1194,6 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-
 
         <v-dialog v-model="startSurvey" persistent max-width="800px">
           <v-card>
@@ -1305,35 +1302,37 @@
 
                                 </v-flex>
                               </v-layout>
-                              <v-layout row wrap justify-center v-if="">
+                              <v-layout row wrap justify-center>
                                 <v-flex xs2 text-xs-center class="pb-2 pt-4"
-                                  v-for="(r, ri) in qi.scale" :key="ri" v-if="q.title !== 'Rating scale' && q.title !== 'Yes/No (Close Ended)' && q.title !== 'Input From User' && q.title !== 'Text'">
+                                  v-for="(r, ri) in qi.scale" :key="ri">
+                                  <div v-if="q.title !== 'Rating scale' && q.title !== 'Yes/No (Close Ended)' && q.title !== 'Input From User' && q.title !== 'Text'">
                                   <img disabled v-if="r.img && q.title == 'Emoji scale'" :src="getImgUrl(r.img)"
                                   class="emoji-container" /><br>
                                   <strong v-if="q.title == 'Number Scale'" class="headline grey--text" :class="e1 !== selectedTemplate.questions.length ? 'cursor-pointer' : ''"  @click="e1 !== selectedTemplate.questions.length ? e1 = `${l+2}`  : ''" style="padding:5px 12px; border:1px solid; border-radius:50%;">
                                     {{r.value}}<br>
                                   </strong>
                                   <span class="" v-if="q.title == 'Number Scale' || q.title == 'Emoji scale'">{{r.title}}</span>
-                                  
+                                  </div>
                                 </v-flex>
                                 <v-flex xs2 text-xs-center class="pb-2 pt-4"
-                                  v-for="(r, ri) in qi.scale" :key="ri" v-if="q.title == 'Rating scale' ">
-                                  <strong v-if="q.title == 'Rating scale'" class="headline grey--text" :class="e1 !== selectedTemplate.questions.length ? 'cursor-pointer' : ''"  @click="e1 !== selectedTemplate.questions.length ? e1 = `${l+2}`  : ''" style="padding:5px 12px; border:1px solid; border-radius:50%;">
-                                    {{r.value}}<br>
-                                  </strong>
-                                  <span class="" v-if="q.title == 'Rating scale'">{{r.title}}</span>
-                                  
+                                  v-for="(r, ri) in qi.scale" :key="ri">
+                                  <div v-if="q.title == 'Rating scale'">
+                                    <strong v-if="q.title == 'Rating scale'" class="headline grey--text" :class="e1 !== selectedTemplate.questions.length ? 'cursor-pointer' : ''"  @click="e1 !== selectedTemplate.questions.length ? e1 = `${l+2}`  : ''" style="padding:5px 12px; border:1px solid; border-radius:50%;">
+                                      {{r.value}}<br>
+                                    </strong>
+                                    <span class="" v-if="q.title == 'Rating scale'">{{r.title}}</span>
+                                  </div>
                                 </v-flex>
 
-
                                 <v-flex xs5 style="border:1px solid grey; cursor:pointer; border-radius:6px;" text-xs-center class="pb-2 mx-2 my-2 pt-2"
-                                  v-for="(r, ri) in qi.quickReplies" :key="ri" @click="e1 = `${l+2}`" v-if="q.title == 'Multiple choice question' ">
-                                  {{r.text}}
-                                  
+                                  v-for="(r, ri) in qi.quickReplies" :key="ri" @click="e1 = `${l+2}`">
+                                  <div v-if="q.title == 'Multiple choice question'">
+                                    {{r.text}}
+                                  </div>
                                 </v-flex>
                                 <v-btn color='primary' :disabled=" e1 == selectedTemplate.questions.length" @click="e1 = `${l+2}`" class="float:right" v-if="q.title == 'Yes/No (Close Ended)' || q.title == 'Yes/No'" outline>Yes</v-btn>
                                 <v-btn color='#602a5e' :disabled=" e1 == selectedTemplate.questions.length" @click="e1 = `${l+2}`" v-if="q.title == 'Yes/No (Close Ended)' || q.title == 'Yes/No'" outline>No</v-btn>
-                                
+
                                 <v-text-field
                                   v-if="q.title == 'Input From User' || q.title == 'Open-ended question'"
                                   maxlength="300"
@@ -1365,7 +1364,7 @@
 
                         </v-stepper-items>
                       </v-stepper>
-                          
+
                     </v-flex>
                   </v-layout>
                   <v-layout row wrap>
@@ -1410,8 +1409,10 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { Container, Draggable } from 'vue-smooth-dnd';
-import { ContentLoader } from 'vue-content-loader';
+// import { Container, Draggable } from 'vue-smooth-dnd';
+import draggable from 'vuedraggable';
+
+// import { ContentLoader } from 'vue-content-loader';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import axios from 'axios';
@@ -1426,61 +1427,62 @@ import confirmTrigger from './confirmTrigger';
 import scheduleCampaign from './scheduleCampaign';
 // import newAdhocSummary from './NewAdhocSummary';
 /* eslint-disable no-unused-vars */
-import {
-  VCheckbox,
-  VAlert,
-  VAvatar,
-  VAutocomplete,
-  VTooltip,
-  VTextarea,
-  VProgressLinear,
-  VSlider,
-} from 'vuetify';
+// import {
+//   VCheckbox,
+//   VAlert,
+//   VAvatar,
+//   VAutocomplete,
+//   VTooltip,
+//   VTextarea,
+//   VProgressLinear,
+//   VSlider
+// } from 'vuetify';
 
 dayjs.extend(relativeTime);
 /* eslint-disable no-unused-vars */
 
 export default {
-    name: 'uploadEmployees',
-    components: {
-      ContentLoader,
-      VCheckbox,
-      VAlert,
-      VAvatar,
-      VAutocomplete,
-      VTooltip,
-      VTextarea,
-      VProgressLinear,
-      VSlider,
-      Container,
-      Draggable,
-      newQuestion,
-      questionBank,
-      audienceSource,
-      audienceList,
-      campaigns,
-      distributionMediums,
-      preview,
-      confirmTrigger,
-      scheduleCampaign,
-      // newAdhocSummary,
-    },
-    data() {
-      return {
-        e1: 0,
-        allTemplateList: true,
-        selectedTemplate: {},
-        selectedEmail: '',
-        showTemplate: false,
-        startSurvey: false,
-        unlockStepper: false,
-        editableCampaignName: false,
-        editableCampaignObjective: '',
-        audienceSource: null,
-        campaignCategories: [{
-          text: 'Employee engagement',
-          value: 'employee_engagement',
-          disabled: false,
+  name: 'uploadEmployees',
+  components: {
+    // ContentLoader,
+    // VCheckbox,
+    // VAlert,
+    // VAvatar,
+    // VAutocomplete,
+    // VTooltip,
+    // VTextarea,
+    // VProgressLinear,
+    // VSlider,
+    // Container,
+    // Draggable,
+    draggable,
+    newQuestion,
+    questionBank,
+    audienceSource,
+    audienceList,
+    campaigns,
+    distributionMediums,
+    preview,
+    confirmTrigger,
+    scheduleCampaign
+    // newAdhocSummary,
+  },
+  data () {
+    return {
+      e1: 0,
+      allTemplateList: true,
+      selectedTemplate: {},
+      selectedEmail: '',
+      showTemplate: false,
+      startSurvey: false,
+      unlockStepper: false,
+      editableCampaignName: false,
+      editableCampaignObjective: '',
+      audienceSource: null,
+      campaignCategories: [{
+        text: 'Employee engagement',
+        value: 'employee_engagement',
+        disabled: false
         // }, {
         //   text: 'Candidate Engagement',
         //   value: 'candidate_engagement',
@@ -1497,203 +1499,203 @@ export default {
         //   text: 'Research',
         //   value: 'research',
         //   disabled: true,
-        },],
-        campaignList: [],
-        templateScale: [
-          {
-            title: 'Terrible',
-            img: 'crying',
-            value: '1',
-          }, {
-            title: 'Sad',
-            img: 'sad',
-            value: '2',
-          }, {
-            title: 'Okay',
-            img: 'shocked',
-            value: '3',
-          }, {
-            title: 'Good',
-            img: 'happy',
-            value: '4',
-          }, {
-            title: 'Great',
-            img: 'in-love',
-            value: '5',
-          },
-        ],
-        selectedQuesType: null,
-        newQuestion: {
-          title: '',
-          description: '',
-          questions: [],
-          type: '',
-        },
-        validate: {
-          step1: true,
-          step2: true,
-          step3: true,
-          step4: true,
-          step5: true,
-        },
-        config: {
-          editable: true,
-          iconEditable: false,
-          picPreview: null,
-          panel: [true, true, true, true],
-          searchSurvey: '',
-          activeStep: 1,
-          initialLoading: true,
-          loadingEmployees: false,
-          loadingSurveys: false,
-          loadingContinue: false,
-          loadingDraft: false,
-          savingStage: false,
-          initialLoadingFilters: true,
-          minDate: new Date().toISOString().substr(0, 10),
-          toolbarActions: [{
-            title: 'Employee Touchpoints',
-            icon: 'fas fa-sync',
-            link: '',
-            condition: false,
-          }, {
-            title: 'Support',
-            icon: 'fas fa-life-ring',
-            link: '/support-center',
-            condition: true,
-          }, {
-            title: 'Settings',
-            icon: 'fas fa-cog',
-            link: '/settings',
-            condition: true,
-          }, {
-            title: 'Logout',
-            icon: 'fas fa-power-off',
-            condition: true,
+      }],
+      campaignList: [],
+      templateScale: [
+        {
+          title: 'Terrible',
+          img: 'crying',
+          value: '1'
+        }, {
+          title: 'Sad',
+          img: 'sad',
+          value: '2'
+        }, {
+          title: 'Okay',
+          img: 'shocked',
+          value: '3'
+        }, {
+          title: 'Good',
+          img: 'happy',
+          value: '4'
+        }, {
+          title: 'Great',
+          img: 'in-love',
+          value: '5'
+        }
+      ],
+      selectedQuesType: null,
+      newQuestion: {
+        title: '',
+        description: '',
+        questions: [],
+        type: ''
+      },
+      validate: {
+        step1: true,
+        step2: true,
+        step3: true,
+        step4: true,
+        step5: true
+      },
+      config: {
+        editable: true,
+        iconEditable: false,
+        picPreview: null,
+        panel: [true, true, true, true],
+        searchSurvey: '',
+        activeStep: 1,
+        initialLoading: true,
+        loadingEmployees: false,
+        loadingSurveys: false,
+        loadingContinue: false,
+        loadingDraft: false,
+        savingStage: false,
+        initialLoadingFilters: true,
+        minDate: new Date().toISOString().substr(0, 10),
+        toolbarActions: [{
+          title: 'Employee Touchpoints',
+          icon: 'fas fa-sync',
+          link: '',
+          condition: false
+        }, {
+          title: 'Support',
+          icon: 'fas fa-life-ring',
+          link: '/support-center',
+          condition: true
+        }, {
+          title: 'Settings',
+          icon: 'fas fa-cog',
+          link: '/settings',
+          condition: true
+        }, {
+          title: 'Logout',
+          icon: 'fas fa-power-off',
+          condition: true
+        }],
+        activeTab: 'summary',
+        tabs: [{
+          title: 'About the campaign',
+          value: 'summary',
+          count: 0
+        }, {
+          title: 'Design campaign',
+          value: 'survey',
+          count: 1
+        }, {
+          title: 'Select audience',
+          value: 'audience',
+          count: 2
+        }, {
+          title: 'Select channel',
+          value: 'distribution',
+          count: 3
+        }, {
+          title: 'Launch',
+          value: 'preview',
+          count: 4
+        }],
+        emojiScale: {
+          delay: 2000,
+          title: 'Emoji scale',
+          description: 'Emojis bring a fun element in the chat, a respondent selects an emoji that best describes its state of mind',
+          type: 'scale',
+          viewPostback: false,
+          role: 'mood',
+          img: 'fas fa-smile',
+          msg: [{
+            text: '',
+            scaleType: 'emoji',
+            scale: [
+              {
+                title: 'Terrible',
+                img: 'crying',
+                value: 1,
+                postback: 'I am really sorry to hear that'
+              }, {
+                title: 'Sad',
+                img: 'sad',
+                value: 2,
+                postback: 'That\'s not good'
+              }, {
+                title: 'Okay',
+                img: 'shocked',
+                value: 3,
+                postback: 'I think we can improve'
+              }, {
+                title: 'Good',
+                img: 'happy',
+                value: 4,
+                postback: 'I am happy to know'
+              }, {
+                title: 'Great',
+                img: 'in-love',
+                value: 5,
+                postback: 'That\'s awesome!'
+              }
+            ]
           }],
-          activeTab: 'summary',
-          tabs: [{
-            title: 'About the campaign',
-            value: 'summary',
-            count: 0,
-          }, {
-            title: 'Design campaign',
-            value: 'survey',
-            count: 1,
-          }, {
-            title: 'Select audience',
-            value: 'audience',
-            count: 2,
-          }, {
-            title: 'Select channel',
-            value: 'distribution',
-            count: 3,
-          }, {
-            title: 'Launch',
-            value: 'preview',
-            count: 4,
-          }],
-          emojiScale: {
-            delay: 2000,
-            title: 'Emoji scale',
-            description: 'Emojis bring a fun element in the chat, a respondent selects an emoji that best describes its state of mind',
-            type: 'scale',
-            viewPostback: false,
-            role: 'mood',
-            img: 'fas fa-smile',
-            msg: [{
-              text: '',
-              scaleType: 'emoji',
-              scale: [
-                {
-                  title: 'Terrible',
-                  img: 'crying',
-                  value: 1,
-                  postback: 'I am really sorry to hear that',
-                }, {
-                  title: 'Sad',
-                  img: 'sad',
-                  value: 2,
-                  postback: 'That\'s not good',
-                }, {
-                  title: 'Okay',
-                  img: 'shocked',
-                  value: 3,
-                  postback: 'I think we can improve',
-                }, {
-                  title: 'Good',
-                  img: 'happy',
-                  value: 4,
-                  postback: 'I am happy to know',
-                }, {
-                  title: 'Great',
-                  img: 'in-love',
-                  value: 5,
-                  postback: 'That\'s awesome!',
-                },
-              ],
-            }],
-            response_required: true,
-            response: [],
-          },
-        },
-        roleList: [{
-          title: 'Strategy',
-          value: 'strategy',
-        }, {
-          title: 'Onboarding',
-          value: 'onboarding',
-        }, {
-          title: 'Culture',
-          value: 'culture',
-        }, {
-          title: 'Goal-Setting',
-          value: 'goalSetting',
-        }, {
-          title: 'Organizational Fit',
-          value: 'organizationalFit',
-        }, {
-          title: 'Meaningful Work',
-          value: 'meaningfulWork',
-        }, {
-          title: 'Transparency',
-          value: 'transparency',
-        }, {
-          title: 'Training',
-          value: 'training',
-        }, {
-          title: 'Reward',
-          value: 'reward',
-        }, {
-          title: 'Workload',
-          value: 'workload',
-        }, {
-          title: 'Accomplishment',
-          value: 'accomplishment',
-        }, {
-          title: 'Management Support',
-          value: 'managementSupport',
-        }, {
-          title: 'Growth',
-          value: 'growth',
-        }, {
-          title: 'Recognition',
-          value: 'recognition',
-        }, {
-          title: 'Engagement',
-          value: 'engagement',
-        }, {
-          title: 'Peer Relationship',
-          value: 'peerRelationship',
-        }, {
-          title: 'Environment',
-          value: 'environment',
-        }, {
-          title: 'Autonomy',
-          value: 'autonomy',
-        }, {
-          title: 'Freedom',
-          value: 'freedom',
+          response_required: true,
+          response: []
+        }
+      },
+      roleList: [{
+        title: 'Strategy',
+        value: 'strategy'
+      }, {
+        title: 'Onboarding',
+        value: 'onboarding'
+      }, {
+        title: 'Culture',
+        value: 'culture'
+      }, {
+        title: 'Goal-Setting',
+        value: 'goalSetting'
+      }, {
+        title: 'Organizational Fit',
+        value: 'organizationalFit'
+      }, {
+        title: 'Meaningful Work',
+        value: 'meaningfulWork'
+      }, {
+        title: 'Transparency',
+        value: 'transparency'
+      }, {
+        title: 'Training',
+        value: 'training'
+      }, {
+        title: 'Reward',
+        value: 'reward'
+      }, {
+        title: 'Workload',
+        value: 'workload'
+      }, {
+        title: 'Accomplishment',
+        value: 'accomplishment'
+      }, {
+        title: 'Management Support',
+        value: 'managementSupport'
+      }, {
+        title: 'Growth',
+        value: 'growth'
+      }, {
+        title: 'Recognition',
+        value: 'recognition'
+      }, {
+        title: 'Engagement',
+        value: 'engagement'
+      }, {
+        title: 'Peer Relationship',
+        value: 'peerRelationship'
+      }, {
+        title: 'Environment',
+        value: 'environment'
+      }, {
+        title: 'Autonomy',
+        value: 'autonomy'
+      }, {
+        title: 'Freedom',
+        value: 'freedom'
         // }, {
         //   title: 'Customer Focus',
         //   value: 'customerFocus',
@@ -1715,575 +1717,373 @@ export default {
         // }, {
         //   title: 'Engaging Leadership',
         //   value: 'engagingLeadership',
-        }],
-        filters: {
-            default: {},
-            main: {},
+      }],
+      filters: {
+        default: {},
+        main: {}
+      },
+      newCampaign: {
+        time: '',
+        status: 'live',
+        type: 'adhoc',
+        title: '',
+        // logo: 'fa fa-bullhorn',
+        category: 'employee_engagement',
+        description: '',
+        objectives: null,
+        // objectives: [{
+        //     done: false,
+        //     text: 'Objective 1',
+        //     editable: false,
+        // }, {
+        //     done: false,
+        //     text: '',
+        //     editable: false,
+        // }],
+        notifications: [],
+        audience: [],
+        survey: {
+          id: null,
+          title: 'No question set'
         },
-        newCampaign: {
-            time: '',
-            status: 'live',
-            type: 'adhoc',
-            title: '',
-            // logo: 'fa fa-bullhorn',
-            category: 'employee_engagement',
-            description: '',
-            objectives: null,
-            // objectives: [{
-            //     done: false,
-            //     text: 'Objective 1',
-            //     editable: false,
-            // }, {
-            //     done: false,
-            //     text: '',
-            //     editable: false,
-            // }],
-            notifications: [],
-            audience: [],
-            survey: {
-                id: null,
-                title: 'No question set',
-            },
-            totalAudienceCount: null,
-            distribution: [],
-            distributionsEnabled: {},
-            group_id: null,
-            trigger_time: null,
-            schedule_end_at: new Date().toISOString().substr(0, 10),
-            // schedule_end_atTime: new Date().toISOString().substr(11, 5),
-        },
-        icons: [{
+        totalAudienceCount: null,
+        distribution: [],
+        distributionsEnabled: {},
+        group_id: null,
+        trigger_time: null,
+        schedule_end_at: new Date().toISOString().substr(0, 10)
+        // schedule_end_atTime: new Date().toISOString().substr(11, 5),
+      },
+      icons: [{
         //   name: 'poll',
         //   icon: 'fas fa-poll',
         // }, {
         //   name: 'poll-h',
         //   icon: 'fas fa-poll-h',
         // }, {
-          name: 'horn',
-          icon: 'fa fa-bullhorn',
-        }, {
-          name: 'donate',
-          icon: 'fa fa-donate',
-        }, {
-          name: 'dollar',
-          icon: 'fa fa-dollar-sign',
-        }, {
-          name: 'comments',
-          icon: 'fa fa-comments',
+        name: 'horn',
+        icon: 'fa fa-bullhorn'
+      }, {
+        name: 'donate',
+        icon: 'fa fa-donate'
+      }, {
+        name: 'dollar',
+        icon: 'fa fa-dollar-sign'
+      }, {
+        name: 'comments',
+        icon: 'fa fa-comments'
         // }, {
         //   name: 'comments-dollar',
         //   icon: 'fas fa-comments-dollar',
+      }],
+      questionTypesD: [{
+        delay: 2000,
+        title: 'Rating scale',
+        description: 'A respondent selects a number from a given set to answer the question',
+        type: 'scale',
+        role: '',
+        img: 'fas fa-arrows-alt-h',
+        msg: [{
+          text: '',
+          scaleType: 'number',
+          scale: [
+            {
+              title: 'Terrible',
+              color: 'red',
+              value: 1,
+              postback: 'I am really sorry to hear that'
+            }, {
+              title: 'Sad',
+              color: 'deep-orange',
+              value: 2,
+              postback: 'That\'s not good'
+            }, {
+              title: 'Okay',
+              color: 'orange',
+              value: 3,
+              postback: 'I think we can improve'
+            }, {
+              title: 'Good',
+              color: 'light-green',
+              value: 4,
+              postback: 'That\'s good to know'
+            }, {
+              title: 'Great',
+              color: 'green',
+              value: 5,
+              postback: 'I am happy to know'
+            }
+          ]
         }],
-        questionTypesD: [{
-          delay: 2000,
-          title: 'Rating scale',
-          description: 'A respondent selects a number from a given set to answer the question',
-          type: 'scale',
-          role: '',
-          img: 'fas fa-arrows-alt-h',
-          msg: [{
-            text: '',
-            scaleType: 'number',
-            scale: [
-              {
-                title: 'Terrible',
-                color: 'red',
-                value: 1,
-                postback: 'I am really sorry to hear that',
-              }, {
-                title: 'Sad',
-                color: 'deep-orange',
-                value: 2,
-                postback: 'That\'s not good',
-              }, {
-                title: 'Okay',
-                color: 'orange',
-                value: 3,
-                postback: 'I think we can improve',
-              }, {
-                title: 'Good',
-                color: 'light-green',
-                value: 4,
-                postback: 'That\'s good to know',
-              }, {
-                title: 'Great',
-                color: 'green',
-                value: 5,
-                postback: 'I am happy to know',
-              },
-            ],
-          }],
-          response_required: true,
-          response: [],
+        response_required: true,
+        response: []
+      }, {
+        delay: 2000,
+        title: 'Yes/No',
+        description: 'Some questions are so direct that they can be answered by selecting either yes or no',
+        viewPostback: false,
+        type: 'closeEnded',
+        msg: [{
+          text: '',
+          quickReplies: [
+            {
+              title: 'Yes',
+              value: 5,
+              postback: 'Good to know!'
+            }, {
+              title: 'No',
+              value: 1,
+              postback: 'That\'s sad'
+            }
+          ]
+        }],
+        img: 'fas fa-reply-all',
+        response_required: true,
+        response: []
+      }],
+      welcome: [{
+        delay: 2000,
+        title: 'Welcome statement',
+        type: 'text',
+        img: 'fas fa-align-left',
+        msg: [{
+          text: ''
+        }],
+        response_required: false,
+        response: []
+      }],
+      multipleChoice: [{
+        delay: 2000,
+        title: 'Multiple choice question',
+        response_required: true,
+        description: 'Multiple choice questions are effective and efficient way to assess respondent\'s thought process',
+        type: 'multipleChoice',
+        img: 'fas fa-list-ol',
+        msg: [{
+          text: '',
+          viewScore: false,
+          askpostback: false,
+          quickReplies: [
+            {
+              placeholder: 'Enter Choice',
+              text: '',
+              followup: false,
+              // value: '0',
+              postback: 'Thank you for responding'
+            }, {
+              placeholder: 'Enter Choice',
+              text: '',
+              // value: '0',
+              followup: false,
+              postback: 'Thank you for responding'
+            },
+            {
+              placeholder: 'Enter Choice',
+              text: '',
+              // value: '0',
+              followup: false,
+              postback: 'Thank you for responding'
+            }, {
+              placeholder: 'Enter Choice',
+              text: '',
+              // value: '0',
+              followup: false,
+              postback: 'Thank you for responding'
+            }
+          ]
+        }],
+        // response_required: true,
+        response: []
+      }],
+      statements: [{
+        delay: 2000,
+        title: 'Filler statement by Amara',
+        type: 'text',
+        img: 'fas fa-align-left',
+        msg: [{
+          text: ''
+        }],
+        response_required: false,
+        response: []
+      }],
+      questionTypes: [{
+        delay: 2000,
+        title: 'Open-ended question',
+        description: 'Here the respondent uses the comment box to express feelings',
+        type: 'textInput',
+        img: 'fas fa-keyboard',
+        msg: [{
+          text: ''
+        }],
+        response_required: true,
+        response: []
+      }],
+      pagination: {
+        rowsPerPage: 10
+      },
+      table: {
+        loading: true,
+        team: [],
+        headers: [{
+          text: 'Member Details',
+          align: 'left',
+          sortable: false
         }, {
-          delay: 2000,
-          title: 'Yes/No',
-          description: 'Some questions are so direct that they can be answered by selecting either yes or no',
-          viewPostback: false,
-          type: 'closeEnded',
-          msg: [{
-            text: '',
-            quickReplies: [
-              {
-                title: 'Yes',
-                value: 5,
-                postback: 'Good to know!',
-              }, {
-                title: 'No',
-                value: 1,
-                postback: 'That\'s sad',
-              },
-            ],
-          }],
-          img: 'fas fa-reply-all',
-          response_required: true,
-          response: [],
+          text: 'Mood',
+          align: 'left',
+          sortable: false
         }],
-        welcome: [{
-          delay: 2000,
-          title: `Welcome statement`,
-          type: 'text',
-          img: 'fas fa-align-left',
-          msg: [{
-            text: '',
-          }],
-          response_required: false,
-          response: [],
+        notificationsHeaders: [{
+          text: 'Member Details',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Notifications',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Reports',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Actions',
+          align: 'left',
+          sortable: false
+        }]
+      },
+      list: {
+        employees: [],
+        survey: [],
+        timeDuration: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 18, 24, 32],
+        timeIn: [{
+          text: 'Before',
+          value: '-'
+        }, {
+          text: 'After',
+          value: '+'
         }],
-        multipleChoice: [{
-          delay: 2000,
-          title: 'Multiple choice question',
-          response_required: true,
-          description: `Multiple choice questions are effective and efficient way to assess respondent's thought process`,
-          type: 'multipleChoice',
-          img: 'fas fa-list-ol',
-          msg: [{
-            text: '',
-            viewScore: false,
-            askpostback: false,
-            quickReplies: [
-              {
-                placeholder: 'Enter Choice',
-                text: '',
-                followup: false,
-                // value: '0',
-                postback: 'Thank you for responding',
-              }, {
-                placeholder: 'Enter Choice',
-                text: '',
-                // value: '0',
-                followup: false,
-                postback: 'Thank you for responding',
-              },
-              {
-                placeholder: 'Enter Choice',
-                text: '',
-                // value: '0',
-                followup: false,
-                postback: 'Thank you for responding',
-              }, {
-                placeholder: 'Enter Choice',
-                text: '',
-                // value: '0',
-                followup: false,
-                postback: 'Thank you for responding',
-              },
-            ],
-          }],
-          response_required: true,
-          response: [],
+        timeRef: [{
+          text: 'Joining date',
+          value: 'joining_date'
+        }, {
+          text: 'Offer date',
+          value: 'offer_date'
         }],
-        statements: [{
-          delay: 2000,
-          title: `Filler statement by Amara`,
-          type: 'text',
-          img: 'fas fa-align-left',
-          msg: [{
-            text: '',
-          }],
-          response_required: false,
-          response: [],
-        }],
-        questionTypes: [{
-          delay: 2000,
-          title: 'Open-ended question',
-          description: 'Here the respondent uses the comment box to express feelings',
-          type: 'textInput',
-          img: 'fas fa-keyboard',
-          msg: [{
-            text: '',
-          }],
-          response_required: true,
-          response: [],
-        }],
-        pagination: {
-            rowsPerPage: 10,
-        },
-        table: {
-            loading: true,
-            team: [],
-            headers: [{
-                text: 'Member Details',
-                align: 'left',
-                sortable: false,
-            }, {
-                text: 'Mood',
-                align: 'left',
-                sortable: false,
-            }],
-            notificationsHeaders: [{
-                text: 'Member Details',
-                align: 'left',
-                sortable: false,
-            }, {
-                text: 'Notifications',
-                align: 'left',
-                sortable: false,
-            }, {
-                text: 'Reports',
-                align: 'left',
-                sortable: false,
-            }, {
-                text: 'Actions',
-                align: 'left',
-                sortable: false,
-            }],
-        },
-        list: {
-            employees: [],
-            survey: [],
-            timeDuration: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 18, 24, 32],
-            timeIn: [{
-                text: 'Before',
-                value: '-',
-            }, {
-                text: 'After',
-                value: '+',
-            }],
-            timeRef: [{
-                text: 'Joining date',
-                value: 'joining_date',
-            }, {
-                text: 'Offer date',
-                value: 'offer_date',
-            }],
-            timeUnit: [{
-                text: 'Days',
-                value: 'days',
-            }, {
-                text: 'Weeks',
-                value: 'weeks',
-            }, {
-                text: 'Months',
-                value: 'months',
-            }, {
-                text: 'Years',
-                value: 'years',
-            }],
-        },
+        timeUnit: [{
+          text: 'Days',
+          value: 'days'
+        }, {
+          text: 'Weeks',
+          value: 'weeks'
+        }, {
+          text: 'Months',
+          value: 'months'
+        }, {
+          text: 'Years',
+          value: 'years'
+        }]
+      },
 
-        //Step 2
-        newSurvey: {
-          title: '',
-          description: '',
-          interactions: [],
-          type: '',
-        },
-        drag: {
-          startDragging: false,
-          droppingNow: false,
-        },
-        questionSource: null,
-        dialogs: {
-          newQuestion: false,
-          question_bank: false,
-          campaign: false,
-          confirmTrigger: false,
-          scheduleCampaign: false,
-        },
-      };
+      // Step 2
+      newSurvey: {
+        title: '',
+        description: '',
+        interactions: [],
+        type: ''
+      },
+      drag: {
+        startDragging: false,
+        droppingNow: false
+      },
+      questionSource: null,
+      dialogs: {
+        newQuestion: false,
+        question_bank: false,
+        campaign: false,
+        confirmTrigger: false,
+        scheduleCampaign: false
+      }
+    };
+  },
+  computed: {
+    ...mapState({
+      selectedEmailTemp: state => state.EmailTemplate,
+      stagesOrder: state => state.stages,
+      user: state => state.user,
+      users (state) {
+        const adminUsers = state.companyUsersList;
+        // this.$lodash.remove((v) => {
+        //
+        // })
+        return adminUsers;
+      },
+      validatePreviousSteps (activeTab) {
+        let flag = true;
+        this.$lodash.each(this.config.tabs, (t, ti) => {
+          if (ti < activeTab) {
+            if (this.validate[`step${ti + 1}`]) {
+              flag = false;
+            }
+          }
+        });
+        return flag;
+      }
+    })
+  },
+  methods: {
+    ...mapActions(['getCompanyUsers']),
+    allowedStep: m => m % 5 === 0,
+    goBack () {
+      this.$router.push({
+        path: '/ad-hoc'
+      });
     },
-    computed: {
-      ...mapState({
-        selectedEmailTemp: state => state.EmailTemplate,
-        stagesOrder: state => state.stages,
-        user: state => state.user,
-        users(state) {
-            const adminUsers = state.companyUsersList;
-            // this.$lodash.remove((v) => {
-            //
-            // })
-            return adminUsers;
-        },
-        validatePreviousSteps(activeTab) {
-          let flag = true;
-          this.$lodash.each(this.config.tabs, (t, ti) => {
-            if (ti < activeTab) {
-              if (this.validate[`step${ti+1}`]) {
-                flag = false;
-              }
-            }
-          });
-          return flag;
-        },
-      }),
+    getTemplateList () {
+      axios.get(`${process.env.VUE_APP_ADHOC_API_URL}stage/templates`).then((response) => {
+        if (response && response.data) {
+          this.campaignList = response.data;
+          // this.newCampaign = stageData;
+        }
+      }, (response) => {
+        this.config.initialLoading = false;
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Unable to fetch stage, Please try again later!'
+        });
+        throw new Error(response);
+      });
     },
-    methods: {
-      ...mapActions(['getCompanyUsers']),
-      allowedStep: m => m % 5 === 0,
-      goBack() {
-        this.$router.push({
-            path: '/ad-hoc',
-        });
-      },
-      getTemplateList() {
-          axios.get(`${process.env.VUE_APP_ADHOC_API_URL}stage/templates`).then((response) => {
-              if (response && response.data) {
-                this.campaignList = response.data;
-                // this.newCampaign = stageData;
-              }
-          }, (response) => {
-              this.config.initialLoading = false;
-              this.$store.dispatch('updateSnackbar', {
-                  color: 'error',
-                  show: true,
-                  text: 'Unable to fetch stage, Please try again later!',
-              });
-              throw new Error(response);
-          });
-      },
-      startBlank() {
-        this.startSurvey = false;
-      },
-      BrowseTemplate() {
-        this.startSurvey = false;
-        this.showTemplate = true;
-        this.getTemplateList();
-      },
-      openTemplate(templateData) {
-        this.e1 = 1;
-        this.allTemplateList = false;
-        this.selectedTemplate = templateData;
-      },
-      discard() {
-        if (this.newCampaign.stage_id) {
-          // delete stage
-          axios.delete(`${process.env.VUE_APP_ADHOC_API_URL}stage/delete?stage_id=${this.newCampaign.stage_id}`).then((response) => {
-            if (response) {
-              if (response.status === 204) {
-                this.$store.dispatch('updateSnackbar', {
-                  color: 'success',
-                  show: true,
-                  text: 'Campaign discarded successfully!',
-                });
-                this.goBack();
-              } else {
-                this.$store.dispatch('updateSnackbar', {
-                  color: 'error',
-                  show: true,
-                  text: 'Unable to discard campaign, Please try again later!',
-                });
-              }
-              // this.templates = response.data.data;
-            }
-          }, (response) => {
-            this.$store.dispatch('updateSnackbar', {
-              color: 'error',
-              show: true,
-              text: 'Unable to discard campaign, Please try again later!',
-            });
-            throw new Error(response);
-          });
-        } else {
-          this.goBack();
-        }
-      },
-      proceed() {
-        if (this.newCampaign.title && this.newCampaign.category) {
-          this.unlockStepper = true;
-          // this.config.activeTab = 'survey';
-          this.saveAsDraft(false, true);
-        }
-      },
-      previous() {
-        if (this.config.activeTab === 'survey') {
-          this.config.activeTab = 'summary';
-        } else if (this.config.activeTab === 'audience') {
-          this.config.activeTab = 'survey';
-        } else if (this.config.activeTab === 'distribution') {
-          this.config.activeTab = 'audience';
-          setTimeout(() => {
-            // console.log(this.newCampaign.totalAudienceCount);
-            if (!this.newCampaign.totalAudienceCount) {
-              this.$refs.audienceList.getEmployees();
-              this.$refs.audienceSource.open = true;
-            } else {
-              this.$refs.audienceList.config.initialLoading = false;
-              this.$refs.audienceList.table.loading = false;
-              this.$refs.audienceList.table.audience = this.newCampaign.audience;
-              this.$refs.audienceList.table.totalAudienceCount = this.newCampaign.totalAudienceCount;
-              this.$refs.audienceList.toggleAll(true);
-              this.$refs.audienceList.showCheckboxes = false;
-            }
-          }, 100);
-        } else if (this.config.activeTab === 'preview') {
-          this.config.activeTab = 'distribution';
-        } else {
-          this.config.activeTab = 'summary';
-        }
-      },
-      next() {
-        this.config.loadingContinue = true;
-        if (this.config.activeTab === 'summary') {
-          this.saveAsDraft();
-        } else if (this.config.activeTab === 'survey') {
-          if (this.newSurvey.interactions && this.newSurvey.interactions.length) {
-            this.saveAsDraft();
-          } else {
-            this.$store.dispatch('updateSnackbar', {
-              show: true,
-              text: 'Please design your campaign!',
-              color: 'error',
-            });
-            this.config.loadingContinue = false;
-          }
-        } else if (this.config.activeTab === 'audience') {
-          if (this.$refs.audienceList && this.$refs.audienceList.selectedAudience && Object.keys(this.$refs.audienceList.selectedAudience).length > 0) {
-            this.saveAsDraft();
-          } else {
-            this.$store.dispatch('updateSnackbar', {
-              show: true,
-              text: 'Please select your campaign audience!',
-              color: 'error',
-            });
-            this.config.loadingContinue = false;
-          }
-        } else if (this.config.activeTab === 'distribution') {
-          if (this.newCampaign.distribution && Object.keys(this.newCampaign.distribution).length) {
-            this.saveAsDraft();
-          } else {
-            this.$store.dispatch('updateSnackbar', {
-              show: true,
-              text: 'Please configure atleast one distribution channel before launching campaign!',
-              color: 'error',
-            });
-            this.config.loadingContinue = false;
-          }
-        }
-        
-      },
-      capitaliseCampaignTitle() {
-        this.newCampaign.title = this.newCampaign.title.charAt(0).toUpperCase() + this.newCampaign.title.slice(1);
-      },
-      checkLength() {
-        if (this.newCampaign.title.length > 40) {
-
-        }
-      },
-      openFilePicker(type) {
-          this.$refs[type].click();
-      },
-      removeIfBlank(index) {
-        if ((!this.newCampaign.objectives[index] || this.newCampaign.objectives[index].text === '') &&
-            this.newCampaign.objectives.length > 1) {
-            this.newCampaign.objectives.splice(index, 1);
-            this.newCampaign.objectives[index-1].editable = true;
-            this.editableCampaignObjective = this.newCampaign.objectives[index-1].text;
-        }
-      },
-      addNewObjective(index) {
-        this.newCampaign.objectives.splice(index + 1, 0, {
-            done: false,
-            text: '',
-            editable: false,
-        });
-        this.newCampaign.objectives[index+1].editable = true;
-        // this.editableCampaignObjective = this.newCampaign.objectives[index+1].text;
-      },
-      updateQuestion(ques, index, editFlag) {
-        this.$refs.newQuestion.selectedQuesType = {};
-        this.$refs.newQuestion.selectedQuesType['0'] = JSON.parse(JSON.stringify(ques));
-        this.$refs.newQuestion.editFlag = editFlag;
-        this.$refs.newQuestion.questionIndex = index;
-        this.newQuestion.questions = {};
-        this.newQuestion.questions = {
-          ...this.newQuestion.questions,
-          ...this.$refs.newQuestion.selectedQuesType,
-        };
-        this.questionSource = 'new';
-        this.$refs.newQuestion.dialogs.newQuestion = true;
-      },
-      updateQuestionSource(source) {
-        if (source === 'question_bank') {
-          if (this.newCampaign && this.newCampaign.category) {
-            this.$refs[source].getQuestionsTypes();
-          }
-        } else if (source === 'campaign') {
-          this.$refs[source].getCampaigns();
-        }
-        this.$refs[source].dialogs[source] = true;
-        this.questionSource = source;
-        this.dialogs[source] = true;
-      },
-      scheduleCampaign() {
-        this.validateDetails();
-        let flag = false;
-        this.$lodash.each(this.validate, (step) => {
-          if (!step) {
-            flag = true;
-            return;
-          }
-        });
-        if (!flag) {
-          this.$refs.scheduleCampaign.dialogs.scheduleCampaign = true;
-          // this.triggerCampaign();
-        }
-      },
-      activateCampaign() {
-        this.validateDetails();
-        let flag = false;
-        this.$lodash.each(this.validate, (step) => {
-          if (!step) {
-            flag = true;
-            return;
-          }
-        });
-        if (!flag) {
-          this.$refs.confirmTrigger.dialogs.confirmTrigger = true;
-          // this.triggerCampaign();
-        }
-      },
-      triggerCampaign() {
-        let campaignData = {
-          'stage_id': this.newCampaign.stage_id ? this.newCampaign.stage_id : undefined,
-          'trigger_time': this.newCampaign.trigger_time ? this.newCampaign.trigger_time : null,
-          'schedule_end_at': this.newCampaign.schedule_end_at.concat(' 23:59'),
-          'distributions': [],
-          // 'status': 'scheduled',
-        };
-        if (this.newCampaign.distribution && Object.keys(this.newCampaign.distribution).length) {
-          this.$lodash.each(this.newCampaign.distribution, (dist, index) => {
-            campaignData.distributions.push(dist.id);
-          });
-        }
-        axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/launch`, campaignData).then((response) => {
-          if (response && response.data) {
-            if (response.data) {
-              // this.newCampaign.stage_id = response.data.stage_id;
-              // this.newSurvey.interactions = response.data.interactions ? response.data.interactions : [];
-              // this.newCampaign.distribution = response.data.distributions ? response.data.distributions : [];
-              // this.$refs.preview.$refs.testCampaign.stage_id=  response.data.stage_id;
+    startBlank () {
+      this.startSurvey = false;
+    },
+    BrowseTemplate () {
+      this.startSurvey = false;
+      this.showTemplate = true;
+      this.getTemplateList();
+    },
+    openTemplate (templateData) {
+      this.e1 = 1;
+      this.allTemplateList = false;
+      this.selectedTemplate = templateData;
+    },
+    discard () {
+      if (this.newCampaign.stage_id) {
+        // delete stage
+        axios.delete(`${process.env.VUE_APP_ADHOC_API_URL}stage/delete?stage_id=${this.newCampaign.stage_id}`).then((response) => {
+          if (response) {
+            if (response.status === 204) {
               this.$store.dispatch('updateSnackbar', {
                 color: 'success',
                 show: true,
-                text: 'Campaign activated successfully!',
+                text: 'Campaign discarded successfully!'
               });
               this.goBack();
             } else {
               this.$store.dispatch('updateSnackbar', {
                 color: 'error',
                 show: true,
-                text: 'Unable to activate campaign, Please try again later!',
+                text: 'Unable to discard campaign, Please try again later!'
               });
             }
             // this.templates = response.data.data;
@@ -2292,477 +2092,658 @@ export default {
           this.$store.dispatch('updateSnackbar', {
             color: 'error',
             show: true,
-            text: 'Unable to activate campaign, Please try again later!',
+            text: 'Unable to discard campaign, Please try again later!'
           });
           throw new Error(response);
         });
-      },
-      saveAsDraft(goBackFlag, editFlag) {
-        // this.validateDetails();
-        // let flag = false;
-        // this.$lodash.each(this.validate, (step) => {
-        //   if (!step) {
-        //     flag = true;
-        //     return;
-        //   }
-        // });
-        // if (!flag) {
-          // if(this.selectedEmailTemp) {
-          //   this.$lodash.each(this.selectedEmailTemp, (e, index) => {
-          //     console.log(e);
-          //     this.selectedEmail= e.content.template_id;
-          //   });
+      } else {
+        this.goBack();
+      }
+    },
+    proceed () {
+      if (this.newCampaign.title && this.newCampaign.category) {
+        this.unlockStepper = true;
+        // this.config.activeTab = 'survey';
+        this.saveAsDraft(false, true);
+      }
+    },
+    previous () {
+      if (this.config.activeTab === 'survey') {
+        this.config.activeTab = 'summary';
+      } else if (this.config.activeTab === 'audience') {
+        this.config.activeTab = 'survey';
+      } else if (this.config.activeTab === 'distribution') {
+        this.config.activeTab = 'audience';
+        setTimeout(() => {
+          // console.log(this.newCampaign.totalAudienceCount);
+          if (!this.newCampaign.totalAudienceCount) {
+            this.$refs.audienceList.getEmployees();
+            this.$refs.audienceSource.open = true;
+          } else {
+            this.$refs.audienceList.config.initialLoading = false;
+            this.$refs.audienceList.table.loading = false;
+            this.$refs.audienceList.table.audience = this.newCampaign.audience;
+            this.$refs.audienceList.table.totalAudienceCount = this.newCampaign.totalAudienceCount;
+            this.$refs.audienceList.toggleAll(true);
+            this.$refs.audienceList.showCheckboxes = false;
+          }
+        }, 100);
+      } else if (this.config.activeTab === 'preview') {
+        this.config.activeTab = 'distribution';
+      } else {
+        this.config.activeTab = 'summary';
+      }
+    },
+    next () {
+      this.config.loadingContinue = true;
+      if (this.config.activeTab === 'summary') {
+        this.saveAsDraft();
+      } else if (this.config.activeTab === 'survey') {
+        if (this.newSurvey.interactions && this.newSurvey.interactions.length) {
+          this.saveAsDraft();
+        } else {
+          this.$store.dispatch('updateSnackbar', {
+            show: true,
+            text: 'Please design your campaign!',
+            color: 'error'
+          });
+          this.config.loadingContinue = false;
+        }
+      } else if (this.config.activeTab === 'audience') {
+        if (this.$refs.audienceList && this.$refs.audienceList.selectedAudience && Object.keys(this.$refs.audienceList.selectedAudience).length > 0) {
+          this.saveAsDraft();
+        } else {
+          this.$store.dispatch('updateSnackbar', {
+            show: true,
+            text: 'Please select your campaign audience!',
+            color: 'error'
+          });
+          this.config.loadingContinue = false;
+        }
+      } else if (this.config.activeTab === 'distribution') {
+        if (this.newCampaign.distribution && Object.keys(this.newCampaign.distribution).length) {
+          this.saveAsDraft();
+        } else {
+          this.$store.dispatch('updateSnackbar', {
+            show: true,
+            text: 'Please configure atleast one distribution channel before launching campaign!',
+            color: 'error'
+          });
+          this.config.loadingContinue = false;
+        }
+      }
+    },
+    capitaliseCampaignTitle () {
+      this.newCampaign.title = this.newCampaign.title.charAt(0).toUpperCase() + this.newCampaign.title.slice(1);
+    },
+    checkLength () {
+      if (this.newCampaign.title.length > 40) {
+
+      }
+    },
+    openFilePicker (type) {
+      this.$refs[type].click();
+    },
+    removeIfBlank (index) {
+      if ((!this.newCampaign.objectives[index] || this.newCampaign.objectives[index].text === '') &&
+            this.newCampaign.objectives.length > 1) {
+        this.newCampaign.objectives.splice(index, 1);
+        this.newCampaign.objectives[index - 1].editable = true;
+        this.editableCampaignObjective = this.newCampaign.objectives[index - 1].text;
+      }
+    },
+    addNewObjective (index) {
+      this.newCampaign.objectives.splice(index + 1, 0, {
+        done: false,
+        text: '',
+        editable: false
+      });
+      this.newCampaign.objectives[index + 1].editable = true;
+      // this.editableCampaignObjective = this.newCampaign.objectives[index+1].text;
+    },
+    updateQuestion (ques, index, editFlag) {
+      this.$refs.newQuestion.selectedQuesType = {};
+      this.$refs.newQuestion.selectedQuesType['0'] = JSON.parse(JSON.stringify(ques));
+      this.$refs.newQuestion.editFlag = editFlag;
+      this.$refs.newQuestion.questionIndex = index;
+      this.newQuestion.questions = {};
+      this.newQuestion.questions = {
+        ...this.newQuestion.questions,
+        ...this.$refs.newQuestion.selectedQuesType
+      };
+      this.questionSource = 'new';
+      this.$refs.newQuestion.dialogs.newQuestion = true;
+    },
+    updateQuestionSource (source) {
+      if (source === 'question_bank') {
+        if (this.newCampaign && this.newCampaign.category) {
+          this.$refs[source].getQuestionsTypes();
+        }
+      } else if (source === 'campaign') {
+        this.$refs[source].getCampaigns();
+      }
+      this.$refs[source].dialogs[source] = true;
+      this.questionSource = source;
+      this.dialogs[source] = true;
+    },
+    scheduleCampaign () {
+      this.validateDetails();
+      let flag = false;
+      this.$lodash.each(this.validate, (step) => {
+        if (!step) {
+          flag = true;
+        }
+      });
+      if (!flag) {
+        this.$refs.scheduleCampaign.dialogs.scheduleCampaign = true;
+        // this.triggerCampaign();
+      }
+    },
+    activateCampaign () {
+      this.validateDetails();
+      let flag = false;
+      this.$lodash.each(this.validate, (step) => {
+        if (!step) {
+          flag = true;
+        }
+      });
+      if (!flag) {
+        this.$refs.confirmTrigger.dialogs.confirmTrigger = true;
+        // this.triggerCampaign();
+      }
+    },
+    triggerCampaign () {
+      const campaignData = {
+        stage_id: this.newCampaign.stage_id ? this.newCampaign.stage_id : undefined,
+        trigger_time: this.newCampaign.trigger_time ? this.newCampaign.trigger_time : null,
+        schedule_end_at: this.newCampaign.schedule_end_at.concat(' 23:59'),
+        distributions: []
+        // 'status': 'scheduled',
+      };
+      if (this.newCampaign.distribution && Object.keys(this.newCampaign.distribution).length) {
+        this.$lodash.each(this.newCampaign.distribution, (dist, index) => {
+          campaignData.distributions.push(dist.id);
+        });
+      }
+      axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/launch`, campaignData).then((response) => {
+        if (response && response.data) {
+          if (response.data) {
+            // this.newCampaign.stage_id = response.data.stage_id;
+            // this.newSurvey.interactions = response.data.interactions ? response.data.interactions : [];
+            // this.newCampaign.distribution = response.data.distributions ? response.data.distributions : [];
+            // this.$refs.preview.$refs.testCampaign.stage_id=  response.data.stage_id;
+            this.$store.dispatch('updateSnackbar', {
+              color: 'success',
+              show: true,
+              text: 'Campaign activated successfully!'
+            });
+            this.goBack();
+          } else {
+            this.$store.dispatch('updateSnackbar', {
+              color: 'error',
+              show: true,
+              text: 'Unable to activate campaign, Please try again later!'
+            });
+          }
+          // this.templates = response.data.data;
+        }
+      }, (response) => {
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Unable to activate campaign, Please try again later!'
+        });
+        throw new Error(response);
+      });
+    },
+    saveAsDraft (goBackFlag, editFlag) {
+      // this.validateDetails();
+      // let flag = false;
+      // this.$lodash.each(this.validate, (step) => {
+      //   if (!step) {
+      //     flag = true;
+      //     return;
+      //   }
+      // });
+      // if (!flag) {
+      // if(this.selectedEmailTemp) {
+      //   this.$lodash.each(this.selectedEmailTemp, (e, index) => {
+      //     console.log(e);
+      //     this.selectedEmail= e.content.template_id;
+      //   });
+      // }
+
+      const campaignData = {
+        stage_id: this.newCampaign.stage_id ? this.newCampaign.stage_id : undefined,
+        group_id: this.newCampaign.group_id ? this.newCampaign.group_id : undefined
+        // 'status': 'draft',
+      };
+      if (this.config.activeTab === 'summary') {
+        campaignData.summary = {
+          title: this.newCampaign.title,
+          // 'icon': this.newCampaign.logo,
+          status: 'draft',
+          category: this.newCampaign.category !== 'Others' ? this.newCampaign.category : this.newCampaign.categoryValue,
+          objectives: this.newCampaign.objectives
+        };
+      }
+      if (this.newSurvey.interactions && this.newSurvey.interactions.length && this.config.activeTab === 'survey') {
+        this.$lodash.each(this.newSurvey.interactions, (interaction, index) => {
+          // if (interaction.id) {
+          //   delete interaction.id;
           // }
-
-          let campaignData = {
-            'stage_id': this.newCampaign.stage_id ? this.newCampaign.stage_id : undefined,
-            'group_id': this.newCampaign.group_id ? this.newCampaign.group_id : undefined,
-            // 'status': 'draft',
-          };
-          if (this.config.activeTab === 'summary') {
-            campaignData.summary = {
-              'title': this.newCampaign.title,
-              // 'icon': this.newCampaign.logo,
-              'status': 'draft',
-              'category': this.newCampaign.category !== 'Others' ? this.newCampaign.category : this.newCampaign.categoryValue,
-              'objectives': this.newCampaign.objectives,
-            };
+          interaction.questions = interaction.msg;
+          delete interaction.msg;
+        });
+        campaignData.interactions = this.newSurvey.interactions;
+      }
+      if (this.$refs.audienceList && this.$refs.audienceList.selectedAudience &&
+            Object.keys(this.$refs.audienceList.selectedAudience).length > 0 &&
+            this.config.activeTab === 'audience') {
+        const audience = [];
+        const copyAudience = JSON.parse(JSON.stringify(this.$refs.audienceList.selectedAudience));
+        this.$lodash.each(copyAudience, (recipient, index) => {
+          if (recipient.id) {
+            delete recipient.id;
           }
-          if (this.newSurvey.interactions && this.newSurvey.interactions.length && this.config.activeTab === 'survey') {
-            this.$lodash.each(this.newSurvey.interactions, (interaction, index) => {
-              // if (interaction.id) {
-              //   delete interaction.id;
-              // }
-              interaction.questions = interaction.msg;
-              delete interaction.msg;
+          audience.push(recipient);
+        });
+        campaignData.recipients = this.newCampaign.audience = audience;
+        this.newCampaign.totalAudienceCount = this.newCampaign.audience.length;
+      }
+      if (this.newCampaign.distribution && Object.keys(this.newCampaign.distribution).length && this.config.activeTab === 'distribution') {
+        campaignData.distributions = this.newCampaign.distribution;
+      }
+      axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/create`, campaignData).then((response) => {
+        if (response && response.data) {
+          if (response.data.stage_id) {
+            this.newCampaign.stage_id = response.data.stage_id;
+            this.$lodash.each(this.newSurvey.interactions, (v, k) => {
+              v.msg = v.questions;
             });
-            campaignData.interactions = this.newSurvey.interactions;
-          }
-          if (this.$refs.audienceList && this.$refs.audienceList.selectedAudience
-            && Object.keys(this.$refs.audienceList.selectedAudience).length > 0
-            && this.config.activeTab === 'audience') {
-
-            const audience = [];
-            const copyAudience = JSON.parse(JSON.stringify(this.$refs.audienceList.selectedAudience));
-            this.$lodash.each(copyAudience, (recipient, index) => {
-              if (recipient.id) {
-                delete recipient.id;
+            this.newCampaign.group_id = response.data.group_id ? response.data.group_id : this.newCampaign.group_id;
+            setTimeout(() => {
+              if (this && this.$refs && this.$refs.preview) {
+                this.$refs.preview.$refs.testCampaign.stage_id = response.data.stage_id;
+                this.$refs.preview.$refs.testCampaign.group_id = this.newCampaign.group_id;
+                if (response.data.group_id) {
+                  this.$refs.preview.$refs.testCampaign.group_id = this.newCampaign.group_id;
+                }
               }
-              audience.push(recipient);
+            }, 100);
+            if (this && this.$refs && this.$refs.confirmTrigger) {
+              this.$refs.confirmTrigger.totalAudienceCount = this.newCampaign.totalAudienceCount;
+            }
+            this.newCampaign.distribution = response.data.distributions ? response.data.distributions : this.newCampaign.distribution;
+            this.$store.dispatch('updateSnackbar', {
+              color: 'success',
+              show: true,
+              text: 'Campaign saved as draft successfully!'
             });
-            campaignData.recipients = this.newCampaign.audience = audience;
-            this.newCampaign.totalAudienceCount = this.newCampaign.audience.length;
-          }
-          if (this.newCampaign.distribution && Object.keys(this.newCampaign.distribution).length && this.config.activeTab === 'distribution') {
-            campaignData.distributions = this.newCampaign.distribution;
-            // const temp = [];
-            // this.$lodash.each(this.newCampaign.distribution, (d, index) => {
-            //   console.log(d);
-            //   this.$lodash.each(d, (t, i) => {
-            //     console.log(t);
-            //     console.log(i);
-            //     if (t === 'sms') {
-            //       temp.push(d);
-            //     }
-            //     if (t === 'email') {
-            //       temp.push(d);
-            //     }
-              //   campaignData.distributions = temp;
-              // console.log(campaignData.distributions);
-              // console.log(this.selectedEmail);
-            //   });
-            // });
-          }
-          axios.post(`${process.env.VUE_APP_ADHOC_API_URL}stage/create`, campaignData).then((response) => {
-            if (response && response.data) {
+            this.config.loadingContinue = false;
+            if (goBackFlag) {
+              this.goBack();
+            } else if (editFlag) {
               if (response.data.stage_id) {
-                this.newCampaign.stage_id = response.data.stage_id;
-                this.$lodash.each(this.newSurvey.interactions, (v, k) => {
-                  v.msg = v.questions;
+                this.config.activeTab = 'survey';
+                this.$router.push({
+                  path: `/ad-hoc/edit/${response.data.stage_id}`
                 });
-                this.newCampaign.group_id = response.data.group_id ? response.data.group_id : this.newCampaign.group_id;
+                this.getStage(response.data.stage_id);
+              }
+            } else {
+              if (this.config.activeTab === 'summary') {
+                this.config.activeTab = 'survey';
+              } else if (this.config.activeTab === 'survey') {
+                this.config.activeTab = 'audience';
                 setTimeout(() => {
-                  if (this && this.$refs && this.$refs.preview) {
-                    this.$refs.preview.$refs.testCampaign.stage_id=  response.data.stage_id;
-                    this.$refs.preview.$refs.testCampaign.group_id = this.newCampaign.group_id;
-                    if (response.data.group_id) {
-                      this.$refs.preview.$refs.testCampaign.group_id = this.newCampaign.group_id;
-                    }
+                  // console.log(this.newCampaign.totalAudienceCount);
+                  if (!this.newCampaign.totalAudienceCount) {
+                    this.$refs.audienceList.getEmployees();
+                    this.$refs.audienceSource.open = true;
+                  } else {
+                    this.$refs.audienceList.config.initialLoading = false;
+                    this.$refs.audienceList.table.loading = false;
+                    this.$refs.audienceList.table.audience = this.newCampaign.audience;
+                    this.$refs.audienceList.table.totalAudienceCount = this.newCampaign.totalAudienceCount;
+                    this.$refs.audienceList.toggleAll(true);
+                    this.$refs.audienceList.showCheckboxes = false;
                   }
                 }, 100);
-                if (this && this.$refs && this.$refs.confirmTrigger) {
-                  this.$refs.confirmTrigger.totalAudienceCount = this.newCampaign.totalAudienceCount;
-                }
-                this.newCampaign.distribution = response.data.distributions ? response.data.distributions : this.newCampaign.distribution ;
-                this.$store.dispatch('updateSnackbar', {
-                  color: 'success',
-                  show: true,
-                  text: 'Campaign saved as draft successfully!',
-                });
-                this.config.loadingContinue = false;
-                if (goBackFlag) {
-                  this.goBack();
-                } else if (editFlag) {
-                  if (response.data.stage_id) {
-                    this.config.activeTab = 'survey';
-                    this.$router.push({
-                      path: `/ad-hoc/edit/${response.data.stage_id}`,
-                    });
-                    this.getStage(response.data.stage_id);
-                  }
-                } else {
-                  if (this.config.activeTab === 'summary') {
-                    this.config.activeTab = 'survey';
-                  } else if (this.config.activeTab === 'survey') {
-                    this.config.activeTab = 'audience';
-                    setTimeout(() => {
-                      // console.log(this.newCampaign.totalAudienceCount);
-                      if (!this.newCampaign.totalAudienceCount) {
-                        this.$refs.audienceList.getEmployees();
-                        this.$refs.audienceSource.open = true;
-                      } else {
-                        this.$refs.audienceList.config.initialLoading = false;
-                        this.$refs.audienceList.table.loading = false;
-                        this.$refs.audienceList.table.audience = this.newCampaign.audience;
-                        this.$refs.audienceList.table.totalAudienceCount = this.newCampaign.totalAudienceCount;
-                        this.$refs.audienceList.toggleAll(true);
-                        this.$refs.audienceList.showCheckboxes = false;
-                      }
-                    }, 100);
-                  } else if (this.config.activeTab === 'audience') {
-                    this.config.activeTab = 'distribution';
-                  } else if (this.config.activeTab === 'distribution') {
-                    this.config.activeTab = 'preview';
-                  }
-                }
-              } else {
-                this.$store.dispatch('updateSnackbar', {
-                  color: 'error',
-                  show: true,
-                  text: 'Unable to draft campaign, Please try again later!',
-                });
-                this.config.loadingContinue = false;
+              } else if (this.config.activeTab === 'audience') {
+                this.config.activeTab = 'distribution';
+              } else if (this.config.activeTab === 'distribution') {
+                this.config.activeTab = 'preview';
               }
-              // this.templates = response.data.data;
             }
-          }, (response) => {
-            this.$store.dispatch('updateSnackbar', {
-              color: 'error',
-              show: true,
-              text: 'Unable to draft campaign, Please try again later!',
-            });
-            this.config.loadingContinue = false;
-            throw new Error(response);
-            this.config.loadingContinue = false;
-          });
-        // }
-       
-      },
-      validateDetails() {
-        let error = false;
-        this.validate = {
-            step1: true,
-            step2: true,
-            step3: true,
-            step4: true,
-            step5: true,
-        };
-
-        if (!this.newCampaign.title || !this.newCampaign.category) {
-            error = true;
-            this.validate.step1 = false;
-            this.config.activeTab = 'summary';
-            this.$store.dispatch('updateSnackbar', {
-                color: 'error',
-                show: true,
-                text: 'Fill all the mandatory fields!',
-            });
-        } else if (this.newCampaign.category === "Others" && !this.newCampaign.categoryValue) {
-          error = true;
-          this.validate.step1 = false;
-          this.config.activeTab = 'summary';
-          this.$store.dispatch('updateSnackbar', {
-              color: 'error',
-              show: true,
-              text: 'Fill all the mandatory fields!',
-          });
-        } else if (!this.newSurvey.interactions || !this.newSurvey.interactions.length) {
-            error = true;
-            this.validate.step2 = false;
-            this.config.activeTab = 'survey';
-            this.$store.dispatch('updateSnackbar', {
-              color: 'error',
-              show: true,
-              text: 'Please design your campaign!',
-          });
-        } else if (!this.newCampaign.audience || !this.newCampaign.totalAudienceCount) {
-          error = true;
-          this.validate.step3 = false;
-          this.config.activeTab = 'audience';
-          this.$store.dispatch('updateSnackbar', {
-              color: 'error',
-              show: true,
-              text: 'Please select your campaign audience!',
-          });
-        } else if (!this.newCampaign.distribution || !Object.keys(this.newCampaign.distribution).length) {
-          error = true;
-          this.validate.step4 = false;
-          this.config.activeTab = 'distribution';
-          this.$store.dispatch('updateSnackbar', {
-              color: 'error',
-              show: true,
-              text: 'Please configure atleast one distribution channel before launching campaign!',
-          });
-        }
-
-        // this.$validator.validateAll().then((res) => {
-        //     if (!res || error) {
-        //         this.$store.dispatch('updateSnackbar', {
-        //             color: 'error',
-        //             show: true,
-        //             text: 'Fill all the mandatory fields!',
-        //         });
-        //     } else {
-        //         this.saveStage();
-        //     }
-        // });
-      },
-      getAvatar(c) {
-        const avt = `${c.first_name.charAt(0)}${c.last_name.charAt(0)}`;
-        return avt.toUpperCase();
-      },
-      GetTemplateData() {
-        axios.patch(`${process.env.VUE_APP_ADHOC_API_URL}stage/templates/${this.selectedTemplate.id}/usage_counter/`,{
-        times_used : this.selectedTemplate.times_used + 1,
-        }
-        ).then((response) => {
-              
-          }, (response) => {
-              this.config.initialLoading = false;
-              this.$store.dispatch('updateSnackbar', {
-                  color: 'error',
-                  show: true,
-                  text: 'Unable to update count of template used, Please try again later!',
-              });
-              throw new Error(response);
-          });
-        this.showTemplate = false;
-        const stageData = this.selectedTemplate;
-        this.newCampaign.title = this.selectedTemplate.title;
-        this.newCampaign.category = this.newCampaign.category;
-        this.newCampaign.group_id = stageData.group_id? stageData.group_id: this.newCampaign.group_id;
-        this.newCampaign.objectives = this.selectedTemplate.objectives;
-        // this.$lodash.each(stageData.interactions, (v, k) => {
-        //   v.msg = v.questions;
-        // });
-        this.newSurvey.interactions = this.selectedTemplate.questions;
-        this.newCampaign.audience = stageData.recipients || [];
-        this.newCampaign.totalAudienceCount = stageData.recipients ? stageData.recipients.length : this.newCampaign.totalAudienceCount;
-        this.newCampaign.distribution = stageData.distributions ? stageData.distributions : this.newCampaign.distribution;
-
-        this.$lodash.each(this.newCampaign.audience, (recipient, index) => {
-          recipient.index = index + 1;
-        });
-
-        this.$lodash.each(this.newCampaign.distribution, (dist, index) => {
-          if (this.newCampaign.distributionsEnabled) {
-            this.newCampaign.distributionsEnabled[dist.type] = true;
-          }
-        });
-
-        if (this && this.$refs && this.$refs.preview) {
-          if (stageData.group_id) {
-            this.$refs.preview.$refs.testCampaign.group_id = stageData.group_id;
-          }
-        }
-        if (this && this.$refs && this.$refs.confirmTrigger) {
-          this.$refs.confirmTrigger.totalAudienceCount = this.newCampaign.totalAudienceCount;
-        }
-      },
-      getStage(id) {
-          const queryParams = {
-              sections: 'stage_id,group_id,summary,interactions,recipients,distributions,schedule_end_at',
-          };
-          axios.get(`${process.env.VUE_APP_ADHOC_API_URL}stage/detail?stage_id=${id}&stage_edit_mode=true`).then((response) => {
-              this.config.initialLoading = false;
-              if (response && response.data) {
-                const stageData = response.data.data;
-                this.newCampaign.stage_id = id ? id: null;
-                this.newCampaign.title = stageData.summary && stageData.summary.title ? stageData.summary.title: this.newCampaign.title;
-                this.newCampaign.category = stageData.summary && stageData.summary.category ? stageData.summary.category: this.newCampaign.category;
-                this.newCampaign.group_id = stageData.group_id? stageData.group_id: this.newCampaign.group_id;
-                this.newCampaign.objectives = stageData.summary && stageData.summary.objectives ? stageData.summary.objectives: this.newCampaign.objectives;
-                this.$lodash.each(stageData.interactions, (v, k) => {
-                  v.msg = v.questions;
-                });
-                this.newSurvey.interactions = stageData.interactions ? stageData.interactions: this.newSurvey.interactions;
-                this.newCampaign.audience = stageData.recipients || [];
-                this.newCampaign.totalAudienceCount = stageData.recipients ? stageData.recipients.length : this.newCampaign.totalAudienceCount;
-                this.newCampaign.distribution = stageData.distributions ? stageData.distributions : this.newCampaign.distribution;
-                
-                this.$lodash.each(response.data.data.distributions, (dist, index) => {
-                  if (dist.type === 'email') {
-                    this.$store.dispatch('updateEmail', dist);
-                  }
-                });
-                this.$lodash.each(this.newCampaign.audience, (recipient, index) => {
-                  recipient.index = index + 1;
-                });
-
-                this.$lodash.each(this.newCampaign.distribution, (dist, index) => {
-                  if (this.newCampaign.distributionsEnabled) {
-                    this.newCampaign.distributionsEnabled[dist.type] = true;
-                  }
-                });
-
-                if (this && this.$refs && this.$refs.preview) {
-                  if (stageData.group_id) {
-                    this.$refs.preview.$refs.testCampaign.group_id = stageData.group_id;
-                  }
-                }
-                if (this && this.$refs && this.$refs.confirmTrigger) {
-                  this.$refs.confirmTrigger.totalAudienceCount = this.newCampaign.totalAudienceCount;
-                }
-                // this.newCampaign = stageData;
-              }
-          }, (response) => {
-              this.config.initialLoading = false;
-              this.$store.dispatch('updateSnackbar', {
-                  color: 'error',
-                  show: true,
-                  text: 'Unable to fetch stage, Please try again later!',
-              });
-              throw new Error(response);
-          });
-      },
-      addReplies(index, qi, text) {
-        this.newSurvey.interactions[index].msg[qi].quickReplies.push({
-          title: `${text} #${this.newSurvey.interactions[index].msg[qi].quickReplies.length + 1}`,
-        });
-      },
-      //step 2
-      applyDrag(arr, dragResult) {
-        const { removedIndex, addedIndex, payload } = dragResult;
-        if (removedIndex === null && addedIndex === null) return arr;
-
-        const result = [...arr];
-        let itemToAdd = payload;
-
-        if (removedIndex !== null) {
-          itemToAdd = result[removedIndex];
-          result.splice(removedIndex, 1);
-        }
-
-        if (addedIndex !== null) {
-          result.splice(addedIndex, 0, itemToAdd);
-        }
-
-        this.$lodash.each(result, (v, k) => {
-          v.index = k;
-          v.enabled = true;
-          v.status = 'updated';
-        });
-        return result;
-      },
-      getIPayload(index) {
-        return this.newSurvey[index];
-      },
-      onDrop(dropResult) {
-        if (dropResult.payload) {
-          dropResult.payload = JSON.parse(JSON.stringify(dropResult.payload));
-        }
-        this.newSurvey.interactions = this.applyDrag(this.newSurvey.interactions, dropResult);
-      },
-      onDragEnd() {
-        this.drag.startDragging = false;
-      },
-      getImgUrl(pet) {
-        const images = require.context('@/assets/', false, /\.png$/);
-        return images(`./${pet}.png`);
-      },
-      getLogoUrl(pet) {
-        const images = require.context('@/assets/logo', false, /\.png$/);
-        return images(`./${pet}.png`);
-      },
-      toSeconds(millisec) {
-        const sec = (millisec / 1000).toFixed(1);
-        return `+${sec}s`;
-      },
-      takeAction(item) {
-        if (item.link) {
-          this.$router.push(item.link);
-        } else {
-          if (item.title === 'Employee Touchpoints') {
-            if (window.location.host === 'localhost:8080') {
-              window.open('http://localhost:8080');
-            } else if (window.location.host === 'localhost:8081') {
-              window.open('http://localhost:8081');
-            } else if (window.location.host === 'app.dev.amara.ai') {
-              window.open('https://app.dev.amara.ai');
-            } else {
-              window.open('https://app.amara.ai');
-            }
-          } else if (item.title === 'Logout') {
-            this.logout();
-          }
-        }
-      },
-      logout() {
-        axios.post(`${process.env.VUE_APP_API_URL}logout`).then((response) => {
-          if (response && response.data.status === 200) {
-            this.$store.dispatch('deleteSession');
-            this.$router.push('/login');
           } else {
-            this.$notify({
-              group: 'foo',
-              title: 'Error while logging out!',
-              type: 'warn',
+            this.$store.dispatch('updateSnackbar', {
+              color: 'error',
+              show: true,
+              text: 'Unable to draft campaign, Please try again later!'
             });
-            this.$store.dispatch('deleteSession');
-            this.$router.push('/login');
+            this.config.loadingContinue = false;
           }
-        }, () => {
+          // this.templates = response.data.data;
+        }
+      }, (response) => {
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Unable to draft campaign, Please try again later!'
+        });
+        this.config.loadingContinue = false;
+        throw new Error(response);
+        // eslint-disable-next-line no-unreachable
+        this.config.loadingContinue = false;
+      });
+      // }
+    },
+    validateDetails () {
+      let error = false;
+      this.validate = {
+        step1: true,
+        step2: true,
+        step3: true,
+        step4: true,
+        step5: true
+      };
+
+      if (!this.newCampaign.title || !this.newCampaign.category) {
+        error = true;
+        this.validate.step1 = false;
+        this.config.activeTab = 'summary';
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Fill all the mandatory fields!'
+        });
+      } else if (this.newCampaign.category === 'Others' && !this.newCampaign.categoryValue) {
+        error = true;
+        this.validate.step1 = false;
+        this.config.activeTab = 'summary';
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Fill all the mandatory fields!'
+        });
+      } else if (!this.newSurvey.interactions || !this.newSurvey.interactions.length) {
+        error = true;
+        this.validate.step2 = false;
+        this.config.activeTab = 'survey';
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Please design your campaign!'
+        });
+      } else if (!this.newCampaign.audience || !this.newCampaign.totalAudienceCount) {
+        error = true;
+        this.validate.step3 = false;
+        this.config.activeTab = 'audience';
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Please select your campaign audience!'
+        });
+      } else if (!this.newCampaign.distribution || !Object.keys(this.newCampaign.distribution).length) {
+        error = true;
+        this.validate.step4 = false;
+        this.config.activeTab = 'distribution';
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Please configure atleast one distribution channel before launching campaign!'
+        });
+      }
+
+      // this.$validator.validateAll().then((res) => {
+      //     if (!res || error) {
+      //         this.$store.dispatch('updateSnackbar', {
+      //             color: 'error',
+      //             show: true,
+      //             text: 'Fill all the mandatory fields!',
+      //         });
+      //     } else {
+      //         this.saveStage();
+      //     }
+      // });
+    },
+    getAvatar (c) {
+      const avt = `${c.first_name.charAt(0)}${c.last_name.charAt(0)}`;
+      return avt.toUpperCase();
+    },
+    GetTemplateData () {
+      axios.patch(`${process.env.VUE_APP_ADHOC_API_URL}stage/templates/${this.selectedTemplate.id}/usage_counter/`, {
+        times_used: this.selectedTemplate.times_used + 1
+      }
+      ).then((response) => {
+
+      }, (response) => {
+        this.config.initialLoading = false;
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Unable to update count of template used, Please try again later!'
+        });
+        throw new Error(response);
+      });
+      this.showTemplate = false;
+      const stageData = this.selectedTemplate;
+      this.newCampaign.title = this.selectedTemplate.title;
+      // eslint-disable-next-line no-self-assign
+      this.newCampaign.category = this.newCampaign.category;
+      this.newCampaign.group_id = stageData.group_id ? stageData.group_id : this.newCampaign.group_id;
+      this.newCampaign.objectives = this.selectedTemplate.objectives;
+      // this.$lodash.each(stageData.interactions, (v, k) => {
+      //   v.msg = v.questions;
+      // });
+      this.newSurvey.interactions = this.selectedTemplate.questions;
+      this.newCampaign.audience = stageData.recipients || [];
+      this.newCampaign.totalAudienceCount = stageData.recipients ? stageData.recipients.length : this.newCampaign.totalAudienceCount;
+      this.newCampaign.distribution = stageData.distributions ? stageData.distributions : this.newCampaign.distribution;
+
+      this.$lodash.each(this.newCampaign.audience, (recipient, index) => {
+        recipient.index = index + 1;
+      });
+
+      this.$lodash.each(this.newCampaign.distribution, (dist, index) => {
+        if (this.newCampaign.distributionsEnabled) {
+          this.newCampaign.distributionsEnabled[dist.type] = true;
+        }
+      });
+
+      if (this && this.$refs && this.$refs.preview) {
+        if (stageData.group_id) {
+          this.$refs.preview.$refs.testCampaign.group_id = stageData.group_id;
+        }
+      }
+      if (this && this.$refs && this.$refs.confirmTrigger) {
+        this.$refs.confirmTrigger.totalAudienceCount = this.newCampaign.totalAudienceCount;
+      }
+    },
+    getStage (id) {
+      const queryParams = {
+        sections: 'stage_id,group_id,summary,interactions,recipients,distributions,schedule_end_at'
+      };
+      axios.get(`${process.env.VUE_APP_ADHOC_API_URL}stage/detail?stage_id=${id}&stage_edit_mode=true`).then((response) => {
+        this.config.initialLoading = false;
+        if (response && response.data) {
+          const stageData = response.data.data;
+          this.newCampaign.stage_id = id || null;
+          this.newCampaign.title = stageData.summary && stageData.summary.title ? stageData.summary.title : this.newCampaign.title;
+          this.newCampaign.category = stageData.summary && stageData.summary.category ? stageData.summary.category : this.newCampaign.category;
+          this.newCampaign.group_id = stageData.group_id ? stageData.group_id : this.newCampaign.group_id;
+          this.newCampaign.objectives = stageData.summary && stageData.summary.objectives ? stageData.summary.objectives : this.newCampaign.objectives;
+          this.$lodash.each(stageData.interactions, (v, k) => {
+            v.msg = v.questions;
+          });
+          this.newSurvey.interactions = stageData.interactions ? stageData.interactions : this.newSurvey.interactions;
+          this.newCampaign.audience = stageData.recipients || [];
+          this.newCampaign.totalAudienceCount = stageData.recipients ? stageData.recipients.length : this.newCampaign.totalAudienceCount;
+          this.newCampaign.distribution = stageData.distributions ? stageData.distributions : this.newCampaign.distribution;
+
+          this.$lodash.each(response.data.data.distributions, (dist, index) => {
+            if (dist.type === 'email') {
+              this.$store.dispatch('updateEmail', dist);
+            }
+          });
+          this.$lodash.each(this.newCampaign.audience, (recipient, index) => {
+            recipient.index = index + 1;
+          });
+
+          this.$lodash.each(this.newCampaign.distribution, (dist, index) => {
+            if (this.newCampaign.distributionsEnabled) {
+              this.newCampaign.distributionsEnabled[dist.type] = true;
+            }
+          });
+
+          if (this && this.$refs && this.$refs.preview) {
+            if (stageData.group_id) {
+              this.$refs.preview.$refs.testCampaign.group_id = stageData.group_id;
+            }
+          }
+          if (this && this.$refs && this.$refs.confirmTrigger) {
+            this.$refs.confirmTrigger.totalAudienceCount = this.newCampaign.totalAudienceCount;
+          }
+          // this.newCampaign = stageData;
+        }
+      }, (response) => {
+        this.config.initialLoading = false;
+        this.$store.dispatch('updateSnackbar', {
+          color: 'error',
+          show: true,
+          text: 'Unable to fetch stage, Please try again later!'
+        });
+        throw new Error(response);
+      });
+    },
+    addReplies (index, qi, text) {
+      this.newSurvey.interactions[index].msg[qi].quickReplies.push({
+        title: `${text} #${this.newSurvey.interactions[index].msg[qi].quickReplies.length + 1}`
+      });
+    },
+    // step 2
+    applyDrag (arr, dragResult) {
+      const { removedIndex, addedIndex, payload } = dragResult;
+      if (removedIndex === null && addedIndex === null) return arr;
+
+      const result = [...arr];
+      let itemToAdd = payload;
+
+      if (removedIndex !== null) {
+        itemToAdd = result[removedIndex];
+        result.splice(removedIndex, 1);
+      }
+
+      if (addedIndex !== null) {
+        result.splice(addedIndex, 0, itemToAdd);
+      }
+
+      this.$lodash.each(result, (v, k) => {
+        v.index = k;
+        v.enabled = true;
+        v.status = 'updated';
+      });
+      return result;
+    },
+    getIPayload (index) {
+      return this.newSurvey[index];
+    },
+    onDrop (dropResult) {
+      if (dropResult.payload) {
+        dropResult.payload = JSON.parse(JSON.stringify(dropResult.payload));
+      }
+      this.newSurvey.interactions = this.applyDrag(this.newSurvey.interactions, dropResult);
+    },
+    onDragEnd () {
+      this.drag.startDragging = false;
+    },
+    getImgUrl (pet) {
+      const images = require.context('@/assets/', false, /\.png$/);
+      return images(`./${pet}.png`);
+    },
+    getLogoUrl (pet) {
+      const images = require.context('@/assets/logo', false, /\.png$/);
+      return images(`./${pet}.png`);
+    },
+    toSeconds (millisec) {
+      const sec = (millisec / 1000).toFixed(1);
+      return `+${sec}s`;
+    },
+    takeAction (item) {
+      if (item.link) {
+        this.$router.push(item.link);
+      } else {
+        if (item.title === 'Employee Touchpoints') {
+          if (window.location.host === 'localhost:8080') {
+            window.open('http://localhost:8080');
+          } else if (window.location.host === 'localhost:8081') {
+            window.open('http://localhost:8081');
+          } else if (window.location.host === 'app.dev.amara.ai') {
+            window.open('https://app.dev.amara.ai');
+          } else {
+            window.open('https://app.amara.ai');
+          }
+        } else if (item.title === 'Logout') {
+          this.logout();
+        }
+      }
+    },
+    logout () {
+      axios.post(`${process.env.VUE_APP_API_URL}logout`).then((response) => {
+        if (response && response.data.status === 200) {
           this.$store.dispatch('deleteSession');
           this.$router.push('/login');
-        });
-      },
-      getDragPosition(type) {
-        let style= 'position:absolute;left:7%;top:-33%;z-index:2';
-        if (type === 'closeEnded') {
-          style= 'position:absolute;left:7%;top:-27%;z-index:2';
-        } else if (type === 'scale') {
-          style= 'position:absolute;left:7%;top:-21%;z-index:2';
-        } else if (type === 'multipleChoice') {
-          style= 'position:absolute;left:7%;top:-7%;z-index:2';
+        } else {
+          this.$notify({
+            group: 'foo',
+            title: 'Error while logging out!',
+            type: 'warn'
+          });
+          this.$store.dispatch('deleteSession');
+          this.$router.push('/login');
         }
-        return style;
-      },
-      editAction(ques, index, editFlag) {
-        this.updateQuestion(ques, index, editFlag);
-      },
-      deleteAction(i) {
-        this.newSurvey.interactions.splice(i, 1);
-      },
-      duplicateAction(item) {
-        const temp = JSON.parse(JSON.stringify(item));
-        this.newSurvey.interactions.push(temp);
-      },
+      }, () => {
+        this.$store.dispatch('deleteSession');
+        this.$router.push('/login');
+      });
     },
-    watch: {
-    },
-    mounted: {
-    },
-    beforeMount() {
-      if (this.$route.name === 'NewAdhoc') {
-        this.startSurvey = true;
+    getDragPosition (type) {
+      let style = 'position:absolute;left:7%;top:-33%;z-index:2';
+      if (type === 'closeEnded') {
+        style = 'position:absolute;left:7%;top:-27%;z-index:2';
+      } else if (type === 'scale') {
+        style = 'position:absolute;left:7%;top:-21%;z-index:2';
+      } else if (type === 'multipleChoice') {
+        style = 'position:absolute;left:7%;top:-7%;z-index:2';
       }
-      if (this.$route.params && this.$route.params.stageId) {
-        
-          this.getStage(this.$route.params.stageId);
-      } else {
-      }
-      this.getCompanyUsers();
+      return style;
     },
+    editAction (ques, index, editFlag) {
+      this.updateQuestion(ques, index, editFlag);
+    },
+    deleteAction (i) {
+      this.newSurvey.interactions.splice(i, 1);
+    },
+    duplicateAction (item) {
+      const temp = JSON.parse(JSON.stringify(item));
+      this.newSurvey.interactions.push(temp);
+    }
+  },
+  watch: {
+  },
+  mounted: {
+  },
+  beforeMount () {
+    if (this.$route.name === 'NewAdhoc') {
+      this.startSurvey = true;
+    }
+    if (this.$route.params && this.$route.params.stageId) {
+      this.getStage(this.$route.params.stageId);
+    } else {
+    }
+    this.getCompanyUsers();
+  }
 };
 </script>
 
@@ -2808,7 +2789,7 @@ export default {
   .actions {
     margin-top: 0 !important;
   }
-} 
+}
 .campaign-title-top {
   position:relative;
   left:20px;
@@ -2871,7 +2852,6 @@ export default {
   }
 }
 
-
 .adhoc-objectives-list {
   margin-top: 10px;
   overflow-y:auto;
@@ -2924,8 +2904,7 @@ export default {
 .firstStep {
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
-  
-}
 
+}
 
 </style>

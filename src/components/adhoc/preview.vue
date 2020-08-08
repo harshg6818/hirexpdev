@@ -194,11 +194,11 @@
 </template>
 
 <script>
-import { VAlert, VMenu, VTextarea, VSelect } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VTextarea, VSelect } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { mapState } from 'vuex';
-import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import axios from 'axios';
+// import VueContentLoading from 'vue-content-loading';
 import testCampaign from './testCampaign';
 import scheduleCampaign from './scheduleCampaign';
 import dayjs from 'dayjs';
@@ -209,59 +209,59 @@ dayjs.extend(relativeTime);
 export default {
   name: 'NewQuestion',
   components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSelect,
-    Container,
-    VueContentLoading,
+    // VAlert,
+    // VMenu,
+    // VTextarea,
+    // VSelect,
+    // Container,
+    // VueContentLoading,
     testCampaign,
-    scheduleCampaign,
-    dayjs,
+    scheduleCampaign
+    // dayjs,
   },
   props: ['newSurvey'],
-  data() {
+  data () {
     return {
       nowDate: new Date().toISOString().slice(0, 10),
       campaignCategories: [{
         text: 'Employee Engagement',
         value: 'employee_engagement',
-        disabled: false,
+        disabled: false
       }, {
         text: 'Candidate Engagement',
         value: 'candidate_engagement',
-        disabled: true,
+        disabled: true
       }, {
         text: 'Customer Engagement',
         value: 'customer_engagement',
         disabled: true,
-        beta: true,
+        beta: true
       // }, {
       //   text: 'Others',
       //   value: 'others',
       }, {
         text: 'Research',
         value: 'research',
-        disabled: true,
-      },],
+        disabled: true
+      }],
       newCampaign: {
         questions: [],
-        schedule_end_at: '',
+        schedule_end_at: ''
       },
       menu: {
-        date: false,
-      },
+        date: false
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
+      user: state => state.user
     }),
-    formattedDate() {
+    formattedDate () {
       return dayjs(this.newCampaign.schedule_end_at).endOf('day').format('DD-MM-YYYY');
     },
-    campaignInteractionsCount() {
-      let counter = 0 ;
+    campaignInteractionsCount () {
+      let counter = 0;
       if (this.newCampaign.questions && this.newCampaign.questions.length > 0) {
         this.$lodash.each(this.newCampaign.questions, (v, k) => {
           if (v.response_required) {
@@ -270,17 +270,17 @@ export default {
         });
       }
       return counter;
-    },
+    }
   },
   watch: {
-    newSurvey() {
+    newSurvey () {
       if (this.newSurvey && this.newSurvey.interactions) {
         this.newCampaign.questions = this.newSurvey.interactions;
       }
-    },
+    }
   },
   methods: {
-    getCategory(category) {
+    getCategory (category) {
       let name = category;
       this.$lodash.each(this.campaignCategories, (v, k) => {
         if (v.value === category) {
@@ -289,17 +289,17 @@ export default {
       });
       return name;
     },
-    edit(tab) {
+    edit (tab) {
       if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent && this.$parent.$parent.$parent.config) {
         this.$parent.$parent.$parent.config.activeTab = tab;
       }
     },
-    scheduleCampaign() {
+    scheduleCampaign () {
       if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent) {
         this.$parent.$parent.$parent.scheduleCampaign();
       }
     },
-    activateCampaign() {
+    activateCampaign () {
       if (this.newCampaign.schedule_end_at) {
         if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent) {
           this.$parent.$parent.$parent.newCampaign.schedule_end_at = dayjs(`${this.newCampaign.schedule_end_at}`).format('YYYY-MM-DD');
@@ -309,25 +309,25 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Please fill campaign cutoff date!',
+          text: 'Please fill campaign cutoff date!'
         });
       }
     },
-    testCampaign() {
+    testCampaign () {
       this.$refs.testCampaign.dialogs.testCampaign = true;
       // if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent) {
       //   this.$parent.$parent.$parent.activateCampaign();
       // }
-    },
+    }
   },
-  created() {
+  created () {
     if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent && this.$parent.$parent.$parent.newCampaign) {
       this.newCampaign = this.$parent.$parent.$parent.newCampaign;
       this.newCampaign.questions = this.newSurvey.interactions;
     }
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 

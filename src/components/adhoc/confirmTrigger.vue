@@ -39,16 +39,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import axios from 'axios';
+// import axios from 'axios';
 import dayjs from 'dayjs';
 
 export default {
   name: 'confirm',
   components: {},
-  data() {
+  data () {
     return {
       dialogs: {
-        confirmTrigger: false,
+        confirmTrigger: false
       },
       schedule: null,
       triggerSchedule: false,
@@ -56,20 +56,20 @@ export default {
       triggerTime: dayjs().format('HH:MM'),
       // triggerTime: this.round(dayjs(), (30 * 60 * 1000), 'ceil').format('HH:MM'),
       minDate: new Date().toISOString().substr(0, 10),
-      totalAudienceCount: null,
+      totalAudienceCount: null
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
     allowedStep: m => m % 5 === 0,
-    round(date, duration, method) {
+    round (date, duration, method) {
       return dayjs(Math[method]((+date) / (+duration)) * (+duration));
     },
-    confirm() {
+    confirm () {
       // console.log(this.triggerTime, dayjs(`${this.triggerTime}`).format('THH:mm'));
       if (this.$parent && this.$parent.newCampaign) {
         // this.$parent.newCampaign.trigger_time = dayjs(`${this.triggerDate}`).format('YYYY-MM-DD').concat(` ${dayjs(`${this.triggerTime}`).format('THH:mm')}`);
@@ -78,24 +78,24 @@ export default {
         this.dialogs.confirmTrigger = false;
       }
     },
-    updateSchedule(time) {
+    updateSchedule (time) {
       this.schedule = time;
     },
-    proceed() {
+    proceed () {
       if (this.triggerDate && this.triggerTime) {
         this.triggerSchedule = true;
       }
-    },
+    }
   },
-  beforeMount() {
+  beforeMount () {
   },
-  created() {
+  created () {
     if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent &&
         this.$parent.$parent.$parent.$parent &&
         this.$parent.$parent.$parent.$parent.newCampaign) {
       this.totalAudienceCount = this.$parent.$parent.$parent.$parent.newCampaign.totalAudienceCount;
     }
-  },
+  }
 };
 </script>
 

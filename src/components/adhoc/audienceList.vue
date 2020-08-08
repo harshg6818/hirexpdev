@@ -159,8 +159,8 @@
       <v-card class="filters-card pa-3">
         <v-expansion-panel disabled expand v-model="config.panel"
           class="elevation-0 employee-filters"
-        >         
-          
+        >
+
           <v-layout row wrap>
             <v-flex>
               <h3 class="my-2">
@@ -228,82 +228,82 @@
 </template>
 
 <script>
-import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VAvatar } from 'vuetify';
-import { Container, Draggable } from 'vue-smooth-dnd';
+// import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox, VAvatar } from 'vuetify';
+// import { Container, Draggable } from 'vue-smooth-dnd';
 import { ContentLoader } from 'vue-content-loader';
 import { mapState } from 'vuex';
 import axios from 'axios';
-import VueContentLoading from 'vue-content-loading';
+// import VueContentLoading from 'vue-content-loading';
 
 export default {
   name: 'audienceList',
   components: {
-    VAlert,
-    VMenu,
-    VTextarea,
-    VSlider,
-    VSelect,
-    Container,
-    Draggable,
-    VChip,
-    VPagination,
-    VCheckbox,
-    VueContentLoading,
-    VAvatar,
-    ContentLoader,
+    // VAlert,
+    // VMenu,
+    // VTextarea,
+    // VSlider,
+    // VSelect,
+    // Container,
+    // Draggable,
+    // VChip,
+    // VPagination,
+    // VCheckbox,
+    // VueContentLoading,
+    // VAvatar,
+    ContentLoader
   },
-  data() {
+  data () {
     return {
-        showFilter: false,
-        showCheckBoxes: false,
-        allSelected: false,
-        filters: {
-          default: {},
-          selected: {},
-          main: {},
-        },
-        selectedAudience: {},
-        table: {
-          searchString: '',
-          totalAudienceCount: 0,
-          loading: true,
-          audience: [],
-          // headers: [],
-          headers: [{
-              text: 'Name',
-              align: 'left',
-              sortable: false,
-          }, {
-              text: 'Email',
-              align: 'left',
-              sortable: false,
-          }, {
-              text: 'Phone Number',
-              align: 'left',
-              sortable: false,
-          }, {
-              text: 'Gender',
-              align: 'left',
-              sortable: false,
-          }],
-        },
-        config: {
-          filter: false,
-          panel: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
-          initialLoading: false,
-          initialLoadingFilters: true,
-        },
-        pagination: {
-          rowsPerPage: 10,
-          page: 1,
-        },
+      showFilter: false,
+      showCheckBoxes: false,
+      allSelected: false,
+      filters: {
+        default: {},
+        selected: {},
+        main: {}
+      },
+      selectedAudience: {},
+      table: {
+        searchString: '',
+        totalAudienceCount: 0,
+        loading: true,
+        audience: [],
+        // headers: [],
+        headers: [{
+          text: 'Name',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Email',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Phone Number',
+          align: 'left',
+          sortable: false
+        }, {
+          text: 'Gender',
+          align: 'left',
+          sortable: false
+        }]
+      },
+      config: {
+        filter: false,
+        panel: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+        initialLoading: false,
+        initialLoadingFilters: true
+      },
+      pagination: {
+        rowsPerPage: 10,
+        page: 1
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
+      user: state => state.user
     }),
-    filtersApplied() {
+    filtersApplied () {
       let applied = false;
       this.$lodash.each(this.filters.selected, (v) => {
         if (v.length > 0) {
@@ -311,7 +311,7 @@ export default {
         }
       });
       return applied;
-    },
+    }
   },
   watch: {
     // pagination: {
@@ -324,7 +324,7 @@ export default {
     // },
   },
   methods: {
-    updateAudienceSource() {
+    updateAudienceSource () {
       if (this.$parent && this.$parent.$parent && this.$parent.$parent.$parent) {
         // this.$parent.$parent.$parent.$refs.audienceSource.audienceSource = this.$parent.$parent.$parent.audienceSource;
         this.$parent.$parent.$parent.audienceSource = null;
@@ -333,8 +333,8 @@ export default {
         }
       }
     },
-    getFilters() {
-        axios.get(`${process.env.VUE_APP_ADHOC_API_URL}user/filters`).then((response) => {
+    getFilters () {
+      axios.get(`${process.env.VUE_APP_ADHOC_API_URL}user/filters`).then((response) => {
         if (response && response.data && response.data) {
           this.config.initialLoadingFilters = false;
           this.filters.default = response.data.data;
@@ -351,18 +351,18 @@ export default {
         }
       });
     },
-    resetFilters() {
+    resetFilters () {
       this.filters.selected = JSON.parse(JSON.stringify(this.filters.main));
       this.getEmployees();
     },
-    triggerUpdate() {
+    triggerUpdate () {
       this.getEmployees();
     },
-    applyfilter() {
+    applyfilter () {
       this.showFilter = false;
       this.triggerUpdate();
     },
-    getName(key) {
+    getName (key) {
       let name;
       switch (key) {
         case 'currentPosition':
@@ -376,17 +376,18 @@ export default {
       }
       return name;
     },
-    getEmployees() {
+    getEmployees () {
       this.config.initialLoading = true;
-      let stageId, activeDriver;
+      let stageId;
       if (this.$route.params && this.$route.params.stageId) {
+        // eslint-disable-next-line no-unused-vars
         stageId = this.$route.params.stageId;
       }
       const queryParams = {
         count: 'true',
         page_limit: this.pagination.rowsPerPage,
         // page_offset: this.pagination.page || 1,
-        page_offset: 0,
+        page_offset: 0
         // completed_date_start: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.startDate).format('YYYY-MM-DD') : undefined,
         // completed_date_end: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.endDate).format('YYYY-MM-DD') : undefined,
       };
@@ -398,7 +399,7 @@ export default {
       });
       this.table.loading = true;
       axios.get(`${process.env.VUE_APP_ADHOC_API_URL}user/list`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         if (response && response.data) {
           if (response.data.data) {
@@ -408,7 +409,7 @@ export default {
             this.table.totalAudienceCount = response.data.data.count;
 
             this.$lodash.each(this.table.audience, (v, k) => {
-              v.index = k+1;
+              v.index = k + 1;
             });
 
             this.toggleAll(true);
@@ -430,23 +431,23 @@ export default {
         this.$store.dispatch('updateSnackbar', {
           color: 'error',
           show: true,
-          text: 'Unable to fetch employees list, Please try again later!',
+          text: 'Unable to fetch employees list, Please try again later!'
         });
         throw new Error(response);
       });
     },
-    updateSelectedAudience(emp, ev) {
+    updateSelectedAudience (emp, ev) {
       let temp = JSON.parse(JSON.stringify(this.selectedAudience));
       // const match = this.$lodash.findIndex(this.selectedAudience, (employee) =>
       //   employee.index === emp.index);
       if (ev && !temp[emp.index]) {
         const newAudience = {
-          [emp.index]: emp,
-        }
+          [emp.index]: emp
+        };
         temp = {
           ...temp,
-          ...newAudience,
-        }
+          ...newAudience
+        };
       } else if (!ev && this.selectedAudience[emp.index]) {
         delete temp[emp.index];
       }
@@ -458,25 +459,25 @@ export default {
       }
       // this.$store.dispatch('updateSelectedCandidatesWithData', temp);
     },
-    update() {
+    update () {
       if (this.allSelected) {
         this.toggleAll(false);
         this.toggleAll(true);
       }
     },
-    toggleAll(ev) {
+    toggleAll (ev) {
       if (!ev) {
         this.selectedAudience = {};
         this.allSelected = false;
       } else {
-        this.$nextTick(function a() {
+        this.$nextTick(function a () {
           this.selectedAudience = {};
           this.allSelected = true;
           this.$lodash.each(this.table.audience, emp => {
             let newAudience = {};
             if (emp.index) {
               newAudience = {
-                [emp.index]: emp,
+                [emp.index]: emp
               };
             // } else if (emp.id) {  // this block is used in case of audience added via CSV
             //   newAudience = {
@@ -485,24 +486,24 @@ export default {
             }
             this.selectedAudience = {
               ...this.selectedAudience,
-              ...newAudience,
+              ...newAudience
             };
           });
         });
       }
     },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
     },
-    getColor(e) {
+    getColor (e) {
       let color = '#4c3e9d';
       if (e.gender && e.gender === 'female') {
         color = 'pink';
       }
       return color;
     },
-    getAvatar(c) {
+    getAvatar (c) {
       let name = '';
       let avt = '';
       if (c.user_display_name) {
@@ -517,14 +518,14 @@ export default {
         avt = `${c.first_name ? c.first_name.charAt(0) : ''}${c.last_name.charAt(0)}`;
       }
       return avt.toUpperCase();
-    },
+    }
   },
-  created() {
+  created () {
     this.getFilters();
     // this.getEmployees();
   },
-  beforeMount() {
-  },
+  beforeMount () {
+  }
 };
 </script>
 
