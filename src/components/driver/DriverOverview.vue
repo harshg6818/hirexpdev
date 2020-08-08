@@ -74,7 +74,7 @@
 
                     <v-btn color="primary" @click.stop="goToEmployeeList()" outline style="display:block; font-size:14px; margin-left:36%; padding: 0 10px;">view employees</v-btn>
                   </h1><br>
-                  
+
                 </div>
 
                 <div v-else->
@@ -107,40 +107,40 @@
 import { mapState } from 'vuex';
 import { ContentLoader } from 'vue-content-loader';
 import listEmployees from '../analytics/listEmployees';
-import * as am4core from '@amcharts/amcharts4/core';
-import * as am4charts from '@amcharts/amcharts4/charts';
-import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-import am4themes_kelly from '@amcharts/amcharts4/themes/kelly';
-import {
-  VCheckbox,
-  VAvatar,
-  VTooltip,
-  VAlert,
-  VProgressLinear,
-  VProgressCircular,
-  VChip,
-} from 'vuetify';
+// import * as am4core from '@amcharts/amcharts4/core';
+// import * as am4charts from '@amcharts/amcharts4/charts';
+// import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+// import am4themes_kelly from '@amcharts/amcharts4/themes/kelly';
+// import {
+//   VCheckbox,
+//   VAvatar,
+//   VTooltip,
+//   VAlert,
+//   VProgressLinear,
+//   VProgressCircular,
+//   VChip,
+// } from 'vuetify';
 import Anychart from 'anychart';
-import VueAnychart from '../../components/analytics/VueAnychart';
+// import VueAnychart from '../../components/analytics/VueAnychart';
 
-am4core.useTheme(am4themes_animated);
-am4core.useTheme(am4themes_kelly);
+// am4core.useTheme(am4themes_animated);
+// am4core.useTheme(am4themes_kelly);
 
 export default {
   name: 'EmployeesList',
   components: {
     ContentLoader,
-    VCheckbox,
-    VAvatar,
-    VTooltip,
-    VAlert,
-    VChip,
-    VProgressLinear,
-    VProgressCircular,
-    listEmployees,
-    VueAnychart,
+    // VCheckbox,
+    // VAvatar,
+    // VTooltip,
+    // VAlert,
+    // VChip,
+    // VProgressLinear,
+    // VProgressCircular,
+    listEmployees
+    // VueAnychart,
   },
-  data() {
+  data () {
     return {
       dateRangeOptions: {},
       open: false,
@@ -152,11 +152,11 @@ export default {
         engagement_score: 0,
         employees_reached: 0,
         chats_completed: 0,
-        disengaged_employees: 0,
+        disengaged_employees: 0
       },
       dashboardReference: {},
       pagination: {
-        rowsPerPage: 10,
+        rowsPerPage: 10
       },
       stats: false,
       config: {
@@ -165,22 +165,22 @@ export default {
         panel: [true, true, true, true],
         initialLoading: true,
         loading: false,
-        initialLoadingFilters: true,
-      },
+        initialLoadingFilters: true
+      }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    goToEmployeeList() {
+    goToEmployeeList () {
       // console.log('data', this.$route.params.driver);
       this.$emit('updateEmpWithDriver', this.$route.params.driver);
       // this.$router.push({ path: `/employees?disengaged_from_driver=${this.$route.params.driver}` });
     },
-    getEngagementScore(score) {
+    getEngagementScore (score) {
       let color = '#fff';
       if (score) {
         if (score <= 3) {
@@ -193,19 +193,19 @@ export default {
       }
       return color;
     },
-    openDisengagedEmployees() {
+    openDisengagedEmployees () {
       this.$router.push({
-        query: { activeTab: 'need-to-meet' },
+        query: { activeTab: 'need-to-meet' }
       });
       this.dashboardReference.getDisengagedEmployeesDashboard();
     },
-    generateLineGraph(data) {
+    generateLineGraph (data) {
       if (document.getElementById('lineGraph')) {
         document.getElementById('lineGraph').innerHTML = '';
       }
 
       const that = this;
-      let chart = anychart.line();
+      const chart = Anychart.line();
       // chart.animation(true);
       // chart.padding([10, 40, 5, 20]);
       chart.title('');
@@ -223,11 +223,11 @@ export default {
         .format('{%Value}');
 
       // adjust markers of a series
-      let markers = series.markers();
+      const markers = series.markers();
       markers.enabled(true);
       markers.fill("#edebf5");
       markers.stroke("2 #4c3e9d");
-      let hoverMarkers = series.hovered().markers();
+      const hoverMarkers = series.hovered().markers();
       hoverMarkers.fill("#4c3e9d");
       hoverMarkers.stroke("2 #4c3e9d");
 
@@ -241,7 +241,6 @@ export default {
       chart.interactivity().hoverMode('by-x');
       chart.tooltip().positionMode('point');
 
-
       chart.xScale().mode('continuous');
 
       chart.yScale().maximum(5);
@@ -252,20 +251,20 @@ export default {
       // initiate chart drawing
       chart.draw();
     },
-    listEmployees() {
+    listEmployees () {
       this.$refs.listEmployees.pagination.page = 1;
       this.$refs.listEmployees.dialogs.listEmployee = true;
       this.$refs.listEmployees.getEmployeesToMeet();
-    },
+    }
   },
   watch: {
   },
-  beforeMount() {
+  beforeMount () {
     if (this.$route.params && this.$route.params.stageId) {
       // this.getFilters();
       this.stageId = this.$route.params.stageId;
     }
-  },
+  }
 };
 </script>
 

@@ -27,7 +27,7 @@
                     </ContentLoader>
                   </div>
                 </v-flex>
-                
+
                 <v-flex xs8>
                   <div class="vibes-cards">
                     <ContentLoader
@@ -52,7 +52,7 @@
             </v-flex>
           </v-layout>
         </div>
-    
+
         <!-- After intial loading -->
         <div class="mt-0 pt-2" v-show="!config.initialLoading">
             <v-layout xs12>
@@ -62,13 +62,13 @@
                     <div class="engagement-cards">
                       <!-- <p class="pa-3 text-xs-left mb-0"> DRIVER-WISE ENGAGEMENT </p> -->
                       <v-layout class="pb-4" v-if="report.length">
-                        <v-flex pa-5 mt-4 xs4 text-xs-left v-if="driver"> 
+                        <v-flex pa-5 mt-4 xs4 text-xs-left v-if="driver">
                           <v-img :src="getDriverImg(driver)" style="height:100px;width:100px;filter: grayscale(100%);"> </v-img>
                           <p class="pa-3 heading mb-0"> Key sub-drivers of {{ driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2') }} </p>
                           <p class="px-3 grey--text sub-heading"> Discover how satisfied employees are with the sub drivers of {{ driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2') }} at different touchpoints. </p>
                         </v-flex>
 
-                        <v-flex pa-5 mt-4 xs4 text-xs-left v-else> 
+                        <v-flex pa-5 mt-4 xs4 text-xs-left v-else>
                           <p class="pa-3 heading mb-0"> Key sub-drivers of Driver </p>
                           <p class="px-3 grey--text sub-heading"> Discover how satisfied employees are with the sub drivers of Driver at different touchpoints. </p>
                         </v-flex>
@@ -85,6 +85,7 @@
                             class="engagement-inbox px-2 mt-4"
                             hide-actions
                           >
+                            <!-- eslint-disable-next-line vue/no-unused-vars -->
                             <template slot="headers" slot-scope="headers">
                               <!--<v-card>-->
                               <tr class="card mb-2" color="primary">
@@ -96,7 +97,7 @@
                                   </p>
                                 </td>
 
-                                <td style="width:15%;max-width:15%" class="text-xs-left" v-for="subdriver in roles">
+                                <td style="width:15%;max-width:15%" class="text-xs-left" v-for="(subdriver, idx) in roles" :key="idx">
                                   <p class="mb-0 ">
                                     <strong style="color:white !important;">
                                       {{ subdriver.replace(/([a-z0-9])([A-Z])/g, '$1 $2').charAt(0).toUpperCase() + subdriver.replace(/([a-z0-9])([A-Z])/g, '$1 $2').substr(1) }}
@@ -114,7 +115,7 @@
                                     </p>
                                   </td>
 
-                                  <td style="width:15%;max-width:15%" class="text-xs-left" v-for="subdriver in roles">
+                                  <td style="width:15%;max-width:15%" class="text-xs-left" v-for="(subdriver, idx) in roles" :key="idx">
                                     <p class="mb-0">
                                         {{props.item[subdriver]}}
                                     </p>
@@ -122,7 +123,7 @@
                                 </tr>
                               <!--</v-card>-->
                             </template>
-                            <template slot="expand" slot-scope="props">
+                            <template slot="expand">
                               <div class="secondary px-4 py-2">
                                 Extra details
                               </div>
@@ -172,40 +173,40 @@
 /* eslint-disable max-len */
 import { mapState } from 'vuex';
 import { ContentLoader } from 'vue-content-loader';
-import axios from 'axios';
-import * as am4core from '@amcharts/amcharts4/core'; 
-import * as am4charts from '@amcharts/amcharts4/charts'; 
-import am4themes_animated from '@amcharts/amcharts4/themes/animated'; 
-import am4themes_kelly from '@amcharts/amcharts4/themes/kelly'; 
+// import axios from 'axios';
+// import * as am4core from '@amcharts/amcharts4/core';
+// import * as am4charts from '@amcharts/amcharts4/charts';
+// import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+// import am4themes_kelly from '@amcharts/amcharts4/themes/kelly';
 import Anychart from 'anychart';
-import VueAnychart from '../analytics/VueAnychart';
+// import VueAnychart from '../analytics/VueAnychart';
+// import {
+//   VCheckbox,
+//   VAvatar,
+//   VTooltip,
+//   VAlert,
+//   VProgressLinear,
+//   VProgressCircular,
+//   VChip
+// } from 'vuetify';
 
-am4core.useTheme(am4themes_animated); 
-am4core.useTheme(am4themes_kelly); 
-import {
-  VCheckbox,
-  VAvatar,
-  VTooltip,
-  VAlert,
-  VProgressLinear,
-  VProgressCircular,
-  VChip,
-} from 'vuetify';
+// am4core.useTheme(am4themes_animated);
+// am4core.useTheme(am4themes_kelly);
 
 export default {
   name: 'EmployeesList',
   components: {
-    ContentLoader,
-    VCheckbox,
-    VAvatar,
-    VTooltip,
-    VAlert,
-    VChip,
-    VProgressLinear,
-    VProgressCircular,
-    VueAnychart,
+    ContentLoader
+    // VCheckbox,
+    // VAvatar,
+    // VTooltip,
+    // VAlert,
+    // VChip,
+    // VProgressLinear,
+    // VProgressCircular,
+    // VueAnychart
   },
-  data() {
+  data () {
     return {
       dateRangeOptions: {},
       open: false,
@@ -216,7 +217,7 @@ export default {
       report: [],
       roles: [],
       pagination: {
-        rowsPerPage: 10,
+        rowsPerPage: 10
       },
       stats: false,
       config: {
@@ -225,36 +226,36 @@ export default {
         panel: [true, true, true, true],
         initialLoading: true,
         loading: false,
-        initialLoadingFilters: true,
+        initialLoadingFilters: true
       },
       table: {
         loading: true,
         stage: [],
-        totalItems: 0,
+        totalItems: 0
       }
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-    }),
+      user: state => state.user
+    })
   },
   methods: {
-    getDriverImg(pet) {
+    getDriverImg (pet) {
       let url = '';
       const images = require.context('@/assets/', false, /\.png$/);
       if (images && images(`./${pet}.png`)) {
         url = images(`./${pet}.png`);
       } else {
-        url = images(`./driver.png`);
+        url = images('./driver.png');
       }
       return url;
     },
-    generateHeatMap(data) {
-      const that = this;
+    generateHeatMap (data) {
+      // const that = this;
       // create a chart and set the data
       document.getElementById('milestone-heatmap').innerHTML = '';
-      let chart = anychart.heatMap(data);
+      const chart = Anychart.heatMap(data);
       // chart.height('80%');
       chart.container('milestone-heatmap');
 
@@ -263,15 +264,15 @@ export default {
       var labelsX = chart.xAxis().labels();
       var labelsY = chart.yAxis().labels();
 
-      labelsX.fontColor("#000");
+      labelsX.fontColor('#000');
       labelsX.fontSize(12);
       labelsX.fontWeight(500);
-      labelsX.hAlign("center");
+      labelsX.hAlign('center');
       labelsX.padding(20, 0, 20, 0);
-      labelsY.fontColor("#000");
+      labelsY.fontColor('#000');
       labelsY.fontSize(12);
       labelsY.fontWeight(500);
-      labelsY.hAlign("center");
+      labelsY.hAlign('center');
       labelsY.padding(0, 20, 0, 20);
 
       // enable and configure scrollers
@@ -280,44 +281,44 @@ export default {
       chart.yScroller().enabled(true);
       chart.yZoom().setToPointsCount(6);
 
-
       // tooltip settings
-      chart.tooltip().titleFormat("{%y}");
+      chart.tooltip().titleFormat('{%y}');
       chart.tooltip().useHtml(true);
 
       // chart.tooltip().title("{%y}");
-      chart.tooltip().format("{%x} : {%heat}");
+      chart.tooltip().format('{%x} : {%heat}');
 
       // create and configure a color scale.
-      var customColorScale = anychart.scales.ordinalColor();
+      var customColorScale = Anychart.scales.ordinalColor();
       customColorScale.ranges([
-        {from: 0, to: 0},
-        {from: 0.1, to: 3},
-        {from: 3.1, to: 4},
-        {greater: 4}
+        { from: 0, to: 0 },
+        { from: 0.1, to: 3 },
+        { from: 3.1, to: 4 },
+        { greater: 4 }
       ]);
-      customColorScale.colors(["lightgrey", "#f44336", "#ff9800", "#37b99c"]);
+      customColorScale.colors(['lightgrey', '#f44336', '#ff9800', '#37b99c']);
 
       // set the color scale as the color scale of the chart
       chart.colorScale(customColorScale);
 
-      chart.listen("pointClick", function(e) {
-        const tag = e.point.get("x");        
+      chart.listen('pointClick', function (e) {
+        // eslint-disable-next-line no-unused-vars
+        const tag = e.point.get('x');
       });
 
       // initiate drawing the chart
       chart.draw();
       this.$forceUpdate();
-    },
+    }
   },
   watch: {
   },
-  beforeMount() {
+  beforeMount () {
     if (this.$route.params && this.$route.params.driver) {
       // this.getFilters();
       this.driver = this.$route.params.driver;
     }
-  },
+  }
 };
 </script>
 

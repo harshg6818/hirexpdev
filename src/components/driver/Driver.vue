@@ -2,7 +2,7 @@
   <div class="">
     <v-layout column class="bg-gradient py-0 pl-1">
       <!-- Search Bar and Filters -->
-      <v-layout row wrap align-center style="border-bottom: 1px solid rgb(243, 241, 241);z-index:3;max-height:70px;"> 
+      <v-layout row wrap align-center style="border-bottom: 1px solid rgb(243, 241, 241);z-index:3;max-height:70px;">
         <v-flex xs2 class="mr-2">
           <v-btn class="elevation-0 ml-0 text-xs-right back-button"
             @click="goBack()"
@@ -52,8 +52,8 @@
           <DriverEngagement ref="DriverEngagement" class="my-2" />
         </v-flex>
       </v-layout>
-    </v-layout>  
-    
+    </v-layout>
+
     <!-- <v-dialog v-model="showFilter" persistent max-width="65%" style="overflow-y: hidden;"> -->
     <v-navigation-drawer
       style="height:100vh; position :fixed; bottom:0; right:0"
@@ -126,7 +126,7 @@
               </v-expansion-panel-content>
             <!-- </v-flex>
             <v-flex sm12 style="min-width:100%"
-              
+
             > -->
             <v-expansion-panel-content v-for="(v, k) in filters.default"
               :key="k"
@@ -178,7 +178,7 @@
           </v-expansion-panel>
 
         <v-card-actions style="position:fixed; bottom :0; width:100%; right:0; border-top: 1px solid #ccc; box-shadow:1;">
-          
+
           <v-btn color="error" flat @click="showFilter = false">Close</v-btn>
           <v-spacer></v-spacer>
           <v-btn @click="applyfilter()" class="white--text" color="primary" style="float:right">Apply</v-btn>
@@ -191,21 +191,21 @@
 
 <script>
 import Vue from 'vue';
-import {
-  VSelect,
-  VChip,
-  VMenu,
-  VDivider,
-  VTooltip,
-  VCheckbox,
-} from 'vuetify';
+// import {
+//   VSelect,
+//   VChip,
+//   VMenu,
+//   VDivider,
+//   VTooltip,
+//   VCheckbox
+// } from 'vuetify';
 import { mapState } from 'vuex';
 import axios from 'axios';
 import VDateRange from 'vuetify-daterange-picker';
 import dayjs from 'dayjs';
 import 'vuetify-daterange-picker/dist/vuetify-daterange-picker.css';
 
-import DriverEmployeesList from '../analytics/DriverEmployeesList';
+// import DriverEmployeesList from '../analytics/DriverEmployeesList';
 import DriverOverview from '../driver/DriverOverview';
 import DriverEngagement from '../driver/SubDriverEngagement';
 
@@ -216,39 +216,39 @@ Vue.use(VDateRange);
 export default {
   name: 'ViewDriver',
   components: {
-    VSelect,
-    VChip,
-    VMenu,
-    VDivider,
-    DriverEmployeesList,
-    VCheckbox,
-    VTooltip,
+    // VSelect,
+    // VChip,
+    // VMenu,
+    // VDivider,
+    // DriverEmployeesList,
+    // VCheckbox,
+    // VTooltip,
     DriverOverview,
-    DriverEngagement,
+    DriverEngagement
   },
-  data() {
+  data () {
     return {
       showFilter: false,
       config: {
         panel: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
         initialLoading: true,
-        activeDriver: null,
+        activeDriver: null
       },
       search: '',
       highPotentialOptions: [
         {
           label: 'True',
-          key: 'true',
+          key: 'true'
         },
         {
           label: 'False',
-          key: 'false',
-        },
+          key: 'false'
+        }
       ],
       highPotential: {
         default: {},
         selected: [],
-        main: {},
+        main: {}
       },
       dateRangeOptions: {
         startDate: undefined,
@@ -261,58 +261,58 @@ export default {
             label: 'All time',
             range: [
               undefined,
-              undefined,
-            ],
+              undefined
+            ]
           },
           {
             label: 'This Week',
             range: [
               dayjs().subtract(7, 'day').format(),
-              dayjs().format(),
-            ],
+              dayjs().format()
+            ]
           },
           {
             label: 'Last 30 Days',
             range: [
               dayjs().subtract(1, 'month').format(),
-              dayjs().format(),
-            ],
+              dayjs().format()
+            ]
           },
           {
             label: 'Last 3 Months',
             range: [
               dayjs().subtract(3, 'month').format(),
-              dayjs().format(),
-            ],
+              dayjs().format()
+            ]
           },
           {
             label: 'Last 6 Months',
             range: [
               dayjs().subtract(6, 'month').format(),
-              dayjs().format(),
-            ],
-          },
+              dayjs().format()
+            ]
+          }
         ],
         dateRange: {
           startDate: dayjs().format('DD/MM'),
-          endDate: dayjs().format('DD/MM'),
-        },
+          endDate: dayjs().format('DD/MM')
+        }
       },
       filters: {
         default: {},
         selected: {},
-        main: {},
+        main: {}
       },
       filtersList: {
         default: {},
         selected: {},
-        main: {},
+        main: {}
       },
-      searchFilter: '',
+      searchFilter: ''
       // previousRoutePath: '/',
     };
   },
-  beforeRouteEnter(to, from, next) {
+  beforeRouteEnter (to, from, next) {
     // console.log('from.fullPath', from);
     const r = from.fullPath;
     next((vm) => {
@@ -322,7 +322,7 @@ export default {
     previousRoutePath = r;
   },
   computed: {
-    formattedRange() {
+    formattedRange () {
       let time = '';
       if (!this.dateRangeOptions.startDate && !this.dateRangeOptions.endDate) {
         time = 'All Time';
@@ -333,11 +333,11 @@ export default {
     },
     ...mapState({
       user: state => state.user,
-      dashboardFilters: state => state.dashboardFilters,
-    }),
+      dashboardFilters: state => state.dashboardFilters
+    })
   },
   methods: {
-    checkForFilters() {
+    checkForFilters () {
       let applied = false;
       this.$lodash.each(this.filters.selected, (v) => {
         if (v.length > 0) {
@@ -360,7 +360,7 @@ export default {
     //   this.getSearchedFiltered(k);
     // }, 1000);
     // },
-    searchingfilter(k) {
+    searchingfilter (k) {
       if (this.filtersList.default[k]) {
         const filter = this.filtersList.default[k];
         if (this.searchFilter) {
@@ -383,27 +383,27 @@ export default {
     //   const tempData = filter.filter((r) => { return r[k].toLowerCase().indexOf(this.searchFilter.toLowerCase()) >= 0; });
     //   this.filtersList.default[k] = tempData;
     // },
-    getFilterName(name) {
+    getFilterName (name) {
       return name.replace('_', ' ');
     },
-    getSelectedFiltersCount(filter, idx) {
+    getSelectedFiltersCount (filter, idx) {
       if (filter[idx]) {
         return filter[idx].length;
       }
       return 0;
     },
-    applyfilter() {
+    applyfilter () {
       this.filterApplied = true;
       this.triggerUpdate(this.$route.params.stageId);
     },
-    goBack() {
+    goBack () {
       const t = this.updateEmployeeWithFilterSelected;
       let tempAllFilters = {};
       if (t.filters) {
         this.$lodash.each(t.filters, (value, key) => {
           if (value.length > 0) {
             const tempObj = {
-              [key]: value.length > 1 ? value.join() : value[0],
+              [key]: value.length > 1 ? value.join() : value[0]
             };
             tempAllFilters = { ...tempAllFilters, ...tempObj };
           }
@@ -422,11 +422,11 @@ export default {
         path: prevPath[0],
         query:
          {
-           ...tempAllFilters,
-         },
+           ...tempAllFilters
+         }
       });
     },
-    getDriverDetails(driver) {
+    getDriverDetails (driver) {
       if (document.getElementById('lineGraph')) {
         document.getElementById('lineGraph').innerHTML = '';
       }
@@ -438,22 +438,22 @@ export default {
       let queryParams = {
         initiated_date_start: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.startDate).format('YYYY-MM-DD') : undefined,
         initiated_date_end: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.endDate).format('YYYY-MM-DD') : undefined,
-        user__profile__high_potential_emp: this.highPotential.selected,
+        user__profile__high_potential_emp: this.highPotential.selected
       };
       this.$lodash.each(this.filters.selected, (v, k) => {
         if (v.length > 0) {
           queryParams[`user__profile__${k}__in`] = v.join();
         }
       });
-      let temp = {
-        fields: 'driver_user_count,driver_disengaged_user,monthwise_driver_trend,milestone_wise_analysis,driver_average',
+      const temp = {
+        fields: 'driver_user_count,driver_disengaged_user,monthwise_driver_trend,milestone_wise_analysis,driver_average'
       };
       queryParams = {
         ...queryParams,
-        ...temp,
+        ...temp
       };
       axios.get(`${process.env.VUE_APP_API_URL}driver/${driver}/details`, {
-        params: queryParams,
+        params: queryParams
       }).then((response) => {
         this.config.initialLoading = false;
         if (response && response.data) {
@@ -464,10 +464,10 @@ export default {
             this.$refs.DriverOverview.report.engagement_score = response.data.driver_average;
             this.$refs.DriverOverview.report.monthwise_driver_trend = response.data.monthwise_driver_trend;
             this.$refs.DriverOverview.report.disengaged_employees = response.data.driver_disengaged_user_count;
-            let temp = response.data.monthwise_driver_trend;
-            let data = [];
+            const temp = response.data.monthwise_driver_trend;
+            const data = [];
             this.$lodash.each(temp, (score, date) => {
-              let temp2 = [];
+              const temp2 = [];
               temp2.push(date);
               temp2.push(score);
               data.push(temp2);
@@ -477,12 +477,12 @@ export default {
           }
           if (this.$refs && this.$refs.DriverEngagement) {
             this.$refs.DriverEngagement.config.initialLoading = false;
-            let heatMapData = [];
-            let roles = [];
+            const heatMapData = [];
+            const roles = [];
             this.$lodash.each(response.data.milestone_wise_analysis, (data, milestone) => {
               this.$lodash.each(data, (average, subdriver) => {
                 let match = -1;
-                match = this.$lodash.findIndex(roles, (role) =>  
+                match = this.$lodash.findIndex(roles, (role) =>
                   role === subdriver);
                 if (match === -1) {
                   roles.push(subdriver);
@@ -493,29 +493,29 @@ export default {
             this.$lodash.each(response.data.milestone_wise_analysis, (data, milestone) => {
               let rowData = {};
               const temp = {
-                milestone: milestone,
+                milestone: milestone
               };
               rowData = {
                 ...rowData,
-                ...temp,
-              }
+                ...temp
+              };
               this.$lodash.each(roles, (v) => {
                 if (data[v]) {
                   const temp = {
-                    [v]: data[v],
+                    [v]: data[v]
                   };
                   rowData = {
                     ...rowData,
-                    ...temp,
-                  }
+                    ...temp
+                  };
                 } else {
                   const temp = {
-                    [v]: 0,
+                    [v]: 0
                   };
                   rowData = {
                     ...rowData,
-                    ...temp,
-                  }
+                    ...temp
+                  };
                 }
               });
               heatMapData.push(rowData);
@@ -541,7 +541,7 @@ export default {
         }
       });
     },
-    resetDashboard() {
+    resetDashboard () {
       if (this.config.activeDriver) {
         this.$router.push('/');
       } else {
@@ -553,14 +553,14 @@ export default {
         this.triggerUpdate();
       }
     },
-    updateEmployeeWithDriverFilter(driver) {
+    updateEmployeeWithDriverFilter (driver) {
       const t = this.updateEmployeeWithFilterSelected;
       let tempAllFilters = {};
       if (t.filters) {
         this.$lodash.each(t.filters, (value, key) => {
           if (value.length > 0) {
             const tempObj = {
-              [key]: value.length > 1 ? value.join() : value[0],
+              [key]: value.length > 1 ? value.join() : value[0]
             };
             tempAllFilters = { ...tempAllFilters, ...tempObj };
           }
@@ -579,14 +579,14 @@ export default {
       this.$router.push({
         path: '/employees',
         query:
-         { ...tempAllFilters },
+         { ...tempAllFilters }
       });
     },
-    triggerUpdate() {
+    triggerUpdate () {
       const dashboardFilters = {
         dateRangeOptions: this.dateRangeOptions,
         filters: this.filters.selected,
-        highPotential: this.highPotential.selected,
+        highPotential: this.highPotential.selected
       };
       this.$store.dispatch('updateFilters', dashboardFilters);
       this.updateEmployeeWithFilterSelected = dashboardFilters;
@@ -595,14 +595,14 @@ export default {
         this.getDriverDetails(this.$route.params.driver);
       }
     },
-    updateDate(date) {
+    updateDate (date) {
       if (date) {
         this.dateRangeOptions.startDate = date[0];
         this.dateRangeOptions.endDate = date[1];
         this.triggerUpdate();
       }
     },
-    getFilters() {
+    getFilters () {
       axios.get(`${process.env.VUE_APP_API_URL}company/${this.user.company}/dashboard_filters_options`).then((response) => {
         if (response && response.data && response.data.queryset_filters_options) {
           this.config.initialLoadingFilters = false;
@@ -624,7 +624,7 @@ export default {
         }
       });
     },
-    getFilterData(k) {
+    getFilterData (k) {
       this.expansion = !this.expansion;
       axios.get(`${process.env.VUE_APP_API_URL}company/${this.user.company}/dashboard_filters?filter_field=${k}`).then((response) => {
         if (response && response.data && response.data) {
@@ -659,22 +659,22 @@ export default {
     //     }
     //   });
     // },
-    getImgUrl(pet) {
+    getImgUrl (pet) {
       const images = require.context('@/assets/', false, /\.png$/);
       return images(`./${pet}.png`);
-    },
+    }
   },
   watch: {
-    $route() {
+    $route () {
       if (this.$route.params) {
         if (this.$route.params.driver) {
           this.getDriverDetails(this.$route.params.driver);
           this.getFilters();
         }
       }
-    },
+    }
   },
-  beforeMount() {
+  beforeMount () {
     if (this.$route && this.$route.query && Object.keys(this.$route.query).length > 0) {
       let temp = {};
       this.$lodash.each(this.$route.query, (value, key) => {
@@ -685,7 +685,7 @@ export default {
           } else {
             const val = value ? value.split(',') : '';
             const t = {
-              [key]: val,
+              [key]: val
             };
             temp = { ...temp, ...t };
           }
@@ -698,7 +698,7 @@ export default {
       this.filters.selected = temp;
       if (this.filters.selected.highPotential) {
         this.filters.selected.highPotential = this.filters.selected.highPotential[0];
-      } 
+      }
       if (this.$route && this.$route.query && this.$route.query.disengaged_from_driver) {
         delete this.filters.selected.disengaged_from_driver;
         this.disengagedFromDriver.selected = this.$route.query.disengaged_from_driver;
@@ -711,7 +711,7 @@ export default {
     }
     this.getFilters();
     this.triggerUpdate();
-  },
+  }
 
 };
 </script>
