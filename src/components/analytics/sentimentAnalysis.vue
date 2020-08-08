@@ -63,7 +63,7 @@
                       :headers="table.headers"
                       class="w-100 d-flex"
                       :items="report"
-                      hide-actions>
+                      hide-default-footer>
                         <template slot="items" slot-scope="props">
                         <tr v-if="props.item">
                           <td>
@@ -105,7 +105,7 @@
                       class="w-100 d-flex"
                       :headers="table.headers"
                       :items="report"
-                      hide-actions>
+                      hide-default-footer>
                         <template slot="items" slot-scope="props">
                         <tr v-if="props.item">
                           <td>

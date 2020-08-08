@@ -73,13 +73,13 @@
           v-if="activeTab === 'touchpoints-snapshot' || activeTab === 'touchpoints-analysis'"
         >
           <v-btn
-            class="box-container zoom-in"
+            class="box-container zoom-in mx-2"
             @click="dashboardTab = 'touchpoints-snapshot'"
           >
             Snapshot
           </v-btn>
           <v-btn
-            class="box-container zoom-in"
+            class="box-container zoom-in mx-2"
             @click="dashboardTab = 'touchpoints-analysis'"
           >
             Touchpoints analysis
@@ -91,19 +91,19 @@
             || activeTab === 'disengaged-sentiment-analysis'"
         >
           <v-btn
-            class="box-container zoom-in"
+            class="box-container zoom-in mx-2"
             @click="dashboardTab = 'disengaged-snapshot'"
           >
             Snapshot
           </v-btn>
           <v-btn
-            class="box-container zoom-in"
+            class="box-container zoom-in mx-2"
             @click="dashboardTab = 'disengaged-emp-to-meet'"
           >
             Employees to meet
           </v-btn>
           <v-btn
-            class="box-container zoom-in"
+            class="box-container zoom-in mx-2"
             @click="dashboardTab = 'disengaged-sentiment-analysis'"
           >
             Sentiment analysis
@@ -113,13 +113,13 @@
           v-if="activeTab === 'anonymous-snapshot' || activeTab === 'anonymous-message'"
         >
           <v-btn
-            class="box-container zoom-in"
+            class="box-container zoom-in mx-2"
             @click="dashboardTab = 'anonymous-snapshot'"
           >
             Snapshot
           </v-btn>
           <v-btn
-            class="box-container zoom-in"
+            class="box-container zoom-in mx-2"
             @click="dashboardTab = 'anonymous-message'"
           >
             Messages
@@ -193,19 +193,19 @@
         <text-Analysis></text-Analysis>
       </div>
 
-      <!--<div
+      <div
         class="anonymous-snapshot"
         v-if="activeTab === 'anonymous-snapshot'"
       >
-        <AnonymousSnapshot></AnonymousSnapshot>
+        <anonymous-Snapshot></anonymous-Snapshot>
       </div>
 
       <div
         class="anonymous-message"
         v-if="activeTab === 'anonymous-message'"
       >
-        <AnonymousMessage></AnonymousMessage>
-      </div> -->
+        <anonymous-Message></anonymous-Message>
+      </div>
 
     </div>
   </div>
@@ -239,8 +239,8 @@ import DisengagedSentimentAnalysis from './disengaged/sentiment-analysis';
 
 import TextAnalysis from './txt-analysis/analysis';
 
-// import AnonymousSnapshot from './anonymous/anonymous-snapshot';+
-// import AnonymousMessage from './anonymous/anonymous-message';
+import AnonymousSnapshot from './anonymous/anonymous-snapshot';
+import AnonymousMessage from './anonymous/anonymous-message';
 
 export default {
   name: 'dashboard',
@@ -256,9 +256,9 @@ export default {
     DisengagedSnapshot,
     DisengagedEmpToMeet,
     DisengagedSentimentAnalysis,
-    TextAnalysis
-    // AnonymousSnapshot,
-    // AnonymousMessage,
+    TextAnalysis,
+    AnonymousSnapshot,
+    AnonymousMessage
   },
 
   data () {
