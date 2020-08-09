@@ -3,12 +3,12 @@
     <v-container v-show="groupList">
       <v-subheader style="margin-bottom:3%;">
         <v-flex>
-          <v-list-tile-title style="display:block">
+          <v-list-item-title style="display:block">
             <strong class="py-2 " style=" font-size:18px; color:grey;">Groups</strong>
-          </v-list-tile-title>
-          <v-list-tile-sub-title>
+          </v-list-item-title>
+          <v-list-item-sub-title>
             Group of employees from specific segment based on location, gender, grade, departments etc.
-          </v-list-tile-sub-title>
+          </v-list-item-sub-title>
         </v-flex>
         <v-flex text-sm-right>
           <v-btn color="primary" @click.stop="addNewGroup()" :disabled="!checkPermission(['create_group'])">
@@ -145,9 +145,9 @@
                       </v-flex>
                     </v-layout>
                     <v-layout  transition="scale-transition" origin="center center" v-show="filtered_employee_segment || !noFilterapply" style=" padding-left:7%;" row wrap class="segmentFilter">
-                      <!-- <v-flex sm2>
+                      <v-flex sm2>
                         <p style="margin:10px 0 ">Filters applied</p>
-                      </v-flex> -->
+                      </v-flex>
                       <v-flex sm12>
                         <div  class="inine-flex">
                           <v-layout v-for="(filtersApplied, filterName) in segmentFilter" :key="filterName">
@@ -169,13 +169,13 @@
                       <v-flex style="background:white; position: -webkit-sticky; position: sticky; top: 0;" xs4>
                         <v-list style="background:#fff;"  class=''>
                           <template v-for="(item, index) in groupHeader">
-                            <v-list-tile style="border-bottom:1px solid rgba(0,0,0,0.12);" avatar :class="{'activeTab' : activeTab == item.title}" @click="updateTab(item)" :key="index">
-                              <v-list-tile-content>
-                                <v-list-tile-title >{{item.title}}</v-list-tile-title>
-                                <v-list-tile-sub-title  v-if="!segmentFilter[item.title.toLowerCase()] || !segmentFilter[item.title.toLowerCase()].length">{{item.subtitle}}</v-list-tile-sub-title>
-                                <v-list-tile-sub-title  v-else>{{segmentFilter[item.title.toLowerCase()].length}} filters selected</v-list-tile-sub-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
+                            <v-list-item style="border-bottom:1px solid rgba(0,0,0,0.12);" avatar :class="{'activeTab' : activeTab == item.title}" @click="updateTab(item)" :key="index">
+                              <v-list-item-content>
+                                <v-list-item-title >{{item.title}}</v-list-item-title>
+                                <v-list-item-sub-title  v-if="!segmentFilter[item.title.toLowerCase()] || !segmentFilter[item.title.toLowerCase()].length">{{item.subtitle}}</v-list-item-sub-title>
+                                <v-list-item-sub-title  v-else>{{segmentFilter[item.title.toLowerCase()].length}} filters selected</v-list-item-sub-title>
+                              </v-list-item-content>
+                            </v-list-item>
                           </template>
                         </v-list>
                       </v-flex>
@@ -305,7 +305,7 @@
       <v-subheader style="padding-left:0; margin-bottom:50px;">
         <v-flex sm1>
           <v-btn flat icon @click="closeAdminList()">
-            <V-icon>fas fa-arrow-left</V-icon>
+            <v-icon>fas fa-arrow-left</v-icon>
           </v-btn>
         </v-flex>
         <v-flex  >
@@ -356,9 +356,9 @@
               </v-flex>
             </v-layout>
             <v-flex sm12>
-              <v-list-tile style="text-align:center; height:30px;">
+              <v-list-item style="text-align:center; height:30px;">
                 <p style="text-align:center; width:100%; margin:0;">{{item.display_name}}</p>
-              </v-list-tile>
+              </v-list-item>
 
               <p style="width:100%;  text-align:center; margin-bottom:0; text-transform: capitalize;" class="grey--text subtitle-1">{{item.type}}</p>
               <p style="width:100%;  text-align:center; margin-bottom:0; overflow-wrap:break-word;" class="grey--text subtitle-1">{{item.email}}</p>
@@ -374,14 +374,16 @@
         <v-flex style="display:inline-block; padding:2px 10px 5%; min-height:193px"  sm4>
         <v-card  style=" box-shadow:none; webkit-box-shadow:none; cursor:pointer; height:100%;" class="addnewadmin" @click.native="addNewUser = true" :disabled="!checkPermission(['create_group'])">
             <v-list>
-            <v-layout style="height:20px;" >
+            <v-layout style="height:20px;">
             </v-layout>
             <v-flex sm12>
               <p style="width:100%;  text-align:center; margin-bottom:0; text-transform: capitalize;" class="grey--text subtitle-1">&nbsp;</p>
-              <p style="width:100%;  text-align:center; margin-bottom:0;" class="grey--text subtitle-1"><v-icon class="mr-2" small>fas fa-plus</v-icon></p>
-              <v-list-tile style="text-align:center; height:30px;">
+              <p style="width:100%;  text-align:center; margin-bottom:0;" class="grey--text subtitle-1">
+                <v-icon class="mr-2" small>fas fa-plus</v-icon>
+              </p>
+              <v-list-item style="text-align:center; height:30px;">
                 <p style="text-align:center; width:100%; margin:0;">Add Admin</p>
-              </v-list-tile>
+              </v-list-item>
 
               <p style="width:100%;  padding-left:20px; margin-bottom:0;" class="grey--text subtitle-1">&nbsp;</p>
             </v-flex>
