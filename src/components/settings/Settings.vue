@@ -75,6 +75,7 @@
             <ExitTouchpoints ref="ExitTouchpoints" v-show="tab == 'tab-exit' "/>
             <segment ref="segment" v-show="tab == 'tab-users'" v-if="checkPermission(['create_group','update_group','add_user_to_group','remove_user_from_group','change_user_group','delete_access_group']) "/>
             <alertWord ref="alertWord" v-show="tab == 'tab-alertWord'" />
+            <empAuditLog ref="EmpAuditLog" v-show="tab == 'tab-auditLog'"></empAuditLog>
           </v-flex>
         </v-layout>
         <v-layout>
@@ -99,6 +100,7 @@ import ExitTouchpoints from '../exit/ExitTouchpoints';
 import segment from './Segment';
 import emailTemplate from './manageTemplates/emailTemplates';
 import alertWord from './alertWord';
+import EmpAuditLog from './emp-audit-log';
 
 dayjs.extend(relativeTime);
 
@@ -117,7 +119,8 @@ export default {
     stage,
     segment,
     emailTemplate,
-    alertWord
+    alertWord,
+    EmpAuditLog
   },
   data () {
     return {
@@ -163,6 +166,11 @@ export default {
         title: 'Alert words',
         value: 'alertWord',
         subtitle: 'Manage alert words'
+      }, {
+        icon: 'fas fa-history',
+        title: 'Audit log',
+        value: 'auditLog',
+        subtitle: 'Audit logs of uploaded employees'
       }
       ],
       config: {
