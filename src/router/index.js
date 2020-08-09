@@ -138,6 +138,25 @@ const routes = [
           name: 'EditSurvey',
           component: () => import(/* webpackChunkName: "Surveys" */ '@/components/surveys/NewSurvey')
         }]
+      }, {
+        path: 'employees',
+        component: SubShell,
+        children: [{
+          path: '',
+          name: 'Employees',
+          component: () => import(/* webpackChunkName: "Employees" */ '@/components/employees/Employees')
+        },
+        // {
+        // path: 'upload-employees',
+        // component: () =>
+        //  import ( /* webpackChunkName: "Employees" */ '@/components/employees/UploadEmployees'),
+        // name: 'UploadEmployees',
+        // },
+        {
+          path: 'view/:employeeId',
+          name: 'ViewEmployee',
+          component: () => import(/* webpackChunkName: "Employees" */ '@/components/employees/ViewEmployee')
+        }]
       }
     ]
   }
