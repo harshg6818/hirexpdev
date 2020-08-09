@@ -559,16 +559,24 @@ export default {
 
       return `${this.newStage.triggerTimeDuration} ${this.newStage.triggerTimeUnit} ${final.timeIn} ${final.timeRef}`;
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     updateTriggerTimeIn () {
       if (this.newStage.triggerTimeReference === 'joining_date') {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.newStage.triggerTimeIn = '+';
       } else if (this.newStage.triggerTimeReference === 'before_exitDate') {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.newStage.triggerTimeIn = '-';
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.newStage.stageType = 'preExit';
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.config.stageType = 'preExit';
       } else if (this.newStage.triggerTimeReference === 'after_exitDate') {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.newStage.stageType = 'postExit';
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.config.stageType = 'postExit';
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.newStage.triggerTimeIn = '+';
       }
     }

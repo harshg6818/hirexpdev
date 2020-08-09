@@ -64,7 +64,8 @@
                     Actions
                 </v-flex>
             </v-layout> -->
-            <v-layout v-if="thankyouData.length > 0" v-for="(thankyou, r) in thankyouData" :key="r" class="campaign-row"
+            <!-- <v-layout v-if="thankyouData.length > 0" v-for="(thankyou, r) in thankyouData" :key="r" class="campaign-row" -->
+            <v-layout v-for="(thankyou, r) in thankyouData" :key="r" class="campaign-row"
               style="background:#fff; border-radius:6px; padding:10px 20px; margin:10px 0;" row wrap>
 
               <v-flex xs1>

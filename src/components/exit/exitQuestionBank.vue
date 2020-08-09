@@ -151,7 +151,7 @@
                             </v-checkbox>
 
                             <div v-for="(question, qi) in table.questions" class="py-2 px-3 d-inline-flex"
-                            style="width:100%">
+                            style="width:100%" :key="qi">
                               <v-layout>
                                 <v-flex xs1>
                                   <v-checkbox color="#0d2c8d"

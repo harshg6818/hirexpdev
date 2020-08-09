@@ -193,7 +193,8 @@
                             </v-btn>
                           </td>
                         </tr>
-                        <tr v-if="customFields.length > 0" v-for="(cf,index) in customFields" :key="index">
+                        <!-- <tr v-if="customFields.length > 0" v-for="(cf,index) in customFields" :key="index"> -->
+                        <tr v-for="(cf,index) in customFields" :key="index">
                           <td>
                             <v-text-field
                               label="Field name"

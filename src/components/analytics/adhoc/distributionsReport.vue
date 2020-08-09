@@ -70,7 +70,7 @@
               <v-card class="mb-3 mx-5" v-for="(distribution, medium) in group" :key="medium">
                 <!-- <h3 class="text-capitalize px-3 py-3"> Distribution Medium : {{medium}} </h3> -->
 
-                <div v-for="(dist, index) in distribution" class="px-5">
+                <div v-for="(dist, index) in distribution" class="px-5" :key="index">
                   <div v-if="!dist.is_reminder" class="mt-2">
                     <p style="font-size:20px;font-weight:600" class="mb-0"> {{formattedDate(dist.date)}}
                       <v-icon large color="#4c3e9d" class="distribution-report-medium ml-2"> {{getMediumIcon(medium)}} </v-icon>

@@ -5,11 +5,12 @@
           <v-flex style="background:#f3f6fa; position: -webkit-sticky; position: sticky; top: 0;" xs3>
             <v-list style="background:#f3f6fa;"  class=''>
               <template v-for="(item, index) in items" ref="items">
-                <v-subheader v-if="item.header" >{{ item.header }}</v-subheader>
-                <v-divider v-else-if="item.divider" :inset="item.inset" ></v-divider>
+                <v-subheader v-if="item.header" :key="index">{{ item.header }}</v-subheader>
+                <v-divider  :key="index" v-else-if="item.divider" :inset="item.inset" ></v-divider>
                 <v-list-item @click="updateTab(item.value)" class="settings-list"
                   style="border-bottom:1px solid rgba(0,0,0,0.12);" v-else
                   avatar :class="{'tab' : tab == `tab-${item.value}`}"
+                  :key="index"
                 >
                   <v-list-item-action style="min-width:46px;">
                       <v-icon style="font-size:24px;">{{ item.icon }}</v-icon>
@@ -35,13 +36,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import { ContentLoader } from 'vue-content-loader';
+// import { ContentLoader } from 'vue-content-loader';
 // import axios from 'axios';
 import dayjs from 'dayjs';
 import Reminder from './Reminder';
 import Acknowledgment from './Acknowledgment';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import RecipientTranscript from '@/components/elements/RecipientTranscript';
+// import RecipientTranscript from '@/components/elements/RecipientTranscript';
 
 // import {
 //   VCheckbox,

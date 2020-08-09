@@ -84,7 +84,8 @@
                     Actions
                 </v-flex>
             </v-layout> -->
-            <v-layout v-if="reminderData.length > 0" v-for="(reminder, r) in reminderData" :key="r" class="campaign-row"
+            <!-- <v-layout v-if="reminderData.length > 0" v-for="(reminder, r) in reminderData" :key="r" class="campaign-row" -->
+            <v-layout v-for="(reminder, r) in reminderData" :key="r" class="campaign-row"
               style="background:#fff; border-radius:6px; padding:10px 20px; margin:10px 0;" row wrap>
 
               <v-flex xs1>
