@@ -1,7 +1,7 @@
 <template>
   <div class="background-custom-grey adhoc-dashboard">
-    <v-layout row wrap align-center>
-      <v-flex sm3 pl-4 pt-3>
+    <div class="d-flex flex-row flex-wrap align-center">
+      <v-flex sm3 class="pl-4 pt-3">
         <v-text-field
           class="searchField"
           solo
@@ -13,8 +13,7 @@
           :label="`Search campaigns`"
         ></v-text-field>
       </v-flex>
-
-      <v-flex sm9 class="text-xs-right pr-4">
+      <v-flex sm9 class="text-right pr-4">
         <v-btn color="primary"
           :to="`${$route.path}/new`"
           small class="ml-0 text-none elevation-0 white--text pa-3"
@@ -23,22 +22,21 @@
             Create campaign
         </v-btn>
       </v-flex>
-    </v-layout>
-
+    </div>
     <!-- Main Dashboard -->
-    <v-layout column class="px-4 pb-4" style="min-height:85vh;">
+    <div class="px-4 pb-4 d-flex flex-column" style="min-height:85vh;">
       <!-- Campaigns Tabs -->
-      <v-layout row wrap class="mb-0" align-content-start
-      v-if="!config.initialLoading && table.totalCount > 0">
-
+      <div class="d-flex flex-row flex-wrap mb-0 align-content-start"
+        v-if="!config.initialLoading && table.totalCount > 0"
+      >
         <v-flex xs12 class="mb-3 ml-0">
-          <v-layout>
-
+          <div class="d-flex">
             <v-tabs
               v-model="config.activeTab"
               centered
               grow
               class="custom-tabs background-custom-grey"
+              height="fit-content"
             >
               <v-tab
                 v-for="(t, ti) in config.tabs"
@@ -50,7 +48,7 @@
                 color="transparent"
                 hide-slider
               >
-                <v-layout row wrap style="background:#fff;">
+                <div class="d-flex flex-row flex-wrap" style="background:#fff;">
                   <v-flex xs12>
                     <p class="text-capitalize mb-2" style="font-size:16px;">
                       {{ t.title }}
@@ -64,31 +62,28 @@
                       {{ stages_count[t.value] || 0}}
                     </h1>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-tab>
             </v-tabs>
-          </v-layout>
+          </div>
         </v-flex>
-      </v-layout>
-
+      </div>
       <!-- No campaigns present -->
-      <v-layout row wrap
-        v-if="!config.initialLoading && !table.totalItems && !table.searchString" mt-5 pt-2
-        align-content-center justify-center>
-
-        <v-flex sm12 px-2>
-          <v-card class="elevation-0 text-xs-center" min-height="60vh" style="border:1px solid #4c3e9d;">
-
+      <div
+        class="d-flex flex-row flex-wrap align-content-center justify-center mt-5 pt-2"
+        v-if="!config.initialLoading && !table.totalItems && !table.searchString"
+      >
+        <v-flex sm12 class="px-2">
+          <v-card class="elevation-0 text-center" min-height="60vh" style="border:1px solid #4c3e9d;">
             <v-card-title adhoc-title class="justify-center">
-              <v-layout row wrap>
+              <div class="d-flex flex-row flex-wrap">
                 <v-flex xs12>
-                  <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
+                  <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="amara">
                   <h2 class="headline">Welcome {{user.company_name}}!</h2>
                   <p class="subheading grey--text">You haven’t created any surveys yet. Create your first survey!</p>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-card-title>
-
             <v-card-actions class="justify-center mt-2">
               <v-btn color="primary"
                 :to="`${$route.path}/new`"
@@ -101,36 +96,31 @@
             </v-card-actions>
           </v-card>
         </v-flex>
-
-      </v-layout>
-
+      </div>
       <!-- No campaigns present for search query -->
-      <v-layout row wrap
-        v-if="!config.initialLoading && !table.totalItems && table.searchString" mt-5 pt-2
-        align-content-center justify-center>
-
-        <v-flex sm12 px-2>
-          <v-card class="elevation-0 text-xs-center" min-height="60vh" style="border:1px solid #4c3e9d;">
+      <div
+        class="d-flex flex-row flex-wrap align-content-center justify-center mt-5 pt-2"
+        v-if="!config.initialLoading && !table.totalItems && table.searchString"
+      >
+        <v-flex sm12 class="px-2">
+          <v-card class="elevation-0 text-center" min-height="60vh" style="border:1px solid #4c3e9d;">
             <v-card-title adhoc-title class="justify-center">
-              <v-layout row wrap>
+              <div class="d-flex flex-row flex-wrap">
                 <v-flex xs12>
-                  <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
+                  <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="amara">
                   <p>
                     No Campaigns matching the search query
                   </p>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-card-title>
           </v-card>
         </v-flex>
-
-      </v-layout>
-
+      </div>
       <!-- Content Loading Placeholders -->
-      <v-layout row wrap class="fill-layout" align-content-start v-if="config.initialLoading">
-
+      <div class="fill-layout d-flex flex-row flex-wrap align-content-start" v-if="config.initialLoading">
         <v-flex xs12 class="mb-3">
-          <div class="">
+          <div>
             <ContentLoader
               :height="25"
               :width="240"
@@ -148,7 +138,7 @@
         </v-flex>
 
         <v-flex xs12 class="mb-3">
-          <div class="" v-for="i in 5" :key="i">
+          <div v-for="i in 5" :key="i">
             <ContentLoader
               :height="32"
               :width="160"
@@ -160,13 +150,14 @@
             </ContentLoader>
           </div>
         </v-flex>
-      </v-layout>
+      </div>
 
       <!-- Campaigns List -->
-      <v-layout row wrap class="my-2" align-content-start
-      v-if="!config.initialLoading && table.totalItems > 0" >
+      <div class="my-2 d-flex flex-row flex-wrap align-content-start"
+        v-if="!config.initialLoading && table.totalItems > 0"
+      >
         <v-flex xs12>
-          <v-layout row wrap>
+          <div class="d-flex flex-row flex-wrap">
             <!-- <v-flex xs1 class="pl-3 d-inline-flex">
               <v-checkbox color="adhoc" v-model="allSelected" @change="toggleAll($event)"> </v-checkbox> -->
 
@@ -220,15 +211,15 @@
 
             <v-spacer> </v-spacer>
 
-          </v-layout>
+          </div>
         </v-flex>
 
-        <v-flex xs12 class=" mb-0 ml-0">
+        <v-flex xs12 class="mb-0 ml-0">
           <div class="px-0 stage-list">
             <div min-height="156" class="elevation-0 px-3 my-2 bg-white campaign-row"
             style="border:1px solid rgb(243, 241, 241); border-radius:6px;"
             v-for="(t, ti) in table.stage" :key="ti">
-              <v-layout row wrap class="">
+              <div class="d-flex flex-row flex-wrap">
                 <v-flex xs1 class="px-2 py-2">
                   <!-- <v-checkbox color="adhoc" v-model="selectedCampaigns[t.id]" @change="updateSelected(t, $event)"> </v-checkbox> -->
                   <div :style="`background-color: ${getColor1(t.status)}`" style="width:65px; border-radius:6px;">
@@ -236,18 +227,13 @@
                         letter-spacing: 0.4px; text-align:center; padding:20% 0; font-weight:700" >Chat survey</p>
                   </div>
                 </v-flex>
-
                 <v-flex class="headline pt-2" xs3>
-                  <v-layout class="w-100">
-                    <!--<v-flex xs12 style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">-->
-                      <p class="mb-0 mr-4 cursor-pointer hover-link" style="font-size: 18px;"
-                      @click="viewStage(t)">
-                        {{t.title}}
-                      </p>
-
-                    <!--</v-flex>-->
-
-                  </v-layout>
+                  <div class="w-100">
+                    <p class="mb-0 mr-4 cursor-pointer hover-link" style="font-size: 18px;"
+                    @click="viewStage(t)">
+                      {{t.title}}
+                    </p>
+                  </div>
                   <span class="caption grey--text">
                     Created on : {{dayjs(t.created_at).format('DD-MM-YYYY')}} |
                     Modified on : {{dayjs(t.last_updated).format('DD-MM-YYYY')}}
@@ -264,17 +250,15 @@
                         <span v-if="t.status === 'completed'" > Completed </span>
                         <span v-if="t.status === 'closed'" > Closed </span>
                       </div> -->
-                      <v-chip style="margin-top:23%; height:24px; margin-right:30px;" :color="`${getColor1(t.status)}`" text-color="white">
-                        <span v-if="t.status === 'draft'" > Draft </span>
-                        <span v-if="t.status === 'active'" > Active </span>
-                        <span v-if="t.status === 'completed'" > Completed </span>
-                        <span v-if="t.status === 'archived'" > Archived </span>
-                      </v-chip>
-
-                    </v-flex>
-
+                  <v-chip style="margin-top:23%; height:24px; margin-right:30px;" :color="`${getColor1(t.status)}`" text-color="white">
+                    <span v-if="t.status === 'draft'" > Draft </span>
+                    <span v-if="t.status === 'active'" > Active </span>
+                    <span v-if="t.status === 'completed'" > Completed </span>
+                    <span v-if="t.status === 'archived'" > Archived </span>
+                  </v-chip>
+                </v-flex>
                 <v-flex xs7 class="pl-2">
-                  <v-layout row wrap align-center class="pt-3">
+                  <div class="pt-3 d-flex flex-row flex-wrap align-content-start">
                     <v-flex xs3 class="stages-analysis analysis" style="text-align:left; flex-basis:20%;">
                       <p style="font-size:16px; font-weight:500; color:#383535;" class="mb-0 mt-1" >{{t.question_count}}</p>
                       <span  class="grey--text caption">Total questions</span>
@@ -303,31 +287,18 @@
                         Participation rate
                       </span>
                     </v-flex>
-
-                    <!-- <v-flex xs4 text-xs-right>
-                      <v-btn color="primary"
-                        style="border-radius: 5px"
-                        @click="viewStage(t)"
-                        small class="ml-0 elevation-0 pl-0 text-capitalize"
-                        >
-                        <v-icon small class="ml-2">fas fa-chart-bar</v-icon>
-                          &nbsp; &nbsp; View Analysis
-                      </v-btn>
-                    </v-flex> -->
-
-                    <v-flex text-xs-right xs2>
+                    <v-flex xs2 class="text-right">
                       <v-menu offset-y>
                         <v-btn
                           slot="activator"
                           color="#383535"
-                          dark
-                          outline
+                          outlined
                         >
                           Actions <v-icon v-if="!dropDown" class="ml-3 grey--text">fas fa-angle-down</v-icon>
                                   <v-icon v-if="dropDown" class="ml-3 grey--text">fas fa-angle-up</v-icon>
                         </v-btn>
                         <v-list>
-                          <v-list-tile
+                          <v-list-item
                             v-for="(item, index) in config.actions"
                             v-if="item.title !== 'Archived' || (item.title === 'Archived' && (t.status === 'active' || t.status === 'completed'))"
                             :key="index"
@@ -339,30 +310,28 @@
                             || item.dialog == 'restore' && t.status !== 'archived'
                             ? 'd-none' : '' "
                           >
-                            <v-list-tile-title>
+                            <v-list-item-title>
                               <!-- <v-icon class="mr-2">{{item.icon}}</v-icon> -->
                               {{ item.title }}
-                            </v-list-tile-title>
-                          </v-list-tile>
+                            </v-list-item-title>
+                          </v-list-item>
                         </v-list>
                       </v-menu>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-flex>
-              </v-layout>
-              <v-layout class="px-1 mb-1 ml-2" style="background:#7b9fe042; border-radius:3px; color:#9e9e9e; max-width: fit-content;">
-
-              <span style="color:#EC6772; font-weight: bold;">Created by : &nbsp; </span> {{t.created_by_name }}  {{t.created_by_email}}
-              </v-layout>
+              </div>
+              <div class="d-flex px-1 mb-1 ml-2" style="background:#7b9fe042; border-radius:3px; color:#9e9e9e; max-width: fit-content;">
+                <span style="color:#EC6772; font-weight: bold;">Created by : &nbsp; </span> {{t.created_by_name }}  {{t.created_by_email}}
+              </div>
             </div>
           </div>
         </v-flex>
 
         <v-flex xs1> </v-flex>
-      </v-layout>
-
+      </div>
       <!-- Pagination -->
-      <v-layout v-if="table.totalItems > 0">
+      <div class="d-flex" v-if="table.totalItems > 0">
         <v-flex xs1></v-flex>
         <v-flex class="pr-4 mb-0 ml-3" xs10 style="text-align:center">
           <v-pagination
@@ -375,12 +344,10 @@
             circle
           ></v-pagination>
         </v-flex>
-
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
       <!--<v-layout row wrap v-show="table.totalItems > 0" v-if="$route.path === '/ad-hoc'">-->
-    </v-layout>
-
+    </div>
     <!--<EmployeesList ref="EmployeesList" />-->
   </div>
 </template>
