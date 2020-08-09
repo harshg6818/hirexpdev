@@ -9,7 +9,7 @@ import Shell from '../views/Shell';
 import SubShell from '../views/SubShell.vue';
 
 // Views
-// const PageNotFound = () => import(/* webpackChunkName: "PageNotFound" */ './views/PageNotFound')
+const PageNotFound = () => import(/* webpackChunkName: "PageNotFound" */ '../views/PageNotFound');
 
 Vue.use(VueRouter);
 
@@ -18,18 +18,15 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "Login" */ '../views/Login.vue')
-  },
-  {
+  }, {
     path: '/Request-demo',
     name: 'SignUp',
     component: () => import(/* webpackChunkName: "SignUp" */ '../views/SignUp.vue')
-  },
-  {
+  }, {
     path: '/support',
     name: 'NeedHelp',
     component: () => import(/* webpackChunkName: "needhelp" */ '../views/needHelp.vue')
-  },
-  {
+  }, {
     path: '/first-login',
     name: 'FirstLogin',
     component: () => import(/* webpackChunkName: "FirstLogin" */ '../views/FirstLogin.vue')
@@ -108,8 +105,7 @@ const routes = [
           path: '',
           name: 'Adhoc',
           component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/Adhoc')
-        },
-        {
+        }, {
           path: 'new',
           name: 'NewAdhoc',
           component: () => import(/* webpackChunkName: "Stages" */ '@/components/adhoc/NewAdhoc')
@@ -197,8 +193,44 @@ const routes = [
         //   path: 'FAQ',
         //   component: SupportCenterFAQ,
         //   name: 'SupportCenterFAQ',
+      }, {
+        path: 'support-center',
+        component: SubShell,
+        children: [{
+          path: '',
+          name: 'SupportCenterTickets',
+          component: () => import(/* webpackChunkName: "SupportCenter" */ '@/components/supportCenter/SupportCenterTickets')
+        }, {
+          path: 'new',
+          name: 'NewSupportTicket',
+          component: () => import(/* webpackChunkName: "SupportCenter" */ '@/components/supportCenter/NewSupportTicket')
+        }, {
+          path: 'view',
+          name: 'ViewSupportTicket',
+          component: () => import(/* webpackChunkName: "SupportCenter" */ '@/components/supportCenter/ViewSupportTicket')
+        }]
+      }, {
+        path: 'settings',
+        component: SubShell,
+        children: [{
+          path: '',
+          name: 'Settings',
+          component: () => import(/* webpackChunkName: "Settings" */ '@/components/settings/Settings')
+        }]
       }
     ]
+  }, {
+    path: '404',
+    name: 'PageNotFound',
+    component: PageNotFound
+  }, {
+    path: '500',
+    name: 'ServerError',
+    component: PageNotFound
+  }, {
+    path: '*',
+    name: 'PageNotFoundDefault',
+    component: PageNotFound
   }
 ];
 
@@ -209,7 +241,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log('store.state.user', store.state.user);
+  // console.log('store.state.user', store.state.user);
   // for main app navigation start
   const routePath = to.path.split('/');
   const currentPath = routePath[1];
