@@ -157,6 +157,46 @@ const routes = [
           name: 'ViewEmployee',
           component: () => import(/* webpackChunkName: "Employees" */ '@/components/employees/ViewEmployee')
         }]
+      }, {
+        path: 'drivers',
+        component: SubShell,
+        children: [{
+          path: '',
+          name: 'Driver',
+          component: () => import(/* webpackChunkName: "Analytics" */ '@/components/driver-engagement/driver')
+        }, {
+          path: 'v/:driver',
+          name: 'SubDrivers',
+          component: () => import(/* webpackChunkName: "Analytics" */ '@/components/driver-engagement/sub-drivers')
+        }]
+      }, {
+        path: 'analytics',
+        component: SubShell,
+        children: [{
+          path: '',
+          name: 'Analytics',
+          component: () => import(/* webpackChunkName: "Analytics" */ '@/components/analytics/Analytics')
+        }, {
+          path: 'life-cycle',
+          name: 'EmpLifeCycle',
+          component: () => import(/* webpackChunkName: "EmployeeLifecycle" */ '@/components/analytics/EmployeeLifecycle')
+        }, {
+          path: 'response-rate',
+          name: 'EmployeeResponseRate',
+          component: () => import(/* webpackChunkName: "EmployeeResponseRate" */ '@/components/analytics/EmployeeResponseRate')
+        }, {
+          path: 'participation-rate',
+          name: 'EmployeeChatParticipationRate',
+          component: () => import(/* webpackChunkName: "EmployeeResponseRate" */ '@/components/analytics/EmployeeChatParticipationRate')
+        }, {
+          path: 'diversity-report',
+          name: 'DiversityReport',
+          component: () => import(/* webpackChunkName: "EmployeeResponseRate" */ '@/components/analytics/diversityReport')
+        }]
+        // }, {
+        //   path: 'FAQ',
+        //   component: SupportCenterFAQ,
+        //   name: 'SupportCenterFAQ',
       }
     ]
   }
