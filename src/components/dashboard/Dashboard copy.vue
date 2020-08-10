@@ -1210,8 +1210,8 @@ export default {
 .announcekit-widget {
   a {
     color: white !important;
-    margin-left: 16px;
-    margin-top: -16px;
+    margin-left: -16px;
+    margin-top: -32px;
   }
 }
 .dashboardView {

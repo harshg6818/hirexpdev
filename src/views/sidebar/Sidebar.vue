@@ -290,8 +290,8 @@ export default {
     position:absolute;
     top:20px;
     left:25px;
-    margin-left: 16px;
-    margin-top: -16px;
+    margin-left: -16px;
+    margin-top: -32px;
   }
 }
 .v-list.bottom {
