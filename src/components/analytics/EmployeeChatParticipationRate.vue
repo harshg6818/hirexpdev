@@ -140,8 +140,8 @@ export default {
       sortByKey: '',
       selectedfilters: [],
       reportDate: {
-        start: format(subDays(new Date(), 365), 'YYYY-MM-DD'),
-        end: format(new Date(), 'YYYY-MM-DD')
+        start: format(subDays(new Date(), 365), 'yyyy-MM-dd'),
+        end: format(new Date(), 'yyyy-MM-dd')
       }
       // barData: [
       //   {

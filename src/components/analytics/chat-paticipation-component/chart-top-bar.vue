@@ -2,7 +2,7 @@
   <div class="rate-bar-wrap">
     <div class="left-side">
       <div class="back-icon">
-        <v-btn flat icon color="#6f64b0" @click="goBackToAnalytics">
+        <v-btn text icon color="#6f64b0" @click="goBackToAnalytics">
           <v-icon>fas fa-arrow-left</v-icon>
         </v-btn>
       </div>
@@ -30,15 +30,17 @@
           </v-btn> -->
       <div class="report-datepicker">
         <v-menu full-width offset-y :close-on-content-click="false" v-model="dateMenu" bottom>
-          <v-btn
-            slot="activator"
-            class="box-container zoom-in"
-          >
-            <v-icon>far fa-calendar-alt</v-icon>
-            <span>&nbsp;&nbsp;&nbsp;</span>
-            <span v-if="range[0] || range[1]">{{ range[0] }} &mdash; {{ range[1] }}</span>
-            <span v-else>Choose date range</span>
-          </v-btn>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-on="on"
+              class="box-container zoom-in"
+            >
+              <v-icon>far fa-calendar-alt</v-icon>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <span v-if="range[0] || range[1]">{{ range[0] }} &mdash; {{ range[1] }}</span>
+              <span v-else>Choose date range</span>
+            </v-btn>
+          </template>
           <v-card>
             <v-card-text>
               <v-daterange
@@ -55,7 +57,7 @@
               </v-btn> -->
               <v-btn
                 class="error--text"
-                flat
+                text
                 @click="resetDateFilters"
               >Reset</v-btn>
               <v-spacer></v-spacer>
@@ -106,56 +108,56 @@ export default {
       filterApplied: false,
       dateMenu: false,
       range: [
-        format(subDays(new Date(), 365), 'YYYY-MM-DD'),
-        format(new Date(), 'YYYY-MM-DD')
+        format(subDays(new Date(), 365), 'yyyy-MM-dd'),
+        format(new Date(), 'yyyy-MM-dd')
       ],
       dateRangeOptions: {
-        // startDate: format(subDays(new Date(), 7), 'YYYY-MM-DD'),
-        // endDate: format(new Date(), 'YYYY-MM-DD'),
-        startDate: format(subDays(new Date(), 365), 'YYYY-MM-DD'),
-        endDate: format(new Date(), 'YYYY-MM-DD'),
+        // startDate: format(subDays(new Date(), 7), 'yyyy-MM-dd'),
+        // endDate: format(new Date(), 'yyyy-MM-dd'),
+        startDate: format(subDays(new Date(), 365), 'yyyy-MM-dd'),
+        endDate: format(new Date(), 'yyyy-MM-dd'),
         format: 'MM/DD/YYYY',
         presets: [
           {
             label: 'Today',
             range: [
-              format(new Date(), 'YYYY-MM-DD'),
-              format(new Date(), 'YYYY-MM-DD')
+              format(new Date(), 'yyyy-MM-dd'),
+              format(new Date(), 'yyyy-MM-dd')
             ]
           },
           {
             label: 'Yesterday',
             range: [
-              format(subDays(new Date(), 1), 'YYYY-MM-DD'),
-              format(new Date(), 'YYYY-MM-DD')
+              format(subDays(new Date(), 1), 'yyyy-MM-dd'),
+              format(new Date(), 'yyyy-MM-dd')
             ]
           },
           {
             label: 'Last 30 Days',
             range: [
-              format(subDays(new Date(), 30), 'YYYY-MM-DD'),
-              format(subDays(new Date(), 1), 'YYYY-MM-DD')
+              format(subDays(new Date(), 30), 'yyyy-MM-dd'),
+              format(subDays(new Date(), 1), 'yyyy-MM-dd')
             ]
           },
           {
             label: 'Last 3 Months',
             range: [
-              format(subDays(new Date(), 90), 'YYYY-MM-DD'),
-              format(subDays(new Date(), 1), 'YYYY-MM-DD')
+              format(subDays(new Date(), 90), 'yyyy-MM-dd'),
+              format(subDays(new Date(), 1), 'yyyy-MM-dd')
             ]
           },
           {
             label: 'Last 6 Months',
             range: [
-              format(subDays(new Date(), 180), 'YYYY-MM-DD'),
-              format(subDays(new Date(), 1), 'YYYY-MM-DD')
+              format(subDays(new Date(), 180), 'yyyy-MM-dd'),
+              format(subDays(new Date(), 1), 'yyyy-MM-dd')
             ]
           },
           {
             label: 'Last 12 Months',
             range: [
-              format(subDays(new Date(), 365), 'YYYY-MM-DD'),
-              format(subDays(new Date(), 1), 'YYYY-MM-DD')
+              format(subDays(new Date(), 365), 'yyyy-MM-dd'),
+              format(subDays(new Date(), 1), 'yyyy-MM-dd')
             ]
           }
         ]
@@ -187,8 +189,8 @@ export default {
     resetDateFilters () {
       this.dateMenu = false;
       const resetDate = [
-        format(subDays(new Date(), 365), 'YYYY-MM-DD'),
-        format(new Date(), 'YYYY-MM-DD')
+        format(subDays(new Date(), 365), 'yyyy-MM-dd'),
+        format(new Date(), 'yyyy-MM-dd')
       ];
       this.$emit('reportDateFilters', resetDate);
     },

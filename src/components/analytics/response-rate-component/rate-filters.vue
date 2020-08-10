@@ -66,7 +66,7 @@
         >
           <v-btn
             class="error--text"
-            flat
+            text
             @click="showRateFilterDrawer = false"
             style="float:left"
           >Close</v-btn>

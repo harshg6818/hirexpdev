@@ -14,7 +14,7 @@
           color:grey;"
           v-if="filterApplied"
           class="text-capitalize"
-          flat
+          text
           @click="resetDashboard"
         >
           Remove Filters
@@ -378,7 +378,7 @@
         <v-card-actions
           style="position:fixed;bottom:0;width:100%;right:0;border-top:1px solid #ccc;box-shadow:1;"
         >
-          <v-btn style="color:grey;" flat @click="showFilter = false">Close</v-btn>
+          <v-btn style="color:grey;" text @click="showFilter = false">Close</v-btn>
           <v-spacer></v-spacer>
           <v-btn @click="applyfilter()"
             class="white--text"

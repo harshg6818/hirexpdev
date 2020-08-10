@@ -47,7 +47,7 @@
       </thead>
       <tbody>
         <tr
-          class="row"
+          class="am-row"
           v-for="(row, key) in diversityOvertimeData"
           :key="key"
         >
@@ -65,7 +65,7 @@
           </td>
         </tr>
 
-        <tr class="row">
+        <tr class="am-row">
           <td class="row-data">Delhi</td>
           <td class="row-data">
             <tr class="sub-rows">
@@ -110,7 +110,7 @@
             </tr>
           </td>
         </tr>
-        <tr class="row">
+        <tr class="am-row">
           <td class="row-data">Mumbai</td>
           <td class="row-data">
             <tr class="sub-rows">
@@ -155,7 +155,7 @@
             </tr>
           </td>
         </tr>
-        <tr class="row">
+        <tr class="am-row">
           <td class="row-data">Pune</td>
           <td class="row-data">
             <tr class="sub-rows">
@@ -269,7 +269,7 @@ export default {
       padding: 0.4rem 0.7rem;
       min-width: 3rem;
     }
-    tbody .row {
+    tbody .am-row {
       border-bottom: 1px solid #dddddd;
       background-color: var(--bg);
       td {
