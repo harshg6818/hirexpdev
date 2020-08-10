@@ -70,37 +70,39 @@
             v-show="!config.initialLoading"
             :headers="table.headers"
             :items="table.tickets"
-            :pagination.sync="pagination"
-            :total-items="table.totalItems"
+            :options="pagination"
+            :server-items-length="table.totalItems"
             :loading="table.loading"
             class=""
           >
-            <template slot="items" slot-scope="props">
-              <tr class="cursor-pointer">
-                <td>
-                  {{props.item.id}}
-                </td>
-                <td>
-                  {{props.item.subject}}
-                </td>
-                <td>
-                  {{dayjs(props.item.created_at).from()}}
-                </td>
-                <td>
-                  {{getPriority(props.item.priority)}}
-                </td>
-                <td @click.stop>
-                  <!-- View Ticket -->
-                  <v-btn color="primary"
-                    small
-                    flat
-                    icon
-                    @click="viewTicket(props.item)"
-                  >
-                    <v-icon small>fas fa-external-link-alt</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
+            <template v-slot:body="{items}">
+              <tbody>
+                <tr class="cursor-pointer" v-for="(item, index) in items" :key="index">
+                  <td>
+                    {{item.id}}
+                  </td>
+                  <td>
+                    {{item.subject}}
+                  </td>
+                  <td>
+                    {{dayjs(item.created_at).from()}}
+                  </td>
+                  <td>
+                    {{getPriority(item.priority)}}
+                  </td>
+                  <td @click.stop>
+                    <!-- View Ticket -->
+                    <v-btn color="primary"
+                      small
+                      text
+                      icon
+                      @click="viewTicket(item)"
+                    >
+                      <v-icon small>fas fa-external-link-alt</v-icon>
+                    </v-btn>
+                  </td>
+                </tr>
+              </tbody>
             </template>
             <v-alert slot="no-data" :value="true" color="primary"
             icon="fas fa-exclamation-triangle" outline>
