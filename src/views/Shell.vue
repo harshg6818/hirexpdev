@@ -4,6 +4,7 @@
       @searchEmployees="searchEmployees = true;"
     ></navbar>
     <v-main
+      class="app-main-wrap"
       :class="searchEmployees ? 'freeze-main' : ''"
     >
       <SearchEmployees
@@ -1356,6 +1357,11 @@ body, .application {
 }
 
 .content-sidebarOpen {
+  // padding: 0 0 0 53px !important;
+  // padding: 50px 0 0 50px !important;
+  padding: 58px 0 0 0px !important;
+}
+.app-main-wrap {
   // padding: 0 0 0 53px !important;
   // padding: 50px 0 0 50px !important;
   padding: 58px 0 0 0px !important;

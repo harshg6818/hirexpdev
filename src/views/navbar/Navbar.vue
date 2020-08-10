@@ -14,7 +14,7 @@
           color="transparent"
           class="elevation-0 amara-nav-bar"
           background-color="transparent"
-          height="64"
+          height="58"
         >
           <v-btn
             class="amara-nav-btn"
@@ -100,6 +100,7 @@
                         color="primary"
                         small
                         outlined
+                        @click="goToSettings('/settings?tab=profile')"
                       >View Profile
                       </v-btn>
                     </v-list-item-title>
@@ -112,7 +113,7 @@
               </div>
               <v-divider></v-divider>
               <v-list class="menu-account">
-                <v-list-item to="/support-center">
+                <v-list-item @click="goToSettings('/support-center')">
                   <v-list-item-title>
                     Create support ticket
                   </v-list-item-title>
@@ -129,27 +130,27 @@
               </div>
               <v-divider></v-divider>
               <v-list class="menu-manage">
-                <v-list-item to="/settings?tab=company">
+                <v-list-item @click="goToSettings('/settings?tab=company')">
                   <v-list-item-title>
                     Company settings
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item to="/settings?tab=integrations">
+                <v-list-item @click="goToSettings('/settings?tab=integrations')">
                   <v-list-item-title>
                     Integrations
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item to="/settings?tab=milestones">
+                <v-list-item @click="goToSettings('/settings?tab=milestones')">
                   <v-list-item-title>
                     Critical Touchpoints
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item to="/settings?tab=users">
+                <v-list-item @click="goToSettings('/settings?tab=users')">
                   <v-list-item-title>
                     Manage Users
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item to="/settings?tab=alertWord">
+                <v-list-item @click="goToSettings('/settings?tab=alertWord')">
                   <v-list-item-title>
                     Alert Words
                   </v-list-item-title>
@@ -333,6 +334,11 @@ export default {
       this.$router.push({
         path: val
       });
+    },
+    goToSettings (path) {
+      this.$router.push({
+        path
+      });
     }
   },
   // mounted() {
@@ -351,6 +357,17 @@ export default {
 
 <style lang="scss">
 .amara-header {
+  z-index: 9;
+  position: fixed;
+  width: 100%;
+  .v-toolbar {
+    .v-toolbar__content {
+      height: 58px !important;
+      .v-toolbar__title:not(:first-child) {
+        margin-left: 30px;
+      }
+    }
+  }
   .amara-logo {
     height: 100%;
     width: 20%;
