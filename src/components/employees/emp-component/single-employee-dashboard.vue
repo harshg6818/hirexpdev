@@ -60,8 +60,11 @@
           <v-menu offset-y
             max-height="300"
           >
+          <template v-slot:activator="{ on, attrs }">
             <v-btn
               slot="activator"
+              v-bind="attrs"
+              v-on="on"
               :color="getStatusColor"
               small
               outline
@@ -77,19 +80,20 @@
                 <v-icon small>fas fa-sort-down</v-icon>
               </span>
             </v-btn>
+          </template>
             <v-list>
-              <v-list-tile
+              <v-list-item
                 v-for="(action, index) in actionStatus[activeEmployee.last_chat_action_status]"
                 :key="index"
                 @click="action.action(action.dialog, action.permission)"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   <span style="position:relative">
                     <v-icon small>{{action.icon}}</v-icon>
                   </span>
                   &nbsp;{{action.text}}
-                </v-list-tile-title>
-              </v-list-tile>
+                </v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-menu>
         </div>
@@ -106,8 +110,11 @@
           <v-menu offset-y
             max-height="300"
           >
+          <template v-slot:activator="{ on, attrs }">
             <v-btn
               slot="activator"
+              v-bind="attrs"
+              v-on="on"
               color="#6f64b0"
               small
               outline
@@ -123,26 +130,27 @@
                 <v-icon small>fas fa-sort-down</v-icon>
               </span>
             </v-btn>
+          </template>
             <v-list>
-              <v-list-tile
+              <v-list-item
                 v-if="activeEmployee.last_chat_assignedTo_display_name"
                 @click="updateAssignedTo(null)"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   Remove assignee
-                </v-list-tile-title>
-              </v-list-tile>
+                </v-list-item-title>
+              </v-list-item>
               <v-divider
                 v-if="activeEmployee.last_chat_assignedTo_display_name"
               ></v-divider>
-              <v-list-tile
+              <v-list-item
                 v-for="(a,index) in assignedToList" :key="index"
                 @click="updateAssignedTo(a.id)"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   {{a.text}}
-                </v-list-tile-title>
-              </v-list-tile>
+                </v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-menu>
         </div>
@@ -198,7 +206,10 @@
           <v-menu offset-y
             :close-on-content-click="false"
           >
+          <template v-slot:activator="{ on, attrs }">
             <v-btn
+              v-bind="attrs"
+              v-on="on"
               slot="activator"
               color="#6f64b0"
               dark
@@ -208,37 +219,38 @@
             >
               <v-icon small>fas fa-ellipsis-v</v-icon>
             </v-btn>
+          </template>
             <v-list>
-              <v-list-tile>
-                <v-list-tile-title>Amara interaction</v-list-tile-title>
-                <v-list-tile-action>
+              <v-list-item>
+                <v-list-item-title>Amara interaction</v-list-item-title>
+                <v-list-item-action>
                   <v-switch
                     v-model="activeEmployee.interactions_active"
                     color="success"
                     @change="
                     updateAmaraStatus(activeEmployee.interactions_active, ['manage_employee'])"
                   ></v-switch>
-                </v-list-tile-action>
-              </v-list-tile>
+                </v-list-item-action>
+              </v-list-item>
               <v-divider></v-divider>
-              <v-list-tile
+              <v-list-item
                 v-if="activeEmployee.high_potential_emp"
                 @click.stop="openDialog('HipoEmployee', ['manage_employee'])"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   <v-icon small color="#6f64b0">fas fa-star</v-icon>
                   Unmark as high potential
-                </v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
                 v-if="!activeEmployee.high_potential_emp"
                 @click.stop="openDialog('HipoEmployee', ['manage_employee'])"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   <v-icon small color="#6f64b0">far fa-star</v-icon>
                   Mark as high potential
-                </v-list-tile-title>
-              </v-list-tile>
+                </v-list-item-title>
+              </v-list-item>
               <!-- <v-list-tile
                 v-if="activeEmployee.interactions_active"
                 @click.stop="updateAmaraStatus(false, ['manage_employee'])"
@@ -257,22 +269,22 @@
                   Enable Amara's chat
                 </v-list-tile-title>
               </v-list-tile> -->
-              <v-list-tile
+              <v-list-item
                 @click.stop="openDialog('SMSEmployee', ['send_sms'])"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   <v-icon small color="#6f64b0">fas fa-comment</v-icon>
                   Send SMS
-                </v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
                 @click.stop="openDialog('CallEmployee')"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   <v-icon small color="#6f64b0">fas fa-phone</v-icon>
                   Call Employee
-                </v-list-tile-title>
-              </v-list-tile>
+                </v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-menu>
         </div>

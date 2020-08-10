@@ -1,9 +1,9 @@
 <template>
   <div class="w-100">
-    <div class="d-flex">
+    <div class="d-flex w-100">
       <v-flex xs12>
         <!-- Recipients list header -->
-        <div class="d-flex">
+        <div class="d-flex w-100">
           <v-flex xs9 class="d-inline-flex">
             <h2 class="mt-2 mb-4 px-0 d-inline-flex"> Recipients List &nbsp; &nbsp;
               <div class="grey--text" v-if="Object.keys(selectedAudience).length && showCheckBoxes">
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Before content loading -->
-        <div class="d-flex flex-row flex-wrap" v-show="config.initialLoading">
+        <div class="d-flex flex-row flex-wrap" v-if="config.initialLoading">
           <v-flex xs12>
             <ContentLoader
               :height="160"
@@ -40,8 +40,8 @@
         </div>
 
         <!-- Recipients list -->
-        <div class="d-flex flex-row flex-wrap" v-show="!config.initialLoading">
-          <v-flex xs12>
+        <div class="d-flex flex-row flex-wrap w-100" v-show="!config.initialLoading">
+          <v-flex xs12 class="w-100">
             <v-data-table
               :headers="table.headers"
               :items="table.audience"

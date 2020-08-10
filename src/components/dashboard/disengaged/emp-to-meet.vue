@@ -78,23 +78,26 @@
               bottom
             >
               <v-menu offset-y slot="activator" v-model="config.actionMenu[item.id]">
-                <v-btn
-                  slot="activator"
-                  :disabled="config.loading"
-                  icon
-                  :class="{
-                    'primary primary--text': item.action_status === 'open',
-                    '#37b99c amara--text': item.action_status === 'scheduled',
-                    'info info--text': item.action_status === 'inProgress',
-                    'success success--text': item.action_status === 'resolved',
-                    'deep-orange deep-orange--text': item.action_status === 'acknowledged',
-                  }"
-                  class="dropdown-chip ml-0 b-left"
-                  style="height:40px !important;"
-                  small outlined
-                >
-                  <v-icon>fas fa-caret-down</v-icon>
-                </v-btn>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    slot="activator"
+                    v-bind="attrs" v-on="on"
+                    :disabled="config.loading"
+                    icon
+                    :class="{
+                      'primary primary--text': item.action_status === 'open',
+                      '#37b99c amara--text': item.action_status === 'scheduled',
+                      'info info--text': item.action_status === 'inProgress',
+                      'success success--text': item.action_status === 'resolved',
+                      'deep-orange deep-orange--text': item.action_status === 'acknowledged',
+                    }"
+                    class="dropdown-chip ml-0 b-left"
+                    style="height:40px !important;"
+                    small outlined
+                  >
+                    <v-icon>fas fa-caret-down</v-icon>
+                  </v-btn>
+                </template>
                 <v-list>
                   <v-list-item v-for="(item, i) in config.actions" :key="i"
                   v-if="item.action_status !== item.status"
@@ -123,16 +126,18 @@
             </v-chip>
 
             <v-menu offset-y slot="activator">
+              <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  slot="activator"
                   :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
                   icon
                   class="dropdown-chip ml-0 b-left"
                   small outlined
+                  v-bind="attrs" v-on="on"
                   style="border: 1px solid #4c409d;height:40px !important;"
                 >
                   <v-icon @click="getAdminUsers(item)">fas fa-caret-down</v-icon>
                 </v-btn>
+                </template>
                 <v-list v-if="getAdminUsersList && getAdminUsersList.length > 0">
                   <v-list-item v-for="(item, i) in getAdminUsersList" :key="i" @click="updateStatus(item, null, item.user_id)">
                     <v-list-item-title>

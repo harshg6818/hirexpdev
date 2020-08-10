@@ -124,8 +124,10 @@
                   || employeesType !== 'active'
                   || e.last_chat_action_status === 'Na' ? 'disable-action' : ''"
               >
+              <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   slot="activator"
+                  v-bind="attrs" v-on="on"
                   class="box-container emp-status-btn"
                 >
                   <span v-if="getEmpStatusLabel(e.last_chat_action_status)">
@@ -135,19 +137,20 @@
                   <span>&nbsp;&nbsp;&nbsp;</span>
                   <v-icon>fas fa-chevron-down</v-icon>
                 </v-btn>
+              </template>
                 <v-list>
-                  <v-list-tile
+                  <v-list-item
                     v-for="(item, index) in actionStatus[e.last_chat_action_status]"
                     :key="index"
                     v-if="e.last_chat_action_status !== item.status"
                     @click="item.action(e, item.dialog, item.permission)"
                   >
-                    <v-list-tile-title>
+                    <v-list-item-title>
                       <v-icon small>{{item.icon}}</v-icon>
                       <span>&nbsp;&nbsp;&nbsp;</span>
                       <span>{{ item.text }}</span>
-                    </v-list-tile-title>
-                  </v-list-tile>
+                    </v-list-item-title>
+                  </v-list-item>
                 </v-list>
               </v-menu>
             </div>
@@ -179,8 +182,11 @@
                   || employeesType !== 'active'
                   || e.last_chat_action_status === 'Na' ? 'disable-action' : ''"
               >
+              <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   slot="activator"
+                  v-bind="attrs"
+                  v-on="on"
                   class="box-container zoom-in emp-assign-btn"
                 >
                   <span v-if="e.last_chat_assignedTo_display_name">
@@ -190,9 +196,10 @@
                   <span>&nbsp;&nbsp;&nbsp;</span>
                   <v-icon>fas fa-chevron-down</v-icon>
                 </v-btn>
+              </template>
                 <v-list>
-                  <v-list-tile>
-                    <v-list-tile-title>
+                  <v-list-item>
+                    <v-list-item-title>
                       <input type="text"
                         class="assign-text-input"
                         name="searchAssignedTo"
@@ -201,21 +208,21 @@
                         v-model="searchAssignedToUser"
                         @keyup="searchAssignedTo()"
                       >
-                    </v-list-tile-title>
-                  </v-list-tile>
+                    </v-list-item-title>
+                  </v-list-item>
                   <hr>
-                  <v-list-tile @click="updateAssignedTo(e.last_chat_id, null)" style="border-bottom: 1px solid">
-                    <v-list-tile-title>
+                  <v-list-item @click="updateAssignedTo(e.last_chat_id, null)" style="border-bottom: 1px solid">
+                    <v-list-item-title>
                       Choose
-                    </v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-list-item
                     v-for="(item, index) in searchAssignedTo()"
                     :key="index"
                     @click="updateAssignedTo(e.last_chat_id, item.id)"
                   >
-                    <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-                  </v-list-tile>
+                    <v-list-item-title>{{ item.text }}</v-list-item-title>
+                  </v-list-item>
                 </v-list>
               </v-menu>
             </div>
@@ -229,26 +236,30 @@
                     </v-flex>
                   </v-layout>
                 </v-flex> -->
-                <v-btn
-                  slot="activator"
-                  class="box-container zoom-in emp-action-btn"
-                >
-                  <span>Actions</span>
-                  <span>&nbsp;&nbsp;&nbsp;</span>
-                  <v-icon>fas fa-chevron-down</v-icon>
-                </v-btn>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    slot="activator"
+                    class="box-container zoom-in emp-action-btn"
+                  >
+                    <span>Actions</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <v-icon>fas fa-chevron-down</v-icon>
+                  </v-btn>
+                </template>
                 <v-list>
-                  <v-list-tile
+                  <v-list-item
                     v-for="(item, index) in getEmpActions(e)"
                     :key="index"
                     @click="item.action(e, item.dialog, item.permission)"
                   >
-                    <v-list-tile-title>
+                    <v-list-item-title>
                       <v-icon small>{{item.icon}}</v-icon>
                       <span>&nbsp;&nbsp;&nbsp;</span>
                       <span>{{ item.title }}</span>
-                    </v-list-tile-title>
-                  </v-list-tile>
+                    </v-list-item-title>
+                  </v-list-item>
                 </v-list>
               </v-menu>
             </div>

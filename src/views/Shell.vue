@@ -20,7 +20,7 @@
         v-model="snackbar.show"
       >
         {{ snackbar.text }}
-        <v-btn dark @click.native="snackbar.show = false">Close</v-btn>
+        <v-btn text @click.native="snackbar.show = false">Close</v-btn>
       </v-snackbar>
       <router-view />
     </v-main>

@@ -655,9 +655,10 @@
 
                     >
                       <v-menu offset-y slot="activator" v-model="config.actionMenu[item.id]">
+                        <template v-slot:activator="{ on, attrs }">
                         <v-btn
-                          slot="activator"
                           :disabled="config.loading"
+                          v-bind="attrs" v-on="on"
                           icon
                           :class="{
                             'primary primary--text': item.action_status === 'open',
@@ -672,6 +673,7 @@
                         >
                           <v-icon>fas fa-caret-down</v-icon>
                         </v-btn>
+                        </template>
                         <v-list>
                           <v-list-item v-for="(item, i) in config.actions" :key="i"
                           v-if="item.action_status !== item.status"
@@ -728,8 +730,9 @@
                     </v-chip>
 
                     <v-menu offset-y slot="activator">
+                      <template v-slot:activator="{ on, attrs }">
                         <v-btn
-                          slot="activator"
+                          v-bind="attrs" v-on="on"
                           :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
                           icon
                           class="dropdown-chip ml-0 b-left"
@@ -738,6 +741,7 @@
                         >
                           <v-icon @click="getAdminUsers(item)">fas fa-caret-down</v-icon>
                         </v-btn>
+                      </template>
                         <v-list v-if="getAdminUsersList && getAdminUsersList.length > 0">
                           <v-list-item v-for="(item, i) in getAdminUsersList" :key="i" @click="updateStatus(item, null, item.user_id)">
                             <v-list-item-title>

@@ -39,26 +39,26 @@
                   <v-divider class="mb-2"></v-divider>
                   <span class="caption">Subdriver Score</span>
                   <v-list class="pa-0">
-                    <v-list-tile class="subdriver-tile" v-for="(v, k) in d.sub_drivers" :key="k">
+                    <v-list-item class="subdriver-tile" v-for="(v, k) in d.sub_drivers" :key="k">
                       <v-layout>
                         <v-flex xs9 class="overflow-wrap">
-                          <v-list-tile-title class="text-capitalize sub-driver-title">
+                          <v-list-item-title class="text-capitalize sub-driver-title">
                             <span v-if="k"> {{k.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} </span>
-                          </v-list-tile-title>
+                          </v-list-item-title>
                         </v-flex>
                         <v-flex xs2 class="overflow-wrap driver-score">
-                          <v-list-tile-action style="align-items: flex-end;min-width: unset;" class=""
+                          <v-list-item-action style="align-items: flex-end;min-width: unset;" class=""
                             :style="`border-bottom: 2px solid #f44336;border-color: ${getColor(v)}!important`">
                             {{Number.parseFloat(v).toFixed(1)}}
-                          </v-list-tile-action>
+                          </v-list-item-action>
                         </v-flex>
                       </v-layout>
-                    </v-list-tile>
+                    </v-list-item>
                   </v-list>
                   <div class="footer">
                     <v-btn
                       color="primary"
-                      outline
+                      outlined
                     >
                       <span>View details</span>
                     </v-btn>
@@ -188,7 +188,8 @@ export default {
   .driver-title {
     // height: 30px!important;
     padding: 10px;
-    height: 40px;
+    // height: 40px;
+    height: 70px;
     letter-spacing: 0.8px;
     word-spacing: 2px;
     border-bottom: 1px solid #432d6f;

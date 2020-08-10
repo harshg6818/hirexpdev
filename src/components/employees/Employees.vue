@@ -224,7 +224,7 @@ export default {
       this.getTeam();
     },
     getTeam (pageOfset, searchString) {
-      this.$store.dispatch('loadingEmployeesList', true);
+      // this.$store.dispatch('loadingEmployeesList', true);
       const filters = Object.assign({}, this.updateEmployeeFilters);
       if (filters && filters.filters) {
         // filters.filters have the dynamic filters value
@@ -256,7 +256,7 @@ export default {
           this.$store.dispatch('activeEmployee', response.data.data[0]);
           this.employees = response.data.data;
           this.totalEmployees = response.data.total_count;
-          this.$store.dispatch('loadingEmployeesList', false);
+          // this.$store.dispatch('loadingEmployeesList', false);
           if (this.singleEmpView && (searchString || searchString === '')) {
             // this.changeEmpView(this.employees[0].id);
           }

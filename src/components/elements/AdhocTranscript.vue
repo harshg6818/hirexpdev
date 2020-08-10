@@ -26,11 +26,13 @@
                     offset-y
                     style="max-width: 600px"
                   >
-                    <span slot="activator" class="cursor-pointer">
+                  <template v-slot:activator="{ on, attrs }">
+                    <span slot="activator" class="cursor-pointer" v-bind="attrs" v-on="on">
                       <v-chip color="black" class="ma-0 mr-2" outline small>
                         Overall Engagement Score : <strong class="mx-2">{{c.driverAverage}}</strong>
                       </v-chip>
                     </span>
+                  </template>
                     <v-list class="">
                       <v-list-item v-for="(v, k) in c.driverBreakdown" :key="k">
                         <v-list-item-content>

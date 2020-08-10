@@ -1,22 +1,25 @@
 <template>
   <div class="adhoc-app">
-    <div class="flex-column d-flex">
+    <div class="flex-column d-flex w-100">
 
       <!-- Stepper actions -->
-      <div class="b-bottom d-flex flex-row flex-wrap" v-show="unlockStepper">
+      <div class="b-bottom d-flex flex-row flex-wrap w-100" v-if="unlockStepper">
         <v-flex xs4 class="d-inline-flex">
           <v-tooltip bottom style="min-width:70px">
+            <template v-slot:activator="{ on }">
             <v-btn color="grey" class="elevation-0 my-0 text-xs-right back-button b-right"
               @click="previous()"
               style="position:relative;top:5px;margin-left:22px;"
               slot="activator"
               text fab
-              v-show="config.activeTab !== 'summary'"
+              v-on="on"
+              v-if="config.activeTab !== 'summary'"
               :loading="config.savingStage"
               :disabled="config.savingStage"
             >
               <v-icon> fas fa-arrow-left </v-icon>
             </v-btn>
+            </template>
             Back
           </v-tooltip>
 
@@ -33,23 +36,26 @@
             placeholder="Campaign Title (max 40 characters)"
           ></v-text-field>
         </v-flex>
-        <v-flex xs8 class="text-xs-right">
+        <v-flex xs8 class="text-right">
           <v-tooltip bottom class="">
+            <template v-slot:activator="{ on }">
             <v-btn color="red" class="elevation-0 ml-0 text-xs-right back-button"
               @click="discard()"
               style="top:2px"
               slot="activator"
               text fab
+              v-on="on"
             >
               <v-icon> fas fa-trash-alt </v-icon>
             </v-btn>
+            </template>
             Discard
           </v-tooltip>
 
           <v-btn color="orange" class="elevation-0 white--text text-none text-xs-right"
             style="position:relative;top:5px"
             @click="saveAsDraft(true)"
-            text outlinedd
+            text outlined
           >
             Save as draft
           </v-btn>
@@ -83,7 +89,7 @@
       </div>
 
       <!-- Stepper Tabs -->
-      <div class="d-flex flex-row flex-wrap b-bottom" v-show="unlockStepper">
+      <div class="d-flex flex-row flex-wrap b-bottom" v-if="unlockStepper">
         <v-flex xs8>
           <v-tabs
             style=""
@@ -96,7 +102,7 @@
             height="fit-content"
           >
             <v-tab
-              class="stepper-step"
+              class="stepper-step py-3"
               v-for="(t, ti) in config.tabs"
               :key="ti"
               disabled
@@ -116,7 +122,7 @@
           <v-flex xs3></v-flex>
           <v-flex xs6 class="text-xs-left d-inline-flex">
             <div>
-              <h2> Share your campaign idea {{unlockStepper}}</h2>
+              <h2> Share your campaign idea</h2>
               <!--<h4 class="grey--text"> Let us know little bit more about your campaign. This information will help us personalise your campaign.</h4>-->
               <v-text-field
                 class="campaign-title mt-3"
@@ -256,7 +262,7 @@
             <v-tab-item class="stepper-step-content" value="survey" v-if="config.activeTab === 'survey'">
               <div class="mb-3 step-content overflow-y-hidden d-flex flex-row flex-wrap">
                 <v-flex xs12 class="text-xs-left d-inline-flex maximum-step-content">
-                  <div class="maximum-step-content d-flex flex-row flex-wrap">
+                  <div class="maximum-step-content d-flex flex-row">
                     <v-flex xs3 class="px-0 ml-3 maximum-step-content">
                       <h3 class="subheading pt-2 mb-2 pl-1"> Design the chat flow </h3>
                       <div style="border:1px solid lightgrey;overflow-y:auto;height:90%">
@@ -392,7 +398,7 @@
 
                     <v-flex xs9 class="maximum-step-content" style="overflow-y:auto">
                       <v-card height="220" class="text-xs-center pt-5 ma-5 elevation-0"
-                      v-show="newSurvey.interactions.length === 0 && !drag.startDragging">
+                      v-if="newSurvey.interactions.length === 0 && !drag.startDragging">
                         <v-icon large color="#4c3e9d">fas fa-hand-paper</v-icon>
                         <p class="headline font-weight-bold mt-4">No questions added</p>
                         <span>Select question type or question to create survey.</span>
@@ -407,7 +413,7 @@
                         <Draggable v-for="(q, qi) in newSurvey.interactions" :key="qi"> -->
                           <draggable v-for="(q, qi) in newSurvey.interactions" :key="qi" group="people" @start="drag=true" @end="drag=false">
                           <v-card height="220" class="draggable-item text-xs-center pt-5 ma-5 elevation-0"
-                            v-show="drag.startDragging && !drag.droppingNow &&
+                            v-if="drag.startDragging && !drag.droppingNow &&
                             newSurvey.interactions.length === 0"
                             key="blank-response"
                           >
@@ -426,9 +432,11 @@
                                       <!-- <v-layout column class="actions" :style="getDragPosition(q.type)"> -->
                                       <div class="d-flex flex-column actions">
                                         <v-tooltip bottom>
-                                          <v-icon color="grey" class="mb-3 handle" slot="activator">
-                                            fas fa-arrows-alt
-                                          </v-icon>
+                                          <template v-slot:activator="{ on }">
+                                            <v-icon color="grey" class="mb-3 handle" slot="activator" v-on="on">
+                                              fas fa-arrows-alt
+                                            </v-icon>
+                                          </template>
                                           Move
                                         </v-tooltip>
                                       </div>
@@ -440,25 +448,31 @@
                                     <div class="d-flex">
                                       <v-flex xs4>
                                         <v-tooltip bottom>
-                                          <v-icon color="grey" class="mt-3" @click="editAction(q, qi, true)" slot="activator">
+                                          <template v-slot:activator="{ on }">
+                                          <v-icon v-on="on" color="grey" class="mt-3" @click="editAction(q, qi, true)" slot="activator">
                                             fas fa-edit
                                           </v-icon>
+                                          </template>
                                           Edit
                                         </v-tooltip>
                                       </v-flex>
                                       <v-flex xs4>
                                         <v-tooltip bottom>
-                                          <v-icon color="grey" class="mt-3" @click="deleteAction(qi)" slot="activator">
+                                          <template v-slot:activator="{ on }">
+                                          <v-icon v-on="on" color="grey" class="mt-3" @click="deleteAction(qi)" slot="activator">
                                             fas fa-trash
                                           </v-icon>
+                                          </template>
                                           Delete
                                         </v-tooltip>
                                       </v-flex>
                                       <v-flex xs4>
                                         <v-tooltip bottom>
-                                          <v-icon color="grey" class="mt-3" @click="duplicateAction(q)" slot="activator">
+                                          <template v-slot:activator="{ on }">
+                                          <v-icon v-on="on" color="grey" class="mt-3" @click="duplicateAction(q)" slot="activator">
                                             fas fa-copy
                                           </v-icon>
+                                          </template>
                                           Copy
                                         </v-tooltip>
                                       </v-flex>
@@ -504,13 +518,16 @@
                                           offset-y
                                           style="max-width: 600px"
                                         >
-                                          <v-btn class="emoji-btn"
-                                            slot="activator"
-                                            fab text round disabled
-                                          >
-                                            <img v-if="r.img" :src="getImgUrl(r.img)"
-                                            class="emoji-container" />
-                                          </v-btn>
+                                          <template v-slot:activator="{ on, attrs }">
+                                            <v-btn class="emoji-btn"
+                                              slot="activator"
+                                              fab text rounded disabled
+                                              v-bind="attrs" v-on="on"
+                                            >
+                                              <img v-if="r.img" :src="getImgUrl(r.img)"
+                                              class="emoji-container" />
+                                            </v-btn>
+                                          </template>
                                           <v-list class="pa-3">
                                             <v-text-field
                                               class="grey--text text--lighten-2"
@@ -557,19 +574,21 @@
                                           disabled
                                           style="max-width: 600px"
                                         >
+                                        <template v-slot:activator="{ on, attrs }">
                                           <v-btn class="emoji-btn"
                                             :color="r.color"
                                             style="min-width:50px; min-height:50px;"
                                             fab
                                             outlined
-                                            round
+                                            rounded
                                             disabled
-                                            slot="activator"
+                                            v-bind="attrs" v-on="on"
                                           >
                                             <strong class="headline grey--text">
                                               {{r.value}}
                                             </strong>
                                           </v-btn>
+                                        </template>
                                           <v-list class="pa-3">
                                             <v-text-field
                                               class="grey--text text--lighten-2"
@@ -661,37 +680,40 @@
                                       offset-y
                                       style="max-width: 600px"
                                     >
-                                      <v-img
-                                        height="200"
-                                        width="300"
-                                        slot="activator"
-                                        max-height="200"
-                                        max-width="300"
-                                        v-if="q.msg"
-                                        :src="q.msg[0].imgUrl"
-                                        :lazy-src="q.msg[0].imgUrl"
-                                        aspect-ratio="1"
-                                        class="grey lighten-2 mx-auto"
-                                      >
-                                        <div
-                                          class="d-flex"
-                                          slot="placeholder"
-                                          fill-height
-                                          align-center
-                                          justify-center
-                                          ma-0
+                                      <template v-slot:activator="{ on, attrs }">
+                                        <v-img
+                                          height="200"
+                                          width="300"
+                                          slot="activator"
+                                          v-bind="attrs" v-on="on"
+                                          max-height="200"
+                                          max-width="300"
+                                          v-if="q.msg"
+                                          :src="q.msg[0].imgUrl"
+                                          :lazy-src="q.msg[0].imgUrl"
+                                          aspect-ratio="1"
+                                          class="grey lighten-2 mx-auto"
                                         >
-                                          <div class="">
-                                            <v-icon class="mr-2">fas fa-plus-square</v-icon>
-                                            <strong class="mb-2">
-                                              Add Image
-                                            </strong>
+                                          <div
+                                            class="d-flex"
+                                            slot="placeholder"
+                                            fill-height
+                                            align-center
+                                            justify-center
+                                            ma-0
+                                          >
+                                            <div class="">
+                                              <v-icon class="mr-2">fas fa-plus-square</v-icon>
+                                              <strong class="mb-2">
+                                                Add Image
+                                              </strong>
+                                            </div>
+                                            <v-progress-circular v-show="q.msg && q.msg[0].imgUrl"
+                                            indeterminate color="grey lighten-5">
+                                            </v-progress-circular>
                                           </div>
-                                          <v-progress-circular v-show="q.msg && q.msg[0].imgUrl"
-                                          indeterminate color="grey lighten-5">
-                                          </v-progress-circular>
-                                        </div>
-                                      </v-img>
+                                        </v-img>
+                                      </template>
                                       <v-list class="pa-3">
                                         <v-text-field
                                           maxlength="1000"
@@ -721,10 +743,12 @@
                                         offset-y
                                         style="max-width: 600px"
                                       >
+                                      <template v-slot:activator="{ on, attrs }">
                                         <v-img
                                           height="200"
                                           width="300"
                                           slot="activator"
+                                          v-bind="attrs" v-on="on"
                                           max-height="200"
                                           max-width="300"
                                           :src="c.imgUrl"
@@ -751,6 +775,7 @@
                                             </v-progress-circular>
                                           </div>
                                         </v-img>
+                                        </template>
                                         <v-list class="pa-3">
                                           <v-text-field
                                             maxlength="1000"
@@ -801,8 +826,13 @@
                                             class="mb-1"
                                             style="width: 20em;"
                                           >
-                                          <v-btn color="#4c3e9d" block outlined slot="activator">
+                                          <template v-slot:activator="{ on, attrs }">
+                                            <v-btn color="#4c3e9d"
+                                              v-bind="attrs" v-on="on"
+                                              block outlined slot="activator"
+                                            >
                                             {{r.title}}</v-btn>
+                                            </template>
                                             <v-list class="pa-3">
                                               <v-text-field
                                                 class="grey--text text--lighten-2"
@@ -861,10 +891,12 @@
                                           offset-y
                                           style="max-width: 600px"
                                         >
+                                        <template v-slot:activator="{ on, attrs }">
                                           <v-img
                                             height="200"
                                             width="300"
                                             slot="activator"
+                                            v-bind="attrs" v-on="on"
                                             max-height="200"
                                             max-width="300"
                                             :src="c.imgUrl"
@@ -891,6 +923,7 @@
                                               </v-progress-circular>
                                             </div>
                                           </v-img>
+                                          </template>
                                           <v-list class="pa-3">
                                             <v-text-field
                                               maxlength="1000"
@@ -940,8 +973,14 @@
                                               class="mb-1"
                                               style="width: 20em;"
                                             >
-                                            <v-btn color="#4c3e9d" block outlined slot="activator">
-                                              {{r.title}}</v-btn>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn color="#4c3e9d"
+                                                  block outlined slot="activator"
+                                                  v-bind="attrs" v-on="on"
+                                                >
+                                                  {{r.title}}
+                                                </v-btn>
+                                              </template>
                                               <v-list class="pa-3">
                                                 <v-text-field
                                                   class="grey--text text--lighten-2"
@@ -1084,7 +1123,14 @@
                                         offset-y
                                         style="max-width: 600px"
                                       >
-                                      <v-btn color="#4c3e9d" outlined slot="activator" disabled>{{c.title}}</v-btn>
+                                        <template v-slot:activator="{ on, attrs }">
+                                          <v-btn color="#4c3e9d" outlined
+                                            disabled
+                                            v-bind="attrs" v-on="on"
+                                          >
+                                            {{c.title}}
+                                          </v-btn>
+                                        </template>
                                         <v-list class="pa-3">
                                           <v-text-field
                                             class="grey--text text--lighten-2"
@@ -1146,7 +1192,7 @@
             <!-- Recipients Tab content -->
             <v-tab-item class="stepper-step-content" value="audience" v-if="config.activeTab === 'audience'">
               <div class="mb-3 step-content d-flex flex-row flex-wrap">
-                <div class="d-flex">
+                <div class="d-flex w-100">
                   <audienceList ref="audienceList"> </audienceList>
                 </div>
               </div>
@@ -1154,7 +1200,7 @@
 
             <!-- Distributions Tab -->
             <v-tab-item class="stepper-step-content" value="distribution" v-if="config.activeTab === 'distribution'">
-              <div class="mb-3 step-content d-flex flex-row flex-wrap">
+              <div class="mb-3 step-content d-flex flex-row flex-wrap w-100">
                 <v-flex>
                   <distributionMediums> </distributionMediums>
                 </v-flex>
@@ -1163,7 +1209,7 @@
 
             <!-- Preview Tab -->
             <v-tab-item class="stepper-step-content" value="preview" v-show="config.activeTab === 'preview'">
-              <div row wrap class="mb-3 step-content d-flex flex-row flex-wrap">
+              <div row wrap class="mb-3 step-content d-flex flex-row flex-wrap w-100">
                 <v-flex>
                   <preview ref="preview" v-if="config.activeTab === 'preview'" :newSurvey="newSurvey">  </preview>
                 </v-flex>

@@ -37,6 +37,6 @@ export default {
   activeEmployee: {},
   employeesList: [],
   activeNavigation: 'dashboard',
-  loadingEmployeesList: true,
+  loadingEmployeesList: false,
   updateDashboardFilters: null
 };

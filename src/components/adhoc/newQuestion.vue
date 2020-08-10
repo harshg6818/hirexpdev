@@ -370,10 +370,12 @@
                                   offset-y
                                   style="max-width: 600px"
                                 >
+                                <template v-slot:activator="{ on, attrs }">
                                   <v-img
                                     height="200"
                                     width="300"
                                     slot="activator"
+                                    v-bind="attrs" v-on="on"
                                     max-height="200"
                                     max-width="300"
                                     :src="q.msg[0].imgUrl"
@@ -399,6 +401,7 @@
                                       </v-progress-circular>
                                     </v-layout>
                                   </v-img>
+                                  </template>
                                   <v-list class="pa-3">
                                     <v-text-field
                                       maxlength="1000"
@@ -426,10 +429,12 @@
                                     offset-y
                                     style="max-width: 600px"
                                   >
+                                  <template v-slot:activator="{ on, attrs }">
                                     <v-img
                                       height="200"
                                       width="300"
                                       slot="activator"
+                                      v-bind="attrs" v-on="on"
                                       max-height="200"
                                       max-width="300"
                                       :src="c.imgUrl"
@@ -452,6 +457,7 @@
                                         </v-progress-circular>
                                       </div>
                                     </v-img>
+                                    </template>
                                     <v-list class="pa-3">
                                       <v-text-field
                                         maxlength="1000"
@@ -498,8 +504,14 @@
                                         class="mb-1"
                                         style="width: 20em;"
                                       >
-                                      <v-btn color="#4c3e9d" block outline slot="activator">
-                                        {{r.title}}</v-btn>
+                                        <template v-slot:activator="{ on, attrs }">
+                                        <v-btn color="#4c3e9d" block outline
+                                          slot="activator"
+                                          v-bind="attrs" v-on="on"
+                                        >
+                                          {{r.title}}
+                                        </v-btn>
+                                        </template>
                                         <v-list class="pa-3">
                                           <v-text-field
                                             class="grey--text text--lighten-2"
@@ -555,10 +567,12 @@
                                       offset-y
                                       style="max-width: 600px"
                                     >
+                                    <template v-slot:activator="{ on, attrs }">
                                       <v-img
                                         height="200"
                                         width="300"
                                         slot="activator"
+                                        v-bind="attrs" v-on="on"
                                         max-height="200"
                                         max-width="300"
                                         :src="c.imgUrl"
@@ -581,6 +595,7 @@
                                           </v-progress-circular>
                                         </div>
                                       </v-img>
+                                      </template>
                                       <v-list class="pa-3">
                                         <v-text-field
                                           maxlength="1000"
@@ -627,8 +642,13 @@
                                           class="mb-1"
                                           style="width: 20em;"
                                         >
-                                        <v-btn color="#4c3e9d" block outline slot="activator">
-                                          {{r.title}}</v-btn>
+                                        <template v-slot:activator="{ on, attrs }">
+                                          <v-btn color="#4c3e9d" block outline slot="activator"
+                                            v-bind="attrs" v-on="on"
+                                          >
+                                            {{r.title}}
+                                          </v-btn>
+                                        </template>
                                           <v-list class="pa-3">
                                             <v-text-field
                                               class="grey--text text--lighten-2"

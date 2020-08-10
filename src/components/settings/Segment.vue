@@ -1,6 +1,6 @@
 <template>
   <div class="segmentVue">
-    <v-container v-show="groupList">
+    <v-container v-if="groupList">
       <v-subheader style="margin-bottom:3%;">
         <v-flex>
           <v-list-item-title style="display:block">
@@ -19,7 +19,7 @@
       </v-subheader>
       <v-dialog persistent v-model="dialog2" style="box-shadow: 0 3px 1px -2px red;" width="55%" min-height="600px">
         <v-card>
-          <v-card-title v-show="e1=='1'">
+          <v-card-title v-if="e1=='1'">
             <h2  style="font-size:25px; text-align:center; font-weight:400; width:100%; padding-top:30px;">
             Group Name
             </h2>
@@ -109,11 +109,11 @@
                 </v-card-actions>
               </v-stepper-content>
               <v-stepper-content step="3">
-                <v-card-title v-show="e1 !='1'">
-                  <h2 v-show="EditGroup"  style="font-size:25px; font-weight:400; text-align:center; width:100%; ">
+                <v-card-title v-if="e1 !='1'">
+                  <h2 v-if="EditGroup"  style="font-size:25px; font-weight:400; text-align:center; width:100%; ">
                   {{groupDetail.group_name}}
                   </h2>
-                  <h2 v-show="CreateNewGroup"  style="font-size:25px; font-weight:400; text-align:center; width:100%; ">
+                  <h2 v-if="CreateNewGroup"  style="font-size:25px; font-weight:400; text-align:center; width:100%; ">
                   {{New_Group_Name}}
                   </h2>
                   <p style="text-align:center ;width:100%;">Select employees to be a part of this group</p>
@@ -144,7 +144,7 @@
                         </div>
                       </v-flex>
                     </div>
-                    <div transition="scale-transition" origin="center center" v-show="filtered_employee_segment || !noFilterapply" style="padding-left:7%;" class="segmentFilter d-flex flex-row flex-wrap">
+                    <div transition="scale-transition" origin="center center" v-if="filtered_employee_segment || !noFilterapply" style="padding-left:7%;" class="segmentFilter d-flex flex-row flex-wrap">
                       <v-flex sm2>
                         <p style="margin:10px 0 ">Filters applied</p>
                       </v-flex>
@@ -183,7 +183,7 @@
                         min-height:100vh-200px;  border:1px solid #e1e1e1; margin:0 !important; padding-right:10px;"  xs8>
 
                       <div class="w-100 d-flex flex-row" v-for="(filter, index) in segment_filter"
-                        v-show="activeTab.toLowerCase() === index" :key="index"
+                        v-if="activeTab.toLowerCase() === index" :key="index"
                       >
                         <v-flex class="scroll mx-2" style="height:250px; width:100%; margin:0 !important;">
                           <!-- <v-data-table style="width:100%;"
@@ -261,8 +261,8 @@
                   <v-btn color="error" text @click="closeDialog()">Close</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click.native="e1 = 2">Back</v-btn>
-                  <v-btn color="primary" v-show="CreateNewGroup" text @click="create_segment()">Create Group</v-btn>
-                  <v-btn color="primary" v-show="EditGroup" text @click="update_segment()">Update Group</v-btn>
+                  <v-btn color="primary" v-if="CreateNewGroup" text @click="create_segment()">Create Group</v-btn>
+                  <v-btn color="primary" v-if="EditGroup" text @click="update_segment()">Update Group</v-btn>
                 </v-card-actions>
               </v-stepper-content>
             </v-stepper-items>
@@ -288,7 +288,7 @@
               <rect x="0" y="150" rx="2" ry="2" width="394.46" height="17.93" />
             </ContentLoader>
           </div>
-          <v-data-table v-show="!config.initialLoading" :headers="groupHeaders" :items="company" hide-default-footer class="elevation-1">
+          <v-data-table v-if="!config.initialLoading" :headers="groupHeaders" :items="company" hide-default-footer class="elevation-1">
             <template v-slot:body="{items}">
               <tr
                 v-for="(item, index) in items" :key="index"
@@ -307,7 +307,7 @@
         </v-flex>
       </div>
     </v-container>
-    <v-container v-show="adminList" >
+    <v-container v-if="adminList" >
       <v-subheader style="padding-left:0; margin-bottom:50px;">
         <v-flex sm1>
           <v-btn text icon @click="closeAdminList()">
@@ -332,7 +332,7 @@
         </v-flex>
       </v-subheader>
       <!-- <v-container style="padding: 0;">
-        <v-flex v-show="userNotFound" sm12 >
+        <v-flex v-if="userNotFound" sm12 >
           <v-alert :value="true" outline color="grey" >
               There is no admin. you can add new admin
           </v-alert>
@@ -944,6 +944,7 @@ export default {
     },
     addNewGroup () {
       this.dialog2 = true;
+      this.e1 = '1';
       this.CreateNewGroup = true;
       this.EditGroup = false;
       this.segmentFilter = [];
@@ -1423,6 +1424,7 @@ export default {
       this.segment_data = false;
     },
     closeAdminList () {
+      this.dialog2 = false;
       this.adminList = false;
       this.groupList = true;
       this.$lodash.each(this.group_permission, (perm) => {

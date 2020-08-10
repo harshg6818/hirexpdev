@@ -20,7 +20,7 @@
           Remove Filters
         </v-btn>
         <!-- <v-btn class="filter-btn text-capitalize " style="position: absolute;right:0;top:0;" -->
-        <v-btn class="filter-btn text-capitalize"
+        <v-btn class="filter-btn text-capitalize mt-2"
           slot="activator"
           color="primary"
           depressed

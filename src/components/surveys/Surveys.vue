@@ -42,9 +42,11 @@
           :nudge-width="200"
           offset-y
         >
-          <v-btn icon slot="activator" flat color="white">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon slot="activator" flat color="white" v-bind="attrs" v-on="on">
             <v-icon>fas fa-filter</v-icon>
           </v-btn>
+        </template>
           <v-card>
             <v-list>
               <v-list-item>
@@ -174,7 +176,7 @@
                   >
                     <v-icon small>fas fa-ellipsis-v</v-icon>
                   </v-btn>
-                  <v-list>
+                  <>
                     <v-list-item
                       v-for="(item, index) in config.actions"
                       :key="index"
@@ -188,7 +190,7 @@
                         {{item.count}}
                       </v-list-item-action>
                     </v-list-item>
-                  </v-list>
+                  </>
                 </v-menu>
               </v-flex> -->
             </v-layout>

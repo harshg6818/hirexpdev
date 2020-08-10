@@ -94,8 +94,9 @@
 
               <v-flex xs1>
                   <v-menu offset-y>
+                      <template v-slot:activator="{ on, attrs }">
                         <v-btn
-                          slot="activator"
+                          v-bind="attrs" v-on="on"
                           color="#383535"
                           dark
                           outline
@@ -103,8 +104,9 @@
                           Actions <v-icon class="ml-3 grey--text">fas fa-angle-down</v-icon>
 
                         </v-btn>
+                      </template>
                         <v-list>
-                          <v-list-tile
+                          <v-list-item
 
                             v-for="(item, index) in reminderActions"
                             :key="index"
@@ -113,11 +115,11 @@
                             || item.title == 'Delete' && (thankyou.status !== 'draft' && thankyou.status !== 'active')
                             ? 'd-none' : '' "
                           >
-                            <v-list-tile-title>
+                            <v-list-item-title>
                               <!-- <v-icon class="mr-2">{{item.icon}}</v-icon> -->
                               {{ item.title }}&nbsp;<span v-if="item.title === 'Test'">{{thankyou.channel}}</span>
-                            </v-list-tile-title>
-                          </v-list-tile>
+                            </v-list-item-title>
+                          </v-list-item>
                         </v-list>
                       </v-menu>
                       </v-flex>

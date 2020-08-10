@@ -7,17 +7,20 @@
         <v-layout row wrap class="b-bottom" v-show="unlockStepper" style="max-height:52px">
           <v-flex xs4 d-inline-flex>
             <v-tooltip bottom style="max-width:70px">
+              <template v-slot:activator="{ on }">
               <v-btn color="grey" class="elevation-0 my-0 text-xs-right back-button b-right"
                 @click="previous()"
                 style="position:relative;top:5px;margin-left:22px;"
                 slot="activator"
-                flat fab
+                v-on="on"
+                text fab
                 v-show="config.activeTab !== 'summary'"
                 :loading="config.savingStage"
                 :disabled="config.savingStage"
               >
                 <v-icon> fas fa-arrow-left </v-icon>
               </v-btn>
+              </template>
               Back
             </v-tooltip>
 
@@ -35,20 +38,23 @@
             ></v-text-field>
           </v-flex>
           <v-flex xs8 class="text-xs-right pr-3" style="position:relative;top:-10px;">
-            <v-tooltip bottom class="">
-              <v-btn color="red" class="elevation-0 ml-0 text-xs-right back-button"
-                @click="discard()"
-                style="top:2px"
-                slot="activator"
-                flat fab
-              >
-                <v-icon> fas fa-trash-alt </v-icon>
-              </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn color="red" class="elevation-0 ml-0 text-xs-right back-button"
+                  @click="discard()"
+                  style="top:2px"
+                  slot="activator"
+                  text fab
+                  v-on="on"
+                >
+                  <v-icon> fas fa-trash-alt </v-icon>
+                </v-btn>
+              </template>
               Discard
             </v-tooltip>
 
             <v-btn color="primary" class="elevation-0 white--text text-xs-right"
-              flat outline
+              text outlined
               style="position:relative;top:5px"
               @click="next(false)"
               v-if="config.activeTab !== 'configure'"

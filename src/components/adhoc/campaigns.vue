@@ -98,9 +98,11 @@
                             </v-flex>
                             <v-flex xs1>
                               <v-tooltip bottom>
-                                <v-icon class="grey--text" slot="activator" style="margin-top:5px;margin-left:10px">
-                                  {{questionIcon(question.type)}}
-                                </v-icon>
+                                <template v-slot:activator="{ on }">
+                                  <v-icon class="grey--text" slot="activator" v-on="on" style="margin-top:5px;margin-left:10px">
+                                    {{questionIcon(question.type)}}
+                                  </v-icon>
+                                </template>
                                 <span> {{question.type}} </span>
                               </v-tooltip>
                             </v-flex>
@@ -137,7 +139,7 @@
 
         <v-card-actions class="mt-4" align-content-space->
           <v-flex xs2 class="ml-2">
-            <v-btn color="error" flat @click.stop="closeModal()">Close</v-btn>
+            <v-btn color="error" text @click.stop="closeModal()">Close</v-btn>
           </v-flex>
           <v-flex xs8>
           </v-flex>

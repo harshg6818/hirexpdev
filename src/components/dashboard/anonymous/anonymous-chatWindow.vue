@@ -23,11 +23,13 @@
             Status
           </div>
           <v-menu offset-y max-height="300">
+            <template v-slot:activator="{ on, attrs }">
             <v-btn
               slot="activator"
               color="#6f64b0"
               small
               outlined
+              v-bind="attrs" v-on="on"
             >
               <span v-if="activeAnonymousUser.status">
                 {{activeAnonymousUser.status}}
@@ -37,6 +39,7 @@
                 <v-icon small>fas fa-sort-down</v-icon>
               </span>
             </v-btn>
+            </template>
             <v-list>
               <v-list-item
                 v-for="(a,index) in actions" :key="index"
@@ -59,10 +62,12 @@
             Assigend To
           </div>
           <v-menu offset-y max-height="300">
+            <template v-slot:activator="{ on, attrs }">
             <v-btn
               slot="activator"
               color="#6f64b0"
               small
+              v-bind="attrs" v-on="on"
               outlined
             >
               <span v-if="activeAnonymousUser.assignedTo">
@@ -77,6 +82,7 @@
                 <v-icon small>fas fa-sort-down</v-icon>
               </span>
             </v-btn>
+            </template>
             <v-list>
               <v-list-item
                 v-if="activeAnonymousUser.assignedTo"

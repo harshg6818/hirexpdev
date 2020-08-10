@@ -23,9 +23,11 @@
           :close-on-content-click="false"
           center
         >
+        <template v-slot:activator="{ on, attrs }">
           <v-btn
             slot="activator"
             class="box-container zoom-in"
+            v-bind="attrs" v-on="on"
           >
             <span>
               {{chartData.selected.length}}
@@ -35,12 +37,13 @@
             <span>&nbsp;&nbsp;&nbsp;</span>
             <v-icon>fas fa-chevron-down</v-icon>
           </v-btn>
+        </template>
           <v-list>
-            <v-list-tile
+            <v-list-item
               v-for="(item, key) in chartData.default"
               :key="key"
             >
-              <v-list-tile-action>
+              <v-list-item-action>
                 <v-checkbox
                   :ripple="false"
                   :value="item"
@@ -48,9 +51,9 @@
                   color="primary"
                   @change="onChangeItem"
                 ></v-checkbox>
-              </v-list-tile-action>
-              <v-list-tile-title>{{ item.key }}</v-list-tile-title>
-            </v-list-tile>
+              </v-list-item-action>
+              <v-list-item-title>{{ item.key }}</v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-menu>
       </div>

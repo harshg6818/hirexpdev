@@ -9,14 +9,17 @@
                 </v-flex>
                 <v-flex xs4>
                     <v-menu style="float:right" offset-y>
+                        <template v-slot:activator="{ on, attrs }">
                             <v-btn
                             color="primary"
+                            v-bind="attrs" v-on="on"
                             dark
                             slot="activator"
                             class="text-none"
                             >
                             Add reminder <v-icon style="font-size:12px;" small class="ml-3">fas fa-plus</v-icon>
                             </v-btn>
+                        </template>
                         <v-list>
                             <v-list-item
                             class="followupList"
@@ -38,15 +41,18 @@
                             <!-- <h2 class="headline">Welcome {{user.company_name}}!</h2> -->
                             <p class="subheading grey--text mb-3">You haven’t created any reminder yet. Create your first reminder!</p>
                             <v-menu  offset-y>
-                            <v-btn
-                            color="primary"
-                            dark
-                            slot="activator"
-                            class="text-none"
-                            >
-                            Add reminder <v-icon style="font-size:12px;" small class="ml-3">fas fa-plus</v-icon>
-                            </v-btn>
-                        <v-list>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  v-bind="attrs" v-on="on"
+                                  color="primary"
+                                  dark
+                                  slot="activator"
+                                  class="text-none"
+                                >
+                                Add reminder <v-icon style="font-size:12px;" small class="ml-3">fas fa-plus</v-icon>
+                                </v-btn>
+                              </template>
+                          <v-list>
                             <v-list-item
                             class="followupList"
                             v-for="(item, index) in reminder_items"
@@ -120,15 +126,17 @@
 
               <v-flex xs1>
                   <v-menu offset-y>
+                      <template v-slot:activator="{ on, attrs }">
                         <v-btn
+                          v-bind="attrs" v-on="on"
                           slot="activator"
                           color="#383535"
                           dark
                           outline
                         >
                           Actions <v-icon class="ml-3 grey--text">fas fa-angle-down</v-icon>
-
                         </v-btn>
+                      </template>
                         <v-list>
                           <v-list-item
 
