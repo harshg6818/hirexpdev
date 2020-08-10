@@ -290,18 +290,20 @@
           </div>
           <v-data-table v-if="!config.initialLoading" :headers="groupHeaders" :items="company" hide-default-footer class="elevation-1">
             <template v-slot:body="{items}">
-              <tr
-                v-for="(item, index) in items" :key="index"
-                class="groupListRow"
-                @click="getAdminDetails(item.id);"
-                style="cursor:pointer"
-                :disabled="!checkPermission(['update_group','add_user_to_group','remove_user_from_group'])"
-              >
-              <td class="text-left">{{index+1 }}</td>
-              <td class="text-left groupListName">{{ item.name }}</td>
-              <td class="text-left">{{ item.people}}</td>
-              <td class="text-left">{{ item.employees }}</td>
+              <tbody>
+                <tr
+                  v-for="(item, index) in items" :key="index"
+                  class="groupListRow pa-3"
+                  @click="getAdminDetails(item.id);"
+                  style="cursor:pointer"
+                  :disabled="!checkPermission(['update_group','add_user_to_group','remove_user_from_group'])"
+                >
+                <td class="text-left">{{index+1 }}</td>
+                <td class="text-left groupListName">{{ item.name }}</td>
+                <td class="text-left">{{ item.people}}</td>
+                <td class="text-left">{{ item.employees }}</td>
               </tr>
+              </tbody>
             </template>
           </v-data-table>
         </v-flex>
