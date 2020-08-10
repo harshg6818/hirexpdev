@@ -1,6 +1,6 @@
 <template>
   <div class="single-emp-list-wrap">
-    <v-layout class="mb-3 emp-search">
+    <div class="mb-3 emp-search d-flex flex-row">
       <v-flex xs12 class="d-flex justify-space-around">
         <div
           class="emp-active cursor-pointer hover-link"
@@ -21,18 +21,18 @@
           </span>
         </div>
       </v-flex>
-    </v-layout>
-    <v-layout class="emp-list">
+    </div>
+    <div class="emp-list d-flex flex-row">
       <v-flex xs12>
         <div
           v-for="(emp, index) in employees"
           :id="index.toString()"
           :key="index"
         >
-          <v-layout>
+          <div class="d-flex flex-row">
             <v-flex xs11>
-              <v-layout
-                class="emp-card my-2 py-2 pl-3 cursor-pointer hover-link"
+              <div
+                class="emp-card my-2 py-2 pl-3 cursor-pointer hover-link d-flex flex-row"
                 :class="activeEmployee.id === emp.id ? 'active' : ''"
                 @click="changeEmpView(emp.id)"
               >
@@ -41,19 +41,19 @@
                     {{emp.display_name}}
                   </div>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-flex>
             <v-flex class="my-2 active-pointer" xs1 v-show="activeEmployee.id === emp.id">
               <div class="pointer"></div>
             </v-flex>
-          </v-layout>
+          </div>
         </div>
       </v-flex>
       <div>
       </div>
-    </v-layout>
-    <v-layout v-if="totalCount > 10" class="mt-4">
-      <v-flex class="text-xs-center">
+    </div>
+    <div v-if="totalCount > 10" class="mt-4 d-flex flex-row">
+      <v-flex class="text-center">
         <!-- <v-pagination
           class=""
           color="primary"
@@ -110,7 +110,7 @@
           </li>
         </ul>
       </v-flex>
-    </v-layout>
+    </div>
   </div>
 </template>
 

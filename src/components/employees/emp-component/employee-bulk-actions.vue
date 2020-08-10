@@ -1,9 +1,9 @@
 <template>
   <div class="emp-bulk-action-wrap">
-    <v-layout v-if="bulkStatus.show">
+    <div class="d-flex flex-row" v-if="bulkStatus.show">
       <div class="bulk-status" :class="bulkStatus.actionStatus ? 'primary' : 'success'">
         <v-flex lg1>
-          <v-btn v-if="bulkStatus.actionStatus" :loading="true" color="#fff" flat></v-btn>
+          <v-btn v-if="bulkStatus.actionStatus" :loading="true" color="#fff" text></v-btn>
           <v-icon v-if="!bulkStatus.actionStatus" small class="bulk-status-check">
             fas fa-check
           </v-icon>
@@ -102,7 +102,7 @@
           </v-icon>
         </v-flex>
       </div>
-    </v-layout>
+    </div>
     <div class="bulk-actions intro-y">
       <div class="left-side">
         <div style="width: 30px;"></div>
@@ -222,7 +222,7 @@
             </v-tooltip>
           </span>
         </div>
-        <div class="" v-if="selectedEmployeesCount > 0 && !bulkStatus.show">
+        <div class="mx-1" v-if="selectedEmployeesCount > 0 && !bulkStatus.show">
           <!-- <v-overflow-btn
             class="statusSelect"
             :items="bulkStatusOption"
@@ -233,26 +233,29 @@
             @keypress.enter="removeStatus($event)"
           ></v-overflow-btn> -->
           <v-menu offset-y>
-            <v-btn
-              slot="activator"
-              class="box-container zoom-in"
-            >
-              <span>Resolution status</span>
-              <span>&nbsp;&nbsp;&nbsp;</span>
-              <v-icon>fas fa-chevron-down</v-icon>
-            </v-btn>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                class="box-container zoom-in"
+              >
+                <span>Resolution status</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <v-icon>fas fa-chevron-down</v-icon>
+              </v-btn>
+            </template>
             <v-list>
-              <v-list-tile
+              <v-list-item
                 v-for="(item, index) in bulkStatusOption"
                 :key="index"
                 @click="openBulkWarnDialog('status', item.val)"
               >
-                <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-              </v-list-tile>
+                <v-list-item-title>{{ item.text }}</v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-menu>
         </div>
-        <div class="" v-if="selectedEmployeesCount > 0 && !bulkStatus.show">
+        <div class="mx-1" v-if="selectedEmployeesCount > 0 && !bulkStatus.show">
           <!-- <v-overflow-btn
             class="assignSelect"
             hide-details
@@ -270,17 +273,20 @@
             max-height="300"
             :close-on-content-click="false"
           >
-            <v-btn
-              slot="activator"
-              class="box-container zoom-in"
-            >
-              <span>Assigned To</span>
-              <span>&nbsp;&nbsp;&nbsp;</span>
-              <v-icon>fas fa-chevron-down</v-icon>
-            </v-btn>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                class="box-container zoom-in"
+              >
+                <span>Assigned To</span>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <v-icon>fas fa-chevron-down</v-icon>
+              </v-btn>
+            </template>
             <v-list>
-              <v-list-tile>
-                <v-list-tile-title>
+              <v-list-item>
+                <v-list-item-title>
                   <input type="text"
                     class="assign-text-input"
                     name="searchAssignedTo"
@@ -289,86 +295,92 @@
                     v-model="searchAssignedToUser"
                     @keyup="searchAssignedTo()"
                   >
-                </v-list-tile-title>
-              </v-list-tile>
+                </v-list-item-title>
+              </v-list-item>
               <hr>
-              <v-list-tile
+              <v-list-item
                 v-for="(item, index) in searchAssignedTo()"
                 :key="index"
                 @click="updateBulkAssignedTo(item.id, item.text)"
               >
-                <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-              </v-list-tile>
+                <v-list-item-title>{{ item.text }}</v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-menu>
         </div>
       </div>
       <div class="right-side">
-        <div class="">
+        <div class="mx-1">
           <v-menu offset-y>
-            <v-btn
-              slot="activator"
-              class="box-container zoom-in"
-            >
-              <v-icon small>fas fa-cloud-download-alt</v-icon>
-              <span>&nbsp;&nbsp;&nbsp;</span>
-              <span>Download report</span>
-            </v-btn>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                class="box-container zoom-in"
+              >
+                <v-icon small>fas fa-cloud-download-alt</v-icon>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span>Download report</span>
+              </v-btn>
+            </template>
             <v-list style="width: 500px;padding:0">
-              <v-list-tile
+              <v-list-item
                 @click="openReportDialog('filtered')"
                 class="custom-tile"
                 style="padding: 1%;"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   <v-icon small class="ml-2">fas fa-eye</v-icon>
                   Currently Filtered
-                </v-list-tile-title>
-                <v-list-tile-sub-title style="line-height: 1.2;">
+                </v-list-item-title>
+                <v-list-item-sub-title style="line-height: 1.2;">
                   Export the list of all employees <br/>
                   that are currently shown in the <br/>
                   table on the page.
-                </v-list-tile-sub-title>
-              </v-list-tile>
+                </v-list-item-sub-title>
+              </v-list-item>
               <v-divider></v-divider>
-              <v-list-tile
+              <v-list-item
                 @click="openReportDialog()"
                 class="custom-tile"
                 style="padding: 1%;"
               >
-                <v-list-tile-title>
+                <v-list-item-title>
                   <v-icon small class="ml-2">fas fa-user-friends</v-icon>
                   All Employees
-                </v-list-tile-title>
-                <v-list-tile-sub-title style="line-height: 1.2;">
+                </v-list-item-title>
+                <v-list-item-sub-title style="line-height: 1.2;">
                   Export the list of all employees <br/>
                   that are present in <br/>{{user.company_name}}.
-                </v-list-tile-sub-title>
-              </v-list-tile>
+                </v-list-item-sub-title>
+              </v-list-item>
             </v-list>
           </v-menu>
         </div>
-        <div class="">
+        <div class="mx-1">
           <v-menu offset-y>
-            <v-btn
-              slot="activator"
-              class="box-container zoom-in"
-            >
-              <v-icon small>fas fa-plus</v-icon>
-              <span>&nbsp;&nbsp;&nbsp;</span>
-              <span>Add employees</span>
-            </v-btn>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                class="box-container zoom-in"
+              >
+                <v-icon small>fas fa-plus</v-icon>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <span>Add employees</span>
+              </v-btn>
+            </template>
             <v-list>
-              <v-list-tile @click="openBulkUploadDialog">
-                <v-list-tile-title>Bulk Employees</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile @click="openUploadDialog">
-                <v-list-tile-title>Single Employee</v-list-tile-title>
-              </v-list-tile>
+              <v-list-item @click="openBulkUploadDialog">
+                <v-list-item-title>Bulk Employees</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="openUploadDialog">
+                <v-list-item-title>Single Employee</v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-menu>
         </div>
-        <div class="">
+        <div class="mx-1">
           <v-btn
             class="box-container zoom-in"
             @click.stop="toggleFilter()"
@@ -378,7 +390,7 @@
             <span>Filters</span>
           </v-btn>
         </div>
-        <div class="">
+        <div class="mx-1">
           <v-btn
             class="box-container zoom-in"
             v-if="isFilterApplied"

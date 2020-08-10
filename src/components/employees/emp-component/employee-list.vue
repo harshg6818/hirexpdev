@@ -38,9 +38,9 @@
           :id="index"
           v-for="(e, index) in employees" :key="index"
         >
-            <div class="pt-2 text-xs-center">
-              <v-layout>
-                <v-flex xs6 class="text-xs-center">
+            <div class="pt-2 text-center">
+              <div class="d-flex flex-row">
+                <v-flex xs6 class="text-center">
                   <div class="emp-checkbox">
                     <v-checkbox
                       :id="index.toString()"
@@ -53,7 +53,7 @@
                     </v-checkbox>
                   </div>
                 </v-flex>
-                <v-flex xs6 class="text-xs-center emp-profile">
+                <v-flex xs6 class="text-center emp-profile">
                   <div class="star-icon">
                     <v-icon v-if="e.high_potential_emp">fas fa-star</v-icon>
                   </div>
@@ -61,32 +61,32 @@
                     <img :src="getImgUrl('male-avatar')" :alt="e.display_name">
                   </div>
                 </v-flex>
-              </v-layout>
+              </div>
             </div>
-            <div xs12 sm3 md3 lg3 class="pt-2 pl-2 text-xs-left" @click="viewEmpDashboard(e.id)">
-                <v-layout>
+            <div xs12 sm3 md3 lg3 class="pt-2 pl-2 text-left" @click="viewEmpDashboard(e.id)">
+                <div class="d-flex flex-row">
                   <v-flex xs12 class="cursor-pointer hover-link">
                     <div class="emp-name">
                       <b>{{e.display_name}}</b>
                     </div>
                   </v-flex>
-                </v-layout>
-                <v-layout>
+                </div>
+                <div class="d-flex flex-row">
                   <v-flex xs12>
                     <div class="emp-department caption">
                       <span>Department</span><span>&nbsp;:&nbsp;{{e.department}}</span>
                     </div>
                   </v-flex>
-                </v-layout>
-                <v-layout>
+                </div>
+                <div class="d-flex flex-row">
                   <v-flex xs12>
                     <div class="emp-email caption">
                       <span>Email</span><span>&nbsp;:&nbsp;{{e.email}}</span>
                     </div>
                   </v-flex>
-                </v-layout>
+                </div>
             </div>
-            <div xs12 sm1 md1 lg1 class="text-xs-center pt-2">
+            <div xs12 sm1 md1 lg1 class="text-center pt-2">
               <div class="mb-0 emp-mood" v-if="e.mood">
                 <div
                   :style="`background-image: url(${getImgUrl(e.mood)})`"
@@ -100,21 +100,21 @@
                 </div>
               </div>
             </div>
-            <div xs12 sm1 md1 lg1 class="pt-2 text-xs-center">
+            <div xs12 sm1 md1 lg1 class="pt-2 text-center">
               <div class="mb-0" v-if="e.last_milestone">{{e.last_milestone}}</div>
               <div class="mb-0" v-else> -- </div>
               <span class="grey--text caption">
                 Last Touchpoint
               </span>
             </div>
-            <div xs12 sm1 md1 lg1 class="pt-2 text-xs-center">
+            <div xs12 sm1 md1 lg1 class="pt-2 text-center">
               <div class="mb-0" v-if="e.last_milestone">{{e.engagement_score}}</div>
               <div class="mb-0" v-else> -- </div>
               <span class="grey--text caption">
                 Engagement score
               </span>
             </div>
-            <div xs12 sm2 md2 lg2 class="pt-2 text-xs-center">
+            <div xs12 sm2 md2 lg2 class="pt-2 text-center">
               <v-menu
                 offset-y
                 :disabled="!checkPermission(['manage_employee'])
@@ -154,7 +154,7 @@
                 </v-list>
               </v-menu>
             </div>
-            <div xs12 sm2 md2 lg2 class="text-xs-center pt-2">
+            <div xs12 sm2 md2 lg2 class="text-center pt-2">
               <!-- <v-overflow-btn
                 :id="e.last_chat_id"
                 :ref="e.last_chat_id"
@@ -226,15 +226,15 @@
                 </v-list>
               </v-menu>
             </div>
-            <div class="text-xs-center pt-2">
+            <div class="text-center pt-2">
               <v-menu offset-y max-height="200" left>
                 <!-- <v-flex xs12 slot="activator">
-                  <v-layout style="border: 1px dashed rgba(0, 0, 0, 0.12);border-radius: 6px;">
+                  <div class="d-flex flex-row" style="border: 1px dashed rgba(0, 0, 0, 0.12);border-radius: 6px;">
                     <v-flex xs8 style="height:32px" class="pt-1">Actions</v-flex>
                     <v-flex xs4 style="height:32px;border-left: 1px solid rgba(0,0,0,0.12);">
                       <v-icon class="grey--text">fas fa-sort-down</v-icon>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-flex> -->
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -266,9 +266,9 @@
         </div>
 
         <!-- Pagination -->
-        <v-layout v-if="totalCount > 10" class="pb-5 mt-4">
+        <div class="d-flex flex-row pb-5 mt-4" v-if="totalCount > 10">
           <v-flex xs1></v-flex>
-          <v-flex class="text-xs-center">
+          <v-flex class="text-center">
             <v-pagination
               class="emp-pagination"
               color="primary"
@@ -279,7 +279,7 @@
             ></v-pagination>
           </v-flex>
           <v-flex xs1></v-flex>
-        </v-layout>
+        </div>
       </div>
 
     </div>
@@ -307,7 +307,7 @@
         <v-btn
           v-if="bulkSnackbar.showBtn"
           color="white"
-          flat
+          text
           @click="bulkSnackbar.show = false"
         >
           Close
@@ -1350,15 +1350,15 @@ export default {
     margin: 0 20px;
     border-radius: 12px;
     padding: 0 20px;
-    min-height: 80vh;
-    max-height: 80vh;
+    // min-height: 80vh;
+    // max-height: 80vh;
     overflow: hidden;
     // overflow-y: auto;
     .employees-container {
       padding-bottom: 2rem;
-      min-height: 70vh;
-      max-height: 70vh;
-      overflow-y: auto;
+      // min-height: 70vh;
+      // max-height: 70vh;
+      // overflow-y: auto;
       .intro-x:nth-child(1) {
         opacity: 0;
         position: relative;

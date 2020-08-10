@@ -120,7 +120,7 @@
                           class="ma-0"
                           :color="r.color"
                           fab
-                          outline
+                          outlined
                         >
                           <strong class="headline">
                             {{r.value}}
@@ -138,7 +138,7 @@
                     v-if="c.type === 'quickReplies' || c.type === 'closeEnded'
                     && m.quickReplies && m.quickReplies.length > 0">
                       <v-btn :disabled="c.user_responded" :color="r.color || 'primary'"
-                      outline @click="sendMessage({
+                      outlined @click="sendMessage({
                         text: r.title,
                         value: r.value || r.title,
                         }, 'text', ci, r.postback)" class="mb-0"

@@ -409,7 +409,7 @@
         >
           <v-btn
             class="error--text"
-            flat
+            text
             @click="showFilterDrawer = false"
             style="float:left"
           >Close</v-btn>

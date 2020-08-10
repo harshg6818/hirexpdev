@@ -8,7 +8,7 @@
           :class="activeEmployee.last_chat_action_status !== 'Na' ||
           activeEmployee.user_completed_session_count > 0 ? 'pt-2': ''"
         >
-          <v-btn flat icon color="#6f64b0" @click="goBackToEmpList">
+          <v-btn text icon color="#6f64b0" @click="goBackToEmpList">
             <v-icon>fas fa-arrow-left</v-icon>
           </v-btn>
         </div>
@@ -53,7 +53,7 @@
         <div v-if="activeEmployee.last_chat_action_status !== 'Na'">
           <div
             v-if="activeEmployee.last_chat_action_status"
-            class="text-xs-center"
+            class="text-center"
           >
             Resolution status
           </div>
@@ -67,7 +67,7 @@
               v-on="on"
               :color="getStatusColor"
               small
-              outline
+              outlined
             >
               <span v-if="activeEmployee.last_chat_action_status">
                 {{activeEmployee.last_chat_action_status}}
@@ -102,7 +102,7 @@
         > -->
         <div v-if="activeEmployee.user_completed_session_count > 0">
           <div
-            class="text-xs-center"
+            class="text-center"
             v-if="activeEmployee.user_completed_session_count > 0"
           >
             Assigend To
@@ -117,7 +117,7 @@
               v-on="on"
               color="#6f64b0"
               small
-              outline
+              outlined
             >
               <span v-if="activeEmployee.last_chat_assignedTo_display_name">
                 {{activeEmployee.last_chat_assignedTo_display_name}}
@@ -156,13 +156,13 @@
         </div>
         <div
           :class="activeEmployee.last_chat_action_status !== 'Na' ||
-          activeEmployee.user_completed_session_count > 0 ? 'pt-3 mt-1': ''"
+          activeEmployee.user_completed_session_count > 0 ? 'pt-3 mt-2': ''"
         >
           <v-btn
             slot="activator"
             color="#6f64b0"
             small
-            outline
+            outlined
             @click.stop="openDialog('Acknowledge', ['acknowledge_chat'])"
           >
             <v-icon small>fas fa-check-square</v-icon>
@@ -171,13 +171,13 @@
         </div>
         <div
           :class="activeEmployee.last_chat_action_status !== 'Na' ||
-          activeEmployee.user_completed_session_count > 0 ? 'pt-3 mt-1': ''"
+          activeEmployee.user_completed_session_count > 0 ? 'pt-3 mt-2': ''"
         >
           <v-btn
             slot="activator"
             color="#6f64b0"
             small
-            outline
+            outlined
             @click.stop="openDialog('OneOnOne', ['schedule_invite'])"
           >
             <v-icon small>flaticon-012-meeting</v-icon>
@@ -186,13 +186,13 @@
         </div>
         <div
           :class="activeEmployee.last_chat_action_status !== 'Na' ||
-          activeEmployee.user_completed_session_count > 0 ? 'pt-3 mt-1': ''"
+          activeEmployee.user_completed_session_count > 0 ? 'pt-3 mt-2': ''"
         >
           <v-btn
             slot="activator"
             color="#6f64b0"
             small
-            outline
+            outlined
             @click.stop="openDialog('EmailEmployee', ['send_email'])"
           >
             <v-icon small>fas fa-envelope</v-icon>
@@ -214,7 +214,7 @@
               color="#6f64b0"
               dark
               small
-              flat
+              text
               icon
             >
               <v-icon small>fas fa-ellipsis-v</v-icon>
@@ -292,17 +292,17 @@
     </div>
     <!-- emp overview -->
     <v-container fluid class="empdashboard" v-if="activeView === 'overview'">
-      <v-layout>
+      <div class="d-flex flex-row">
         <!-- first row of emp dash -->
         <v-flex xs4 class="mr-3">
-          <v-layout column>
+          <div class="d-flex flex-column">
             <v-flex xs12>
               <v-container class="pa-0">
-                <v-layout column class="emp-profile-card-wrap">
+                <div class="emp-profile-card-wrap d-flex flex-column">
                   <v-flex>
-                    <v-layout row>
+                    <div class="d-flex flex-row">
                       <v-flex xs4></v-flex>
-                      <v-flex xs4 class="text-xs-center">
+                      <v-flex xs4 class="text-center">
                         <div class="emp-profile">
                           <div class="emp-profile-img"
                             :style="`background-image: url(${getImgUrl('male-avatar')})`"
@@ -311,28 +311,28 @@
                         </div>
                       </v-flex>
                       <v-flex xs4></v-flex>
-                    </v-layout>
+                    </div>
                   </v-flex>
                   <v-flex class="emp-body bg-white">
-                    <v-layout column>
-                      <v-flex xs12 class="text-xs-center">
+                    <div class="d-flex flex-column">
+                      <v-flex xs12 class="text-center">
                         <span v-if="activeEmployee.employee_id">
                           {{activeEmployee.employee_id}}
                         </span>
                         <span v-else>--</span>
                       </v-flex>
-                      <v-flex xs12 class="text-xs-center">
+                      <v-flex xs12 class="text-center">
                         <span v-if="activeEmployee.display_name">
                           {{activeEmployee.display_name}}
                         </span>
                         <span v-else>--</span>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-flex>
-                  <v-flex class="emp-footer text-xs-center">
-                    <v-layout row>
+                  <v-flex class="emp-footer text-center">
+                    <div class="d-flex flex-row">
                       <v-flex xs4 class="chat-stats">
-                        <v-layout column>
+                        <div class="d-flex flex-column">
                           <v-flex class="chat-title">Total Chats Initiated</v-flex>
                           <v-flex class="chat-count">
                             <span v-if="activeEmployee.user_session_count">
@@ -340,10 +340,10 @@
                             </span>
                             <span v-else>0</span>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-flex>
                       <v-flex xs4 class="chat-stats two">
-                        <v-layout column>
+                        <div class="d-flex flex-column">
                           <v-flex class="chat-title">Chats in Progress</v-flex>
                           <v-flex class="chat-count">
                             <span v-if="activeEmployee.user_inProgress_session_count">
@@ -351,10 +351,10 @@
                             </span>
                             <span v-else>0</span>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-flex>
                       <v-flex xs4 class="chat-stats three">
-                        <v-layout column>
+                        <div class="d-flex flex-column">
                           <v-flex class="chat-title">Chats Completed</v-flex>
                           <v-flex class="chat-count">
                             <span v-if="activeEmployee.user_completed_session_count">
@@ -362,11 +362,11 @@
                             </span>
                             <span v-else>0</span>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-container>
             </v-flex>
 
@@ -374,15 +374,15 @@
             <v-flex xs12 class="mt-3 pt-2">
               <v-container class="pa-0">
                 <div class="activity-card-wrap">
-                  <v-layout class="card-heading">
-                    <v-flex xs4 class="text-xs-left pl-3 pt-3">
+                  <div class="card-heading d-flex flex-row">
+                    <v-flex xs4 class="text-left pl-3 pt-3">
                       Employee
                     </v-flex>
                     <v-flex xs8>
-                      <v-layout row>
+                      <div class="d-flex flex-row">
                         <v-flex>
                           <v-btn
-                            flat
+                            text
                             color="primary"
                             class="elevation-0"
                             @click="activeEmpCardView = 'activity';loadEmpActivity()"
@@ -395,7 +395,7 @@
                         </v-flex>
                         <v-flex>
                           <v-btn
-                            flat
+                            text
                             color="primary"
                             class="elevation-0"
                             @click="activeEmpCardView = 'comment'"
@@ -406,10 +406,10 @@
                             </div>
                           </v-btn>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </v-flex>
-                  </v-layout>
-                  <v-layout>
+                  </div>
+                  <div class="d-flex flex-row">
                     <v-flex class="card-body">
                       <SingleEmployeeTimeline
                         ref="SingleEmployeeTimeline"
@@ -417,31 +417,31 @@
                       >
                       </SingleEmployeeTimeline>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </div>
               </v-container>
             </v-flex>
-          </v-layout>
+          </div>
         </v-flex>
 
         <!-- second row of emp dash -->
         <v-flex xs8 class="ml-3">
           <v-container fluid class="bg-white emp-dash-second-col">
-            <v-layout column>
+            <div class="d-flex flex-column">
               <v-flex xs12 class="pt-2 emp-stats">
                 <v-container fluid class="pa-0">
-                  <v-layout row>
+                  <div class="d-flex flex-row">
                     <v-flex class="pb-4">
                       <div class="stats-heading">
                         Employee stats
                       </div>
                     </v-flex>
-                  </v-layout>
-                  <v-layout row>
+                  </div>
+                  <div class="d-flex flex-row">
                     <v-flex xs4>
                       <v-container fluid class="pa-0">
-                        <v-layout>
-                          <v-flex xs4 class="text-xs-center">
+                        <div class="d-flex flex-column">
+                          <v-flex xs4 class="text-center">
                             <div class="stats-icon one"
                               :style="{
                                 background: `linear-gradient(0deg,
@@ -461,13 +461,13 @@
                               {{getEngagement(activeEmployee.engagement_score)}}
                             </div>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-container>
                     </v-flex>
                     <v-flex xs4>
                       <v-container fluid class="pa-0">
-                        <v-layout>
-                          <v-flex xs4 class="text-xs-center">
+                        <div class="d-flex flex-row">
+                          <v-flex xs4 class="text-center">
                             <div class="stats-icon">
                               <v-icon v-if="activeEmployee.mood === 0">fas fa-arrow-left
                               </v-icon>
@@ -487,13 +487,13 @@
                               {{activeEmployee.mood}}
                             </div>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-container>
                     </v-flex>
                     <v-flex xs4>
                       <v-container fluid class="pa-0">
-                        <v-layout>
-                          <v-flex xs4 class="text-xs-center">
+                        <div class="d-flex flex-row">
+                          <v-flex xs4 class="text-center">
                             <div class="stats-icon three">
                               <v-icon>fas fa-arrow-left</v-icon>
                             </div>
@@ -504,10 +504,10 @@
                               Sub 3
                             </div>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-container>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-container>
               </v-flex>
               <v-flex xs12 class="emp-quote mt-4">
@@ -517,41 +517,40 @@
               </v-flex>
               <v-flex xs12 class="pt-2">
                 <v-container fluid class="pa-0">
-                  <v-layout row wrap
+                  <div class="d-flex flex-row flex-wrap"
                   >
                     <v-flex xs6 class="vibe-graph-wrap">
-                      <v-layout column>
+                      <div class="d-flex flex-column">
                         <v-flex xs12>
-                          <div class="py-3 text-xs-left vibe-heading">
+                          <div class="py-3 text-left vibe-heading">
                             Employee Vibe Over Time
                           </div>
                         </v-flex>
                         <v-flex xs12>
                           <v-container fluid class="pa-0">
                             <div class="vibe-chart pt-3">
-                              <v-layout
-                                row
-                                wrap
+                              <div
+                                class="d-flex flex-row flex-wrap"
                                 v-if="activeEmployee &&
                                 activeEmployee.user_completed_session_mood &&
                                 activeEmployee.user_completed_session_mood.length > 0"
                               >
                                 <vue-anychart id="vibeGraph" class="vibeGraph" />
-                              </v-layout>
-                              <v-layout v-else class="vibe-graph-wrap pt-3">
+                              </div>
+                              <div v-else class="vibe-graph-wrap pt-3 d-flex flex-row">
                                 <v-flex class="mt-3 pt-2">
                                   <strong class="body-2 font-weight-bold grey--text">
                                     Not enough data to generate analysis
                                   </strong>
                                 </v-flex>
-                              </v-layout>
+                              </div>
                             </div>
                           </v-container>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </v-flex>
                     <v-flex xs6 class="drivers-wrap">
-                      <v-layout column v-if="activeEmployee &&
+                      <div class="d-flex flex-column" v-if="activeEmployee &&
                         activeEmployee.latest_session_driver &&
                         Object.keys(activeEmployee.latest_session_driver).length > 0"
                       >
@@ -563,18 +562,18 @@
                                 :key="index"
                                 class="drivers-list"
                               >
-                                <v-layout>
+                                <div class="d-flex flex-row">
                                   <v-flex xs10 class="pl-2" style="word-break: break-word;">
                                     {{d.title}}
                                   </v-flex>
                                   <v-flex
                                     xs2
-                                    class="text-xs-center"
+                                    class="text-center"
                                     :style="`color:${getColor(d.value.toFixed(1))}`"
                                   >
                                     {{d.value.toFixed(1)}}
                                   </v-flex>
-                                </v-layout>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -585,44 +584,44 @@
                             <div class="driver-body">
                               <div v-for="(d,index) in getDriverAnalysis('bad')" :key="index"
                               class="drivers-list">
-                                <v-layout>
+                                <div class="d-flex flex-row">
                                   <v-flex xs10 class="pl-2" style="word-break: break-word;">
                                     {{d.title}}
                                   </v-flex>
                                   <v-flex
                                     xs2
-                                    class="text-xs-center"
+                                    class="text-center"
                                     :style="`color:${getColor(d.value.toFixed(1))}`"
                                   >
                                     {{d.value.toFixed(1)}}
                                   </v-flex>
-                                </v-layout>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </v-flex>
-                      </v-layout>
-                      <v-layout align-center fill-height v-else>
-                        <v-flex xs12 class="text-xs-center pt-2">
+                      </div>
+                      <div class="d-flex flex-row align-center fill-height" v-else>
+                        <v-flex xs12 class="text-center pt-2">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-container>
               </v-flex>
               <v-flex xs12 class="pt-2 emp-driver-trend">
                 <v-container fluid class="pa-0">
-                  <v-layout row>
+                  <div class="d-flex flex-row">
                     <v-flex class="py-4">
                       <div class="driver-heading">
                         Drivers Trend
                       </div>
                     </v-flex>
-                  </v-layout>
-                  <v-layout row>
+                  </div>
+                  <div class="d-flex flex-row">
                     <v-flex xs12>
                       <div class="milestone-heatmap">
                         <table>
@@ -639,7 +638,7 @@
                               <td class="driver-score ma-0 milestones">{{t.milestone}}</td>
                               <td
                                 v-for="(driver,key) in roles" :key="key"
-                                class="text-xs-center"
+                                class="text-center"
                                 :style="`background-color:${getColor(t[driver])};
                                   color:${getColor(t[driver]) !== '#0000000a'? 'white': 'black'};`"
                               >
@@ -654,28 +653,28 @@
                         </table>
                       </div>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-container>
               </v-flex>
-            </v-layout>
+            </div>
           </v-container>
         </v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="mb-0">
+      <div class="mb-0 d-flex flex-row flex-wrap">
         <v-container fluid class="emp-last-Transcript px-0">
           <div class="" style="border-right: 0px;width:100%;max-width:100%;height:unset;background-color:#fff;border-radius: 25px;">
-            <p class="pa-3 score-card text-capitalize text-xs-center" style="font-weight:bold"> Last Chat Transcript
+            <p class="pa-3 score-card text-capitalize text-center" style="font-weight:bold"> Last Chat Transcript
               <span v-if="activeEmployee.latest_session_driverwise_subdrivers && activeEmployee.latest_session_driverwise_subdrivers.stage_title">
                 ( At {{activeEmployee.latest_session_driverwise_subdrivers.stage_title}} )
               </span>
             </p>
             <div v-if="activeEmployee && activeEmployee.user_latest_session_interactions" class="w-100">
               <div class="response-list pb-3">
-                <v-layout
+                <div
                   :id="`response-${i}`"
                   v-for="(t, i) in activeEmployee.user_latest_session_interactions"
-                  class="mb-0 px-3" :key="i"
+                  class="mb-0 px-3 d-flex flex-row" :key="i"
                 >
                   <div class="active-response w-100"
                     v-if="!t.parent_interaction_id"
@@ -696,19 +695,19 @@
                       </div>
                     </div>
                   </div>
-                </v-layout>
+                </div>
               </div>
             </div>
-            <v-layout row wrap v-else align-center justify-center fill-height style="height:500px">
-              <v-flex text-xs-center class="py-5">
+            <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" v-else style="height:500px">
+              <v-flex class="text-center py-5">
                 <strong class="body-2 font-weight-bold grey--text">
                   Not enough data to generate analysis
                 </strong>
               </v-flex>
-            </v-layout>
+            </div>
           </div>
         </v-container>
-      </v-layout>
+      </div>
     </v-container>
 
     <!-- emp chat -->
