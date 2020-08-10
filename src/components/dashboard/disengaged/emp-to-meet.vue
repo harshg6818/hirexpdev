@@ -41,79 +41,80 @@
               -
             </p>
           </td>
-          <td class="text-xs-left" style="width:14%">
+          <td class="text-left" style="width:14%">
             <span class="" v-if="item.driverAverage"> {{item.driverAverage.toFixed(1)}} </span>
             <span class="font-weight-bold grey--text" v-else>-</span>
           </td>
-          <td class="text-xs-left px-0" style="width:15%" @click.stop v-if="!activeDriver">
+          <td class="text-left px-0" style="width:15%" @click.stop v-if="!activeDriver">
             <!-- Schedule one on one -->
             <span v-if="activeDriver" class="font-weight-bold grey--text">
               -
             </span>
-            <v-tooltip
-              bottom
-            >
-              <v-chip
-                :disabled="config.loading"
-                :loading="config.loading"
-                :class="{
-                  'primary primary--text': item.action_status === 'open',
-                  '#37b99c amara--text': item.action_status === 'scheduled',
-                  'info info--text': item.action_status === 'inProgress',
-                  'success success--text': item.action_status === 'resolved',
-                  'deep-orange deep-orange--text': item.action_status === 'acknowledged',
-                }"
-                style="width:110px !important;height:40px !important;"
-                slot="activator"
-                class="status-chip elevation-0 mr-0 text-capitalize"
-                outlined
-                @click="config.actionMenu[item.id] = !config.actionMenu[item.id]"
-              >
-                {{item.action_status}}
-              </v-chip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-chip
+                  :disabled="config.loading"
+                  :loading="config.loading"
+                  :class="{
+                    'primary primary--text': item.action_status === 'open',
+                    '#37b99c amara--text': item.action_status === 'scheduled',
+                    'info info--text': item.action_status === 'inProgress',
+                    'success success--text': item.action_status === 'resolved',
+                    'deep-orange deep-orange--text': item.action_status === 'acknowledged',
+                  }"
+                  style="width:110px !important;height:40px !important;"
+                  v-bind="attrs"
+                  v-on="on"
+                  class="status-chip elevation-0 mr-0 text-capitalize"
+                  outlined
+                  @click="config.actionMenu[item.id] = !config.actionMenu[item.id]"
+                >
+                  {{item.action_status}}
+                </v-chip>
+              </template>
               Current Status
             </v-tooltip>
 
-            <v-tooltip
-              bottom
-            >
-              <v-menu offset-y slot="activator" v-model="config.actionMenu[item.id]">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    slot="activator"
-                    v-bind="attrs" v-on="on"
-                    :disabled="config.loading"
-                    icon
-                    :class="{
-                      'primary primary--text': item.action_status === 'open',
-                      '#37b99c amara--text': item.action_status === 'scheduled',
-                      'info info--text': item.action_status === 'inProgress',
-                      'success success--text': item.action_status === 'resolved',
-                      'deep-orange deep-orange--text': item.action_status === 'acknowledged',
-                    }"
-                    class="dropdown-chip ml-0 b-left"
-                    style="height:40px !important;"
-                    small outlined
-                  >
-                    <v-icon>fas fa-caret-down</v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item v-for="(item, i) in config.actions" :key="i"
-                  v-if="item.action_status !== item.status"
-                  @click="item.action(item, item.dialog || item.status)"
-                  :disabled="!item.action || !checkPermission(item.permission)">
-                    <v-list-item-title>
-                      <v-icon class="mr-2">{{item.icon}}</v-icon>
-                      {{ item.title }}
-                    </v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-menu offset-y v-bind="attrs" v-on="on" v-model="config.actionMenu[item.id]">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      slot="activator"
+                      v-bind="attrs" v-on="on"
+                      :disabled="config.loading"
+                      icon
+                      :class="{
+                        'primary--text': item.action_status === 'open',
+                        'amara--text': item.action_status === 'scheduled',
+                        'info--text': item.action_status === 'inProgress',
+                        'success--text': item.action_status === 'resolved',
+                        'deep-orange--text': item.action_status === 'acknowledged',
+                      }"
+                      class="dropdown-chip ml-0 b-left"
+                      style="height:40px !important;"
+                      small outlined
+                    >
+                      <v-icon>fas fa-caret-down</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item v-for="(item, i) in config.actions" :key="i"
+                    v-if="item.action_status !== item.status"
+                    @click="item.action(item, item.dialog || item.status)"
+                    :disabled="!item.action || !checkPermission(item.permission)">
+                      <v-list-item-title>
+                        <v-icon class="mr-2">{{item.icon}}</v-icon>
+                        {{ item.title }}
+                      </v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </template>
               Update status of this employee
             </v-tooltip>
           </td>
-          <td class="text-xs-left px-0">
+          <td class="text-left px-0">
             <v-chip
               :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
               slot="activator"
@@ -147,8 +148,8 @@
                 </v-list>
               </v-menu>
           </td>
-          <td class="text-xs-left px-0" style="width:14%">
-            <v-btn flat outlined class="text-capitalize btn-text" color="primary" style="" @click.stop="viewEmployee(item);"> View employee </v-btn>
+          <td class="text-left px-0" style="width:14%">
+            <v-btn text outlined class="text-capitalize btn-text" color="primary" style="" @click.stop="viewEmployee(item);"> View employee </v-btn>
           </td>
         </tr>
         </tbody>

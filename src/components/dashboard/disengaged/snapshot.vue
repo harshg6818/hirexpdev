@@ -1,194 +1,196 @@
 <template>
   <div class="disengaged-snapshot-wrap">
-    <v-layout row wrap class="mb-2"  v-show="stackedGraphs">
-      <v-flex sm6 md3 class="disengaged-employees-cards">
-        <v-card class="elevation-0">
-          <p class="py-3 score-card text-center mb-0 text-capitalize heading">
-            Employee cases identified
-            <v-tooltip max-width="200" bottom class="ml-2">
-              <!-- <v-icon
-              slot="activator"
-              >fas fa-info-circle</v-icon> -->
-                Employees whose engagement score is less than or equal to 2.5 are High-risk employees.
-                Employees whose engagement score is  greater than 2.5 and less than or equal to 3 are Medium risk employees.
-            </v-tooltip>
-          </p>
-
-          <div v-show="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees">
-            <p class="text-center" style="font-weight:300;font-size:36px" v-if="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees > 0">
-              {{overall_disengaged_stats.disengaged_employees}}
+    <div v-show="stackedGraphs">
+      <div class="d-flex flex-row flex-wrap mb-2">
+        <v-flex sm6 md3 class="disengaged-employees-cards">
+          <v-card class="elevation-0">
+            <p class="py-3 score-card text-center mb-0 text-capitalize heading">
+              Employee cases identified
+              <v-tooltip max-width="200" bottom class="ml-2">
+                <!-- <v-icon
+                slot="activator"
+                >fas fa-info-circle</v-icon> -->
+                  Employees whose engagement score is less than or equal to 2.5 are High-risk employees.
+                  Employees whose engagement score is  greater than 2.5 and less than or equal to 3 are Medium risk employees.
+              </v-tooltip>
             </p>
-            <v-layout row wrap align-center justify-center fill-height>
-                  <v-flex text-center>
-                    <strong v-show=" overall_disengaged_stats && overall_disengaged_stats.disengaged_employees == 0" class="body-2 font-weight-bold grey--text">
-                      <p style="text-align:center; margin:0; font-size:20px;"> Yay! </p>
-                      <p style="text-align:center; margin:0;"> You don’t have any disengaged employee </p>
+
+            <div v-show="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees">
+              <p class="text-center" style="font-weight:300;font-size:36px" v-if="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees > 0">
+                {{overall_disengaged_stats.disengaged_employees}}
+              </p>
+              <div class="flex-row flex-wrap d-flex align-center justify-center fill-height">
+                    <v-flex class="text-center">
+                      <strong v-show="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees == 0" class="body-2 font-weight-bold grey--text">
+                        <p style="text-align:center; margin:0; font-size:20px;"> Yay! </p>
+                        <p style="text-align:center; margin:0;"> You don’t have any disengaged employee </p>
+                      </strong>
+                    </v-flex>
+                </div>
+
+              <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="overall_disengaged_stats && overall_disengaged_stats.employees_reached">
+                {{overall_disengaged_stats.disengaged_percentage}}% of {{overall_disengaged_stats.employees_reached}} employees spoken to are disengaged
+              </p>
+              <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
+                0% 0 employees spoken to are disengaged
+              </p>
+
+              <vue-anychart :id="'stackedBarChart-total'" class="stackedBarChart px-1"
+                ref="lineChart">
+              </vue-anychart>
+            </div>
+
+            <div style="height:170px" v-show="!overall_disengaged_stats || !overall_disengaged_stats.disengaged_employees">
+              <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                  <v-flex class="text-center">
+                    <strong class="body-2 font-weight-bold grey--text">
+                      Not enough data to generate analysis
                     </strong>
                   </v-flex>
-              </v-layout>
+                </div>
+            </div>
+          </v-card>
+        </v-flex>
 
-            <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="overall_disengaged_stats && overall_disengaged_stats.employees_reached">
-              {{overall_disengaged_stats.disengaged_percentage}}% of {{overall_disengaged_stats.employees_reached}} employees spoken to are disengaged
-            </p>
-            <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
-              0% 0 employees spoken to are disengaged
-            </p>
-
-            <vue-anychart :id="'stackedBarChart-total'" class="stackedBarChart px-1"
-              ref="lineChart">
-            </vue-anychart>
-          </div>
-
-          <div style="height:170px" v-show="!overall_disengaged_stats || !overall_disengaged_stats.disengaged_employees">
-            <v-layout row wrap align-center justify-center fill-height>
-                <v-flex text-center>
-                  <strong class="body-2 font-weight-bold grey--text">
-                    Not enough data to generate analysis
-                  </strong>
-                </v-flex>
-              </v-layout>
-          </div>
-        </v-card>
-      </v-flex>
-
-      <!-- Issues Resolved -->
-      <v-flex sm6 md3 class="disengaged-employees-cards">
-        <v-card class="elevation-0">
-          <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
-            Employee cases resolved
-            <!--<v-tooltip max-width="200" bottom class="ml-2">
-              <v-icon
-              slot="activator"
-              >fas fa-info-circle</v-icon>
-                Employees whose engagement score is less than or equal to 2.5 are High-risk employees.
-                Employees whose engagement score is  greater than 2.5 and less than or equal to 3 are Medium risk employees.
-            </v-tooltip>-->
-          </p>
-
-          <div v-show="resolved_disengaged_stats && resolved_disengaged_stats.total_disengaged_employees">
-            <p class="text-center" style="font-weight:300;font-size:36px" v-if="resolved_disengaged_stats && resolved_disengaged_stats.resolved_disengaged">
-              {{resolved_disengaged_stats.resolved_disengaged}}
-            </p>
-            <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
-
-            <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="resolved_disengaged_stats && resolved_disengaged_stats.total_disengaged_employees">
-              {{resolved_disengaged_stats.resolved_disengaged_percentage}}% of {{resolved_disengaged_stats.total_disengaged_employees}} disengaged employees
-            </p>
-            <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
-              0% 0 disengaged employees
+        <!-- Issues Resolved -->
+        <v-flex sm6 md3 class="disengaged-employees-cards">
+          <v-card class="elevation-0">
+            <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
+              Employee cases resolved
+              <!--<v-tooltip max-width="200" bottom class="ml-2">
+                <v-icon
+                slot="activator"
+                >fas fa-info-circle</v-icon>
+                  Employees whose engagement score is less than or equal to 2.5 are High-risk employees.
+                  Employees whose engagement score is  greater than 2.5 and less than or equal to 3 are Medium risk employees.
+              </v-tooltip>-->
             </p>
 
-            <p class="px-1 pt-3 mb-0 text-center mt-4 sub-heading" v-if="resolved_disengaged_stats && resolved_disengaged_stats.average_resolution_time"> Average Resolution Time </p>
-            <p class="px-1 score-card text-capitalize text-center" style="font-weight:500" v-if="resolved_disengaged_stats && resolved_disengaged_stats.average_resolution_time">
-              {{ Math.round(resolved_disengaged_stats.average_resolution_time) }} days
+            <div v-show="resolved_disengaged_stats && resolved_disengaged_stats.total_disengaged_employees">
+              <p class="text-center" style="font-weight:300;font-size:36px" v-if="resolved_disengaged_stats && resolved_disengaged_stats.resolved_disengaged">
+                {{resolved_disengaged_stats.resolved_disengaged}}
+              </p>
+              <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
+
+              <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="resolved_disengaged_stats && resolved_disengaged_stats.total_disengaged_employees">
+                {{resolved_disengaged_stats.resolved_disengaged_percentage}}% of {{resolved_disengaged_stats.total_disengaged_employees}} disengaged employees
+              </p>
+              <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
+                0% 0 disengaged employees
+              </p>
+
+              <p class="px-1 pt-3 mb-0 text-center mt-4 sub-heading" v-if="resolved_disengaged_stats && resolved_disengaged_stats.average_resolution_time"> Average Resolution Time </p>
+              <p class="px-1 score-card text-capitalize text-center" style="font-weight:500" v-if="resolved_disengaged_stats && resolved_disengaged_stats.average_resolution_time">
+                {{ Math.round(resolved_disengaged_stats.average_resolution_time) }} days
+              </p>
+
+              <!--<vue-anychart :id="'stackedBarChart-resolved'" class="stackedBarChart"
+                ref="lineChart">
+              </vue-anychart>-->
+            </div>
+
+            <div style="height:170px" v-show="!resolved_disengaged_stats || !resolved_disengaged_stats.total_disengaged_employees">
+              <div class="flex-row flex-wrap d-flex align-center justify-center fill-height">
+                  <v-flex class="text-center">
+                    <strong class="body-2 font-weight-bold grey--text">
+                      Not enough data to generate analysis
+                    </strong>
+                  </v-flex>
+                </div>
+            </div>
+          </v-card>
+        </v-flex>
+
+        <!-- Employees to meet -->
+        <v-flex sm6 md3 class="disengaged-employees-cards">
+          <v-card class="elevation-0">
+            <p class="py-3 score-card text-center mb-0 text-capitalize heading">
+              Employee cases open
+              <!--<v-tooltip max-width="200" bottom class="ml-2">
+                <v-icon
+                slot="activator"
+                >fas fa-info-circle</v-icon>
+                  Employees whose engagement score is less than or equal to 2.5 are High-risk employees.
+                  Employees whose engagement score is  greater than 2.5 and less than or equal to 3 are Medium risk employees.
+              </v-tooltip>-->
             </p>
 
-            <!--<vue-anychart :id="'stackedBarChart-resolved'" class="stackedBarChart"
-              ref="lineChart">
-            </vue-anychart>-->
-          </div>
+            <div v-show="employee_to_meet_stats && employee_to_meet_stats.total_employees_to_meet">
+              <p class="text-center" style="font-weight:300;font-size:36px" v-if="employee_to_meet_stats && employee_to_meet_stats.total_employees_to_meet">
+                {{employee_to_meet_stats.total_employees_to_meet}}
+              </p>
+              <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
 
-          <div style="height:170px" v-show="!resolved_disengaged_stats || !resolved_disengaged_stats.total_disengaged_employees">
-            <v-layout row wrap align-center justify-center fill-height>
-                <v-flex text-center>
-                  <strong class="body-2 font-weight-bold grey--text">
-                    Not enough data to generate analysis
-                  </strong>
-                </v-flex>
-              </v-layout>
-          </div>
-        </v-card>
-      </v-flex>
+              <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="employee_to_meet_stats && employee_to_meet_stats.total_disengaged_employees">
+                {{employee_to_meet_stats.total_employees_to_meet_percentage}}% of {{employee_to_meet_stats.total_disengaged_employees}} disengaged employees
+              </p>
+              <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
+                0% 0 disengaged employees
+              </p>
 
-      <!-- Employees to meet -->
-      <v-flex sm6 md3 class="disengaged-employees-cards">
-        <v-card class="elevation-0">
-          <p class="py-3 score-card text-center mb-0 text-capitalize heading">
-            Employee cases open
-            <!--<v-tooltip max-width="200" bottom class="ml-2">
-              <v-icon
-              slot="activator"
-              >fas fa-info-circle</v-icon>
-                Employees whose engagement score is less than or equal to 2.5 are High-risk employees.
-                Employees whose engagement score is  greater than 2.5 and less than or equal to 3 are Medium risk employees.
-            </v-tooltip>-->
-          </p>
+              <vue-anychart :id="'stackedBarChart-tomeet'" class="stackedBarChart px-1"
+                ref="lineChart">
+              </vue-anychart>
+            </div>
 
-          <div v-show="employee_to_meet_stats && employee_to_meet_stats.total_employees_to_meet">
-            <p class="text-center" style="font-weight:300;font-size:36px" v-if="employee_to_meet_stats && employee_to_meet_stats.total_employees_to_meet">
-              {{employee_to_meet_stats.total_employees_to_meet}}
-            </p>
-            <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
+            <div style="height:170px" v-show="!employee_to_meet_stats || !employee_to_meet_stats.total_employees_to_meet">
+              <div class="d-flex flex-wrap flex-row align-center justify-center fill-height">
+                  <v-flex class="text-center">
+                    <strong class="body-2 font-weight-bold grey--text">
+                      Not enough data to generate analysis
+                    </strong>
+                  </v-flex>
+                </div>
+            </div>
+          </v-card>
+        </v-flex>
 
-            <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="employee_to_meet_stats && employee_to_meet_stats.total_disengaged_employees">
-              {{employee_to_meet_stats.total_employees_to_meet_percentage}}% of {{employee_to_meet_stats.total_disengaged_employees}} disengaged employees
-            </p>
-            <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
-              0% 0 disengaged employees
-            </p>
+        <!-- Exited employees -->
+        <v-flex sm6 md3 class="disengaged-employees-cards">
+          <v-card class="elevation-0">
+            <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
+              Disengaged employees who exited
+              <!--<v-tooltip max-width="200" bottom class="ml-2">
+                <v-icon
+                slot="activator"
+                >fas fa-info-circle</v-icon>
 
-            <vue-anychart :id="'stackedBarChart-tomeet'" class="stackedBarChart px-1"
-              ref="lineChart">
-            </vue-anychart>
-          </div>
-
-          <div style="height:170px" v-show="!employee_to_meet_stats || !employee_to_meet_stats.total_employees_to_meet">
-            <v-layout row wrap align-center justify-center fill-height>
-                <v-flex text-center>
-                  <strong class="body-2 font-weight-bold grey--text">
-                    Not enough data to generate analysis
-                  </strong>
-                </v-flex>
-              </v-layout>
-          </div>
-        </v-card>
-      </v-flex>
-
-      <!-- Exited employees -->
-      <v-flex sm6 md3 class="disengaged-employees-cards">
-        <v-card class="elevation-0">
-          <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
-            Disengaged employees who exited
-            <!--<v-tooltip max-width="200" bottom class="ml-2">
-              <v-icon
-              slot="activator"
-              >fas fa-info-circle</v-icon>
-
-            </v-tooltip>-->
-          </p>
-
-          <div v-show="disengaged_exited_employee_stats && disengaged_exited_employee_stats.total_exited_employee">
-            <p class="text-center" style="font-weight:300;font-size:36px" v-if="disengaged_exited_employee_stats && disengaged_exited_employee_stats.total_exited_employee">
-              {{disengaged_exited_employee_stats.total_exited_employee}}
-            </p>
-            <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
-
-            <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="disengaged_exited_employee_stats && overall_disengaged_stats && overall_disengaged_stats.disengaged_employees">
-              {{disengaged_exited_employee_stats.total_exited_employees_percentage}}% of {{overall_disengaged_stats.disengaged_employees}} disengaged employees
-            </p>
-            <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
-              0% 0 disengaged employees
+              </v-tooltip>-->
             </p>
 
-            <vue-anychart :id="'stackedBarChart-exited'" class="stackedBarChart px-1"
-              ref="lineChart">
-            </vue-anychart>
-          </div>
+            <div v-show="disengaged_exited_employee_stats && disengaged_exited_employee_stats.total_exited_employee">
+              <p class="text-center" style="font-weight:300;font-size:36px" v-if="disengaged_exited_employee_stats && disengaged_exited_employee_stats.total_exited_employee">
+                {{disengaged_exited_employee_stats.total_exited_employee}}
+              </p>
+              <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
 
-          <div style="height:170px" v-show="!disengaged_exited_employee_stats || !disengaged_exited_employee_stats.total_exited_employee">
-            <v-layout row wrap align-center justify-center fill-height>
-                <v-flex text-center>
-                  <strong class="body-2 font-weight-bold grey--text">
-                    Not enough data to generate analysis
-                  </strong>
-                </v-flex>
-            </v-layout>
-          </div>
-        </v-card>
-      </v-flex>
-    </v-layout>
+              <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="disengaged_exited_employee_stats && overall_disengaged_stats && overall_disengaged_stats.disengaged_employees">
+                {{disengaged_exited_employee_stats.total_exited_employees_percentage}}% of {{overall_disengaged_stats.disengaged_employees}} disengaged employees
+              </p>
+              <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
+                0% 0 disengaged employees
+              </p>
 
-    <v-layout row wrap class="mb-2"  v-show="!stackedGraphs">
+              <vue-anychart :id="'stackedBarChart-exited'" class="stackedBarChart px-1"
+                ref="lineChart">
+              </vue-anychart>
+            </div>
+
+            <div style="height:170px" v-show="!disengaged_exited_employee_stats || !disengaged_exited_employee_stats.total_exited_employee">
+              <div class="flex-row flex-wrap align-center justify-center fill-height d-flex">
+                  <v-flex class="text-center">
+                    <strong class="body-2 font-weight-bold grey--text">
+                      Not enough data to generate analysis
+                    </strong>
+                  </v-flex>
+              </div>
+            </div>
+          </v-card>
+        </v-flex>
+      </div>
+    </div>
+
+    <div class="flex-row flex-wrap d-flex mb-2" v-if="!stackedGraphs">
       <v-flex sm6 md3 class="disengaged-employees-cards">
         <v-card class="elevation-0">
           <p class="py-3 score-card text-center mb-0 text-capitalize heading">
@@ -200,13 +202,13 @@
           </p>
 
           <div style="height:170px">
-            <v-layout row wrap align-center justify-center fill-height>
-                <v-flex text-center>
+            <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                <v-flex class="text-center">
                   <strong class="body-2 font-weight-bold grey--text">
                     Not enough data to generate analysis
                   </strong>
                 </v-flex>
-              </v-layout>
+              </div>
           </div>
         </v-card>
       </v-flex>
@@ -219,13 +221,13 @@
           </p>
 
           <div style="height:170px">
-            <v-layout row wrap align-center justify-center fill-height>
-                <v-flex text-center>
+            <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                <v-flex class="text-center">
                   <strong class="body-2 font-weight-bold grey--text">
                     Not enough data to generate analysis
                   </strong>
                 </v-flex>
-              </v-layout>
+              </div>
           </div>
         </v-card>
       </v-flex>
@@ -238,13 +240,13 @@
           </p>
 
           <div style="height:170px">
-            <v-layout row wrap align-center justify-center fill-height>
-                <v-flex text-center>
+            <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                <v-flex class="text-center">
                   <strong class="body-2 font-weight-bold grey--text">
                     Not enough data to generate analysis
                   </strong>
                 </v-flex>
-              </v-layout>
+              </div>
           </div>
         </v-card>
       </v-flex>
@@ -257,8 +259,8 @@
           </p>
 
           <div style="height:170px">
-            <v-layout row wrap align-center justify-center fill-height>
-                <v-flex text-center>
+            <v-layout class="flex-row flex-wrap d-flex align-center justify-center fill-height">
+                <v-flex class="text-center">
                   <strong class="body-2 font-weight-bold grey--text">
                     Not enough data to generate analysis
                   </strong>
@@ -267,9 +269,9 @@
           </div>
         </v-card>
       </v-flex>
-    </v-layout>
+    </div>
 
-    <v-layout class="my-2" row wrap>
+    <div class="my-2 flex-row flex-wrap d-flex">
       <v-flex sm6>
         <div class="disengaged-employees-cards drivers-breakdown">
           <v-card>
@@ -287,12 +289,14 @@
               >
                 <v-card class="pa-2 elevation-0">
                   <div class="slide-content">
-                    <v-layout row wrap>
+                    <div class="d-flex flex-row flex-wrap">
                       <v-flex xs3>
                         <v-tooltip bottom>
-                          <p class="heading-b mb-0" slot="activator">
-                            {{d.average}}
-                          </p>
+                          <template v-slot:activator="{ on, attrs }">
+                            <p class="heading-b mb-0" v-bind="attrs" v-on="on">
+                              {{d.average}}
+                            </p>
+                          </template>
                           <span> Driver average </span>
                         </v-tooltip>
                       </v-flex>
@@ -300,7 +304,7 @@
                         0.6 above
                         <v-icon color="success">fas fa-long-arrow-alt-up</v-icon>
                       </v-flex>-->
-                    </v-layout>
+                    </div>
                     <p class="mb-3 mt-1  driver-title heading" style="min-height:50px;">
                       <span class="heading" v-if="d.driver"> {{d.driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} </span>
                     </p>
@@ -312,19 +316,19 @@
                         v-for="(v, k) in d.sub_drivers"
                         :key="k"
                       >
-                        <v-layout row wrap>
+                        <div class="d-flex flex-row flex-wrap">
                           <v-flex xs9 class="overflow-wrap mr-2">
                             <v-list-item-title class="text-capitalize">
                               <span style="font-size:13px !important;" v-if="k"> {{k.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} </span>
                             </v-list-item-title>
                           </v-flex>
                           <v-flex xs2 class="mr-2">
-                            <v-list-item-action style="font-size:13px !important;align-items:flex-end;" class="text-xs-right "
-                            :style="`min-width:unset;border-bottom: 2px solid #f44336;border-color: ${getEngagementColor(v)} `">
+                            <v-list-item-action style="font-size:13px !important;align-items:flex-end;" class="text-right"
+                            :style="`min-width:unset;border-bottom: 2px solid #f44336;border-color: ${getEngagementColor(v)}`">
                               {{v}}
                             </v-list-item-action>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-list-item>
                     </v-list>
                     <v-divider></v-divider>
@@ -349,17 +353,17 @@
             </swiper>
           </div>
 
-          <div justify-center fill-height v-if="!disengagedDrivers || !disengagedDrivers.length" style="height:450px">
+          <div class="justify-center fill-height" v-if="!disengagedDrivers || !disengagedDrivers.length" style="height:450px">
             <p class="py-3 score-card text-center mb-0 heading" >
               Top 3 drivers leading to disengagement at {{user.company_name}}
             </p>
-            <v-layout class="" style="height:390px">
+            <div class="d-flex flex-wrap flex-row" style="height:390px">
               <v-flex text-center align-self-center>
                 <strong class="body-2 font-weight-bold grey--text">
                   Not enough data to generate analysis
                 </strong>
               </v-flex>
-            </v-layout>
+            </div>
           </div>
         </v-card>
       </div>
@@ -370,25 +374,24 @@
             Average Resolution Time (Days)
           </p>
           <div id="monthwise_art" v-if="monthwise_art && monthwise_art.length > 0"></div>
-          <v-layout class="" v-else style="height:390px">
-            <v-flex text-center align-self-center>
+          <div class="d-flex flex-row flex-wrap" v-else style="height:390px">
+            <v-flex class="text-center align-self-center">
               <strong class="body-2 font-weight-bold grey--text">
                 Not enough data to generate analysis
               </strong>
             </v-flex>
-          </v-layout>
+          </div>
         </v-card>
       </v-flex>
-    </v-layout>
+    </div>
 
-    <v-layout class="bg-white mb-0">
-      <p class="text-center w-100 py-3 text-capitalize heading mb-0
-        ">
+    <div class="bg-white mb-0 d-flex flex-row">
+      <p class="text-center w-100 py-3 text-capitalize heading mb-0">
         Cases Resolution Insights
       </p>
-    </v-layout>
+    </div>
     <div class="caseResolution d-flex flex-wrap">
-      <v-simple-table class="w-100">
+      <!-- <v-simple-table class="w-100">
         <template v-slot:default>
           <thead>
             <th v-for="(h, idx) in headers" :key="idx">
@@ -408,27 +411,29 @@
             </tr>
           </tbody>
         </template>
-      </v-simple-table>
-      <!-- <v-data-table
-      :headers="headers"
-      :items="casesResolutions"
-      item-key="name"
-      class="elevation-1 w-100"
-      :rows-per-page-items="[10, 15, 20]"
+      </v-simple-table> -->
+      <v-data-table
+        :headers="headers"
+        :items="casesResolutions"
+        item-key="name"
+        class="elevation-1 w-100"
+        footer-props.items-per-page-options="[10, 15, 20]"
       >
-        <template slot="items" slot-scope="props">
-          <tr class="py-2">
-            <td class="text-xs-left">
-              <p class="mb-0"> {{ props.item.user_name }} </p>
-              <small class="text-muted grey--text"> {{ props.item.user_email }} </small>
-            </td>
-            <td class="text-center">{{ props.item.total }}</td>
-            <td class="text-center">{{ props.item.resolved }}</td>
-            <td class="text-center">{{ props.item.open }}</td>
-            <td class="text-center">{{ Math.round(props.item.average_resolution_time * 100) / 100 }}</td>
-          </tr>
+        <template v-slot:body="{items}">
+          <tbody>
+            <tr v-for="(item, index) in items" :key="index" class="py-2">
+              <td class="text-left">
+                <p class="mb-0">{{ item.user_name }}</p>
+                <small class="text-muted grey--text"> {{ item.user_email }} </small>
+              </td>
+              <td class="text-center">{{ item.total }}</td>
+              <td class="text-center">{{ item.resolved }}</td>
+              <td class="text-center">{{ item.open }}</td>
+              <td class="text-center">{{ Math.round(item.average_resolution_time * 100) / 100 }}</td>
+            </tr>
+          </tbody>
         </template>
-      </v-data-table> -->
+      </v-data-table>
     </div>
   </div>
 </template>
@@ -560,6 +565,15 @@ export default {
         }
       });
       return applied;
+    }
+  },
+
+  watch: {
+    stackedGraphs: {
+      deep: true,
+      handler () {
+        this.$forceUpdate();
+      }
     }
   },
 
