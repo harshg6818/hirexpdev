@@ -467,13 +467,13 @@
                   </div>
 
                   <v-card v-if="!report || !totalResponses || !responseData">
-                    <v-layout row wrap align-center justify-center fill-height style="height:500px">
-                      <v-flex text-center class="py-5">
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:500px">
+                      <v-flex class="py-5 text-center">
                         <strong class="display-1 font-weight-bold grey--text">
                           Not enough data to generate analysis
                         </strong>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-card>
 
                 </v-flex>

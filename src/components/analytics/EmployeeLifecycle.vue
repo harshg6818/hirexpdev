@@ -1,6 +1,6 @@
 <template>
   <div class="lifecycle-wrap">
-    <v-layout class="filter-wrap">
+    <div class="filter-wrap d-flex flex-row flex-wrap">
       <v-flex>
         <div style="font-size: 24px;padding: 6px 6px 6px 24px;">
           Employee Experience Overview
@@ -8,9 +8,10 @@
       </v-flex>
       <v-flex style="z-index: 0;">
         <v-btn style="right: 10%;
+          top:0;
           position: absolute;
           float: right;
-          z-index: 100 !important; color:grey;"
+          color:grey;"
           v-if="filterApplied"
           class="text-capitalize"
           flat
@@ -18,7 +19,8 @@
         >
           Remove Filters
         </v-btn>
-        <v-btn class="filter-btn text-capitalize " style="position: absolute;right:0;"
+        <!-- <v-btn class="filter-btn text-capitalize " style="position: absolute;right:0;top:0;" -->
+        <v-btn class="filter-btn text-capitalize"
           slot="activator"
           color="primary"
           depressed
@@ -27,28 +29,28 @@
           <v-icon style="font-size:16px; padding-right:10px;">fas fa-filter</v-icon> Filter
         </v-btn>
       </v-flex>
-    </v-layout>
-    <v-layout>
+    </div>
+    <div class="d-flex flex-row">
       <v-flex xs12 sm12>
         <div>
-          <v-layout class="report-head-wrap layout-container" style="padding-top: 20px;">
+          <div class="report-head-wrap layout-container d-flex flex-row" style="padding-top: 20px;">
             <v-flex class="text-xs-left">
               <h1 class="report-title text-xs-left">Employee Experience Cycle</h1>
             </v-flex>
-          </v-layout>
-          <v-layout class="report-head-wrap layout-container">
+          </div>
+          <div class="report-head-wrap layout-container d-flex flex-row">
             <v-flex class="text-xs-left">
               <h3 class="report-sub">
                 Maximize engagement and reduce attrition by
                 addressing the needs of employees during these phases.
               </h3>
             </v-flex>
-          </v-layout>
-          <v-layout class="report-head-wrap layout-container">
-            <v-flex class="text-xs-left">
+          </div>
+          <div class="report-head-wrap layout-container d-flex flex-row">
+            <v-flex class="text-left">
               <h2 class="report-sub">Average engagement</h2>
             </v-flex>
-          </v-layout>
+          </div>
         </div>
         <div class="layout-container">
           <div v-if="initialLoading" style="margin-bottom: 120px;">
@@ -67,30 +69,30 @@
           <avgEngagement v-if="!initialLoading"></avgEngagement>
         </div>
       </v-flex>
-    </v-layout>
+    </div>
 
-    <v-layout class="layout-container">
+    <div class="layout-container d-flex flex-row">
       <v-flex xs9>
         <div id="chartdiv">
         </div>
       </v-flex>
       <v-flex></v-flex>
-    </v-layout>
+    </div>
 
     <div class="details-report-head-wrap remove-chart">
-      <v-layout class="layout-container">
+      <div class="layout-container d-flex flex-row">
         <v-flex class="text-xs-left">
           <h2 class="details-report-title">Phases</h2>
         </v-flex>
-      </v-layout>
-      <v-layout class="layout-container">
+      </div>
+      <div class="layout-container d-flex flex-row">
         <v-flex class="text-xs-left">
           <h3 class="details-report-sub">
             You can customize these experience
             phases using the tenure attribute.
           </h3>
         </v-flex>
-      </v-layout>
+      </div>
     </div>
     <div class="chart-spacer"></div>
     <div class="layout-container">
@@ -932,10 +934,10 @@ export default {
 //   margin-top: 8em;
 // }
 .filter-btn {
-  right: 0;
-  position: absolute;
+  // right: 0;
+  // position: absolute;
   float: right;
-  z-index: 100 !important;
+  // z-index: 100 !important;
   color:white;
 }
 .filter-drawer {

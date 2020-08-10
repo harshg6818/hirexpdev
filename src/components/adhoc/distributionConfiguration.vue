@@ -27,7 +27,7 @@
               @click.stop
             ></v-text-field>
           </v-layout>-->
-                    <v-layout v-show="!selectedTemplate.id && distMedium && distMedium.logo === 'email'" class="template-card">
+          <div v-show="!selectedTemplate.id && distMedium && distMedium.logo === 'email'" class="template-card d-flex">
             <v-flex xs7 class="pr-5">
               <div>
                 <ContentLoader
@@ -61,9 +61,9 @@
                 </ContentLoader>
               </div>
             </v-flex>
-          </v-layout>
+          </div>
 
-          <v-layout v-show="!selectedTemplate.id && distMedium && distMedium.logo === 'sms'" class="template-sms-card">
+          <div v-show="!selectedTemplate.id && distMedium && distMedium.logo === 'sms'" class="template-sms-card d-flex">
             <v-flex xs1></v-flex>
             <v-flex xs10 class="pr-5">
               <div>
@@ -79,9 +79,9 @@
               </div>
             </v-flex>
             <v-flex xs1></v-flex>
-          </v-layout>
+          </div>
 
-          <v-layout class="" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'email'">
+          <div class="d-flex" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'email'">
             <v-flex xs8></v-flex>
 
             <v-flex xs4>
@@ -102,9 +102,9 @@
               >
               </v-select>
             </v-flex>
-          </v-layout>
+          </div>
 
-          <v-layout class="template-card" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'email'">
+          <div class="d-flex template-card" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'email'">
             <v-flex class="template-preview pr-0">
               <v-card v-html="html_content" width="100%" class="html-preview"></v-card>
             </v-flex>
@@ -116,13 +116,13 @@
                 <div v-for="(group, gi) in newTemplate.fields" :key="gi"
                 class="template-section"
                 :class="gi < newTemplate.fields.length - 1 ? 'b-bottom' : ''">
-                  <v-layout xs12>
+                  <div class="d-flex" xs12>
                     <v-flex xs6>
                       <h3 class="pa-3"> {{group.group}} </h3>
                     </v-flex>
-                  </v-layout>
+                  </div>
 
-                  <v-layout v-for="(field, fi) in group.data" :key="fi">
+                  <div class="d-flex" v-for="(field, fi) in group.data" :key="fi">
                     <v-flex xs12 v-if="field.type === 'textfield'">
                       <h4 class="pt-0 pb-3 template-field-label">
                         {{field.label}}
@@ -140,7 +140,7 @@
                     </v-flex>
 
                     <v-flex xs12 v-if="field.type === 'textarea' || field.type === 'html'">
-                      <v-layout>
+                      <div class="d-flex">
                         <v-flex xs6>
                           <h4 class="pt-0 pb-3 template-field-label">
                             {{field.label}}
@@ -161,9 +161,9 @@
                           >
                           </v-select>
                         </v-flex>-->
-                      </v-layout>
+                      </div>
 
-                      <v-layout>
+                      <div class="d-flex">
                         <ckeditor
                           style="width:100%"
                           class="template-field"
@@ -178,7 +178,7 @@
                           :class="{'is-invalid': errors.has(field.label) }"
                           :v-validate="'required'">
                         </ckeditor>
-                      </v-layout>
+                      </div>
                     </v-flex>
 
                     <v-flex xs6 v-if="field.type === 'colorpicker'">
@@ -192,15 +192,14 @@
                       ></slider>-->
                       <colorpicker ref="colorpicker" :color="field.value" v-model="field.value" @input="updatePreview()" />
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </div>
               </v-card>
             </v-flex>
-          </v-layout>
+          </div>
 
-          <v-layout class="" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'sms'">
+          <div class="d-flex" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'sms'">
             <v-flex xs7></v-flex>
-
             <v-flex xs4>
               <span> Select Template </span>
               <v-select
@@ -220,22 +219,22 @@
               </v-select>
             </v-flex>
             <v-flex xs1></v-flex>
-          </v-layout>
+          </div>
 
-          <v-layout class="template-sms-card" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'sms'">
+          <div class="d-flex template-sms-card" v-if="selectedTemplate.id && distMedium && distMedium.logo === 'sms'">
             <v-flex xs1></v-flex>
             <v-flex xs10 class="">
               <v-card style="border-color:#f3f1f1;height:100%;overflow-y:auto">
                 <div v-for="(group, gi) in newTemplate.fields" :key="gi"
                 class="template-section"
                 :class="gi < newTemplate.fields.length - 1 ? 'b-bottom' : ''">
-                  <v-layout xs12>
+                  <div class="d-flex" xs12>
                     <v-flex xs6>
                       <h3 class="pa-3"> {{group.group}} </h3>
                     </v-flex>
-                  </v-layout>
+                  </div>
 
-                  <v-layout v-for="(field, fi) in group.data" style="height:calc(100% - 60px)" :key="fi">
+                  <div class="d-flex" v-for="(field, fi) in group.data" style="height:calc(100% - 60px)" :key="fi">
                     <v-flex xs12 v-if="field.type === 'textfield'">
                       <!-- <h4 class="pt-0 pb-3 template-field-label">
                         {{field.label}}
@@ -253,7 +252,7 @@
                     </v-flex>
 
                     <v-flex xs12 v-if="field.type === 'textarea' || field.type === 'html'">
-                      <v-layout>
+                      <div class="d-flex">
                         <!--<v-flex xs6>
                           <h4 class="pt-0 pb-3 template-field-label">
                             {{field.label}}
@@ -274,9 +273,9 @@
                           >
                           </v-select>
                         </v-flex>-->
-                      </v-layout>
+                      </div>
 
-                      <v-layout style="height:calc(100% - 40px)">
+                      <div class="d-flex" style="height:calc(100% - 40px)">
                         <v-textarea
                           class="template-field template-custom-field custom-textarea"
                           :label="field.label"
@@ -287,7 +286,7 @@
                           single-line
                           @click.stop
                         ></v-textarea>
-                      </v-layout>
+                      </div>
                     </v-flex>
 
                     <v-flex xs6 v-if="field.type === 'colorpicker'">
@@ -301,13 +300,13 @@
                       ></slider>-->
                       <colorpicker ref="colorpicker" :color="field.value" v-model="field.value" @input="updatePreview()" />
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </div>
               </v-card>
             </v-flex>
             <v-flex xs1></v-flex>
 
-          </v-layout>
+          </div>
         </v-card-text>
 
         <v-card-actions align-content-space->
@@ -316,7 +315,7 @@
           </v-flex>
           <v-flex xs8>
           </v-flex>
-          <v-flex text-xs-right xs2 class="mr-3 mb-3">
+          <v-flex xs2 class="mr-3 mb-3 text-right">
             <v-btn color="adhoc" class="white--text" @click.stop="saveTemplate()"> Use Template </v-btn>
           </v-flex>
         </v-card-actions>

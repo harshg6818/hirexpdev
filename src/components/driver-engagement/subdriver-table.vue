@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row>
+    <div class="d-flex flex-row">
       <v-flex xs12>
         <div class="milestone-heatmap">
           <table>
@@ -32,7 +32,7 @@
           </table>
         </div>
       </v-flex>
-    </v-layout>
+    </div>
   </div>
 </template>
 

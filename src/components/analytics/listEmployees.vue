@@ -5,12 +5,12 @@
   >
     <v-card>
       <v-card-title primary-title class="font-weight-bold" style="z-index:3">
-        <v-layout row wrap>
+        <div class="d-flex flex-row flex-wrap">
           <v-flex xs9>
             <h3 class="mt-2 text-capitalize" v-if="sentimentEnabled"> Insights </h3>
             <h3 class="mt-2 text-capitalize" v-else> Employees </h3>
           </v-flex>
-          <v-flex xs3 text-xs-right>
+          <v-flex xs3 class="text-right">
             <v-btn color="rgba(0,0,0,0.54)"
               slot="activator"
               small
@@ -23,7 +23,7 @@
               <v-icon>fas fa-times </v-icon>
             </v-btn>
           </v-flex>
-        </v-layout>
+        </div>
       </v-card-title>
       <v-card-text class="overflow- pt-0">
 
@@ -35,8 +35,9 @@
         grow
         v-model="tabs.active"
         centered
-        color="transparent"
+        color="primary"
         slider-color="primary"
+        height="fill-height"
         >
         <v-tab
             class="mr-2"
@@ -96,10 +97,10 @@
               :loading="table.loading"
               id="employee-list"
             >
-                <template slot="headers" slot-scope="props">
+                <template slot="headers">
                   <tr>
                     <th style="text-align:left"
-                      v-for="header in props.headers"
+                      v-for="header in table.headers"
                       :key="header.text"
                     >
                     <strong>
@@ -110,10 +111,10 @@
                   </tr>
                 </template>
 
-                <template slot="items" slot-scope="props">
-                  <tr v-if="props.item">
+                <template v-slot:body="{items}">
+                  <tr v-for="(item, index) in items" :key="index">
                     <td style="width:17%">
-                      <v-layout row wrap align-center>
+                      <div class="d-flex flex-row flex-wrap align-center">
                           <!-- <v-flex class="py-2" sm3>
                           <v-avatar size="30px" :color="getColor(props.item)">
                               <img src="src" alt="alt" v-show="false">
@@ -121,25 +122,25 @@
                           </v-avatar>
                           </v-flex> -->
                           <v-flex>
-                          <p class="mb-0" v-show="props.item.user_display_name || props.item.display_name">
+                          <p class="mb-0" v-show="item.user_display_name || item.display_name">
                               <strong :class="{'hover-link cursor-pointer': $route.name !== 'ViewAdhoc'}"
-                              @click="viewEmployee(props.item);">
-                              {{ props.item.user_display_name || props.item.display_name }}
+                              @click="viewEmployee(item);">
+                              {{ item.user_display_name || item.display_name }}
                               </strong>
                           </p>
                           <small class="text-truncate" style=" display: inline-block;">
-                              {{props.item.email || props.item.user__email || props.item.user_email}}
+                              {{item.email || item.user__email || item.user_email}}
                           </small>
                           </v-flex>
-                      </v-layout>
+                      </div>
                     </td>
                     <td style="width:16%">
-                      <div v-if="props.item.stage_title || props.item.last_milestone">
+                      <div v-if="item.stage_title || item.last_milestone">
                         <p class="mb-0">
-                          {{props.item.stage_title || props.item.stage__title || props.item.last_milestone}}
+                          {{item.stage_title || item.stage__title || item.last_milestone}}
                         </p>
-                        <p class="mb-0" v-if="(props.item.completedAt && props.item.completedAt !== 'None') || (props.item.last_milestone_completed && props.item.last_milestone_completed !== 'None')">
-                          {{ dayjs(props.item.completedAt).from() || dayjs(props.item.last_milestone_completed).from() }}
+                        <p class="mb-0" v-if="(item.completedAt && item.completedAt !== 'None') || (item.last_milestone_completed && item.last_milestone_completed !== 'None')">
+                          {{ dayjs(item.completedAt).from() || dayjs(item.last_milestone_completed).from() }}
                         </p>
                       </div>
                       <p class="mb-0" v-else>
@@ -147,16 +148,16 @@
                       </p>
                     </td>
                     <td style="width:16%">
-                      <p class="mb-0" v-if="props.item.user_department || props.item.department">
-                          {{ props.item.user_department || props.item.department }}
+                      <p class="mb-0" v-if="item.user_department || item.department">
+                          {{ item.user_department || item.department }}
                       </p>
                       <p class="mb-0" v-else>
                           -
                       </p>
                     </td>
                     <td style="width:16%">
-                      <p class="mb-0" v-if="props.item.user_location || props.item.location">
-                          {{ props.item.user_location || props.item.location }}
+                      <p class="mb-0" v-if="item.user_location || item.location">
+                          {{ item.user_location || item.location }}
                       </p>
                       <p class="mb-0" v-else>
                           -
@@ -199,7 +200,7 @@
                           Add a comment
                       </v-tooltip> -->
 
-                      <a style="color:rgba(0,0,0,0.54)" @click.stop="viewEmployee(props.item);"> View details </a>
+                      <a style="color:rgba(0,0,0,0.54)" @click.stop="viewEmployee(item);"> View details </a>
                     </td>
                   </tr>
                 </template>
@@ -228,13 +229,13 @@
                 <v-alert slot="no-data" :value="true" color="#fff" outline>
                   <span>
                     <div style="height:300px">
-                    <v-layout row wrap align-center justify-center fill-height>
-                        <v-flex text-xs-center>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                        <v-flex class="text-center">
                         <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                         </strong>
                         </v-flex>
-                    </v-layout>
+                    </div>
                     </div>
                   </span>
                 </v-alert>

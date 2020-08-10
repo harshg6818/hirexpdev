@@ -289,14 +289,17 @@
                     </v-flex>
                     <v-flex xs2 class="text-right">
                       <v-menu offset-y>
-                        <v-btn
-                          slot="activator"
-                          color="#383535"
-                          outlined
-                        >
-                          Actions <v-icon v-if="!dropDown" class="ml-3 grey--text">fas fa-angle-down</v-icon>
-                                  <v-icon v-if="dropDown" class="ml-3 grey--text">fas fa-angle-up</v-icon>
-                        </v-btn>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            color="#383535"
+                            outlined
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            Actions <v-icon v-if="!dropDown" class="ml-3 grey--text">fas fa-angle-down</v-icon>
+                                    <v-icon v-if="dropDown" class="ml-3 grey--text">fas fa-angle-up</v-icon>
+                          </v-btn>
+                        </template>
                         <v-list>
                           <v-list-item
                             v-for="(item, index) in config.actions"

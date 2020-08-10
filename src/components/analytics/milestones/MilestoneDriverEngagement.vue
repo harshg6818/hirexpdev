@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row wrap>
+    <div class="d-flex flex-row flex-wrap">
       <v-flex xs12 px-2>
         <div class="d-inline-flex w-100 mb-0 py-2 px-3 grey--text text--darken-3">
           <p class="pt-1 mb-0 subheading"> Driver Framework Analysis </p>
@@ -9,9 +9,9 @@
         </div>
 
         <div class="mt-0" v-if="config.initialLoading">
-          <v-layout>
+          <div class="d-flex">
             <v-flex xs6 class="pr-1">
-              <v-layout class="my-2 py-0" row wrap>
+              <div class="my-2 py-0 d-flex flex-row flex-wrap">
                 <v-flex xs12>
                   <div class="engagement-cards">
                     <ContentLoader
@@ -29,11 +29,11 @@
                     </ContentLoader>
                   </div>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-flex>
 
             <v-flex xs6 class="pl-1">
-              <v-layout class="my-2 py-0" row wrap>
+              <div class="d-flex flex-row flex-wrap my-2 py-0">
                 <v-flex xs12>
                   <div class="engagement-cards">
                     <ContentLoader
@@ -54,19 +54,19 @@
                     </ContentLoader>
                   </div>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-flex>
 
-          </v-layout>
+          </div>
         </div>
 
         <!-- After intial loading -->
         <div class="mt-0" v-if="!config.initialLoading">
-            <v-layout xs12>
+            <div class="d-flex" xs12>
               <v-flex xs12 class="pr-1 my-2">
                 <!-- <p class="pa-3 text-xs-left mb-0 font-weight-bold"> DRIVER-WISE ENGAGEMENT </p> -->
 
-                <v-layout row wrap pa-1
+                <div class="d-flex flex-row flex-wrap pa-1"
                   v-show="report && report.stats && report.company_drivers_breakdown"
                 >
                   <v-flex xs12>
@@ -77,7 +77,7 @@
                         :key="di"
                       >
                         <v-card class="pa-2 elevation-0">
-                          <v-layout row wrap>
+                          <div class="d-flex flex-row flex-wrap">
                             <v-flex xs3>
                               <p class="heading-b mb-0">
                                 {{d.average}}
@@ -87,32 +87,32 @@
                               0.6 above
                               <v-icon color="success">fas fa-long-arrow-alt-up</v-icon>
                             </v-flex>-->
-                          </v-layout>
+                          </div>
                           <p class="mb-3 mt-1 " style="height:40px;">
                             <span class="heading" v-if="d.driver"> {{d.driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} </span>
                           </p>
                           <v-divider class="mb-2"></v-divider>
                           <span class="caption  grey--text">Subdriver Analysis</span>
                           <v-list class="pa-0">
-                            <v-list-tile
+                            <v-list-item
                               class="subdriver-tile"
                               v-for="(v, k) in d.sub_drivers"
                               :key="k"
                             >
-                              <v-layout row wrap>
+                              <div class="d-flex flex-row flex-wrap">
                                 <v-flex xs9 class="overflow-wrap mr-2">
-                                  <v-list-tile-title class="text-capitalize">
+                                  <v-list-item-title class="text-capitalize">
                                     <span class="sub-heading" style="font-size:13px !important;"  v-if="k"> {{k.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} </span>
-                                  </v-list-tile-title>
+                                  </v-list-item-title>
                                 </v-flex>
                                 <v-flex xs2 class="mr-2">
-                                  <v-list-tile-action style="font-size:13px !important;align-items:flex-end;" class="text-xs-right "
+                                  <v-list-item-action style="font-size:13px !important;align-items:flex-end;" class="text-xs-right "
                                   :style="`min-width:unset;border-bottom: 2px solid #f44336;border-color: ${getColor(v)} `">
                                     {{v}}
-                                  </v-list-tile-action>
+                                  </v-list-item-action>
                                 </v-flex>
-                              </v-layout>
-                            </v-list-tile>
+                              </div>
+                            </v-list-item>
                           </v-list>
                           <v-divider></v-divider>
                           <p class="mb-1 mt-2 heading-b">
@@ -134,18 +134,18 @@
                       </div>
                     </swiper>
                   </v-flex>
-                </v-layout>
+                </div>
                 <!-- <vue-anychart id="driverFramework" v-show="report && report.stats && report.company_drivers_breakdown" /> -->
 
-                <v-layout class="driverFramework" v-if="!report || !report.stats || !Object.keys(report.company_drivers_breakdown).length" row wrap align-center justify-center fill-height>
-                  <v-flex text-xs-center>
+                <div class="driverFramework d-flex flex-row flex-wrap align-center justify-center fill-height" v-if="!report || !report.stats || !Object.keys(report.company_drivers_breakdown).length">
+                  <v-flex class="text-center">
                     <strong class="body-2 font-weight-bold grey--text">
                       Not enough data to generate analysis
                     </strong>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
-            </v-layout>
+            </div>
 
               <!-- <v-flex xs6 class="pr-1">
                 <v-layout class="mt-2 py-0" row wrap>
@@ -171,23 +171,23 @@
                 </v-layout>
               </v-flex>-->
 
-            <v-layout xs12>
+            <div class="d-flex flex-row" xs12>
               <!-- Employee Vibes -->
               <v-flex xs6 class="pl-1">
-                <v-layout class="mt-2 py-0" row wrap>
+                <div class="mt-2 py-0 d-flex flex-row flex-wrap">
                   <v-flex xs12 text-xs-center>
                     <div class="engagement-cards">
                       <p class="pa-3 text-xs-left mb-0  text-capitalize"> Employee Vibes </p>
-                      <v-layout class="" v-if="report && report.stats">
+                      <div class="d-flex flex-row" v-if="report && report.stats">
                         <v-flex xs12 class="custom-div-2" v-show="report.mood_analysis && report.mood_analysis.company_mood_breakdown">
                           <div class="px-2" v-for="(mood, di) in report.mood_analysis.company_mood_breakdown" v-if="mood.mood !== '0'" :key="di">
-                            <v-layout class="w-100 ">
+                            <div class="w-100 d-flex">
                               <v-flex xs2 class="ml-3">
                                 <v-img class="mt-2" :src="getImgUrl(mood.mood)" style="height:40px;width:40px"> </v-img>
                               </v-flex>
 
                               <v-flex xs6>
-                                <v-layout row wrap>
+                                <div class="d-flex flex-row flex-wrap">
                                   <v-flex xs3 class="text-xs-left d-inline-flex">
                                     <h2 style="max-width:20px"> {{ mood.value }} </h2>
                                     <small class="text-muted" style="position:relative;top:6px"> ({{mood.percent}} %) </small>
@@ -197,7 +197,7 @@
                                   <v-flex xs6 class="mt-3 grey--text text-xs-right">
                                     {{getName(mood.mood)}}
                                   </v-flex>
-                                </v-layout>
+                                </div>
                                 <v-progress-linear class="mt-0" :color="getSeriesColor(mood.mood)" :value="getMoodPercentage(mood.value)"></v-progress-linear>
                               </v-flex>
 
@@ -209,35 +209,35 @@
                                     Insights
                                 </v-btn>
                               </v-flex>
-                            </v-layout>
+                            </div>
                           </div>
                         </v-flex>
 
-                        <v-layout class="custom-div-2" v-if="!report || !report.stats || !report.mood_analysis" row wrap align-center justify-center fill-height>
-                          <v-flex xs12 text-xs-center>
+                        <div class="custom-div-2 d-flex flex-row flex-wrap align-center justify-center fill-height" v-if="!report || !report.stats || !report.mood_analysis">
+                          <v-flex class="text-center">
                             <strong class="body-2 font-weight-bold grey--text">
                               Not enough data to generate analysis
                             </strong>
                           </v-flex>
-                        </v-layout>
-                      </v-layout>
+                        </div>
+                      </div>
 
-                      <v-layout class="driver-sunburst-card" row wrap align-center justify-center fill-height v-else>
-                        <v-flex text-xs-center>
+                      <div class="driver-sunburst-card d-flex flex-row flex-wrap align-center justify-center fill-height" v-else>
+                        <v-flex class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </div>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
 
               <!-- Monthwise Engagement Trend -->
               <v-flex xs6 class="pl-1">
-                <v-layout class="mt-2 py-0" row wrap v-show="report && report.stats">
-                  <v-flex xs12 text-xs-center>
+                <div class="mt-2 py-0 d-flex flex-row flex-wrap" v-show="report && report.stats">
+                  <v-flex xs12 class="text-center">
                     <div class="engagement-cards">
                       <div class="d-inline-flex w-100">
                         <p class="px-3 pt-3 mb-0 text-xs-left heading text-capitalize">
@@ -257,20 +257,20 @@
 
                       <div id="engagementChart"> </div>
 
-                      <v-layout class="custom-div-2" v-if="false" row wrap align-center justify-center fill-height style="height:400px">
-                        <v-flex xs12 text-xs-center>
+                      <div class="custom-div-2 d-flex flex-row flex-wrap align-center justify-center fill-height" v-if="false" style="height:400px">
+                        <v-flex xs12 class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </div>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout class="mt-2 py-0 engagement-cards" v-if="!report || !report.stats" row wrap justify-center fill-height>
-                  <v-flex text-xs-center>
-                    <div >
+                <div class="mt-2 py-0 engagement-cards d-flex flex-row flex-wrap align-center justify-center fill-height" v-if="!report || !report.stats">
+                  <v-flex class="text-center">
+                    <div>
                       <div class="d-inline-flex w-100">
                         <p class="px-3 pt-3 mb-0 text-xs-left heading text-capitalize">
                           Engagement Over Time
@@ -284,22 +284,22 @@
                       </div>
 
                       <div style="height:400px">
-                        <v-layout row wrap align-center justify-center fill-height>
-                          <v-flex text-xs-center>
+                        <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                          <v-flex class="text-center">
                             <strong class="body-2 font-weight-bold grey--text">
                               Not enough data to generate analysis
                             </strong>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </div>
                     </div>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
-            </v-layout>
+            </div>
         </div>
       </v-flex>
-    </v-layout>
+    </div>
 
     <listEmployees ref="listEmployees" />
   </div>

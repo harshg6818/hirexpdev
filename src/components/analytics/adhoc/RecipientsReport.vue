@@ -33,27 +33,27 @@
           :loading="table.loading"
           class=""
         >
-          <template slot="items" slot-scope="props">
-            <tr v-if="props.item">
+          <template v-slot:body="{items}">
+            <tr v-for="(item, index) in items" :key="index">
               <td>
                 <v-layout row wrap align-center>
-                  {{props.item.recipient_first_name}} {{props.item.recipient_last_name}}
+                  {{item.recipient_first_name}} {{item.recipient_last_name}}
                 </v-layout>
               </td>
               <td>
-                {{ props.item.recipient_email }}
+                {{ item.recipient_email }}
               </td>
               <td>
-                {{ props.item.recipient_phone }}
+                {{ item.recipient_phone }}
               </td>
               <td class="text-sm-left">
-                {{ props.item.status }}
+                {{ item.status }}
               </td>
               <td class="text-sm-left">
                 <v-btn color="adhoc"
-                  :disabled="props.item.status !== 'completed'"
+                  :disabled="item.status !== 'completed'"
                   style="border-radius:5px"
-                  @click="viewResponse(props.item.id)"
+                  @click="viewResponse(item.id)"
                   small class="ml-0 elevation-0 text-none white--text pl-0"
                   >
                   <v-icon small class="ml-2">fas fa-comments</v-icon>
@@ -70,16 +70,16 @@
               :indeterminate="true"></v-progress-linear>
             </div>
           </template>
-          <v-card slot="no-data" class="elevation-0 text-xs-center" min-height="60vh">
+          <v-card slot="no-data" class="elevation-0 text-center" min-height="60vh">
             <v-card-title primary-title class="justify-center">
-              <v-layout row wrap>
+              <div class="d-flex flex-row flex-wrap">
                 <v-flex xs12>
                   <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
                   <p>
                     No recipients present.
                   </p>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-card-title>
           </v-card>
         </v-data-table>

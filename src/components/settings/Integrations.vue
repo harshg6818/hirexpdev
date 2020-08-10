@@ -1,34 +1,34 @@
 <template>
 <div>
-  <v-layout row wrap px-2>
+  <div class="d-flex flex-row flex-wrap px-2">
     <v-flex sm12>
-    <v-subheader class="py-0 px-0">
-        <v-layout>
-          <strong  class="py-2 px-2"  style=" font-size:18px; color:grey;">
+      <v-subheader class="py-0 px-0">
+        <div class="d-flex flex-row flex-wrap">
+          <strong class="py-2 px-2" style=" font-size:18px; color:grey;">
             Integration
           </strong>
           <div class="py-2 px-2 mt-1 text-muted"> Third party integrations are not applicable on this account. </div>
-        </v-layout>
-    </v-subheader>
+        </div>
+      </v-subheader>
     </v-flex>
 
-    <v-flex px-3 py-1 sm6 md4 xl4 mb-3 v-for="(intgrt, i) in presentIntegrations" :key="i">
-      <v-card class="elevation-0 integrations-card"  height="320" >
+    <v-flex class="px-3 py-1 mb-3" sm6 md4 xl4 v-for="(intgrt, i) in presentIntegrations" :key="i">
+      <v-card class="elevation-0 integrations-card" height="320">
         <v-card-title primary-title class="justify-center">
           <v-img :src="getImgUrl(intgrt.logo)" contain height="100" /> <br/>
         </v-card-title>
         <!-- <p class="mb-0 text-xs-center" style="color:#3a811d" v-if="intgrt.integrated"> Connected </p> -->
-        <v-card-text class="text-xs-center pt-0">
+        <v-card-text class="text-center pt-0">
           <div>
             <p class="mb-0 font-weight-bold">
               {{intgrt.title}}
             </p>
-            <p class="mb-0 " style="color:grey;height: 84px;">
+            <p class="mb-0" style="color:grey;height: 84px;">
               {{intgrt.sub_title}}
             </p>
           </div>
         </v-card-text>
-        <v-card-text style="margin-left: 25%;    margin-top: -5%;">
+        <v-card-text style="margin-top: -5%;" class="justify-center align-center text-center">
           <v-btn color="primary" small depressed
             v-if="!intgrt.integrated"
             :disabled="!intgrt.integrationPresent"
@@ -40,14 +40,14 @@
         </v-card-text>
       </v-card>
     </v-flex>
-  </v-layout>
-   <whatsappDialog :dialog="whatsAppModal" @closeWhatsappModal="closeWhatsappModal" @connectToWhatsapp="connectToWhatsapp" />
-   <v-dialog
+  </div>
+  <whatsappDialog :dialog="whatsAppModal" @closeWhatsappModal="closeWhatsappModal" @connectToWhatsapp="connectToWhatsapp" />
+  <v-dialog
     v-if="whatsappErrorDialog"
-      v-model="whatsappErrorDialog"
-      width="500"
-    >
-      <v-card>
+    v-model="whatsappErrorDialog"
+    width="500"
+  >
+    <v-card>
         <v-card-text>
           <div style="margin-left: 37%">
             <v-icon v-if="whatsAppConnected" size="140" color="green">far fa-check-circle</v-icon>
@@ -396,5 +396,6 @@ export default {
 <style lang="scss">
 .integrations-card:hover{
   transform: scale(1.05);
+  transition: 0.4s ease all;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <v-layout row wrap>
+    <div class="d-flex flex-row flex-wrap">
       <v-flex sm12 px-1>
         <div class="d-inline-flex w-100 mb-0 px-5 py-3" style="color:#6f7e95;">
           <p class="text-xs-center main-heading"> Question Wise Analysis </p>
@@ -8,7 +8,7 @@
           <h2 class="text-xs-right" v-else> Score : 0 / 5 </h2>-->
         </div>
 
-        <v-layout row wrap class="mb-4">
+        <div class="mb-4 d-flex flex-row flex-wrap">
           <!-- Initial Loading Filters -->
           <div class="w-100" v-show="config.initialLoading">
             <ContentLoader
@@ -32,21 +32,21 @@
           <div class="w-100 px-5" v-show="!config.initialLoading && (!questions || !questions.length)">
             <v-card class="elevation-0 text-xs-center" min-height="60vh">
               <v-card-title primary-title class="justify-center">
-                <v-layout row wrap>
+                <div class="d-flex flex-row flex-wrap">
                   <v-flex xs12>
                     <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
                     <p>
                       No questions present.
                     </p>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-card-title>
             </v-card>
           </div>
 
           <!-- Questions List -->
           <div class="w-100 px-0" v-show="!config.initialLoading && questions && questions.length > 0">
-            <v-layout v-for="(q, qi) in questions" :key="qi" class="active-response py-0" style="border-bottom:1px solid rgb(243, 241, 241);background-color:#fff">
+            <div v-for="(q, qi) in questions" :key="qi" class="active-response py-0 d-flex flex-row" style="border-bottom:1px solid rgb(243, 241, 241);background-color:#fff">
               <!--<v-card class="w-100 mb-4 pa-3 elevation-0 d-inline-flex">
                 <v-layout>-->
                   <v-flex xs1>
@@ -60,7 +60,7 @@
                       Qusetion Type : <v-icon> {{questiQuestion Wise AnalysisQuestion Wise AnalysisonIcon(q.type)}} </v-icon> {{q.type}}
                     </div>-->
                   </v-flex>
-                  <v-flex xs3 class="pr-3" text-xs-right>
+                  <v-flex xs3 class="pr-3 text-right">
                     <v-btn color="primary"
                       style="border-radius:5px"
                       @click="switchQuestion(q.interaction_id, q.msg[0].text, qi, q.type)"
@@ -72,12 +72,12 @@
                   </v-flex>
                 <!--</v-layout>
               </v-card>-->
-            </v-layout>
+            </div>
           </div>
-        </v-layout>
+        </div>
 
       </v-flex>
-    </v-layout>
+    </div>
 
     <v-dialog v-model="dialogs.sentimentAnalysis">
       <sentimentAnalysis ref="sentimentAnalysis" containerId="3"> </sentimentAnalysis>

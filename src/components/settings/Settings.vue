@@ -1,36 +1,38 @@
 <template>
   <div class="amara-settings-tab">
-    <v-layout column class="hide-overflow">
+    <div class="hide-overflow d-flex flex-column">
     <v-spacer></v-spacer>
-      <v-menu offset-y v-show="false">
-        <v-btn
-          slot="activator"
-          small
-          dark
-          flat
-          icon
-        >
-          <v-icon small>fas fa-ellipsis-v</v-icon>
-        </v-btn>
+      <v-menu offset-y v-if="false">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            small
+            text
+            icon
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon small>fas fa-ellipsis-v</v-icon>
+          </v-btn>
+        </template>
         <v-list>
-          <v-list-tile
+          <v-list-item
             v-for="(item, index) in config.actions"
             @click="item.action(item.dialog)"
             :key="index"
           >
-            <v-list-tile-title>
+            <v-list-item-title>
               <v-icon class="mr-2">{{item.icon}}</v-icon>
               {{ item.title }}
-            </v-list-tile-title>
-            <v-list-tile-action>
+            </v-list-item-title>
+            <v-list-item-action>
               {{item.count}}
-            </v-list-tile-action>
-          </v-list-tile>
+            </v-list-item-action>
+          </v-list-item>
         </v-list>
       </v-menu>
-      <v-layout class="pb-4" row wrap >
+      <div class="pb-4 d-flex flex-row flex-wrap">
         <v-flex xs1>
-          <v-btn color="black" flat icon small to="/" class="mt-4 elevation-0">
+          <v-btn color="black" text icon small to="/" class="mt-4 elevation-0">
             <v-icon small>fas fa-arrow-left</v-icon>
           </v-btn>
         </v-flex>
@@ -39,15 +41,15 @@
               Settings
             </p>
         </v-flex>
-      </v-layout>
-      <aside  style="background:#f1f1f1; min-height:100%; padding:10px " >
-        <v-layout style=" padding-left:10px;" row class="">
+      </div>
+      <aside style="background:#f1f1f1; min-height:100%; padding:10px">
+        <div style="padding-left:10px;" class="d-flex flex-row">
           <v-flex style="background:white; position: -webkit-sticky; position: sticky; top: 0;" xs3>
             <v-list style="background:#fff;"  class=''>
               <template v-for="(item, index) in items" ref="items">
                 <v-subheader v-if="item.header" :key="index">{{ item.header }}</v-subheader>
                 <v-divider v-else-if="item.divider" :key="index" :inset="item.inset" ></v-divider>
-                <v-list-tile @click="updateTab(item.value)" class="settings-list"
+                <v-list-item @click="updateTab(item.value)" class="settings-list"
                     style="border-bottom:1px solid rgba(0,0,0,0.12);" v-else
                     :key="index"
                     avatar :class="{'tab' : tab == `tab-${item.value}`}"
@@ -55,14 +57,14 @@
                     || (item.value === 'integrations' && !checkPermission(['manage_integrations']))
                     || (item.value === 'milestones' && !checkPermission(['manage_milestone']))"
                 >
-                  <v-list-tile-action class="">
+                  <v-list-item-action class="">
                       <v-icon>{{ item.icon }}</v-icon>
-                    </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                    </v-list-item-action>
+                  <v-list-item-content>
+                    <v-list-item-title v-html="item.title"></v-list-item-title>
                     <span style="color: rgba(0,0,0,0.54); font-size: 14px;" class="theme--light.v-list .v-list__tile__sub-title">{{item.subtitle}} </span>
-                  </v-list-tile-content>
-                </v-list-tile>
+                  </v-list-item-content>
+                </v-list-item>
               </template>
             </v-list>
           </v-flex>
@@ -77,11 +79,11 @@
             <alertWord ref="alertWord" v-show="tab == 'tab-alertWord'" />
             <empAuditLog ref="EmpAuditLog" v-show="tab == 'tab-auditLog'"></empAuditLog>
           </v-flex>
-        </v-layout>
-        <v-layout>
-        </v-layout>
+        </div>
+        <div class="d-flex flex-row flex-wrap">
+        </div>
       </aside>
-    </v-layout>
+    </div>
   </div>
 </template>
 

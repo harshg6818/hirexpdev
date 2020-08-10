@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="mt-2 px-4">
-      <v-layout row wrap>
+      <div class="d-flex flex-row flex-wrap">
         <v-flex xs1>
         </v-flex>
         <v-flex>
           <h2 class="mb-5 grey--text ml-5"> Would you like to review your campaign before launch? </h2>
         </v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="b-top" style="border-color: #f3f1f1">
+      <div class="d-flex flex-row flex-wrap b-top" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
         <v-flex xs1 text-xs-center>
@@ -31,9 +31,9 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="b-top" style="border-color: #f3f1f1">
+      <div class="d-flex flex-row flex-wrap b-top" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
         <v-flex xs1 text-xs-center>
@@ -56,9 +56,9 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="b-top" style="border-color: #f3f1f1">
+      <div class="d-flex flex-row flex-wrap b-top" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
         <v-flex xs1 text-xs-center>
@@ -81,9 +81,9 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="b-top" style="border-color: #f3f1f1">
+      <div class="d-flex flex-row flex-wrap b-top" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
         <v-flex xs1 text-xs-center>
@@ -106,9 +106,9 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout class="b-top" style="border-color: #f3f1f1">
+      <div class="d-flex flex-row flex-wrap b-top" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
         <v-flex xs1 text-xs-center>
@@ -159,9 +159,9 @@
           </v-btn>
         </v-flex>-->
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout class="mt-4">
+      <div class="mt-4 d-flex flex-row flex-wrap">
         <v-flex xs2></v-flex>
         <v-flex xs2>
           <v-btn color="orange" class="elevation-0 white--text text-xs-right"
@@ -185,7 +185,7 @@
             Launch Campaign
           </v-btn>
         </v-flex>
-      </v-layout>
+      </div>
     </div>
 
     <testCampaign ref="testCampaign"> </testCampaign>

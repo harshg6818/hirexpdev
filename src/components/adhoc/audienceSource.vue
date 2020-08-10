@@ -27,68 +27,68 @@
     >
       <v-card v-if="!audienceSource && $parent.newCampaign && $parent.newCampaign.category === 'employee_engagement'">
         <v-card-title>
-          <v-layout>
+          <div class="d-flex">
             <v-flex xs9>
               <h2> Please select a source for the recipients. </h2>
             </v-flex>
-            <v-flex xs3 text-xs-right v-if="$parent && $parent.audienceSource">
+            <v-flex xs3 text-right v-if="$parent && $parent.audienceSource">
               <v-icon color="red" class="close-button" @click="closeModal()"> fa fa-times
               </v-icon>
             </v-flex>
-          </v-layout>
+          </div>
         </v-card-title>
         <v-card-text>
-          <v-layout class="mt-5">
+          <div class="mt-5 d-flex">
             <v-flex xs5 class="audience-cards cursor-pointer" @click="selectAudienceSource('csv')">
-              <v-card class="py-5 px-2 text-xs-center">
-                <v-layout>
-                <v-flex xs2 text-xs-center>
+              <v-card class="py-5 px-2 text-center">
+                <div class="d-flex">
+                <v-flex xs2 class="text-center">
                     <v-icon large color="#4c3e9d" style="font-size:70px" class="audience-icon"> flaticon-044-curriculum-1 </v-icon>
                     <!--<v-img :src="getImgUrl('icon-csv')" class="audience-icon"></v-img>-->
                 </v-flex>
                 <v-spacer></v-spacer>
-                <v-flex xs9 d-block>
-                    <h2 class="text-xs-left mb-3"> Upload CSV </h2>
-                    <h3 class="grey--text text-xs-left"> Upload respondents for the campaign. </h3>
+                <v-flex xs9 class="d-block">
+                    <h2 class="text-left mb-3"> Upload CSV </h2>
+                    <h3 class="grey--text text-left"> Upload respondents for the campaign. </h3>
                 </v-flex>
-                </v-layout>
+                </div>
               </v-card>
             </v-flex>
             <v-flex xs2>
-            <div class="difm-menu-split">
+              <div class="difm-menu-split">
                 <div class="or-circle"> &nbsp; OR </div>
-            </div>
+              </div>
             </v-flex>
             <v-flex xs5 class="audience-cards cursor-pointer" @click="selectAudienceSource('existing_employees')">
-              <v-card  class="py-5 px-2 text-xs-center">
-                <v-layout>
-                <v-flex xs2 text-xs-center>
-                    <v-icon color="#4c3e9d" large class="audience-icon"> fa fa-clipboard-list </v-icon>
-                    <!--<v-img :src="getImgUrl('checklist--v1')" class="audience-icon"></v-img>-->
+              <v-card  class="py-5 px-2 text-center">
+                <div class="d-flex">
+                <v-flex xs2 class="text-center">
+                  <v-icon color="#4c3e9d" large class="audience-icon"> fa fa-clipboard-list </v-icon>
+                  <!--<v-img :src="getImgUrl('checklist--v1')" class="audience-icon"></v-img>-->
                 </v-flex>
                 <v-spacer></v-spacer>
-                <v-flex xs9 d-block>
-                    <h2 class="text-xs-left mb-3"> Choose from existing data </h2>
-                    <h3 class="grey--text text-xs-left"> Select recepients for the campaign from available data. </h3>
+                <v-flex xs9 class="d-block">
+                  <h2 class="text-left mb-3"> Choose from existing data </h2>
+                  <h3 class="grey--text text-left"> Select recepients for the campaign from available data. </h3>
                 </v-flex>
-                </v-layout>
+                </div>
               </v-card>
             </v-flex>
-           </v-layout>
+          </div>
         </v-card-text>
       </v-card>
 
       <v-card v-if="audienceSource === 'csv' || ($parent.newCampaign && $parent.newCampaign.category !== 'employee_engagement')">
         <v-card-title>
-          <v-layout class="mb-2">
+          <div class="mb-2 d-flex">
             <v-flex xs9>
               <h2> Upload your own recipients for the campaign </h2>
             </v-flex>
-            <v-flex xs3 text-xs-right>
+            <v-flex xs3 class="text-right">
               <v-icon color="red" class="close-button" @click="closeModal()">"> fa fa-times
               </v-icon>
             </v-flex>
-          </v-layout>
+          </div>
         </v-card-title>
         <v-card-text>
           <v-stepper light v-model="csvUploadStep" vertical>
@@ -105,7 +105,8 @@
 
             <v-stepper-content step="1">
               <div color="grey lighten-1" class="mb-5" @click="openFilePicker('candidateUploader')"
-              style="height:200px;border:1px dashed grey">
+                style="height:200px;border:1px dashed grey"
+              >
                 <input type="file" name="candidateUploader" ref="candidateUploader"
                   class="custom-upload"
                   id="candidateUploader" @input="filesChange($event.target.files);"
@@ -115,14 +116,14 @@
 
                 <v-icon color="#4c3e9d" class="custom-button" large> fa fa-cloud-upload-alt </v-icon>
                 <h3 class="grey--text mb-2 custom-h3"> Drag and drop or </h3>
-                <v-btn text-xs-center color="#4c3e9d" class="white--text custom-btn">
+                <v-btn color="#4c3e9d" class="white--text custom-btn text-center">
                   Upload CSV
                 </v-btn>
 
-                <!--<div class="text-xs-center" style="position:relative;top:-33%;z-index:1">
+                <!--<div class="text-center" style="position:relative;top:-33%;z-index:1">
                   <v-icon color="#4c3e9d" large> fa fa-cloud-upload-alt </v-icon>
                   <h3 class="grey--text mb-2"> Drag and drop or </h3>
-                  <v-btn text-xs-center color="#4c3e9d" class="white--text">
+                  <v-btn text-center color="#4c3e9d" class="white--text">
                     &nbsp; &nbsp; Upload CSV
                   </v-btn>
                 </div>-->
@@ -148,12 +149,12 @@
             </v-stepper-step>
 
             <v-stepper-content step="2">
-                <v-layout row wrap class="mb-3">
+                <div class="mb-3 d-flex flex-wrap flex-row">
                   <v-flex xs1></v-flex>
                   <v-flex sm10 class="pr-5">
                     <table class="table b-table table-hover csv-table" style="width: 100%;">
                       <thead class="">
-                        <tr class="text-xs-left">
+                        <tr class="text-left">
                           <th> Field required </th>
                           <th> Field from CSV </th>
                           <th> First data set from CSV </th>
@@ -193,7 +194,6 @@
                             </v-btn>
                           </td>
                         </tr>
-                        <!-- <tr v-if="customFields.length > 0" v-for="(cf,index) in customFields" :key="index"> -->
                         <tr v-for="(cf,index) in customFields" :key="index">
                           <td>
                             <v-text-field
@@ -235,41 +235,43 @@
                   </v-flex>
                   <v-flex xs1>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout class="mb-4">
+                <div class="mb-4 d-flex">
                   <v-flex xs1></v-flex>
                   <v-flex xs10>
-                    <div class="text-xs-left">
+                    <div class="text-left">
                       <v-menu offset-y max-height="250px">
-                        <p
-                          color="primary"
-                          slot="activator"
-                          small class="ml-2 elevation-0"
-                          style="position:relative;font-size:16px;font-weight:600"
-                        >
-                          <span>+&nbsp;</span>
-                          <span style="text-decoration:underline;">Add new field</span>
-                          <span style="padding-left: 14px;" @click.stop="dialog3 = true;">
-                            <v-icon small>fas fa-info-circle</v-icon>
-                          </span>
-                        </p>
+                        <template v-slot:activator="{ on, attrs }">
+                          <p
+                            v-bind="attrs" v-on="on"
+                            color="primary"
+                            small class="ml-2 elevation-0"
+                            style="position:relative;font-size:16px;font-weight:600"
+                          >
+                            <span>+&nbsp;</span>
+                            <span style="text-decoration:underline;">Add new field</span>
+                            <span style="padding-left: 14px;" @click.stop="dialog3 = true;">
+                              <v-icon small>fas fa-info-circle</v-icon>
+                            </span>
+                          </p>
+                        </template>
                         <v-list>
-                          <v-list-tile
+                          <v-list-item
                             v-for="(item, index) in items"
                             :key="index"
                             @click="addCustomField(item)"
                           >
-                            <v-list-tile-title style="text-transform:capitalize">
+                            <v-list-item-title style="text-transform:capitalize">
                               {{ getFieldsLabel(item.title) }}
-                            </v-list-tile-title>
-                          </v-list-tile>
+                            </v-list-item-title>
+                          </v-list-item>
                         </v-list>
                       </v-menu>
                     </div>
                   </v-flex>
                   <v-flex xs1></v-flex>
-                </v-layout>
+                </div>
 
                 <v-btn
                   color="#4c3e9d"
@@ -293,7 +295,7 @@
           </v-flex>
           <v-flex xs8>
           </v-flex>
-          <v-flex text-xs-right xs2>
+          <v-flex class="text-right" xs2>
           </v-flex>
         </v-card-actions>
       </v-card>

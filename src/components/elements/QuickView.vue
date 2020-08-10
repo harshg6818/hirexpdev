@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid fill-height ma-0 pa-0>
+  <v-container fluid class="fill-height ma-0 pa-0">
     <v-slide-y-transition mode="out-in">
-      <v-layout row wrap>
+      <div class="d-flex flex-row flex-wrap">
         <v-flex xs12 v-for="(t, ti) in transcripts"
           :key="ti"
           v-if="!t.defaultInteraction"
@@ -23,7 +23,7 @@
         <v-flex xs12 v-show="transcripts.length === 0">
           No chat to show.
         </v-flex>
-      </v-layout>
+      </div>
     </v-slide-y-transition>
   </v-container>
 </template>

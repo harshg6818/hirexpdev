@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="mt-2 px-4">
-      <v-layout row wrap>
+      <div class="d-flex flex-row flex-wrap">
         <v-flex xs1>
         </v-flex>
         <v-flex>
           <h2 class="mb-5 ml-5 pl-5 grey--text"> Please select your preferred channel to inform the employees about the campaign </h2>
         </v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout class="mb-3 b-top pt-2" v-for="(medium, mi) in distributionMediums" row wrap style="border-color: #f3f1f1" :key="mi">
+      <div class="mb-3 b-top pt-2 d-flex flex-wrap flex-row" v-for="(medium, mi) in distributionMediums" style="border-color: #f3f1f1" :key="mi">
         <v-flex xs1></v-flex>
         <v-flex xs2 class="mr-2" text-xs-center>
           <v-icon large color="#4c3e9d" class="audience-icon"> {{medium.icon}} </v-icon>
@@ -51,7 +51,7 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
     </div>
 
     <distribution-configuration ref="distributionConfiguration" v-show="dialogs.configuration">  </distribution-configuration>

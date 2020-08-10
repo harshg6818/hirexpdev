@@ -41,13 +41,13 @@
                 <v-flex style="margin:0 auto"  xs8>
                   <v-text-field
                   style="padding:0; marging:0;"
-                  v-show="CreateNewGroup"
+                  v-if="CreateNewGroup"
                   v-model="New_Group_Name"
                     name="Group name"
                     hint="Minimum 8 & Maximum 40 characters allowed"
                   ></v-text-field>
                   <v-text-field
-                  v-show="EditGroup"
+                  v-if="EditGroup"
                   style="padding:0; marging:0;"
                   v-model="groupDetail.group_name"
                     name="Group name"
@@ -57,55 +57,55 @@
                   <v-subheader></v-subheader>
                 </v-flex>
                 <v-card-actions style="">
-                  <v-btn color="error" flat @click="closeDialog()">Close</v-btn>
+                  <v-btn color="error" text @click="closeDialog()">Close</v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn v-show="EditGroup" color="primary" flat @click.native="validationEditGroup()">Next</v-btn>
-                  <v-btn v-show="CreateNewGroup" color="primary" flat @click.native="validationNewGroup()">Next</v-btn>
+                  <v-btn v-if="EditGroup" color="primary" text @click.native="validationEditGroup()">Next</v-btn>
+                  <v-btn v-if="CreateNewGroup" color="primary" text @click.native="validationNewGroup()">Next</v-btn>
                 </v-card-actions>
               </v-stepper-content>
               <v-stepper-content step="2">
-                <v-card-title v-show="e1 !='1'">
-                  <h2 v-show="EditGroup"  style="font-size:25px; font-weight:400; text-align:center; width:100%; ">
+                <v-card-title v-if="e1 !='1'">
+                  <h2 v-if="EditGroup"  style="font-size:25px; font-weight:400; text-align:center; width:100%; ">
                   {{groupDetail.group_name}}
                   </h2>
-                  <h2 v-show="CreateNewGroup"  style="font-size:25px; font-weight:400; text-align:center; width:100%; ">
+                  <h2 v-if="CreateNewGroup"  style="font-size:25px; font-weight:400; text-align:center; width:100%; ">
                   {{New_Group_Name}}
                   </h2>
                   <p style="text-align:center; width:100%;">Manage permissions for members of this group</p>
                 </v-card-title>
                 <v-container style="max-height:300px; padding:0; overflow-y:auto; overflow-x:hidden;">
-                  <v-layout v-for="(permissionGroup, idx) in permissionList" row wrap :key="idx">
-                    <v-layout>
+                  <div class="d-flex flex-row flex-wrap" v-for="(permissionGroup, idx) in permissionList" row wrap :key="idx">
+                    <div class="d-flex flex-row flex-wrap w-100">
                       <v-flex xs6 v-for="(permission, index) in permissionGroup.permissions"  style="padding: 0; margin: 0;" :key="index">
                         <div v-if="permission.title !== 'Ad-hoc campaigns' || (permission.title === 'Ad-hoc campaigns' && user.adhoc_active)">
-                          <v-layout class="font-weight-bold" style="border-top:1px solid rgba(0,0,0,0.12); padding:10px 0" >
+                          <div class="font-weight-bold d-flex flex-row" style="border-top:1px solid rgba(0,0,0,0.12); padding:10px 0" >
                             {{permission.title}}
-                          </v-layout>
+                          </div>
                           <v-container class="permission_p mx-0 my-0 py-1" fluid v-for="(item, key) in permission.items"
                             v-model="item.enabled"
                             :key="key"
                             :prepend-icon="item.action"
                             no-action>
-                            <v-layout style="padding-top:0; padding-bottom:0; padding-right:0;">
+                            <div class="d-flex flex-row flex-wrap" style="padding-top:0; padding-bottom:0; padding-right:0;">
                               <v-flex style="margin:auto;" sm9>
                                 <p>{{ item.title }}</p>
                               </v-flex>
                               <v-flex sm3 style="text-align:center">
-                              <v-switch  v-model="item.enabled"></v-switch>
+                              <v-switch v-model="item.enabled"></v-switch>
                               </v-flex>
-                            </v-layout>
+                            </div>
                           </v-container>
                         </div>
                       </v-flex>
                       <v-divider style="padding-bottom:10px;"></v-divider>
-                    </v-layout>
-                  </v-layout>
+                    </div>
+                  </div>
                 </v-container>
                 <v-card-actions>
-                  <v-btn color="error" flat @click="closeDialog()">Close</v-btn>
+                  <v-btn color="error" text @click="closeDialog()">Close</v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" flat @click.native="e1 = 1">Back</v-btn>
-                  <v-btn color="primary" flat @click.native="e1 = 3">Next</v-btn>
+                  <v-btn color="blue darken-1" text @click.native="e1 = 1">Back</v-btn>
+                  <v-btn color="primary" text @click.native="e1 = 3">Next</v-btn>
                 </v-card-actions>
               </v-stepper-content>
               <v-stepper-content step="3">
@@ -118,11 +118,11 @@
                   </h2>
                   <p style="text-align:center ;width:100%;">Select employees to be a part of this group</p>
                 </v-card-title>
-                <v-layout style="max-height:350px;  overflow-y:auto; overflow-x:hidden; ">
-                  <v-container style="padding:0; " fluid>
-                    <v-layout style="max-height:110px; margin-bottom:20px;" row wrap>
+                <div class="d-flex flex-row flex-wrap" style="max-height:350px;overflow-y:auto; overflow-x:hidden;">
+                  <v-container style="padding:0;" fluid>
+                    <div style="max-height:110px; margin-bottom:20px;" class="d-flex flex-row flex-wrap">
                       <v-flex @click="allEmployee()" :class="{'activeSegment' : noFilterapply }" style="border:1px solid rgba(0, 0, 0, 0.12); border-radius:10px; padding:20px 30px; cursor:pointer; margin:auto; " sm5>
-                        <v-layout>
+                        <div class="d-flex flex-row flex-wrap">
                           <v-flex sm3>
                             <v-icon> fas fa-users
                             </v-icon>
@@ -130,10 +130,10 @@
                           <v-flex sm9>
                             All Employee
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-flex>
                       <v-flex @click="filter_dialog()" :class="{'activeSegment' : !noFilterapply }" style="border:1px solid rgba(0, 0, 0, 0.12); border-radius:10px; padding:20px 30px; cursor:pointer; margin:auto; " sm5>
-                        <v-layout>
+                        <div class="d-flex flex-row flex-wrap">
                           <v-flex sm3>
                             <v-icon> fas fa-filter
                             </v-icon>
@@ -141,16 +141,16 @@
                           <v-flex sm9>
                             Filtered Employee
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </v-flex>
-                    </v-layout>
-                    <v-layout  transition="scale-transition" origin="center center" v-show="filtered_employee_segment || !noFilterapply" style=" padding-left:7%;" row wrap class="segmentFilter">
+                    </div>
+                    <div transition="scale-transition" origin="center center" v-show="filtered_employee_segment || !noFilterapply" style="padding-left:7%;" class="segmentFilter d-flex flex-row flex-wrap">
                       <v-flex sm2>
                         <p style="margin:10px 0 ">Filters applied</p>
                       </v-flex>
                       <v-flex sm12>
-                        <div  class="inine-flex">
-                          <v-layout v-for="(filtersApplied, filterName) in segmentFilter" :key="filterName">
+                        <div class="inine-flex">
+                          <div class="d-flex flex-row flex-wrap" v-for="(filtersApplied, filterName) in segmentFilter" :key="filterName">
                             <v-flex xs2>
                               <h4 class="text-capitalize" v-if="filtersApplied && filtersApplied.length > 0"> {{ filterName }} : </h4>
                             </v-flex>
@@ -162,7 +162,7 @@
                             <v-flex xs2>
                               <span v-if="(filtersApplied.length - 5) > 0">{{filtersApplied.length - 5}}&nbsp;more applied</span>
                             </v-flex>
-                          </v-layout>
+                          </div>
                         </div>
                       </v-flex>
 
@@ -172,8 +172,8 @@
                             <v-list-item style="border-bottom:1px solid rgba(0,0,0,0.12);" avatar :class="{'activeTab' : activeTab == item.title}" @click="updateTab(item)" :key="index">
                               <v-list-item-content>
                                 <v-list-item-title >{{item.title}}</v-list-item-title>
-                                <v-list-item-sub-title  v-if="!segmentFilter[item.title.toLowerCase()] || !segmentFilter[item.title.toLowerCase()].length">{{item.subtitle}}</v-list-item-sub-title>
-                                <v-list-item-sub-title  v-else>{{segmentFilter[item.title.toLowerCase()].length}} filters selected</v-list-item-sub-title>
+                                <v-list-item-sub-title name="filtertitle" v-if="!segmentFilter[item.title.toLowerCase()] || !segmentFilter[item.title.toLowerCase()].length">{{item.subtitle}}</v-list-item-sub-title>
+                                <v-list-item-sub-title name="segfiltertitle" v-else>{{segmentFilter[item.title.toLowerCase()].length}} filters selected</v-list-item-sub-title>
                               </v-list-item-content>
                             </v-list-item>
                           </template>
@@ -182,9 +182,9 @@
                       <v-flex class="filter_segments settings-left-flex " style="background:#fff;
                         min-height:100vh-200px;  border:1px solid #e1e1e1; margin:0 !important; padding-right:10px;"  xs8>
 
-                      <v-layout class="w-100" v-for="(filter, index) in segment_filter"
-                      v-show="activeTab.toLowerCase() === index" :key="index">
-
+                      <div class="w-100 d-flex flex-row" v-for="(filter, index) in segment_filter"
+                        v-show="activeTab.toLowerCase() === index" :key="index"
+                      >
                         <v-flex class="scroll mx-2" style="height:250px; width:100%; margin:0 !important;">
                           <!-- <v-data-table style="width:100%;"
                             :items="filter"
@@ -209,9 +209,9 @@
                             style="width:100%;"
                             :headers="headers"
                             :items="searchSegmentfilter(index)"
-                            select-all
+                            show-select
                             item-key="name"
-                            hide-actions
+                            hide-default-footer
                             class="elevation-1"
                           >
                             <!-- eslint-disable-next-line vue/no-unused-vars -->
@@ -237,13 +237,13 @@
                                 </th>
                               </tr>
                             </template>
-                            <template slot="items" slot-scope="props">
-                              <tr>
-                                <td>{{ props.item }}</td>
+                            <template v-slot:body="{items}">
+                              <tr v-for="(item, index) in items" :key="index">
+                                <td>{{ item }}</td>
                                 <td>
                                   <v-checkbox style="float:right;" :ripple="false"
-                                    v-model="filters[props.item]"
-                                    @change="updateSegmentFilters(props.item, index, filters[props.item])"
+                                    v-model="filters[item]"
+                                    @change="updateSegmentFilters(item, index, filters[item])"
                                     primary
                                   >
                                   </v-checkbox>
@@ -252,26 +252,26 @@
                             </template>
                           </v-data-table>
                         </v-flex>
-                      </v-layout>
+                      </div>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-container>
-                </v-layout>
+                </div>
                 <v-card-actions>
-                  <v-btn color="error" flat @click="closeDialog()">Close</v-btn>
+                  <v-btn color="error" text @click="closeDialog()">Close</v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" flat @click.native="e1 = 2">Back</v-btn>
-                  <v-btn color="primary" v-show="CreateNewGroup" flat @click="create_segment()">Create Group</v-btn>
-                  <v-btn color="primary" v-show="EditGroup" flat @click="update_segment()">Update Group</v-btn>
+                  <v-btn color="blue darken-1" text @click.native="e1 = 2">Back</v-btn>
+                  <v-btn color="primary" v-show="CreateNewGroup" text @click="create_segment()">Create Group</v-btn>
+                  <v-btn color="primary" v-show="EditGroup" text @click="update_segment()">Update Group</v-btn>
                 </v-card-actions>
               </v-stepper-content>
             </v-stepper-items>
           </v-stepper>
         </v-card>
       </v-dialog>
-      <v-layout style="">
-        <v-flex v-show="segment_data" xs12>
-          <div class="" v-show="config.initialLoading">
+      <div class="d-flex flex-row">
+        <v-flex v-if="segment_data" xs12>
+          <div v-if="config.initialLoading">
             <ContentLoader
               :height="160"
               :width="400"
@@ -288,30 +288,36 @@
               <rect x="0" y="150" rx="2" ry="2" width="394.46" height="17.93" />
             </ContentLoader>
           </div>
-          <v-data-table v-show="!config.initialLoading" :headers="groupHeaders" :items="company" hide-actions class="elevation-1">
-            <template slot="items" class="" slot-scope="props">
-              <tr class="groupListRow" @click="getAdminDetails(props.item.id);" style="cursor:pointer" :disabled="!checkPermission(['update_group','add_user_to_group','remove_user_from_group'])">
-              <td class="text-xs-left">{{ props.index+1 }}</td>
-              <td class="text-xs-left groupListName">{{ props.item.name }}</td>
-              <td class="text-xs-left">{{ props.item.people}}</td>
-              <td class="text-xs-left">{{ props.item.employees }}</td>
+          <v-data-table v-show="!config.initialLoading" :headers="groupHeaders" :items="company" hide-default-footer class="elevation-1">
+            <template v-slot:body="{items}">
+              <tr
+                v-for="(item, index) in items" :key="index"
+                class="groupListRow"
+                @click="getAdminDetails(item.id);"
+                style="cursor:pointer"
+                :disabled="!checkPermission(['update_group','add_user_to_group','remove_user_from_group'])"
+              >
+              <td class="text-left">{{index+1 }}</td>
+              <td class="text-left groupListName">{{ item.name }}</td>
+              <td class="text-left">{{ item.people}}</td>
+              <td class="text-left">{{ item.employees }}</td>
               </tr>
             </template>
           </v-data-table>
         </v-flex>
-      </v-layout>
+      </div>
     </v-container>
     <v-container v-show="adminList" >
       <v-subheader style="padding-left:0; margin-bottom:50px;">
         <v-flex sm1>
-          <v-btn flat icon @click="closeAdminList()">
+          <v-btn text icon @click="closeAdminList()">
             <v-icon>fas fa-arrow-left</v-icon>
           </v-btn>
         </v-flex>
         <v-flex  >
-          <strong class="py-2 px-2" style=" font-size:18px; color:grey;">{{groupDetail.group_name}}</strong>
+          <strong class="py-2 px-2" style="font-size:18px; color:grey;">{{groupDetail.group_name}}</strong>
         </v-flex>
-        <v-flex text-sm-right>
+        <v-flex class="text-sm-right">
           <v-btn color="primary" @click="openPermission()" :disabled="!checkPermission(['update_group'])">Permissions</v-btn>
           <v-btn color="primary" @click="editGroup()" :disabled="!checkPermission(['update_group']) || groupDetail.master">
             <v-icon class="mr-2" small>fas fa-edit</v-icon>
@@ -320,7 +326,7 @@
           <!-- <v-btn color="primary" @click.stop="addNewUser = true" :disabled="!checkPermission(['add_user_to_group'])">
             <v-icon class="mr-2" small>fas fa-plus</v-icon>Add Admin
           </v-btn> -->
-          <v-btn @click="openFilter()" flat icon>
+          <v-btn @click="openFilter()" text icon>
             <v-icon color="primary">fas fa-filter</v-icon>
           </v-btn>
         </v-flex>
@@ -332,11 +338,11 @@
           </v-alert>
         </v-flex>
       </v-container> -->
-      <v-layout wrap row>
+      <div class="d-flex flex-row flex-wrap">
         <v-flex style="display:inline-block; padding:0 10px 5%;  min-height:193px " v-for="(item, idx) in groupUsersDetail" :key="idx" sm4>
           <v-card style="padding:2px 10px 7% 10px; box-shadow:none; webkit-box-shadow:none; height:100%;" class="delete-on-hover">
             <v-list>
-            <v-layout style="height:20px;" >
+            <div style="height:20px;" class="d-flex flex-row flex-wrap">
               <v-flex sm12>
                 <img style="    position: relative;
                 top: -45px;
@@ -345,7 +351,7 @@
               </v-flex>
               <v-flex class="delete-button" style="position: absolute; right: -5px; top: -5px;">
                 <v-tooltip bottom>
-                  <v-btn slot="activator" color="error" flat icon @click="removeUser(item.id)"
+                  <v-btn slot="activator" color="error" text icon @click="removeUser(item.id)"
                   :disabled="!checkPermission(['remove_user_from_group']) || config.loading || item.type === 'SuperAdmin'">
                     <v-icon >fas fa-times</v-icon>
                   </v-btn>
@@ -354,7 +360,7 @@
                     <span v-else> You are not allowed to remove Super Admin from the group.  </span> -->
                 </v-tooltip>
               </v-flex>
-            </v-layout>
+            </div>
             <v-flex sm12>
               <v-list-item style="text-align:center; height:30px;">
                 <p style="text-align:center; width:100%; margin:0;">{{item.display_name}}</p>
@@ -371,11 +377,11 @@
           </v-card>
 
         </v-flex>
-        <v-flex style="display:inline-block; padding:2px 10px 5%; min-height:193px"  sm4>
-        <v-card  style=" box-shadow:none; webkit-box-shadow:none; cursor:pointer; height:100%;" class="addnewadmin" @click.native="addNewUser = true" :disabled="!checkPermission(['create_group'])">
+        <v-flex style="display:inline-block; padding:2px 10px 5%; min-height:193px" sm4>
+        <v-card style=" box-shadow:none; webkit-box-shadow:none; cursor:pointer; height:100%;" class="addnewadmin" @click.native="addNewUser = true" :disabled="!checkPermission(['create_group'])">
             <v-list>
-            <v-layout style="height:20px;">
-            </v-layout>
+            <div class="d-flex flex-row" style="height:20px;">
+            </div>
             <v-flex sm12>
               <p style="width:100%;  text-align:center; margin-bottom:0; text-transform: capitalize;" class="grey--text subtitle-1">&nbsp;</p>
               <p style="width:100%;  text-align:center; margin-bottom:0;" class="grey--text subtitle-1">
@@ -392,16 +398,16 @@
             </v-list>
           </v-card>
         </v-flex>
-      </v-layout>
+      </div>
     </v-container>
     <v-dialog persistent v-model="addNewUser" style="box-shadow: 0 3px 1px -2px red;" width="55%" min-height="600px">
       <v-card>
-        <v-card-title >
+        <v-card-title>
           <h2  style="font-size:25px; text-align:center; width:100%; padding-top:30px;">
             Add Admin
           </h2>
         </v-card-title>
-        <v-layout style="padding-bottom:30px; margin:auto" row>
+        <div class="d-flex flex-row flex-wrap" style="padding-bottom:30px; margin:auto">
           <v-flex style="margin:auto;" xs5>
             <v-select
               autocomplete
@@ -414,31 +420,31 @@
             ></v-select>
             <span slot=“no-options”> </span>
           </v-flex>
-        </v-layout>
+        </div>
         <v-card-actions>
-          <v-btn color="error" flat @click="closeAddAdmin()">Close</v-btn>
+          <v-btn color="error" text @click="closeAddAdmin()">Close</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click="addUser()">Add</v-btn>
+          <v-btn color="primary" text @click="addUser()">Add</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <v-dialog v-model="viewPermission" class="" persistent max-width="55%">
       <v-card>
-        <v-layout style="border:1px solid rgba(0,0,0,0.12);">
-        <v-flex style="" sm12>
+        <div class="d-flex flex-row flex-wrap" style="border:1px solid rgba(0,0,0,0.12);">
+        <v-flex sm12>
           <h2 style="border-bottom:1px solid rgba(0,0,0,0.12); color: grey; padding-left:10px;">Permissions
-
           </h2>
           <v-container style="max-height:300px;  overflow-y:auto; overflow-x:hidden;">
-            <v-layout v-for="(permissionGroup, index) in permissionList" row wrap :key="index">
+            <div class="d-flex flex-row flex-wrap" v-for="(permissionGroup, index) in permissionList" :key="index">
               <!-- <v-flex class="font-weight-bold" sm6 v-for="permission in permissionGroup.permissions"
               v-if="permission.title !== 'Ad-hoc campaigns' || (permission.title === 'Ad-hoc campaigns' && user.adhoc_active)"
               style=" padding:10px 0">
                 {{permission.title}}
               </v-flex>-->
-              <v-layout>
+              <div class="d-flex flex-row flex-wrap">
                 <v-flex xs6 v-for="(permission ,idx) in permissionGroup.permissions" :key="idx"
-                style="padding: 0; margin: 0;">
+                  style="padding: 0; margin: 0;"
+                >
                   <div v-if="permission.title !== 'Ad-hoc campaigns' || (permission.title === 'Ad-hoc campaigns' && user.adhoc_active)">
                     <v-flex class="font-weight-bold" style=" padding:10px 0">
                       {{permission.title}}
@@ -448,7 +454,7 @@
                       :key="key"
                       :prepend-icon="item.action"
                       no-action>
-                      <v-layout style="padding-top:0; padding-bottom:0; padding-right:0;">
+                      <div class="d-flex flex-row flex-wrap" style="padding-top:0; padding-bottom:0; padding-right:0;">
                         <v-flex style="margin:auto;" sm9>
                           <p>{{ item.title }}</p>
                         </v-flex>
@@ -457,18 +463,18 @@
                         :disabled="groupDetail.master">
                         </v-switch>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </v-container>
                   </div>
                 </v-flex>
                 <v-divider style="padding-bottom:10px;"></v-divider>
-              </v-layout>
-            </v-layout>
+              </div>
+            </div>
           </v-container>
         </v-flex>
-      </v-layout>
+      </div>
         <v-card-actions>
-          <v-btn color="error" flat @click="viewPermission = false">Close</v-btn>
+          <v-btn color="error" text @click="viewPermission = false">Close</v-btn>
           <v-spacer></v-spacer>
           <v-btn color="primary" @click="update_segment()">Update Permission</v-btn>
         </v-card-actions>
@@ -478,13 +484,13 @@
       <v-card>
 
           <h2 style="padding-left:10px; color: grey; ">Filters</h2>
-          <v-layout  style="border-top:1px solid rgba(0,0,0,0.12);border-bottom:1px solid rgba(0,0,0,0.12);">
+          <div class="d-flex flex-row" style="border-top:1px solid rgba(0,0,0,0.12);border-bottom:1px solid rgba(0,0,0,0.12);">
             <!-- <v-flex style="padding:10px" sm2>
               <p style="margin:0px ">Filters applied :- </p>
             </v-flex> -->
             <v-flex v-if="!noFilterapply" style="padding:10px" sm12 >
               <div class="inine-flex">
-                <v-layout v-for="(filterName, index) in noFilter" :key="index">
+                <div class="d-flex flex-row flex-wrap" v-for="(filterName, index) in noFilter" :key="index">
                   <v-flex xs2 v-if="true">
                     <h4 class="text-capitalize"> {{ filterName.title }} : </h4>
                   </v-flex>
@@ -496,25 +502,25 @@
                   <v-flex xs10 v-if="!segmentFilter[filterName.title.toLowerCase()] || segmentFilter[filterName.title.toLowerCase()].length === 0">
                     {{ filterName.title1 }}
                   </v-flex>
-                </v-layout>
+                </div>
               </div>
             </v-flex>
             <v-flex v-if="noFilterapply"  style="padding:10px" sm9 >
               <div class="inine-flex">
-                <v-layout v-for="(filterName, index) in noFilter" :key="index">
+                <div class="d-flex flex-row flex-wrap" v-for="(filterName, index) in noFilter" :key="index">
                   <v-flex xs2>
                     <h4 class="text-capitalize"> {{ filterName.title }} : </h4>
                   </v-flex>
                   <v-flex xs10>
-                      {{filterName.title1}},
+                    {{filterName.title1}},
                   </v-flex>
-                </v-layout>
+                </div>
               </div>
             </v-flex>
-          </v-layout>
+          </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" flat @click="viewFilter = false">Close</v-btn>
+          <v-btn color="error" text @click="viewFilter = false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

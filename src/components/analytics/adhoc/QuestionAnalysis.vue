@@ -1,7 +1,7 @@
 <template>
-    <v-card >
+    <v-card>
       <v-card-text class="pt-0">
-        <v-layout v-if="dialogs.questionAnalysis">
+        <div class="d-flex" v-if="dialogs.questionAnalysis">
           <v-flex xs10>
             <h2 class="mt-3"> Question : {{question}} </h2>
           </v-flex>
@@ -10,15 +10,16 @@
               <v-icon color="grey">fas fa-times</v-icon>
             </v-btn>
           </v-flex>
-        </v-layout>
+        </div>
         <v-tabs
           ref="tabs"
           :class="analysisEnabled ? 'custom-dashboard-tabs' : 'dashboard-tabs'"
           grow
           v-model="tabs.active"
           centered
-          color="transparent"
+          color="primary"
           slider-color="primary"
+          height="fill-height"
         >
           <v-tab
             class="mr-2 text-none"
@@ -37,20 +38,20 @@
 
             <v-tab-item value="tab-analysis" v-show="analysisTab && analysisEnabled">
               <!-- Response Breakup (Scale / Close Ended Questions) -->
-              <v-layout v-if="dialogs.questionAnalysis && selectedQuestion && report">
+              <div class="d-flex" v-if="dialogs.questionAnalysis && selectedQuestion && report">
                 <!-- Scale Type -->
-                <v-layout row wrap v-if="questionType === 'scale'">
+                <div class="d-flex flex-row flex-wrap" v-if="questionType === 'scale'">
                   <!-- Bar graph chart for Scale  -->
                   <div class="w-100" style="border-bottom: 1px solid rgb(243, 241, 241)!important;">
                     <div id="donutChartdiv-scale" class="donutchartdiv" v-if="report.length > 0 && tabs.active === 'tab-analysis'"></div>
                     <v-card class="pa-4 no-data elevation-0" v-else>
-                      <v-layout row wrap align-center justify-center fill-height>
-                        <v-flex text-xs-center>
+                      <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                        <v-flex class="text-center">
                           <strong class="display-1 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </v-card>
                   </div>
 
@@ -61,38 +62,38 @@
                       class="w-100"
                       :items="report"
                       hide-actions>
-                        <template slot="items" slot-scope="props">
-                        <tr v-if="props.item">
+                      <template v-slot:body="{ items }">
+                        <tr v-for="(item, index) in items" :key="index">
                           <td>
-                          {{props.item.response_text}}
+                          {{item.response_text}}
                           </td>
 
                           <td class="text-xs-left">
-                          {{props.item.count}}
+                          {{item.count}}
                           </td>
 
                           <td class="text-xs-left">
-                          {{props.item.percent}} %
+                          {{item.percent}} %
                           </td>
                         </tr>
                       </template>
                     </v-data-table>
                   </div>
-                </v-layout>
+                </div>
 
                 <!-- multiple Type -->
-                <v-layout row wrap v-if="questionType === 'multipleChoice'">
+                <div class="d-flex flex-row flex-wrap" v-if="questionType === 'multipleChoice'">
                   <!-- Bar graph chart for Scale  -->
                   <div class="w-100" style="border-bottom: 1px solid rgb(243, 241, 241)!important;">
                     <div id="donutChartdiv-multipleChoice" class="donutchartdiv" v-if="tabs.active === 'tab-analysis'"></div>
                     <v-card class="pa-4 no-data elevation-0" v-else>
-                      <v-layout row wrap align-center justify-center fill-height>
-                        <v-flex text-xs-center>
+                      <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                        <v-flex class="text-center">
                           <strong class="display-1 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </v-card>
                   </div>
 
@@ -103,38 +104,38 @@
                       class="w-100"
                       :items="report"
                       hide-actions>
-                        <template slot="items" slot-scope="props">
-                        <tr v-if="props.item">
+                        <template v-slot:body="{ items }">
+                        <tr v-for="(item, index) in items" :key="index">
                           <td>
-                          {{props.item.response_text}}
+                          {{item.response_text}}
                           </td>
 
                           <td class="text-xs-left">
-                          {{props.item.count}}
+                          {{item.count}}
                           </td>
 
                           <td class="text-xs-left">
-                          {{props.item.percent}} %
+                          {{item.percent}} %
                           </td>
                         </tr>
                       </template>
                     </v-data-table>
                   </div>
-                </v-layout>
+                </div>
 
                 <!-- Yes / No (close ended) Response -->
-                <v-layout row wrap v-if="questionType === 'closeEnded'">
+                <div class="d-flex flex-row flex-wrap" v-if="questionType === 'closeEnded'">
                   <!-- Donut chart for Yes/ No  -->
                   <div class="w-100" style="border-bottom: 1px solid rgb(243, 241, 241)!important;">
                     <div id="donutChartdiv-closeEnded" class="donutchartdiv" v-if="report.length > 0"></div>
                     <v-card class="pa-4 no-data elevation-0" v-else>
-                      <v-layout row wrap align-center justify-center fill-height>
-                        <v-flex text-xs-center>
+                      <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                        <v-flex class="text-center">
                           <strong class="display-1 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </v-card>
                   </div>
 
@@ -145,33 +146,33 @@
                       :headers="table.headers"
                       :items="report"
                       hide-actions>
-                        <template slot="items" slot-scope="props">
-                        <tr v-if="props.item">
+                        <template v-slot:body="{items}" >
+                        <tr v-for="(item, index) in items" :key="index">
                           <td>
-                          {{props.item.response_text}}
+                          {{item.response_text}}
                           </td>
 
                           <td class="text-xs-left">
-                          {{props.item.count}}
+                          {{item.count}}
                           </td>
 
                           <td class="text-xs-left">
-                          {{props.item.percent}} %
+                          {{item.percent}} %
                           </td>
                         </tr>
                       </template>
                     </v-data-table>
                   </div>
-                </v-layout>
-              </v-layout>
+                </div>
+              </div>
             </v-tab-item>
 
             <v-tab-item value="tab-sentiment-analysis" v-show="sentimentTab">
               <!-- Sentiment Analysis -->
-              <v-layout row wrap class="my-1" v-if="selectedQuestion && report">
+              <div class="d-flex flex-row flex-wrap my-1" v-if="selectedQuestion && report">
               <!-- <v-layout row wrap class="my-1" v-if="selectedQuestion"> -->
                 <v-flex xs12>
-                  <v-layout row wrap v-show="report && wordCloudData && typeof wordCloudData === 'object' && Object.keys(wordCloudData).length > 0">
+                  <div class="d-flex flex-row flex-wrap" v-show="report && wordCloudData && typeof wordCloudData === 'object' && Object.keys(wordCloudData).length > 0">
                     <v-flex xs8>
                       <div :id="`wordCloudContainer_${containerId}`" class="wordCloud mt-0" />
                     </v-flex>
@@ -204,32 +205,32 @@
                         </div>
                       </v-card> -->
                     </v-flex>
-                  </v-layout>
+                  </div>
 
                   <!-- Exception message from API in case of no wordcloud responses -->
                   <v-card class="my-2" v-if="report" v-show="wordCloudData && typeof wordCloudData === 'string'">
-                    <v-layout row wrap align-center justify-center fill-height style="height:200px" >
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:200px" >
                       <v-flex text-xs-center class="py-5">
                         <strong class="display-1 font-weight-bold grey--text">
                           {{wordCloudData}}
                         </strong>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-card>
 
                   <!-- Exception message in case of no wordcloud analysis -->
                   <v-card class="my-2" v-if="!report || !wordCloudData || Object.keys(wordCloudData).length === 0">
-                    <v-layout row wrap align-center justify-center fill-height style="height:300px" >
-                      <v-flex text-xs-center class="py-5">
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:300px" >
+                      <v-flex class="py-5 text-center">
                         <strong class="display-1 font-weight-bold grey--text">
                           Not enough data to generate analysis
                         </strong>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-card>
 
                   <!-- Sentiment Category Tabs (Positive, Neutral, and Negative) -->
-                  <v-layout row wrap v-if="totalResponses" style="background:white;">
+                  <div class="d-flex flex-row flex-wrap" v-if="totalResponses" style="background:white;">
                     <!-- <v-flex xs6>
                       <v-tabs
                         v-model="config.activeTab"
@@ -266,8 +267,8 @@
                         flat single-line>
                       </v-combobox>
                     </v-flex>
-                  </v-layout>
-                  <v-layout class="questionAnalysis">
+                  </div>
+                  <div class="questionAnalysis d-flex">
                     <v-tabs
                       v-if="totalResponses"
                       centered
@@ -281,7 +282,8 @@
                         :key="ti"
                         :href="`#tab-${t.value}`"
                         @click="addMoodRef(t.value)"
-                        color="transparent"
+                        color="primary"
+                        height="fill-height"
                         hide-slider
                         style="max-width: 400px;width: 25%; height:100% !important;"
                         slider-color="accent"
@@ -320,9 +322,9 @@
                         <v-tab-item value="tab-negative" v-show="config.activeMoodTab === 'negative'">
                           <!-- Response List -->
                           <div class="response-list">
-                            <v-layout :id="`response-${i}`" v-for="(t, i) in responseData" row wrap class="mb-0 px-3" :key="i">
+                            <div :id="`response-${i}`" v-for="(t, i) in responseData" class="mb-0 px-3 d-flex flex-row flex-wrap" :key="i">
                               <div class="active-response w-100" style="border-bottom: 1px solid lightgrey;padding: 7px;">
-                                <v-layout row wrap class="d-inline-flex">
+                                <div class="d-inline-flex d-flex flex-row flex-wrap">
                                     <!-- <v-checkbox> </v-checkbox> -->
                                     <!--<text-highlight :queries="queries">
                                       <p class="w-100 mb-0"> {{t.answer}} </p>
@@ -337,7 +339,7 @@
                                         - {{t.user_name}}
                                       </p>
                                     </v-flex>
-                                </v-layout>
+                                </div>
                                 <!-- <div class="d-inline-flex w-100">
                                   <p class="grey--text text-xs-left mb-0 ">
                                     <span v-if="t.user_department"> Department: {{t.user_department}} &nbsp; </span>
@@ -355,7 +357,7 @@
                                   </p>
                                 </div>
                               </div>
-                            </v-layout>
+                            </div>
                             <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
                               <span slot='no-more'>{{' '}}</span>
                               <span slot='no-results'>{{' '}}</span>
@@ -367,9 +369,9 @@
                         <v-tab-item value="tab-neutral" v-show="config.activeMoodTab === 'neutral'">
                           <!-- Response List -->
                           <div class="response-list">
-                            <v-layout :id="`response-${i}`" v-for="(t, i) in responseData" row wrap class="mb-0 px-3" :key="i">
+                            <div :id="`response-${i}`" v-for="(t, i) in responseData" class="mb-0 px-3 d-flex flex-row flex-wrap" :key="i">
                               <div class="active-response w-100" style="border-bottom: 1px solid lightgrey;padding: 7px;">
-                                <v-layout row wrap class="d-inline-flex">
+                                <div class="d-inline-flex d-flex flex-row flex-wrap">
                                     <!-- <v-checkbox> </v-checkbox> -->
                                     <!--<text-highlight :queries="queries">
                                       <p class="w-100 mb-0"> {{t.answer}} </p>
@@ -384,7 +386,7 @@
                                         - {{t.user_name}}
                                       </p>
                                     </v-flex>
-                                </v-layout>
+                                </div>
                                 <!-- <div class="d-inline-flex w-100">
                                   <p class="grey--text text-xs-left mb-0 ">
                                     <span v-if="t.user_department"> Department: {{t.user_department}} &nbsp; </span>
@@ -402,7 +404,7 @@
                                   <span v-if="t.interaction_sub_driver"> Sub driver: {{ t.interaction_sub_driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2') }} </span>
                                 </p>
                               </div>
-                            </v-layout>
+                            </div>
                             <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
                               <span slot='no-more'>{{' '}}</span>
                               <span slot='no-results'>{{' '}}</span>
@@ -414,9 +416,9 @@
                         <v-tab-item value="tab-positive" v-show="config.activeMoodTab === 'positive'">
                           <!-- Response List -->
                           <div class="response-list">
-                            <v-layout :id="`response-${i}`" v-for="(t, i) in responseData" row wrap class="mb-0 px-3" :key="i">
+                            <div :id="`response-${i}`" v-for="(t, i) in responseData" class="mb-0 px-3 d-flex flex-row flex-wrap" :key="i">
                               <div class="active-response w-100" style="border-bottom: 1px solid lightgrey;padding: 7px;">
-                                <v-layout row wrap class="d-inline-flex">
+                                <div class="d-inline-flex d-flex flex-row flex-wrap">
                                     <!-- <v-checkbox> </v-checkbox> -->
                                     <!--<text-highlight :queries="queries">
                                       <p class="w-100 mb-0"> {{t.answer}} </p>
@@ -430,7 +432,7 @@
                                         - {{t.user_name}}
                                       </p>
                                     </v-flex>
-                                </v-layout>
+                                </div>
                                 <!-- <div class="d-inline-flex w-100">
                                   <p class="grey--text text-xs-left mb-0 ">
                                     <span v-if="t.user_department"> Department: {{t.user_department}} &nbsp; </span>
@@ -448,7 +450,7 @@
                                   <span v-if="t.interaction_sub_driver"> Sub driver: {{ t.interaction_sub_driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2') }} </span>
                                 </p>
                               </div>
-                            </v-layout>
+                            </div>
                             <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
                               <span slot='no-more'>{{' '}}</span>
                               <span slot='no-results'>{{' '}}</span>
@@ -457,17 +459,17 @@
                         </v-tab-item>
                       </v-tabs-items>
                     </v-tabs>
-                  </v-layout>
+                  </div>
 
                   <!-- All Responses -->
                   <div v-if="totalResponses && (!config.activeMoodTab ||
                   (config.activeMoodTab !== 'positive' && config.activeMoodTab !== 'negative' &&
                   config.activeMoodTab !== 'neutral'))">
                     <div class="response-list">
-                      <v-layout :id="`response-${i}`" v-for="(t, i) in responseData" row wrap class="mb-0 px-3" :key="i"
+                      <div :id="`response-${i}`" v-for="(t, i) in responseData" class="mb-0 px-3 d-flex flex-row flex-wrap" :key="i"
                       >
                         <div class="active-response w-100" style="border-bottom: 1px solid lightgrey;padding: 7px;">
-                          <v-layout row wrap class="d-inline-flex">
+                          <div class="d-inline-flex d-flex flex-row flex-wrap">
                               <!-- <v-checkbox> </v-checkbox> -->
                               <!--<text-highlight :queries="queries">
                                 <p class="w-100 mb-0"> {{t.answer}} </p>
@@ -481,7 +483,7 @@
                                   - {{t.user_name}}
                                 </p>
                               </v-flex>
-                          </v-layout>
+                          </div>
                           <!-- <div class="d-inline-flex w-100">
                             <p class="grey--text text-xs-left mb-0 ">
                               <span v-if="t.user_department"> Department: {{t.user_department}} &nbsp; </span>
@@ -499,7 +501,7 @@
                             </p>
                           </div>
                         </div>
-                      </v-layout>
+                      </div>
                       <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
                         <span slot='no-more'>{{' '}}</span>
                         <span slot='no-results'>{{' '}}</span>
@@ -508,17 +510,17 @@
                   </div>
 
                   <v-card v-if="!report || !totalResponses || !responseData">
-                    <v-layout row wrap align-center justify-center fill-height style="height:500px">
-                      <v-flex text-xs-center class="py-5">
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:500px">
+                      <v-flex class="py-5 text-center">
                         <strong class="display-1 font-weight-bold grey--text">
                           Not enough data to generate analysis
                         </strong>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-card>
 
                 </v-flex>
-              </v-layout>
+              </div>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>

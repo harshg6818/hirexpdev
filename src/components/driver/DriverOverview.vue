@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-layout row wrap>
+    <div class="d-flex flex-row flex-wrap">
       <v-flex xs12 px-1>
         <div class="mt-3" v-show="config.initialLoading">
-           <ContentLoader
+          <ContentLoader
             :height="30"
             :width="200"
             :speed="2"
@@ -18,8 +18,7 @@
 
         <!-- After intial loading -->
         <div class="mt-3" v-show="!config.initialLoading">
-
-            <v-layout row wrap>
+            <div class="d-flex flex-row flex-wrap">
               <!-- Engagement Score -->
               <!-- <div class="overview-cards engagement-score"
               :style="report.engagement_score ?
@@ -54,13 +53,13 @@
                 id="lineGraph" class="lineGraph"> </div>
 
                 <div class="pt-3 mt-3" v-show="!report || !report.monthwise_driver_trend">
-                  <v-layout row wrap align-center justify-center fill-height style="height:160px">
-                    <v-flex text-xs-center>
+                  <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:160px">
+                    <v-flex class="text-center">
                       <strong class="body-2 font-weight-bold grey--text">
                         Not enough data to generate analysis
                       </strong>
                     </v-flex>
-                </v-layout>
+                </div>
                 </div>
               </div>
 
@@ -71,29 +70,28 @@
                 class="d-inline-flex w-100 text-xs-center"
                 style="border-bottom: 1px solid rgb(243, 241, 241);">
                   <h1 class="score-card heading w-100 text-xs-center"> <span class="cursor-pointer" @click="goToEmployeeList()">{{report.disengaged_employees}} </span>
-
                     <v-btn color="primary" @click.stop="goToEmployeeList()" outline style="display:block; font-size:14px; margin-left:36%; padding: 0 10px;">view employees</v-btn>
                   </h1><br>
 
                 </div>
 
                 <div v-else->
-                  <v-layout row wrap align-center justify-center fill-height style="height:160px;">
-                    <v-flex text-xs-center>
+                  <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:160px;">
+                    <v-flex class="text-center">
                       <strong class="body-2 font-weight-bold grey--text">
                         Not enough data to generate analysis
                       </strong>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </div>
                 <!-- <div>
                   <button>abc</button>
                 </div> -->
               </div>
-            </v-layout>
+            </div>
         </div>
       </v-flex>
-    </v-layout>
+    </div>
 
     <listEmployees ref="listEmployees" />
   </div>

@@ -28,52 +28,52 @@
       :loading="table.loading"
       class=""
     >
-      <template slot="items" slot-scope="props">
-        <tr v-if="props.item">
+      <template v-slot:body="{items}">
+        <tr v-for="(item, index) in items" :key="index">
           <td>
             <v-layout row wrap align-center>
               <v-flex class="py-2" sm3>
-                <v-avatar size="30px" :color="getColor(props.item)">
+                <v-avatar size="30px" :color="getColor(item)">
                   <img src="src" alt="alt" v-show="false">
-                  <span class="white--text">{{getAvatar(props.item)}}</span>
+                  <span class="white--text">{{getAvatar(item)}}</span>
                 </v-avatar>
               </v-flex>
               <v-flex>
-                <p class="mb-0" v-show="props.item.user__display_name">
-                  <strong :class="{'hover-link cursor-pointer': $route.name !== 'ViewAdhoc'}" @click="viewEmployee(props.item);">
-                    {{props.item.user__display_name}}
+                <p class="mb-0" v-show="item.user__display_name">
+                  <strong :class="{'hover-link cursor-pointer': $route.name !== 'ViewAdhoc'}" @click="viewEmployee(item);">
+                    {{item.user__display_name}}
                   </strong>
                 </p>
                 <small>
-                  {{props.item.user__email}}
+                  {{item.user__email}}
                 </small>
               </v-flex>
             </v-layout>
           </td>
           <td>
-            {{props.item.stage__title}}
+            {{item.stage__title}}
           </td>
           <td>
             <v-chip :class="{
-              'success success--text': props.item.driver_rating > 3,
-              'error error--text': props.item.driver_rating <= 3
-            }" class="ma-0" outline small v-if="props.item.driver_rating">{{props.item.driver_rating}}</v-chip>
+              'success success--text': item.driver_rating > 3,
+              'error error--text': item.driver_rating <= 3
+            }" class="ma-0" outlined small v-if="item.driver_rating">{{item.driver_rating}}</v-chip>
           </td>
           <td class="text-sm-left">
-            <span v-if="!props.item.user_mood && !props.item.overall_mood" class="font-weight-bold grey--text">-</span>
-            <v-tooltip bottom v-if="props.item.user_mood">
+            <span v-if="!item.user_mood && !item.overall_mood" class="font-weight-bold grey--text">-</span>
+            <v-tooltip bottom v-if="item.user_mood">
               <img
                 slot="activator"
                 height="30"
-                :src="getImgUrl(`${props.item.user_mood}`)"
+                :src="getImgUrl(`${item.user_mood}`)"
               >
               Current Vibe
             </v-tooltip>
-            <v-tooltip bottom v-if="props.item.overall_mood">
+            <v-tooltip bottom v-if="item.overall_mood">
               <img
                 slot="activator"
                 height="30"
-                :src="getImgUrl(`${props.item.overall_mood}`)"
+                :src="getImgUrl(`${item.overall_mood}`)"
               >
               Current Vibe
             </v-tooltip>
@@ -89,16 +89,16 @@
           :indeterminate="true"></v-progress-linear>
         </div>
       </template>
-      <v-card slot="no-data" class="elevation-0 text-xs-center" min-height="60vh">
+      <v-card slot="no-data" class="elevation-0 text-center" min-height="60vh">
         <v-card-title primary-title class="justify-center">
-          <v-layout row wrap>
+          <div class="d-flex flex-row flex-wrap">
             <v-flex xs12>
               <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
               <p>
                 No employees present.
               </p>
             </v-flex>
-          </v-layout>
+          </div>
         </v-card-title>
       </v-card>
     </v-data-table>

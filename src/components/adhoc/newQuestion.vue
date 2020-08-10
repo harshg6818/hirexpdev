@@ -8,12 +8,11 @@
         <v-card-text class="pa-0">
           <!-- <h2 v-if="selectedQuesType && selectedQuesType[0].type === 'text'">  Create a statement </h2>
           <h2 v-else> Create New Question </h2> -->
-          <v-layout row wrap :reverse="ifSmall" v-show="selectedQuesType">
+          <div class="d-flex flex-row flex-wrap" :reverse="ifSmall" v-show="selectedQuesType">
             <!-- Area to add elements -->
             <v-flex class="interactions">
               <v-card style="border:none" class="elevation-0 interaction-card">
-
-                <v-layout row wrap grey lighten-5 class="drag-container">
+                <div class="drag-container d-flex flex-row flex-wrap grey lighten-5">
                   <v-flex xs12>
                     <div class="d-flex flex-row">
                       <v-flex xs8>
@@ -61,11 +60,11 @@
                               </v-flex>
                             </v-layout> -->
 
-                            <v-layout row wrap align-center class="pt-2 px-3">
+                            <div class="pt-2 px-3 d-flex flex-row flex-wrap align-center">
 
                               <!-- Scale -->
                               <v-flex class="" xs10 offset-xs1 v-if="q.type === 'scale'">
-                                <v-layout row wrap>
+                                <div class="d-flex flex-row flex-wrap">
                                   <v-flex xs8 class="">
                                   </v-flex>
                                   <v-flex xs4 class="text-xs-right" >
@@ -79,7 +78,7 @@
                                   <span>Customize Amara responses for each option</span>
                                     </v-tooltip>
                                   </v-flex>
-                                </v-layout>
+                                </div>
                                 <v-text-field
                                   v-if="q.msg"
                                   maxlength="300"
@@ -95,16 +94,16 @@
                                   outline
                                 >
                                 <v-fade-transition slot="prepend">
-                                        <img width="30" height="30"
-                                        :src="getImgUrl('amara-60')">
-                                      </v-fade-transition>
+                                  <img width="30" height="30"
+                                  :src="getImgUrl('amara-60')">
+                                </v-fade-transition>
                                 </v-text-field>
 
-                                <v-layout row wrap
-                                v-if="q.msg && q.msg[0].scaleType === 'emoji'" justify-center>
-                                  <v-flex xs10 text-xs-center class="mb-3"
+                                <div class="d-flex flex-row flex-wrap justify-center"
+                                v-if="q.msg && q.msg[0].scaleType === 'emoji'">
+                                  <v-flex xs10 class="mb-3 text-center"
                                   v-for="(r, ri) in q.msg[0].scale" :key="ri">
-                                    <v-layout>
+                                    <div class="d-flex">
                                       <v-flex xs3>
                                         <v-btn class="emoji-btn"
                                           slot="activator"
@@ -145,16 +144,17 @@
                                         ></v-text-field>
                                       </v-flex>
 
-                                    </v-layout>
+                                    </div>
 
                                   </v-flex>
-                                </v-layout>
+                                </div>
 
-                                <v-layout row wrap
-                                v-if="q.msg && q.msg[0].scaleType === 'number'" justify-center>
-                                  <v-flex xs10 text-xs-center class="mb-3"
+                                <div class="d-flex flex-row flex-wrap justify-center"
+                                  v-if="q.msg && q.msg[0].scaleType === 'number'"
+                                >
+                                  <v-flex xs10 class="mb-3 text-center"
                                   v-for="(r, ri) in q.msg[0].scale" :key="ri">
-                                    <v-layout>
+                                    <div class="d-flex">
                                       <v-flex xs3>
                                         <v-btn class="emoji-btn"
                                           style="min-width:56px;"
@@ -198,13 +198,13 @@
                                           label="Amara's response"
                                         ></v-text-field>
                                       </v-flex>
-                                    </v-layout>
+                                    </div>
                                   </v-flex>
-                                </v-layout>
+                                </div>
                               </v-flex>
                               <!-- Multiple choice que -->
                               <v-flex class="MultiChoiceQue mx-4 px-3" xs12 v-if="q.type == 'multipleChoice'">
-                                <v-layout row wrap>
+                                <div class="d-flex flex-row flex-wrap">
                                   <v-flex xs8 class="">
                                   </v-flex>
                                   <!-- <v-flex class="pr-3 xs2" >
@@ -218,7 +218,7 @@
                                       <span>Tooltip</span>
                                     </v-tooltip>
                                   </v-flex> -->
-                                  <v-flex xs4 class="text-xs-right" >
+                                  <v-flex xs4 class="text-xs-right">
                                     <v-tooltip max-width='250' top>
                                     <v-checkbox slot="activator" class="mt-0"
                                     style="float:right"
@@ -229,8 +229,8 @@
                                   <span>Customize Amara responses for each option</span>
                                     </v-tooltip>
                                   </v-flex>
-                                </v-layout>
-                                <v-layout row wrap>
+                                </div>
+                                <div class="d-flex flex-row flex-wrap">
                                 <v-text-field
                                   maxlength="300"
                                   v-model="q.msg[0].text"
@@ -249,11 +249,11 @@
                                         :src="getImgUrl('amara-60')">
                                       </v-fade-transition>
                                 </v-text-field>
-                                </v-layout>
-                                  <v-layout style="padding-left:6%;" row wrap>
+                                </div>
+                                  <div style="padding-left:6%;" class="d-flex flex-row flex-wrap">
                                     <v-flex style="margin-left:0px;"  xs12 class="pb-2 px-1" v-for="(quickQue , QN) in q.msg[0].quickReplies"  :key="QN">
                                       <v-card style="min-height:auto" class="px-2 pt-2 optionscard">
-                                        <v-layout>
+                                        <div class="d-flex">
                                         <v-flex xs8 class="text-xs-left">
                                           <small>Option {{QN+1}}</small>
                                       <v-text-field
@@ -279,8 +279,8 @@
                                       <span>Amara will ask a followup question to understand the reason for the selection</span>
                                     </v-tooltip>
                                         </v-flex>
-                                        </v-layout>
-                                      <v-layout>
+                                        </div>
+                                      <div class="d-flex">
                                         <!-- <v-flex xs4 class="text-xs-left" v-if="q.msg[0].viewScore">
                                               <small>Score</small>
                                               <v-text-field
@@ -308,12 +308,12 @@
                                             <!-- </v-flex>
                                           </v-layout> -->
                                         </v-flex>
-                                      </v-layout>
+                                      </div>
 
                                       </v-card>
                                     </v-flex>
 
-                                  </v-layout>
+                                  </div>
                                   <v-btn style="float:right" @click="addOption()">
                                     Add options
                                   </v-btn>
@@ -437,12 +437,9 @@
                                       aspect-ratio="1"
                                       class="grey lighten-2 mx-auto"
                                     >
-                                      <v-layout
+                                      <div
+                                        class="d-flex flex-row flex-wrap fill-height align-center justify-center ma-0"
                                         slot="placeholder"
-                                        fill-height
-                                        align-center
-                                        justify-center
-                                        ma-0
                                       >
                                         <div class="">
                                           <v-icon class="mr-2">fas fa-plus-square</v-icon>
@@ -453,7 +450,7 @@
                                         <v-progress-circular v-show="c.imgUrl"
                                         indeterminate color="grey lighten-5">
                                         </v-progress-circular>
-                                      </v-layout>
+                                      </div>
                                     </v-img>
                                     <v-list class="pa-3">
                                       <v-text-field
@@ -549,7 +546,7 @@
 
                               <!-- Carousel -->
                               <v-flex class="" v-if="q.type === 'carousel'">
-                                <v-layout row wrap>
+                                <div class="d-flex flex-row flex-wrap">
                                   <v-card class="mr-3" width="300"
                                     v-for="(c, ci) in q.msg" :key="ci"
                                   >
@@ -569,12 +566,9 @@
                                         aspect-ratio="1"
                                         class="grey lighten-2 mx-auto"
                                       >
-                                        <v-layout
+                                        <div
+                                          class="d-flex flex-row flex-wrap fill-height align-center justify-center ma-0"
                                           slot="placeholder"
-                                          fill-height
-                                          align-center
-                                          justify-center
-                                          ma-0
                                         >
                                           <div class="">
                                             <v-icon class="mr-2">fas fa-plus-square</v-icon>
@@ -585,7 +579,7 @@
                                           <v-progress-circular v-show="c.imgUrl"
                                           indeterminate color="grey lighten-5">
                                           </v-progress-circular>
-                                        </v-layout>
+                                        </div>
                                       </v-img>
                                       <v-list class="pa-3">
                                         <v-text-field
@@ -687,13 +681,13 @@
                                       </v-btn>Add card
                                     </p>
                                   </v-card>
-                                </v-layout>
+                                </div>
                               </v-flex>
 
                               <!-- Quick replies -->
                               <v-flex class="" xs10 offset-xs1
                               v-if="q.type === 'quickReplies' || q.type === 'closeEnded'">
-                              <v-layout row wrap>
+                              <div class="d-flex flex-row flex-wrap">
                                   <v-flex xs8 class="">
                                   </v-flex>
                                   <v-flex xs4 class="text-xs-right" >
@@ -707,7 +701,7 @@
                                   <span>Customize Amara responses for each option</span>
                                     </v-tooltip>
                                   </v-flex>
-                                </v-layout>
+                                </div>
                                 <v-text-field
                                   v-if="q.msg"
                                   maxlength="300"
@@ -728,11 +722,12 @@
                                   </v-fade-transition>
                                 </v-text-field>
 
-                                <v-layout row wrap
-                                class="text-xs-left" v-if="q.msg" justify-center>
-                                  <v-flex xs10 text-xs-center class="mb-3"
+                                <div
+                                  class="text-xs-left d-flex flex-row flex-wrap justify-center" v-if="q.msg"
+                                >
+                                  <v-flex xs10 class="mb-3 text-center"
                                     v-for="(c, ci) in q.msg[0].quickReplies" :key="ci">
-                                    <v-layout>
+                                    <div class="d-flex">
                                       <v-flex xs3>
                                         <v-btn color="#4c3e9d" outline slot="activator">
                                         {{c.title}}</v-btn>
@@ -761,7 +756,7 @@
                                           label="Amara's response"
                                         ></v-text-field>
                                       </v-flex>
-                                    </v-layout>
+                                    </div>
                                   </v-flex>
 
                                   <!-- Add new quick reply -->
@@ -772,13 +767,13 @@
                                       <v-icon small>fas fa-plus</v-icon>
                                     </v-btn>Add reply
                                   </span>
-                                </v-layout>
+                                </div>
                               </v-flex>
 
-                            </v-layout>
+                            </div>
                           </v-card>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </div>
                   </v-flex>
 
@@ -793,12 +788,12 @@
                       <span class="mt-2"> Set response labels and postbacks for the question. </span>
                     </div>
                   </v-flex>-->
-                </v-layout>
+                </div>
 
               </v-card>
             </v-flex>
 
-          </v-layout>
+          </div>
         </v-card-text>
 
         <v-card-actions align-content-space->

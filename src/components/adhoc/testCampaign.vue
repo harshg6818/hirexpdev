@@ -13,13 +13,13 @@
             Test Campaign
           </h2>
 
-          <v-layout mx-0 mt-2 row wrap style="height:250px">
+          <div class="d-flex flex-row flex-wrap mx-0 mt-2" style="height:250px">
             <div class="pa-5" v-if="!testSentFlag" style="width:100%">
               <h3 class="mb-3">
                 Send a test to
               </h3>
               <span v-if="distributionsEnabled.email && distributionsEnabled.sms">
-                <v-layout>
+                <div class="d-flex">
                   <v-flex xs5>
                     <v-text-field
                     class="template-field "
@@ -49,9 +49,9 @@
                     @click.stop
                     ></v-text-field>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout>
+                <div class="d-flex">
                   <v-flex xs11>
                     <v-text-field
                     class="template-field "
@@ -65,9 +65,9 @@
                     @click.stop
                     ></v-text-field>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout>
+                <div class="d-flex">
                   <v-flex xs11>
                     <v-text-field
                     class="template-field "
@@ -81,11 +81,11 @@
                     @click.stop
                     ></v-text-field>
                   </v-flex>
-                </v-layout>
+                </div>
               </span>
 
               <span v-if="distributionsEnabled.email && !distributionsEnabled.sms">
-                  <v-layout>
+                  <div class="d-flex">
                   <v-flex xs5>
                     <v-text-field
                     class="template-field "
@@ -115,9 +115,9 @@
                     @click.stop
                     ></v-text-field>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout>
+                <div class="d-flex">
                   <v-flex xs11>
                     <v-text-field
                     class="template-field "
@@ -131,11 +131,11 @@
                     @click.stop
                     ></v-text-field>
                   </v-flex>
-                </v-layout>
+                </div>
               </span>
 
               <span v-if="!distributionsEnabled.email && distributionsEnabled.sms">
-                  <v-layout>
+                  <div class="d-flex">
                   <v-flex xs5>
                     <v-text-field
                     class="template-field "
@@ -165,9 +165,9 @@
                     @click.stop
                     ></v-text-field>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout>
+                <div class="d-flex">
                   <v-flex xs11>
                     <v-text-field
                     class="template-field "
@@ -181,7 +181,7 @@
                     @click.stop
                     ></v-text-field>
                   </v-flex>
-                </v-layout>
+                </div>
               </span>
             </div>
 
@@ -193,7 +193,7 @@
               <span v-if="!distributionsEnabled.email && distributionsEnabled.sms && testRecipient.phone"> on <strong> {{testRecipient.phone}} </strong> </span>
             </v-alert>
 
-          </v-layout>
+          </div>
         </v-card-text>
 
         <v-card-actions class="my-3 ml-2" align-content-space v-if="!testSentFlag">
@@ -213,7 +213,7 @@
         </v-card-actions>
 
         <v-card-actions class="my-3 mx-0 px-4" align-content-space v-else>
-           <v-flex text-xs-right xs6 v-if="testSentFlag">
+          <v-flex text-xs-right xs6 v-if="testSentFlag">
             <v-btn color="adhoc" class="white--text" @click.stop="resetTest()"
             style="left:-10px;position:relative;">
               Send another Test

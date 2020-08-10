@@ -1,8 +1,8 @@
 <template>
   <div class="reminderadHoc">
-    <v-layout class="pa-2">
+    <div class="pa-2 d-flex">
         <v-flex class="">
-            <v-layout class="">
+            <div class="d-flex">
                 <v-flex xs8>
                     <h2>Acknowledge the respondents</h2>
                     <small style="font-size:100%;">This feature enables you to send a thank-you note to all those who have completed the chat</small>
@@ -19,10 +19,10 @@
                             Add thank you note <v-icon style="font-size:12px;" small class="ml-3">fas fa-plus</v-icon>
                             </v-btn>
                 </v-flex>
-            </v-layout>
+            </div>
             <v-card v-if="thankyouData.length == 0" class="elevation-0 text-xs-center" min-height="300" style="border:1px solid #4c3e9d;">
                 <v-card-title adhoc-title class="justify-center pb-0">
-                    <v-layout row wrap>
+                    <div class="d-flex flex-row flex-wrap">
                         <v-flex xs12>
                             <img :src="getImgUrl('amara_avatar')" class="blank-avatar-small" alt="">
                             <!-- <h2 class="headline">Welcome {{user.company_name}}!</h2> -->
@@ -38,7 +38,7 @@
                             Add thank you note <v-icon style="font-size:12px;" small class="ml-3">fas fa-plus</v-icon>
                             </v-btn>
                         </v-flex>
-                    </v-layout>
+                    </div>
                 </v-card-title>
 
                 <v-card-actions class="justify-center">
@@ -65,8 +65,8 @@
                 </v-flex>
             </v-layout> -->
             <!-- <v-layout v-if="thankyouData.length > 0" v-for="(thankyou, r) in thankyouData" :key="r" class="campaign-row" -->
-            <v-layout v-for="(thankyou, r) in thankyouData" :key="r" class="campaign-row"
-              style="background:#fff; border-radius:6px; padding:10px 20px; margin:10px 0;" row wrap>
+            <div v-for="(thankyou, r) in thankyouData" :key="r" class="campaign-row d-flex flex-row flex-wrap"
+              style="background:#fff; border-radius:6px; padding:10px 20px; margin:10px 0;">
 
               <v-flex xs1>
                 <div :style="`background-color: ${getColor1(thankyou.channel)}; display:inline-block;`" style="width:55px; height:55px; border-radius:6px;">
@@ -122,18 +122,17 @@
                       </v-menu>
                       </v-flex>
                       <v-flex xs12>
-                          <v-layout class="my-2 px-2 " style="background:#7b9fe042; border-radius:3px; color:#9e9e9e; max-width: fit-content;">
-
+              <div class="d-flex my-2 px-2 " style="background:#7b9fe042; border-radius:3px; color:#9e9e9e; max-width: fit-content;">
               <span style="color:#EC6772; font-weight: bold;">Created by : &nbsp; </span> {{thankyou.created_by }} |&nbsp; <span style="color:#EC6772; font-weight: bold;">Modified by : &nbsp; </span> {{thankyou.last_update_by}}
-              </v-layout>
+              </div>
                       </v-flex>
-            </v-layout>
+            </div>
         </v-flex>
-    </v-layout>
+    </div>
     <v-dialog v-model="dialog" class="" persistent max-width="800px">
       <v-card class="mediumDialog">
         <v-card-title class="pb-0">
-          <v-layout>
+          <div class="d-flex">
             <v-flex v-if="this.mediumSelected !== '' && (!editView || editView && testEmailData || testSmsData)" style="margin-top:-10px;">
           <v-btn flat icon @click="back();" >
             <v-icon  style="font-size:12px;" small class="">fas fa-arrow-left</v-icon>
@@ -147,15 +146,14 @@
             <v-icon  style="font-size:12px;" small class="">fas fa-times</v-icon>
             </v-btn>
             </v-flex>
-          </v-layout>
+          </div>
         </v-card-title>
         <v-card-text class="pb-0">
           <div v-if="this.mediumSelected === '' && !testCampaigns">
-
-            <v-layout row wrap  style="border-bottom: 1px solid grey;">
+            <div class="d-flex flex-row flex-wrap" style="border-bottom: 1px solid grey;">
               <v-flex :class="this.emailUsed ? 'tooltip' : ''"  @click="selectedMedium('email')" xs6 :style="this.emailUsed ? '' : ' cursor: pointer'" style="border-right: 1px solid grey;">
 
-                <v-layout>
+                <div class="d-flex">
                     <v-flex sm1 class="mr-0 ml-3 mt-5 pt-2">
                         <v-radio :value='thankyou.chooseRadio' v-model="thankyou.chooseRadio"></v-radio>
                     </v-flex>
@@ -167,29 +165,29 @@
                     <h3>Email</h3>
                     <small>Send them a thank you note via email</small>
                   </v-flex>
-                </v-layout>
+                </div>
                 <span class="tooltiptext">Acknowledgement notification via email is already configured, You can edit the same if you want to make any changes</span>
               </v-flex>
 
               <v-flex :class="this.smsUsed ? 'tooltip' : ''" @click="selectedMedium('sms')" :style="this.smsUsed ? '' : ' cursor: pointer'" xs6>
-                <v-layout>
-                    <v-flex  sm1 class="mr-0 ml-3 mt-5 pt-2">
-                        <v-radio v-model="thankyou.chooseRadio1" value="top"></v-radio>
-                    </v-flex>
+                <div class="d-flex">
+                  <v-flex sm1 class="mr-0 ml-3 mt-5 pt-2">
+                    <v-radio v-model="thankyou.chooseRadio1" value="top"></v-radio>
+                  </v-flex>
                   <v-flex xs3 class="py-4 px-2">
                     <v-icon large :color="this.smsUsed ? 'grey' : '#4c3e9d'" class="audience-icon"> flaticon-003-chat-1 </v-icon>
                   </v-flex>
                   <v-flex class="py-4 mt-3 px-2">
                     <h3>SMS</h3>
-                     <small>Send a thank you note via SMS</small>
+                    <small>Send a thank you note via SMS</small>
                   </v-flex>
-                </v-layout>
+                </div>
                 <span class="tooltiptext">Acknowledgement notification via SMS is already configured, You can edit the same if you want to make any changes</span>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap >
+            </div>
+            <div class="d-flex flex-row flex-wrap">
               <v-flex xs6 style="border-right: 1px solid grey">
-                <v-layout>
+                <div class="d-flex flex-row flex-wrap">
                     <v-flex sm1 class="mr-0 ml-3 mt-5 pt-2">
                         <v-radio disabled v-model="thankyou.chooseRadio" value="top"></v-radio>
                     </v-flex>
@@ -201,10 +199,10 @@
                     <small>Send a thank you note via WhatsApp</small>
                     <h5 style='color:#4c3e9d'>Cooming soon</h5>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
               <v-flex xs6>
-                <v-layout>
+                <div class="d-flex flex-row flex-wrap">
                     <v-flex sm1 class="mr-0 ml-3 mt-5 pt-2">
                         <v-radio disabled v-model="thankyou.chooseRadio" value="top"></v-radio>
                     </v-flex>
@@ -216,16 +214,15 @@
                     <small>Send a thank you note via Slack</small>
                     <h5 style='color:#4c3e9d'>Cooming soon</h5>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
-            </v-layout>
+            </div>
           </div>
           <v-container v-if="this.mediumSelected !== '' && !this.testEmailData && !this.testSmsData" class="pt-0 reminderEditor" grid-list-md>
-            <v-layout wrap>
+            <div class="d-flex flex-row flex-wrap">
               <v-flex xs12 sm12 v-if="mediumSelected === 'email'">
                 <label>Subject</label>
                 <v-text-field
-
                   placeholder="Enter mail subject"
                   solo
                   v-model="subjectEmail"
@@ -234,8 +231,8 @@
                   name="subject"
                 ></v-text-field>
               </v-flex>
-               <v-flex xs12>
-                 <label>Body</label>
+              <v-flex xs12>
+                <label>Body</label>
                 <VuePellEditor
                 v-if="thankyou.channel === 'email'"
                 class="w-100"
@@ -254,10 +251,10 @@
                 :error-messages="errors.collect('body')"
                 ></v-textarea>
               </v-flex>
-            </v-layout>
+            </div>
           </v-container>
           <v-container v-if="this.testEmailData || this.testSmsData" class="pt-0 reminderEditor" grid-list-md>
-            <v-layout wrap>
+            <div class="d-flex flex-row flex-wrap">
 
               <v-flex sm6>
                   <v-text-field
@@ -299,7 +296,7 @@
                     name="mobile"
                 ></v-text-field>
               </v-flex>
-            </v-layout>
+            </div>
           </v-container>
         </v-card-text>
         <v-card-actions class="px-4">
@@ -339,54 +336,54 @@
       <v-card v-if="mediumSelected === 'email'"  class="previewDialogemail" style="min-height:375px; background-color: transparent; box-shadow:none;">
         <v-card-text style="max-height:500px; min-height:350px;">
             <div style="max-height:450px; overflow-y:auto;overflow-x:hidden;">
-                <v-layout>
+                <div class="d-flex">
                     <v-flex xs12>
                         <v-btn icon flat style="float:right;" @click="closeEmailPreview()">
                             <v-icon style="font-size:12px;">fas fa-times
                             </v-icon>
                         </v-btn>
                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;">
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;">
                     <v-flex xs2>
                         <p>From : </p>
                     </v-flex>
-                     <v-flex xs9>
-                        <p>test@hirexp.com</p>
-                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;">
+                    <v-flex xs9>
+                      <p>test@hirexp.com</p>
+                    </v-flex>
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;">
                     <v-flex xs2>
                         <p>To : </p>
                     </v-flex>
                     <v-flex xs9>
-                        <p>amara@hirexp.com</p>
-                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;">
+                      <p>amara@hirexp.com</p>
+                    </v-flex>
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;">
                     <v-flex xs2>
                         <p>Date : </p>
                     </v-flex>
                     <v-flex xs9>
-                        <p>{{currentTime}}</p>
-                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;">
+                      <p>{{currentTime}}</p>
+                    </v-flex>
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;">
                     <v-flex xs2>
                         <p>Subject :</p>
                     </v-flex>
                     <v-flex xs9>
                         <p>{{thankyou.subject}}</p>
-                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;" wrap row>
+                    </v-flex>
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;" wrap row>
                     <v-flex xs12>
                         <p>Body :</p>
                     </v-flex>
                     <v-flex xs12 style="text-align:center">
-                        <p style="overflow-wrap: break-word; text-align:left" v-html="this.bodyEmail"></p><br>
-                     </v-flex>
-                </v-layout>
+                      <p style="overflow-wrap: break-word; text-align:left" v-html="this.bodyEmail"></p><br>
+                    </v-flex>
+                </div>
             </div>
         </v-card-text>
         <v-card-actions class="px-5 pb-4">

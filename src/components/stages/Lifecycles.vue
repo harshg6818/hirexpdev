@@ -1,9 +1,8 @@
 <template>
   <div class="">
-    <v-layout column class="bg-gradient py-0 pl-1">
-      <v-layout row wrap align-center style="border-bottom: 1px solid rgb(243, 241, 241);z-index:3;max-height:70px">
-
-        <v-flex sm6 class="white--text" xs4 pl-4 style="">
+    <div class="bg-gradient py-0 pl-1 d-flex flex-column flex-wrap">
+      <div class="d-flex flex-row flex-wrap align-center w-100" style="border-bottom: 1px solid rgb(243, 241, 241);z-index:3;max-height:70px">
+        <v-flex sm6 class="white--text pl-4" xs4>
           <v-text-field
             append-icon="fas fa-search"
             v-model="table.searchString"
@@ -14,8 +13,8 @@
           ></v-text-field>
         </v-flex>
 
-        <v-flex xs6 style="position:relative;" class="black--text" text-xs-right>
-          <v-btn v-if="!config.initialLoading"  color="primary"
+        <v-flex xs6 style="position:relative;" class="black--text text-right">
+          <v-btn v-if="!config.initialLoading" color="primary"
                 :to="`lifecycle/new`"
                 class="elevation-0"
                 >
@@ -25,22 +24,22 @@
                 <v-icon small class="ml-2 mr-2">fas fa-plus</v-icon> Add touchpoint
               </v-btn>
         </v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap style="z-index:2"
-      v-if="!config.initialLoading && stages.length === 0 && !table.searchString" mt-5 pt-2
-      align-content-center justify-center>
-        <v-flex sm12 px-2>
-          <v-card style="border:none;" class="elevation-0 text-xs-center" min-height="60vh">
+      <div class="d-flex flex-row flex-wrap align-center justify-center fill-height mt-5 pt-2" style="z-index:2"
+        v-if="!config.initialLoading && stages.length === 0 && !table.searchString"
+      >
+        <v-flex sm12 class="px-2">
+          <v-card style="border:none;" class="elevation-0 text-center" min-height="60vh">
             <v-card-title primary-title class="justify-center">
-              <v-layout row wrap>
+              <div class="d-flex flex-row flex-wrap">
                 <v-flex xs12>
                   <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
                   <p>
                     No Critical touchpoints created
                   </p>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-card-title>
             <v-card-actions class="justify-center mt-4">
 
@@ -55,7 +54,7 @@
             </v-card-text>
           </v-card>
         </v-flex>
-      </v-layout>
+      </div>
 
       <!-- Before Initial Loading -->
       <div class="" v-show="config.initialLoading" style="z-index:2">
@@ -145,7 +144,7 @@
                     {{triggerTimeAuto(item.stage_details)}}
                   </v-flex>
                   <v-flex class="text-sm-right" @click="editStage(item.stage_details)">
-                    <v-btn color="primary" class="ma-0" flat icon>
+                    <v-btn color="primary" class="ma-0" text icon>
                       <v-icon color="primary">fas fa-edit</v-icon>
                     </v-btn>
                   </v-flex>
@@ -222,14 +221,14 @@
         v-show="!config.initialLoading && stages.length > 0" style="z-index:2"
         :headers="headers"
         :items="stages"
-        :total-items="totalItems"
+        :server-items-length="totalItems"
         :loading="table.loading"
-        :pagination.sync="pagination"
+        :options.sync="pagination"
         class=""
       >
         <template slot="headers" slot-scope="props">
           <tr style="border-color:#f3f1f1">
-            <th class="px-2 text-xs-left sub-heading"
+            <th class="px-2 text-left sub-heading"
               :style="`border-right:1px solid #f3f1f1;word-break: break-all; color:rgba(0,0,0,0.54);`"
               v-for="header in props.headers"
               :key="header.text"
@@ -239,36 +238,36 @@
           </tr>
         </template>
 
-        <template slot="items" slot-scope="props">
+        <template v-slot:body="{items}">
           <!--<v-card>-->
-            <tr class="card mb-2" style="border-top:1px solid #f3f1f1;">
+            <tr class="card mb-2" style="border-top:1px solid #f3f1f1;" v-for="(item, index) in items" :key="index">
               <td class="px-2" style="`border-right:1px solid #f3f1f1;width:5%;font-size:13px !important;`">
                 <p class="mb-0">
-                    {{ props.item.index + 1 }}
+                    {{ item.index + 1 }}
                 </p>
               </td>
 
               <td class="px-2" style="`border-right:1px solid #f3f1f1;width:30%;font-size:13px !important;`">
                 <p class="mb-0">
-                    {{ props.item.stage_details.title }}
+                    {{ item.stage_details.title }}
                 </p>
               </td>
 
               <td class="px-2" :style="`border-right:1px solid #f3f1f1;width:20%;font-size:13px !important;`">
                 <p class="mb-0">
-                  {{ triggerTimeAuto(props.item.stage_details) }}
+                  {{ triggerTimeAuto(item.stage_details) }}
                 </p>
               </td>
 
               <td class="px-2" style="`border-right:1px solid #f3f1f1;width:15%;font-size:13px !important;`">
                 <v-chip class="mb-0 text-capitalize">
-                    {{ props.item.stage_details.status }}
+                    {{ item.stage_details.status }}
                 </v-chip>
               </td>
 
               <td class="px-2" style="`border-right:1px solid #f3f1f1;width:15%;font-size:13px !important;`">
-                <p class="mb-0" v-if="props.item.stage_details.chatFromUser">
-                    {{ getUserName(props.item.stage_details.chatFromUser) }}
+                <p class="mb-0" v-if="item.stage_details.chatFromUser">
+                    {{ getUserName(item.stage_details.chatFromUser) }}
                 </p>
                 <p class="mb-0" v-else>
                   -
@@ -276,14 +275,14 @@
               </td>
 
               <td class="px-2" :style="`border-right:1px solid #f3f1f1;width:15%;font-size:13px !important;`">
-                <v-btn color="primary" class="ma-0" flat icon @click="editStage(props.item.stage_details)">
+                <v-btn color="primary" class="ma-0" text icon @click="editStage(item.stage_details)">
                   <v-icon color="primary">fas fa-edit</v-icon>
                 </v-btn>
               </td>
             </tr>
         </template>
       </v-data-table>
-    </v-layout>
+    </div>
     <DeleteStage ref="deleteStage" />
     <EmployeesList ref="EmployeesList" />
   </div>

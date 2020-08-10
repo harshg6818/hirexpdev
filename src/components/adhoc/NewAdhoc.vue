@@ -1,16 +1,16 @@
 <template>
   <div class="adhoc-app">
-    <v-layout column class="">
+    <div class="flex-column d-flex">
 
       <!-- Stepper actions -->
-      <v-layout row wrap class="b-bottom" v-show="unlockStepper">
-        <v-flex xs4 d-inline-flex>
+      <div class="b-bottom d-flex flex-row flex-wrap" v-show="unlockStepper">
+        <v-flex xs4 class="d-inline-flex">
           <v-tooltip bottom style="min-width:70px">
             <v-btn color="grey" class="elevation-0 my-0 text-xs-right back-button b-right"
               @click="previous()"
               style="position:relative;top:5px;margin-left:22px;"
               slot="activator"
-              flat fab
+              text fab
               v-show="config.activeTab !== 'summary'"
               :loading="config.savingStage"
               :disabled="config.savingStage"
@@ -39,7 +39,7 @@
               @click="discard()"
               style="top:2px"
               slot="activator"
-              flat fab
+              text fab
             >
               <v-icon> fas fa-trash-alt </v-icon>
             </v-btn>
@@ -49,7 +49,7 @@
           <v-btn color="orange" class="elevation-0 white--text text-none text-xs-right"
             style="position:relative;top:5px"
             @click="saveAsDraft(true)"
-            flat outline
+            text outlinedd
           >
             Save as draft
           </v-btn>
@@ -80,10 +80,10 @@
             Launch campaign
           </v-btn>
         </v-flex>
-      </v-layout>
+      </div>
 
       <!-- Stepper Tabs -->
-      <v-layout row wrap class="b-bottom" v-show="unlockStepper">
+      <div class="d-flex flex-row flex-wrap b-bottom" v-show="unlockStepper">
         <v-flex xs8>
           <v-tabs
             style=""
@@ -91,8 +91,9 @@
             centered
             class="text-xs-center px-3 stepper-step-title create-campaign"
             :class="config.activeTab === 'preview' ? 'last-step' : '' "
-            color="transparent"
+            color="primary"
             slider-color="#4c3e9d"
+            height="fit-content"
           >
             <v-tab
               class="stepper-step"
@@ -106,17 +107,16 @@
             </v-tab>
           </v-tabs>
         </v-flex>
-
-      </v-layout>
+      </div>
 
       <!-- Summary view outside Stepper -->
-      <v-layout row wrap v-show="!unlockStepper">
+      <div class="w-100 d-flex flex-row flex-wrap" v-if="!unlockStepper">
         <!-- <v-layout row wrap class="firstStep" style="position:absolute;top:5vh;left:4vw;width:100%; overflow-y:auto; "> -->
-        <v-layout row wrap class="firstStep">
+        <div class="firstStep d-flex flex-row flex-wrap w-100">
           <v-flex xs3></v-flex>
           <v-flex xs6 class="text-xs-left d-inline-flex">
             <div>
-              <h2> Share your campaign idea </h2>
+              <h2> Share your campaign idea {{unlockStepper}}</h2>
               <!--<h4 class="grey--text"> Let us know little bit more about your campaign. This information will help us personalise your campaign.</h4>-->
               <v-text-field
                 class="campaign-title mt-3"
@@ -125,7 +125,7 @@
                 v-model="newCampaign.title"
                 name="campaign title"
                 maxlength="40"
-                outline
+                outlined
                 label="Campaign title *"
                 placeholder="max 40 characters"
               ></v-text-field>
@@ -134,19 +134,19 @@
                 style="width:100%"
                 :items="campaignCategories"
                 label="Category *"
-                flat outline
+                text outlined
                 v-model="newCampaign.category"
                 placeholder="Select from dropdown"
               >
-               <template slot="item" slot-scope="data">
-                <v-layout row wrap v-if="data.item.disabled">
+              <template slot="item" slot-scope="data">
+                <div class="d-flex flex-row flex-wrap" v-if="data.item.disabled">
                   <v-flex xs6>
                     {{ data.item.text }}
                   </v-flex>
-                  <v-flex xs6 text-xs-right adhoc--text>
+                  <v-flex xs6 class="text-xs-right adhoc--text">
                     Not Active
                   </v-flex>
-                </v-layout>
+                </div>
                 <span v-if="!data.item.disabled && !data.item.beta"> {{ data.item.text }} </span>
               </template>
               </v-select>
@@ -157,7 +157,7 @@
                 v-model="newCampaign.categoryValue"
                 name="others category"
                 single-line
-                flat outline
+                text outlined
                 label="Specify Category *"
                 placeholder="Specify category"
               ></v-text-field>
@@ -165,11 +165,11 @@
               <v-flex xs12 class="mt-2 pt-0 adhoc-campaign-objectives">
                 <h2 class=""> Objectives </h2>
 
-                 <v-textarea
+                <v-textarea
                   label="Campaign Objectives"
                   placeholder="Objectives"
                   v-model="newCampaign.objectives"
-                  outline flat
+                  outlined text
                   single-line
                   @click.stop
                 ></v-textarea>
@@ -186,16 +186,16 @@
             </div>
           </v-flex>
           <v-flex xs3></v-flex>
-        </v-layout>
-      </v-layout>
+        </div>
+      </div>
 
       <!-- Stepper Tabs content -->
-      <v-layout row wrap v-show="unlockStepper">
+      <div class="d-flex flex-row flex-wrap" v-if="unlockStepper">
         <v-flex>
-          <v-tabs-items v-model="config.activeTab">
+          <v-tabs-items v-model="config.activeTab" height="fit-content">
             <!-- Summary Tab content -->
             <v-tab-item class="stepper-step-content" value="summary" v-if="config.activeTab === 'summary'">
-              <v-layout row wrap class="mb-3 step-content">
+              <div class="mb-3 step-content d-flex flex-row flex-wrap">
                 <v-flex xs3></v-flex>
                 <v-flex xs6 class="text-xs-left d-inline-flex">
                   <div>
@@ -206,7 +206,7 @@
                       v-model="newCampaign.title"
                       name="campaign title"
                       maxlength="40"
-                      outline
+                      outlined
                       label="Campaign Title *"
                       placeholder="max 40 characters"
                     ></v-text-field>
@@ -215,7 +215,7 @@
                       style="width:100%"
                       :items="campaignCategories"
                       label="Category *"
-                      flat outline
+                      text outlined
                       v-model="newCampaign.category"
                       placeholder="Select from dropdown"
                     >
@@ -227,7 +227,7 @@
                       v-model="newCampaign.categoryValue"
                       name="others category"
                       single-line
-                      flat outline
+                      text outlined
                       label="Specify Category *"
                       placeholder="Specify category"
                     ></v-text-field>
@@ -243,27 +243,26 @@
                     label="Campaign Objectives"
                     placeholder="Objectives"
                     v-model="newCampaign.objectives"
-                    outline flat
+                    outlined text
                     single-line
                     @click.stop
                   ></v-textarea>
                 </V-flex>
                 <v-flex xs3></v-flex>
-              </v-layout>
-
+              </div>
             </v-tab-item>
 
             <!-- Survey Tab content -->
             <v-tab-item class="stepper-step-content" value="survey" v-if="config.activeTab === 'survey'">
-              <v-layout row wrap class="mb-3 step-content overflow-y-hidden">
+              <div class="mb-3 step-content overflow-y-hidden d-flex flex-row flex-wrap">
                 <v-flex xs12 class="text-xs-left d-inline-flex maximum-step-content">
-                  <v-layout row-wrap class="maximum-step-content">
+                  <div class="maximum-step-content d-flex flex-row flex-wrap">
                     <v-flex xs3 class="px-0 ml-3 maximum-step-content">
                       <h3 class="subheading pt-2 mb-2 pl-1"> Design the chat flow </h3>
                       <div style="border:1px solid lightgrey;overflow-y:auto;height:90%">
                         <!--<h3 class="subheading mt-3 pt-3 pl-1">Question Bank</h3>
                         <h2 class="grey--text subheading b-bottom pl-1">Choose a source for your questions</h2>-->
-                        <v-layout class="row wrap mt-0">
+                        <div class="flex-row flex-wrap mt-0">
                           <div class="flex px-1 py-2 sm12 mt-2 b-bottom d-inline-flex w-100 cursor-pointer question-type"
                           @click="updateQuestionSource('campaign')">
                             <v-icon color="adhoc" small class="mt-0 mr-3" style="max-width:40px">fa fa-copy</v-icon>
@@ -271,12 +270,12 @@
                               Select questions from existing campaigns
                             </span>
                           </div>
-                        </v-layout>
+                        </div>
 
                         <h3 class="subheading mt-3 pt-3 pl-1"> <strong> Draft a new question </strong></h3>
                         <h2 class="grey--text subheading b-bottom pl-1">Select a category to add a new question</h2>
                         <!--<h3 class="subheading pt-2 mb-2 pl-1">Bot Responses/Questions</h3>-->
-                        <v-layout  class="row wrap mt-0">
+                        <div class="d-flex flex-row flex-wrap mt-0">
                           <div class="flex px-1 py-2 sm12 mt-2 b-bottom cursor-pointer question-type"
                           v-for="(b, bi) in welcome" :key="bi" @click="updateQuestion(b)">
                             <div class="d-inline-flex w-100">
@@ -292,9 +291,9 @@
                               </span>
                             </div>
                           </div>
-                        </v-layout>
+                        </div>
 
-                        <v-layout  class="row wrap mt-0">
+                        <div class="flex-row flex-wrap d-flex mt-0">
                           <div class="flex px-1 py-2 sm12 mt-2 b-bottom cursor-pointer question-type"
                           v-for="(b, bi) in multipleChoice" :key="bi" @click="updateQuestion(b)">
                             <div class="d-inline-flex w-100">
@@ -310,10 +309,10 @@
                               </span>
                             </div>
                           </div>
-                        </v-layout>
+                        </div>
 
                         <!--<h3 class="subheading pt-2 mb-2 pl-1">Emoji scale</h3>-->
-                        <v-layout  class="row wrap mt-0">
+                        <div class="flex-row flex-wrap d-flex mt-0">
                           <div class="flex px-1 py-2 sm12 mt-2 b-bottom cursor-pointer question-type"
                           @click="updateQuestion(config.emojiScale)">
                             <div class="d-inline-flex w-100">
@@ -329,10 +328,10 @@
                               </span>
                             </div>
                           </div>
-                        </v-layout>
+                        </div>
 
                         <!--<h3 class="subheading pt-2 mb-2 pl-1">Responses/Questions with Driver</h3>-->
-                        <v-layout class="row wrap mt-0">
+                        <div class="d-flex flex-row flex-wrap mt-0">
                           <div class="flex px-1 py-2 sm12 mt-2 b-bottom cursor-pointer question-type"
                           v-for="(b, bi) in questionTypesD" :key="bi" @click="updateQuestion(b)">
                             <div class="d-inline-flex w-100">
@@ -348,9 +347,9 @@
                               </span>
                             </div>
                           </div>
-                        </v-layout>
+                        </div>
 
-                        <v-layout  class="row wrap mt-0">
+                        <div class="d-flex flex-row flex-wrap mt-0">
                           <div class="flex px-1 py-2 sm12 mt-2 b-bottom cursor-pointer question-type"
                           v-for="(b, bi) in questionTypes" :key="bi" @click="updateQuestion(b)">
                             <div class="d-inline-flex w-100">
@@ -366,9 +365,9 @@
                               </span>
                             </div>
                           </div>
-                        </v-layout>
+                        </div>
 
-                        <v-layout  class="row wrap mt-0">
+                        <div class="flex-row flex-wrap d-flex mt-0">
                           <div class="flex px-1 py-2 sm12 mt-2 b-bottom cursor-pointer question-type"
                           v-for="(b, bi) in statements" :key="bi" @click="updateQuestion(b)">
                             <div class="d-inline-flex w-100">
@@ -384,7 +383,7 @@
                               </span>
                             </div>
                           </div>
-                        </v-layout>
+                        </div>
 
                         <!--<h3 class="subheading mt-3 pt-3 pl-1"> <strong> Draft Amara's statement </strong></h3>-->
                         <!--<h2 class="grey--text subheading b-bottom pl-1">Choose a question type to add new question</h2>-->
@@ -417,27 +416,28 @@
                             <span>Now drop the action here.</span>
                           </v-card>
                           <div class="draggable-item" style="position:unset;">
-                            <v-flex class="pr-2 px-5 mb-4 action-card"
-                            text-xs-center sm12  style="position:relative;">
+                            <v-flex class="pr-2 px-5 mb-4 action-card text-xs-center"
+                              sm12 style="position:relative;"
+                            >
                               <v-card class="mb-1 elevation-0">
-                                <v-layout row wrap style="min-height:48px">
+                                <div class="d-flex flex-row flex-wrap" style="min-height:48px">
                                   <v-flex xs2 class="mt-2 text-xs-left ml-5">
                                     <span>
                                       <!-- <v-layout column class="actions" :style="getDragPosition(q.type)"> -->
-                                      <v-layout column class="actions">
+                                      <div class="d-flex flex-column actions">
                                         <v-tooltip bottom>
                                           <v-icon color="grey" class="mb-3 handle" slot="activator">
                                             fas fa-arrows-alt
                                           </v-icon>
                                           Move
                                         </v-tooltip>
-                                      </v-layout>
+                                      </div>
                                     </span>
                                     <span>Q{{qi+1}}</span>
                                   </v-flex>
                                   <v-spacer></v-spacer>
                                   <v-flex xs2>
-                                    <v-layout>
+                                    <div class="d-flex">
                                       <v-flex xs4>
                                         <v-tooltip bottom>
                                           <v-icon color="grey" class="mt-3" @click="editAction(q, qi, true)" slot="activator">
@@ -462,14 +462,14 @@
                                           Copy
                                         </v-tooltip>
                                       </v-flex>
-                                    </v-layout>
+                                    </div>
                                   </v-flex>
                                   <v-flex xs12>
                                     <v-divider></v-divider>
                                   </v-flex>
-                                </v-layout>
+                                </div>
 
-                                <v-layout row wrap align-center class="pt-4 pa-3">
+                                <div class="pt-4 pa-3 d-flex flex-row flex-wrap align-center">
 
                                   <!-- Scale -->
                                   <v-flex class="" xs10 offset-xs1 v-if="q.type === 'scale'">
@@ -486,7 +486,7 @@
                                       v-validate="'required'"
                                       single-line
                                       disabled
-                                      outline
+                                      outlined
                                     >
                                     <v-fade-transition slot="prepend">
                                         <img width="30" height="30"
@@ -494,9 +494,9 @@
                                       </v-fade-transition>
                                     </v-text-field>
 
-                                    <v-layout row wrap
-                                    v-if="q.msg && q.msg[0].scaleType === 'emoji'" justify-center>
-                                      <v-flex xs2 text-xs-center
+                                    <div class="d-flex flex-row flex-wrap justify-center"
+                                    v-if="q.msg && q.msg[0].scaleType === 'emoji'">
+                                      <v-flex xs2 class="text-xs-center"
                                       v-for="(r, ri) in q.msg[0].scale" :key="ri">
                                         <v-menu
                                           absolute
@@ -506,7 +506,7 @@
                                         >
                                           <v-btn class="emoji-btn"
                                             slot="activator"
-                                            fab flat round disabled
+                                            fab text round disabled
                                           >
                                             <img v-if="r.img" :src="getImgUrl(r.img)"
                                             class="emoji-container" />
@@ -515,9 +515,9 @@
                                             <v-text-field
                                               class="grey--text text--lighten-2"
                                               maxlength="50"
-                                              outline
+                                              outlined
                                               v-model="r.title"
-                                              flat
+                                              text
                                               @click.stop
                                               name="quickReply"
                                               :label="`Rating ${ri+1}`"
@@ -527,9 +527,9 @@
                                             <v-text-field
                                               class="grey--text text--lighten-2"
                                               maxlength="300"
-                                              outline
+                                              outlined
                                               v-model="r.postback"
-                                              flat
+                                              text
                                               @click.stop
                                               name="postback"
                                               label="Amara's response"
@@ -545,11 +545,11 @@
                                           {{r.title}}
                                         </p>
                                       </v-flex>
-                                    </v-layout>
+                                    </div>
 
-                                    <v-layout row wrap
-                                    v-if="q.msg && q.msg[0].scaleType === 'number'" justify-center>
-                                      <v-flex xs2 text-xs-center
+                                    <div class="d-flex flex-row flex-wrap justify-center"
+                                    v-if="q.msg && q.msg[0].scaleType === 'number'">
+                                      <v-flex xs2 class="text-xs-center"
                                       v-for="(r, ri) in q.msg[0].scale" :key="ri">
                                         <v-menu
                                           absolute
@@ -561,7 +561,7 @@
                                             :color="r.color"
                                             style="min-width:50px; min-height:50px;"
                                             fab
-                                            outline
+                                            outlined
                                             round
                                             disabled
                                             slot="activator"
@@ -574,9 +574,9 @@
                                             <v-text-field
                                               class="grey--text text--lighten-2"
                                               maxlength="50"
-                                              outline
+                                              outlined
                                               v-model="r.title"
-                                              flat
+                                              text
                                               disabled
                                               @click.stop
                                               name="quickReply"
@@ -586,9 +586,9 @@
                                             <v-text-field
                                               class="grey--text text--lighten-2"
                                               maxlength="300"
-                                              outline
+                                              outlined
                                               v-model="r.postback"
-                                              flat
+                                              text
                                               disabled
                                               @click.stop
                                               name="postback"
@@ -604,7 +604,7 @@
                                           {{r.title}}
                                         </p>
                                       </v-flex>
-                                    </v-layout>
+                                    </div>
                                   </v-flex>
 
                                   <!-- Input from user -->
@@ -621,7 +621,7 @@
                                       data-vv-as="interaction text"
                                       v-validate="'required'"
                                       single-line
-                                      outline
+                                      outlined
                                     >
                                       <v-fade-transition slot="prepend">
                                         <img width="30" height="30"
@@ -631,7 +631,7 @@
                                   </v-flex>
 
                                   <!-- Text -->
-                                  <v-flex class="" xs10 offset-xs1 v-if="q.type === 'text'">
+                                  <v-flex class="offset-1" xs10 offset-xs1 v-if="q.type === 'text'">
                                     <v-text-field
                                       maxlength="300"
                                       v-model="q.msg['0'].text"
@@ -644,7 +644,7 @@
                                       data-vv-as="interaction text"
                                       v-validate="'required'"
                                       single-line
-                                      outline
+                                      outlined
                                     >
                                       <v-fade-transition slot="prepend">
                                         <img width="30" height="30"
@@ -673,7 +673,8 @@
                                         aspect-ratio="1"
                                         class="grey lighten-2 mx-auto"
                                       >
-                                        <v-layout
+                                        <div
+                                          class="d-flex"
                                           slot="placeholder"
                                           fill-height
                                           align-center
@@ -689,15 +690,15 @@
                                           <v-progress-circular v-show="q.msg && q.msg[0].imgUrl"
                                           indeterminate color="grey lighten-5">
                                           </v-progress-circular>
-                                        </v-layout>
+                                        </div>
                                       </v-img>
                                       <v-list class="pa-3">
                                         <v-text-field
                                           maxlength="1000"
-                                          outline
+                                          outlined
                                           v-if="q.msg"
                                           v-model="q.msg[0].imgUrl"
-                                          flat
+                                          text
                                           disabled
                                           @click.stop
                                           name="url"
@@ -731,7 +732,8 @@
                                           aspect-ratio="1"
                                           class="grey lighten-2 mx-auto"
                                         >
-                                          <v-layout
+                                          <div
+                                            class="d-flex"
                                             slot="placeholder"
                                             fill-height
                                             align-center
@@ -747,14 +749,14 @@
                                             <v-progress-circular v-show="c.imgUrl"
                                             indeterminate color="grey lighten-5">
                                             </v-progress-circular>
-                                          </v-layout>
+                                          </div>
                                         </v-img>
                                         <v-list class="pa-3">
                                           <v-text-field
                                             maxlength="1000"
-                                            outline
+                                            outlined
                                             v-model="c.imgUrl"
-                                            flat
+                                            text
                                             disabled
                                             @click.stop
                                             name="url"
@@ -770,7 +772,7 @@
                                           maxlength="300"
                                           solo
                                           v-model="c.text"
-                                          flat
+                                          text
                                           disabled
                                           @click.stop
                                           name="cardTitle"
@@ -780,7 +782,7 @@
                                       <div>
                                         <v-textarea
                                           maxlength="500"
-                                          flat
+                                          text
                                           rows="2"
                                           solo
                                           disabled
@@ -799,15 +801,15 @@
                                             class="mb-1"
                                             style="width: 20em;"
                                           >
-                                          <v-btn color="#4c3e9d" block outline slot="activator">
+                                          <v-btn color="#4c3e9d" block outlined slot="activator">
                                             {{r.title}}</v-btn>
                                             <v-list class="pa-3">
                                               <v-text-field
                                                 class="grey--text text--lighten-2"
                                                 maxlength="50"
-                                                outline
+                                                outlined
                                                 v-model="r.title"
-                                                flat
+                                                text
                                                 disabled
                                                 @click.stop
                                                 name="quickReply"
@@ -817,9 +819,9 @@
                                               <v-text-field
                                                 class="grey--text text--lighten-2"
                                                 maxlength="300"
-                                                outline
+                                                outlined
                                                 v-model="r.postback"
-                                                flat
+                                                text
                                                 disabled
                                                 @click.stop
                                                 name="postback"
@@ -827,7 +829,7 @@
                                               ></v-text-field>
 
                                               <v-flex xs12 class="text-xs-right">
-                                                <v-btn color="error" small flat disabled
+                                                <v-btn color="error" small text disabled
                                                 @click="deleteReply(qi, ci, ri)">Delete</v-btn>
                                                 <v-btn color="#4c3e9d"  class="white--text" small disabled>Done</v-btn>
                                               </v-flex>
@@ -838,7 +840,7 @@
                                           <p class="cursor-pointer mb-0 text-sm-center"
                                           v-if="c.quickReplies.length < 5"
                                           style="width: 20em;" @click="addReplies(qi, ci, 'Button')">
-                                            <v-btn color="accent" class="mr-2" small outline icon disabled>
+                                            <v-btn color="accent" class="mr-2" small outlined icon disabled>
                                               <v-icon small>fas fa-plus</v-icon>
                                             </v-btn>Add reply
                                           </p>
@@ -849,7 +851,7 @@
 
                                   <!-- Carousel -->
                                   <v-flex class="" v-if="q.type === 'carousel'">
-                                    <v-layout row wrap>
+                                    <div class="d-flex flex-row flex-wrap">
                                       <v-card class="mr-3" width="300"
                                         v-for="(c, ci) in q.msg" :key="ci"
                                       >
@@ -870,7 +872,8 @@
                                             aspect-ratio="1"
                                             class="grey lighten-2 mx-auto"
                                           >
-                                            <v-layout
+                                            <div
+                                              class="d-flex"
                                               slot="placeholder"
                                               fill-height
                                               align-center
@@ -886,14 +889,14 @@
                                               <v-progress-circular v-show="c.imgUrl"
                                               indeterminate color="grey lighten-5">
                                               </v-progress-circular>
-                                            </v-layout>
+                                            </div>
                                           </v-img>
                                           <v-list class="pa-3">
                                             <v-text-field
                                               maxlength="1000"
-                                              outline
+                                              outlined
                                               v-model="c.imgUrl"
-                                              flat
+                                              text
                                               disabled
                                               @click.stop
                                               name="url"
@@ -909,7 +912,7 @@
                                             maxlength="300"
                                             solo
                                             v-model="c.text"
-                                            flat
+                                            text
                                             disabled
                                             @click.stop
                                             name="cardTitle"
@@ -919,7 +922,7 @@
                                         <div>
                                           <v-textarea
                                             maxlength="500"
-                                            flat
+                                            text
                                             disabled
                                             rows="2"
                                             solo
@@ -937,15 +940,15 @@
                                               class="mb-1"
                                               style="width: 20em;"
                                             >
-                                            <v-btn color="#4c3e9d" block outline slot="activator">
+                                            <v-btn color="#4c3e9d" block outlined slot="activator">
                                               {{r.title}}</v-btn>
                                               <v-list class="pa-3">
                                                 <v-text-field
                                                   class="grey--text text--lighten-2"
                                                   maxlength="50"
-                                                  outline
+                                                  outlined
                                                   v-model="r.title"
-                                                  flat
+                                                  text
                                                   disabled
                                                   @click.stop
                                                   name="quickReply"
@@ -955,9 +958,9 @@
                                                 <v-text-field
                                                   class="grey--text text--lighten-2"
                                                   maxlength="300"
-                                                  outline
+                                                  outlined
                                                   v-model="r.postback"
-                                                  flat
+                                                  text
                                                   disabled
                                                   @click.stop
                                                   name="postback"
@@ -965,7 +968,7 @@
                                                 ></v-text-field>
 
                                                 <v-flex xs12 class="text-xs-right">
-                                                  <v-btn color="error" small flat
+                                                  <v-btn color="error" small text
                                                   @click="deleteReply(qi, ci, ri)" disabled>Delete</v-btn>
                                                   <v-btn color="#4c3e9d"  class="white--text" small disabled>Done</v-btn>
                                                 </v-flex>
@@ -976,7 +979,7 @@
                                             <p class="cursor-pointer mb-0 text-sm-center"
                                             v-if="c.quickReplies.length < 5"
                                             style="width: 20em;" @click="addReplies(qi, ci, 'Button')">
-                                              <v-btn color="accent" class="mr-2" small disabled outline icon>
+                                              <v-btn color="accent" class="mr-2" small disabled outlined icon>
                                                 <v-icon small>fas fa-plus</v-icon>
                                               </v-btn>Add reply
                                             </p>
@@ -988,12 +991,12 @@
                                         <p class="cursor-pointer mb-0 text-sm-center"
                                         v-if="q.msg.length < 5"
                                         style="width: 20em;" @click="addCard(qi)">
-                                          <v-btn color="accent" class="mr-2" small disabled outline icon>
+                                          <v-btn color="accent" class="mr-2" small disabled outlined icon>
                                             <v-icon small>fas fa-plus</v-icon>
                                           </v-btn>Add card
                                         </p>
                                       </v-card>
-                                    </v-layout>
+                                    </div>
                                   </v-flex>
 
                                   <!-- Multiple Choice question -->
@@ -1012,16 +1015,16 @@
                                       data-vv-as="interaction text"
                                       v-validate="'required'"
                                       single-line
-                                      outline
+                                      outlined
                                     >
                                       <v-fade-transition slot="prepend">
                                         <img width="30" height="30"
                                         :src="getImgUrl('amara-60')">
                                       </v-fade-transition>
                                     </v-text-field>
-                                    <v-layout  row wrap>
+                                    <div class="d-flex flex-row flex-wrap">
                                       <v-flex xs12 style="margin-left:6%" class="" v-for="(qr, q) in q.msg[0].quickReplies" :key="q">
-                                        <v-layout>
+                                        <div class="d-flex">
                                           <v-flex xs2 class="pt-3">
                                             Option {{q+1}}
                                           </v-flex>
@@ -1032,22 +1035,22 @@
                                               v-model="qr.text"
                                               disabled
                                               single-line
-                                              outline
+                                              outlined
                                                 >
                                             </v-text-field>
                                           </v-flex>
-                                        </v-layout>
+                                        </div>
                                         <!-- <v-text-field
                                           maxlength="300"
                                           class="elevation-0 grey--text text--lighten-2"
                                           v-model="qr.text"
                                           disabled
                                           single-line
-                                          outline
+                                          outlined
                                             >
                                         </v-text-field> -->
                                       </v-flex>
-                                    </v-layout>
+                                    </div>
                                   </v-flex>
 
                                   <!-- Quick replies -->
@@ -1066,7 +1069,7 @@
                                       data-vv-as="interaction text"
                                       v-validate="'required'"
                                       single-line
-                                      outline
+                                      outlined
                                     >
                                       <v-fade-transition slot="prepend">
                                         <img width="30" height="30"
@@ -1081,14 +1084,14 @@
                                         offset-y
                                         style="max-width: 600px"
                                       >
-                                      <v-btn color="#4c3e9d" outline slot="activator" disabled>{{c.title}}</v-btn>
+                                      <v-btn color="#4c3e9d" outlined slot="activator" disabled>{{c.title}}</v-btn>
                                         <v-list class="pa-3">
                                           <v-text-field
                                             class="grey--text text--lighten-2"
                                             maxlength="50"
-                                            outline
+                                            outlined
                                             v-model="c.title"
-                                            flat
+                                            text
                                             disabled
                                             @click.stop
                                             name="quickReply"
@@ -1098,9 +1101,9 @@
                                           <v-text-field
                                             class="grey--text text--lighten-2"
                                             maxlength="300"
-                                            outline
+                                            outlined
                                             v-model="c.postback"
-                                            flat
+                                            text
                                             disabled
                                             @click.stop
                                             name="postback"
@@ -1108,7 +1111,7 @@
                                           ></v-text-field>
 
                                           <v-flex xs12 class="text-xs-right">
-                                            <v-btn color="error" small flat
+                                            <v-btn color="error" small text
                                             v-if="q.type === 'quickReplies'"
                                             @click="deleteReply(qi, 0, ci)" disabled>Delete</v-btn>
                                             <v-btn color="#4c3e9d"  class="white--text" small disabled>Done</v-btn>
@@ -1120,14 +1123,14 @@
                                       <span class="cursor-pointer" @click="addReplies(qi, 0, 'Answer')"
                                       v-if="q.msg && q.msg[0].quickReplies.length < 5
                                       && q.type === 'quickReplies'">
-                                        <v-btn color="accent" small disabled outline icon>
+                                        <v-btn color="accent" small disabled outlined icon>
                                           <v-icon small>fas fa-plus</v-icon>
                                         </v-btn>Add reply
                                       </span>
                                     </div>
                                   </v-flex>
 
-                                </v-layout>
+                                </div>
                               </v-card>
                             </v-flex>
                           </div>
@@ -1135,36 +1138,36 @@
                         <!-- </Draggable>
                       </Container> -->
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-tab-item>
 
             <!-- Recipients Tab content -->
             <v-tab-item class="stepper-step-content" value="audience" v-if="config.activeTab === 'audience'">
-              <v-layout row wrap class="mb-3 step-content">
-                <v-layout>
+              <div class="mb-3 step-content d-flex flex-row flex-wrap">
+                <div class="d-flex">
                   <audienceList ref="audienceList"> </audienceList>
-                </v-layout>
-              </v-layout>
+                </div>
+              </div>
             </v-tab-item>
 
             <!-- Distributions Tab -->
             <v-tab-item class="stepper-step-content" value="distribution" v-if="config.activeTab === 'distribution'">
-              <v-layout row wrap class="mb-3 step-content">
+              <div class="mb-3 step-content d-flex flex-row flex-wrap">
                 <v-flex>
                   <distributionMediums> </distributionMediums>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-tab-item>
 
             <!-- Preview Tab -->
             <v-tab-item class="stepper-step-content" value="preview" v-show="config.activeTab === 'preview'">
-              <v-layout row wrap class="mb-3 step-content">
+              <div row wrap class="mb-3 step-content d-flex flex-row flex-wrap">
                 <v-flex>
                   <preview ref="preview" v-if="config.activeTab === 'preview'" :newSurvey="newSurvey">  </preview>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-tab-item>
           </v-tabs-items>
         </v-flex>
@@ -1176,18 +1179,18 @@
           <v-card>
             <v-card-text>
               <h2> Select icons </h2>
-              <v-layout row wrap>
+              <div class="d-flex flex-row flex-wrap">
                 <v-card class="ma-4" v-for="(icon, key) in icons" :key="key">
                   <v-icon large color="#4c3e9d" class="pa-4 cursor-pointer" @click="newCampaign.logo = icon.icon;config.iconEditable=false;">
                     {{icon.icon}}
                   </v-icon>
                 </v-card>
-              </v-layout>
+              </div>
             </v-card-text>
 
             <v-card-actions align-content-space->
               <v-flex xs2>
-                <v-btn color="error" flat @click.stop="config.iconEditable=false;">Close</v-btn>
+                <v-btn color="error" text @click.stop="config.iconEditable=false;">Close</v-btn>
               </v-flex>
               <v-flex xs8>
               </v-flex>
@@ -1212,7 +1215,7 @@
               <v-spacer></v-spacer>
               <v-btn color="primary darken-1  white--text" class="text-none" @click="startBlank()">Start blank <v-icon class="px-2" style="font-size:10px;"> fas fa-check </v-icon></v-btn>
               <span class="px-3">Or</span>
-              <v-btn color="primary darken-1" class=" text-none" outline @click="BrowseTemplate()">Browse templates</v-btn>
+              <v-btn color="primary darken-1" class=" text-none" outlined @click="BrowseTemplate()">Browse templates</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -1223,7 +1226,7 @@
             <v-btn style="position:fixed; top:0px; right:10px; color:grey;" icon dark @click="showTemplate = false">
               <v-icon style="font-size:12px;">fas fa-times</v-icon>
             </v-btn>
-            <v-layout v-if="allTemplateList">
+            <div class="d-flex" v-if="allTemplateList">
               <v-flex sm3 class="w-100 bg-white pa-4" style="height:100vh; position:relative; background: -webkit-linear-gradient(90deg,#61245e 0%,#42276f 90%);">
                 <div>
                 <p class="mb-0 white--text" style="font-size: 20px;font-weight:400;">Browse templates</p>
@@ -1234,17 +1237,17 @@
                   <p style="margin-left:-32%;" class="text-xs-center white--text mb-0">
                     <small style="font-size:100%;">Have your own ideas in mind?</small>
                   </p>
-                  <a color="primary darken-1" class="ml-3  white--text b-bottom" flat @click="showTemplate = false;">Start blank survey</a>
+                  <a color="primary darken-1" class="ml-3  white--text b-bottom" text @click="showTemplate = false;">Start blank survey</a>
                 </div>
               </v-flex>
               <v-flex class="background-custom-grey" sm9 style="padding:0 5%; height:100vh; overflow-y:auto; overflow-x:hidden;">
                 <v-container>
-                  <v-layout row wrap>
+                  <div class="d-flex flex-row flex-wrap">
                     <v-flex xs12>
                       <p style="font-size:20px; font-weight:400;">Templates</p>
                     </v-flex>
-                  </v-layout>
-                  <v-layout row wrap>
+                  </div>
+                  <div class="d-flex flex-row flex-wrap">
                     <v-flex xs4 md4 v-for="(item, key) in campaignList" :key="key" @click="openTemplate(item)"  class="px-2 py-2 adhocTemplate-card">
                       <v-card style="min-height:100%;">
                         <img
@@ -1260,14 +1263,14 @@
                         </v-card-title>
                       </v-card>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-container>
               </v-flex>
-            </v-layout>
-            <v-layout v-if="!allTemplateList">
+            </div>
+            <div class="d-flex" v-if="!allTemplateList">
               <v-flex class="background-custom-grey"  sm9 style="padding: 0 3%; height:100vh; overflow-y:auto; overflow-x:hidden;">
                 <v-container style="margin-top:10%;">
-                  <v-layout row wrap>
+                  <div class="d-flex flex-row flex-wrap" row wrap>
                     <v-flex xs12 v-for="(q, l) in selectedTemplate.questions" :key="l">
                       <v-stepper v-model="e1" style="background:none; box-shadow:none;">
                         <v-stepper-header class="d-none">
@@ -1285,12 +1288,12 @@
                         <v-stepper-items>
                           <v-stepper-content :step="l+1">
                             <v-card class="mb-1 elevation-0 b-none" style="background:transparent; border:none;" min-height='100' v-for="(qi, i) in q.questions" :key="i">
-                              <v-layout row wrap style="min-height:48px">
+                              <div class="d-flex flex-row flex-wrap" style="min-height:48px">
                                 <v-flex xs6>
                                   <p style="font-size:15px; font-weight:500;" class="mt-2 ml-3 mb-0">Question type : {{q.title}}</p>
                                 </v-flex>
-                              </v-layout>
-                              <v-layout row wrap class="mt-2" style="min-height:48px">
+                              </div>
+                              <div class="d-flex flex-row flex-wrap mt-2" style="min-height:48px">
                                 <v-flex class="pl-2" xs10 >
                                   <v-fade-transition slot="prepend" style="display:inline-block;">
                                       <img width="60" height="60" style="border-radius:50%;"
@@ -1299,11 +1302,10 @@
                                   <p class="ml-4 mb-0" style="font-size:30px; width:85%; display:inline-block; vertical-align: top;">
                                     {{qi.text}}
                                   </p>
-
                                 </v-flex>
-                              </v-layout>
-                              <v-layout row wrap justify-center>
-                                <v-flex xs2 text-xs-center class="pb-2 pt-4"
+                              </div>
+                              <div class="d-flex flex-row flex-wrap justify-center">
+                                <v-flex xs2 class="pb-2 pt-4 text-center"
                                   v-for="(r, ri) in qi.scale" :key="ri">
                                   <div v-if="q.title !== 'Rating scale' && q.title !== 'Yes/No (Close Ended)' && q.title !== 'Input From User' && q.title !== 'Text'">
                                   <img disabled v-if="r.img && q.title == 'Emoji scale'" :src="getImgUrl(r.img)"
@@ -1314,7 +1316,7 @@
                                   <span class="" v-if="q.title == 'Number Scale' || q.title == 'Emoji scale'">{{r.title}}</span>
                                   </div>
                                 </v-flex>
-                                <v-flex xs2 text-xs-center class="pb-2 pt-4"
+                                <v-flex xs2 class="pb-2 pt-4 text-center"
                                   v-for="(r, ri) in qi.scale" :key="ri">
                                   <div v-if="q.title == 'Rating scale'">
                                     <strong v-if="q.title == 'Rating scale'" class="headline grey--text" :class="e1 !== selectedTemplate.questions.length ? 'cursor-pointer' : ''"  @click="e1 !== selectedTemplate.questions.length ? e1 = `${l+2}`  : ''" style="padding:5px 12px; border:1px solid; border-radius:50%;">
@@ -1324,14 +1326,14 @@
                                   </div>
                                 </v-flex>
 
-                                <v-flex xs5 style="border:1px solid grey; cursor:pointer; border-radius:6px;" text-xs-center class="pb-2 mx-2 my-2 pt-2"
+                                <v-flex xs5 style="border:1px solid grey; cursor:pointer; border-radius:6px;" class="text-center pb-2 mx-2 my-2 pt-2"
                                   v-for="(r, ri) in qi.quickReplies" :key="ri" @click="e1 = `${l+2}`">
                                   <div v-if="q.title == 'Multiple choice question'">
                                     {{r.text}}
                                   </div>
                                 </v-flex>
-                                <v-btn color='primary' :disabled=" e1 == selectedTemplate.questions.length" @click="e1 = `${l+2}`" class="float:right" v-if="q.title == 'Yes/No (Close Ended)' || q.title == 'Yes/No'" outline>Yes</v-btn>
-                                <v-btn color='#602a5e' :disabled=" e1 == selectedTemplate.questions.length" @click="e1 = `${l+2}`" v-if="q.title == 'Yes/No (Close Ended)' || q.title == 'Yes/No'" outline>No</v-btn>
+                                <v-btn color='primary' :disabled=" e1 == selectedTemplate.questions.length" @click="e1 = `${l+2}`" class="float:right" v-if="q.title == 'Yes/No (Close Ended)' || q.title == 'Yes/No'" outlined>Yes</v-btn>
+                                <v-btn color='#602a5e' :disabled=" e1 == selectedTemplate.questions.length" @click="e1 = `${l+2}`" v-if="q.title == 'Yes/No (Close Ended)' || q.title == 'Yes/No'" outlined>No</v-btn>
 
                                 <v-text-field
                                   v-if="q.title == 'Input From User' || q.title == 'Open-ended question'"
@@ -1342,11 +1344,11 @@
                                   class="elevation-0 mx-4 mt-2 grey--text text--lighten-2"
                                   label="Type your answer ..."
                                   single-line
-                                  outline
+                                  outlined
                                 >
                                 </v-text-field>
 
-                              </v-layout>
+                              </div>
                           </v-card>
                           <div style="margin-top:10%;">
                             <v-btn :disabled=" e1 == 1" @click="e1 = `${l}`"><v-icon class="pr-2">fas fa-chevron-left</v-icon> previous </v-btn>
@@ -1366,14 +1368,14 @@
                       </v-stepper>
 
                     </v-flex>
-                  </v-layout>
-                  <v-layout row wrap>
-                  </v-layout>
+                  </div>
+                  <!-- <v-layout row wrap>
+                  </v-layout> -->
                 </v-container>
               </v-flex>
               <v-flex sm3 class="w-100 bg-white pa-4 " style="height:100vh; padding-left:10%; position:relative; background: -webkit-linear-gradient(90deg,#61245e 0%,#42276f 90%);">
                 <div>
-                  <a flat @click="allTemplateList = true;" class="white--text"><v-icon class="mr-2 white--text" style="font-size:12px;">fas fa-arrow-left</v-icon>Back to template</a>
+                  <a text @click="allTemplateList = true;" class="white--text"><v-icon class="mr-2 white--text" style="font-size:12px;">fas fa-arrow-left</v-icon>Back to template</a>
                 <p class="mb-0 mt-4 white--text" style="font-size: 20px;font-weight:600;">{{selectedTemplate.title}}</p>
                 <small style="font-size:100%;" class="mt-2 white--text">{{selectedTemplate.objectives}}</small><br>
                 <v-btn color="primary"
@@ -1388,13 +1390,13 @@
                   <p style="margin-left:-30%;" class="text-xs-center mb-0 white--text">
                     <small style="font-size:100%;">Have your own ideas in mind?</small>
                   </p>
-                  <a class="ml-3 white--text b-bottom" flat @click="showTemplate = false;">Start blank survey</a>
+                  <a class="ml-3 white--text b-bottom" text @click="showTemplate = false;">Start blank survey</a>
                 </div>
               </v-flex>
-            </v-layout>
+            </div>
           </v-card>
         </v-dialog>
-      </v-layout>
+      </div>
 
       <newQuestion ref="newQuestion" v-show="questionSource === 'new'"></newQuestion>
       <questionBank ref="question_bank" v-show="questionSource === 'question_bank'"></questionBank>
@@ -1403,7 +1405,7 @@
 
       <confirmTrigger ref="confirmTrigger"></confirmTrigger>
       <scheduleCampaign ref="scheduleCampaign"></scheduleCampaign>
-    </v-layout>
+    </div>
   </div>
 </template>
 

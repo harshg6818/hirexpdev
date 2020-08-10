@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row wrap>
+    <div class="d-flex flex-row flex-wrap">
       <v-flex xs12 px-1>
         <div class="mt-3" v-show="config.initialLoading">
             <ContentLoader
@@ -17,10 +17,10 @@
 
         <!-- After intial loading -->
         <div class="mt-3" v-show="!config.initialLoading">
-            <v-layout>
+            <div class="d-flex">
               <v-flex xs6 class="overview-cards">
-                <v-layout class="my-2 py-4" row wrap v-if="stats && report && report.stats">
-                  <v-flex xs4 text-xs-center>
+                <div class="my-2 py-4 d-flex flex-row flex-wrap" v-if="stats && report && report.stats">
+                  <v-flex xs4 class="text-center">
                     <v-progress-circular
                     :rotate="360"
                     :size="140"
@@ -33,7 +33,7 @@
                     </v-progress-circular>
                   </v-flex>
 
-                  <v-flex xs4 text-xs-center>
+                  <v-flex xs4 class="text-center">
                     <v-progress-circular
                     :rotate="360"
                     :size="140"
@@ -46,7 +46,7 @@
                     </v-progress-circular>
                   </v-flex>
 
-                  <v-flex xs4 text-xs-center>
+                  <v-flex xs4 class="text-center">
                     <v-progress-circular
                     :rotate="360"
                     :size="140"
@@ -58,46 +58,45 @@
                     <p  class="black--text"> Chats completed </p>
                     </v-progress-circular>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout class="my-2 pt-3" row wrap v-if="stats && report && report.stats">
-                  <v-flex xs12 text-xs-center>
+                <div class="my-2 pt-3 d-flex flex-row flex-wrap" v-if="stats && report && report.stats">
+                  <v-flex xs12 class="text-center">
                     <v-chip color="lightgrey" class="text-none"> <strong> Total chats : {{ report.stats.total_recipients }} </strong> </v-chip>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout class="dailyResponseGraph" row wrap align-center justify-center fill-height v-show="!stats || !report || !report.stats">
-                  <v-flex text-xs-center>
+                <div class="dailyResponseGraph d-flex flex-row flex-wrap align-center justify-center fill-height" v-show="!stats || !report || !report.stats">
+                  <v-flex class="text-center">
                   <strong class="display-1 font-weight-bold grey--text">
                       Not enough data to generate analysis
                   </strong>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
 
-              <v-flex xs6  class="overview-cards">
+              <v-flex xs6 class="overview-cards">
                 <!-- <div id="chartdiv" class="dailyResponseGraph" v-show="stats && report && report.stats"> </div> -->
                 <vue-anychart id="chartdiv" class="dailyResponseGraph" v-show="stats && report && report.stats"> </vue-anychart>
 
-                <v-layout class="my-2" row wrap  v-show="stats && report && report.stats">
-                  <v-flex xs12 text-xs-center>
+                <div class="my-2 d-flex flex-row flex-wrap" v-show="stats && report && report.stats">
+                  <v-flex xs12 class="text-center">
                     <v-chip color="lightgrey" class="text-capitalize"> <strong> Responses / Day </strong> </v-chip>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout class="dailyResponseGraph" row wrap align-center justify-center fill-height v-show="!stats || !report || !report.stats">
+                <div class="dailyResponseGraph d-flex flex-row flex-wrap align-center justify-center fill-height" v-show="!stats || !report || !report.stats">
                   <v-flex text-xs-center>
                     <strong class="display-1 font-weight-bold grey--text">
                       Not enough data to generate analysis
                     </strong>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
-
-            </v-layout>
+            </div>
         </div>
       </v-flex>
-    </v-layout>
+    </div>
   </div>
 </template>
 

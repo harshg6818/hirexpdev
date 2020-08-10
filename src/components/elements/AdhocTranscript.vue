@@ -3,20 +3,20 @@
     'chat-bg pa-0': chat.activeSession
     }">
     <v-card class="activity-card elevation-0 w-100" v-if="chat.sessions.length === 0">
-      <v-layout row wrap align-center justify-center fill-height>
-        <v-flex text-xs-center>
+      <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+        <v-flex class="text-center">
           <strong class="display-1 font-weight-bold grey--text">
             No Ad-hoc Campaigns Initiated!
           </strong>
         </v-flex>
-      </v-layout>
+      </div>
     </v-card>
     <v-slide-y-transition mode="out-in">
-      <v-layout row wrap v-if="!chat.activeSession">
+      <div class="d-flex flex-row flex-wrap" v-if="!chat.activeSession">
         <v-flex class="pr-4 mb-4" sm6 md4
         v-for="(c, ci) in chat.sessions" :key="ci">
           <v-card min-height="156" class="elevation-0 px-3">
-            <v-layout row wrap class="mt-2">
+            <div class="mt-2 d-flex flex-row flex-wrap">
               <v-flex class="headline pt-2" xs10>
                 <p class="mb-0 hover-link cursor-pointer" @click="viewTranscript(c)">
                   {{c.stage_title}}
@@ -32,24 +32,24 @@
                       </v-chip>
                     </span>
                     <v-list class="">
-                      <v-list-tile v-for="(v, k) in c.driverBreakdown" :key="k">
-                        <v-list-tile-content>
-                          <v-layout row wrap pt-2 class="w-100">
+                      <v-list-item v-for="(v, k) in c.driverBreakdown" :key="k">
+                        <v-list-item-content>
+                          <div class="w-100 d-flex flex-row flex-wrap pt-2">
                             <v-flex sm3 pr-2>
                               <v-chip color="success" class="ma-0" outline small>{{v}}</v-chip>
                             </v-flex>
                             <v-flex sm9 px-2 class="text-capitalize">
                               {{k}}
                             </v-flex>
-                          </v-layout>
-                        </v-list-tile-content>
-                      </v-list-tile>
+                          </div>
+                        </v-list-item-content>
+                      </v-list-item>
                     </v-list>
                   </v-menu>
                 </span>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap align-content-end class="mt-3 text-xs-center b-top pt-2">
+            </div>
+            <div class="mt-3 text-xs-center b-top pt-2 d-flex flex-row flex-wrap align-content-end">
               <v-flex xs6 class="stages-analysis-block c-info">
                 <p class="mb-0 font-weight-bold">{{dayjs(c.createdAt).from()}}</p>
                 <span class="grey--text">
@@ -62,12 +62,12 @@
                   Completed
                 </span>
               </v-flex>
-            </v-layout>
+            </div>
           </v-card>
         </v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="chat-window-adhoc mx-0" v-if="chat.activeSession">
+      <div class="chat-window-adhoc mx-0 d-flex flex-row flex-wrap" v-if="chat.activeSession">
         <v-toolbar class="elevation-0">
           <v-btn color="primary" fab flat small @click="chat.activeSession = null;">
             <v-icon>fas fa-arrow-left</v-icon>
@@ -75,9 +75,10 @@
           <v-toolbar-title>{{chat.activeSession.stage_title}}</v-toolbar-title>
         </v-toolbar>
         <main class="py-3 px-1" ref="mainChatWindow">
-          <v-layout column wrap>
+          <div class="d-flex flex-column flex-wrap">
             <v-flex>
-              <v-layout row wrap px-2 mb-2
+              <div
+                class="d-flex flex-row flex-wrap px-2 mb-2"
                 v-for="(c, ci) in chat.transcript" :key="ci"
                 :reverse="!c.bot_response"
               >
@@ -121,23 +122,20 @@
                         aspect-ratio="1"
                         class="grey lighten-2 mx-0"
                       >
-                        <v-layout
+                        <div
+                          class="d-flex flex-row flex-wrap align-center justify-center fill-height ma-0"
                           slot="placeholder"
-                          fill-height
-                          align-center
-                          justify-center
-                          ma-0
                         >
                           <v-progress-circular v-show="m.imgUrl"
                           indeterminate color="grey lighten-5">
                           </v-progress-circular>
-                        </v-layout>
+                        </div>
                       </v-img>
                     </v-flex>
 
                     <!-- Emoji scale bar -->
-                    <v-layout class="actions scale" row wrap
-                    v-if="c.type === 'scale' && m.scaleType === 'emoji'" mt-2 justify-center>
+                    <v-layout class="actions scale d-flex flex-row flex-wrap mt-2 justify-center"
+                    v-if="c.type === 'scale' && m.scaleType === 'emoji'">
                       <v-flex class="emoji-btn" text-xs-center v-for="(r, ri) in m.scale" :key="ri">
                         <v-btn
                           :disabled="c.user_responded"
@@ -153,7 +151,6 @@
                         >
                           <img v-if="r.img" :src="getImgUrl(r.img)" class="emoji-container" />
                         </v-btn>
-
                         <p>
                           {{r.title}}
                         </p>
@@ -161,8 +158,8 @@
                     </v-layout>
 
                     <!-- Number scale bar -->
-                    <v-layout class="actions scale" row wrap
-                    v-if="c.type === 'scale' && m.scaleType === 'number'" mt-2 justify-center>
+                    <v-layout class="actions scale d-flex flex-row flex-wrap mt-2 justify-center"
+                    v-if="c.type === 'scale' && m.scaleType === 'number'">
                       <v-flex class="emoji-btn" text-xs-center v-for="(r, ri) in m.scale" :key="ri">
                         <v-btn
                           :disabled="c.user_responded"
@@ -174,7 +171,7 @@
                           class="ma-0"
                           :color="r.color"
                           fab
-                          outline
+                          outlined
                         >
                           <strong class="headline">
                             {{r.value}}
@@ -200,10 +197,10 @@
                     </v-flex>
                   </p>
                 </v-flex>
-              </v-layout>
+              </div>
 
               <!-- Typing icon -->
-              <v-layout row wrap px-2 mb-2 v-show="chat.typing">
+              <div class="d-flex flex-row flex-wrap px-2 mb-2" v-show="chat.typing">
                 <v-flex class="avatar-container">
                   <v-avatar
                     size="35"
@@ -220,12 +217,11 @@
                     <span></span>
                   </p>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-flex>
-          </v-layout>
-
+          </div>
         </main>
-      </v-layout>
+      </div>
     </v-slide-y-transition>
 
   </v-container>

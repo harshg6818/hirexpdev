@@ -108,13 +108,13 @@
                 </div>
                 </div>
                 <div v-else>
-                  <v-layout class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
+                  <div class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
                     <v-flex text-center>
                       <strong class="body-2 font-weight-bold grey--text">
                         Not enough data to generate analysis
                       </strong>
                     </v-flex>
-                </v-layout>
+                </div>
                 </div>
               </div>
 
@@ -192,13 +192,13 @@
                   </p>
                 </div>
                 <div v-if="!report || !report.disengaged_employees || !report.disengaged_employees.disengaged_employees === 0">
-                  <v-layout row wrap align-center justify-center fill-height style="height:160px">
-                    <v-flex text-center class="mt-5 pt-4">
+                  <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:160px">
+                    <v-flex class="mt-5 pt-4 text-center">
                       <strong class="body-2 font-weight-bold grey--text">
                         Not enough data to generate analysis
                       </strong>
                     </v-flex>
-                </v-layout>
+                </div>
                 </div>
               </div>
 
@@ -233,7 +233,7 @@
 
                 <div v-else>
                   <div class="flex-row d-flex flex-wrap align-center justify-center fill-height" style="height:160px">
-                    <v-flex text-center>
+                    <v-flex class="text-center">
                       <strong class="body-2 font-weight-bold grey--text">
                         Not enough data to generate analysis
                       </strong>
@@ -336,7 +336,7 @@
                 <!--<div id="chartdiv" class="dailyResponseGraph"> </div>-->
                 <div v-else style="position:relative;top:14%;">
                   <div class="flex-row flex-wrap align-center justify-center fill-height" style="height:160px;">
-                    <v-flex text-center>
+                    <v-flex class="text-center">
                       <strong class="body-2 font-weight-bold grey--text">
                         Not enough data to generate analysis
                       </strong>

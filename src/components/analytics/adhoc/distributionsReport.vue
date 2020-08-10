@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row wrap>
+    <div class="d-flex flex-row flex-wrap">
       <v-flex xs12 px-1>
         <div class="mt-3" v-show="config.initialLoading">
             <ContentLoader
@@ -17,7 +17,7 @@
 
         <!-- After intial loading -->
         <div class="mt-3" v-show="!config.initialLoading">
-          <v-layout class="mb-3 pb-3">
+          <div class="mb-3 pb-3 d-flex">
             <v-flex xs6 style="border-right:1px solid rgb(206, 203, 203)">
 
               <!-- Email Distribution Donut Chart -->
@@ -32,13 +32,13 @@
               </div>
 
               <!-- No data for Email Distribution -->
-              <v-layout class="distributionGraph" row wrap align-center justify-center fill-height v-show="!Emailstats">
+              <div class="distributionGraph d-flex flex-row flex-wrap align-center justify-center fill-height" v-show="!Emailstats">
                 <v-flex text-xs-center>
                 <strong class="display-1 font-weight-bold grey--text">
                     Not enough data to generate analysis
                 </strong>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-flex>
 
             <v-flex xs6 >
@@ -51,16 +51,16 @@
               </div>
 
               <!-- No data for SMS Distribution -->
-              <v-layout class="distributionGraph" row wrap align-center justify-center fill-height v-show="!SMSstats">
-                <v-flex text-xs-center>
+              <div class="distributionGraph d-flex flex-row flex-wrap align-center justify-center fill-height" v-show="!SMSstats">
+                <v-flex class="text-center">
                   <strong class="display-1 font-weight-bold grey--text">
                     Not enough data to generate analysis
                   </strong>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-flex>
 
-          </v-layout>
+          </div>
 
           <!-- Distribution Analysis -->
           <div class="w-100 px-5">
@@ -91,7 +91,7 @@
 
         </div>
       </v-flex>
-    </v-layout>
+    </div>
 
     <RecipientsReport ref="RecipientsReport"> </RecipientsReport>
   </div>

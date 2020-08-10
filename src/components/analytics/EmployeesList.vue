@@ -39,7 +39,7 @@
           <template slot="items" slot-scope="props">
             <tr v-if="props.item">
               <td>
-                <v-layout row wrap align-center>
+                <div class="d-flex flex-row flex-wrap align-center">
                   <v-flex class="py-2" sm3>
                     <v-avatar size="30px" :color="getColor(props.item)">
                       <img src="src" alt="alt" v-show="false">
@@ -56,7 +56,7 @@
                       {{props.item.email || props.item.user_email}}
                     </small>
                   </v-flex>
-                </v-layout>
+                </div>
               </td>
               <td>
                 {{props.item.last_triggered_stage || props.item.stage_title}}
@@ -107,14 +107,14 @@
           </template>
           <v-card slot="no-data" class="elevation-0 text-xs-center" min-height="60vh">
             <v-card-title primary-title class="justify-center">
-              <v-layout row wrap>
+              <div class="d-flex flex-row flex-wrap">
                 <v-flex xs12>
                   <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
                   <p>
                     No employees present.
                   </p>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-card-title>
           </v-card>
         </v-data-table>

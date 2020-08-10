@@ -80,9 +80,9 @@
         v-show="!config.initialLoading && stages.length > 0" style="z-index:2"
         :headers="headers"
         :items="stages"
-        :total-items="totalItems"
+        :server-items-length="totalItems"
         :loading="table.loading"
-        :pagination.sync="pagination"
+        :options.sync="pagination"
         class=""
       >
         <template slot="headers" slot-scope="props">

@@ -1,6 +1,6 @@
 <template>
-  <v-layout row wrap class="mx-0 mt-0">
-    <v-layout row wrap class="mb-4" v-if="config.initialLoading">
+  <div class="mx-0 mt-0 d-flex flex-row flex-wrap">
+    <div class="mb-4 d-flex flex-row flex-wrap" v-if="config.initialLoading">
       <v-flex xs3>
         <ContentLoader
           class="bg-white mb-2"
@@ -66,14 +66,14 @@
           >
         </ContentLoader>
       </v-flex>
-    </v-layout>
+    </div>
 
     <!-- Profile and engagement -->
-    <v-layout row wrap class="mb-0" v-if="!config.initialLoading" style="border-bottom: 1px solid #d0d0d0;">
+    <div class="mb-0 d-flex flex-row flex-wrap" v-if="!config.initialLoading" style="border-bottom: 1px solid #d0d0d0;">
       <v-flex xs3 style="border-right: 1px solid #d0d0d0;">
         <!-- Employee Details -->
         <div class="overview-cards employee-profile engagement-score" style="border-right: 1px solid #d0d0d0;width:100%;max-width:100%">
-          <v-layout row wrap>
+          <div class="d-flex flex-row flex-wrap">
             <v-flex xs10>
               <v-avatar size="100px" class="mt-3 text-xs-center" :color="getColor(employee)" style="margin: 0 0 0 36%">
                 <img :src="employee.profilePicture" alt="employee.display_name" v-show="employee.profilePicture">
@@ -97,9 +97,9 @@
                 </v-chip>
                 Employee ID
               </v-tooltip>
-          </v-layout>
+          </div>
 
-          <v-layout row wrap>
+          <div class="d-flex flex-row flex-wrap">
             <v-flex xs12 class="mt-2">
               <h1 class="pt-2 px-3 pb-0 mb-0 text-uppercase text-xs-left text-overflow-ellipsis" style="font-weight:bold" :class="employee.status === 'inactive' ? 'emp-disable' : 'emp-enable'">
                 <v-btn @click.stop="highpotentialTrue = true" v-show="employee.high_potential_emp" flat icon color="#fdd835">
@@ -124,7 +124,7 @@
                   Location : {{ employee.location }}
                 </p>
               </div>
-              <v-layout class="d-inline-flex w-100 mt-2 text-xs-center" style="border-top: 1px solid #d0d0d0;height:200px">
+              <div class="flex-row flex-wrap d-flex w-100 mt-2 text-center" style="border-top: 1px solid #d0d0d0;height:200px">
                 <v-flex class="w-100" v-if="employee.user_session_count >= 0" style="border-right: 1px solid #d0d0d0;">
                   <p class="pt-2 px-2 pb-0 mb-0" style="font-size:10px">
                     Total Chats <br/> Initiated
@@ -149,14 +149,14 @@
                     {{ employee.user_completed_session_count }}
                   </p>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-flex>
-          </v-layout>
+          </div>
         </div>
       </v-flex>
 
       <v-flex xs9>
-        <v-layout row wrap class="mb-0" style="border-bottom: 1px solid #d0d0d0;">
+        <div class="mb-0 d-flex flex-row flex-wrap" style="border-bottom: 1px solid #d0d0d0;">
           <!-- Enagagement Score -->
           <div class="overview-cards employee-view engagement-score d-inline-flex ml-3"
           :style="`border-right: 1px solid #d0d0d0;color:#fff;width:100%;max-width:100%;margin:unset`">
@@ -169,13 +169,13 @@
                 <h1 class="subheading score-card score-bold text-xs-left"> /5 </h1>
               </div>
               <div v-else>
-                <v-layout row wrap align-center justify-center fill-height style="height:160px">
-                  <v-flex text-xs-center>
+                <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:160px">
+                  <v-flex class="text-center">
                     <strong class="body-2 font-weight-bold grey--text">
                       Not enough data to generate analysis
                     </strong>
                   </v-flex>
-                </v-layout>
+                </div>
               </div>
               <div v-if="employee && employee.engagement_score" class="card-footer text-capitalize score-card pt-3" style="font-size:14px;position:relative;top:-75px"
               :style="{ background: `linear-gradient(0deg,${getEngagementScore(employee.engagement_score)}24 0%, #ffffff 100%)`}">
@@ -190,24 +190,24 @@
               class="px-3 pt-3 mb-0 score-card text-capitalize text-xs-center" style="font-weight:bold">
                 Employee Vibe Over Time
               </p>
-              <v-layout row wrap v-if="employee && employee.user_completed_session_mood &&
+              <div class="d-flex flex-row flex-wrap" v-if="employee && employee.user_completed_session_mood &&
               employee.user_completed_session_mood.length > 0">
                 <vue-anychart id="vibeGraph" class="vibeGraph" />
-              </v-layout>
+              </div>
 
-              <v-layout row wrap align-center justify-center fill-height v-else style="height:150px">
-                <v-flex text-xs-center>
+              <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" v-else style="height:150px">
+                <v-flex class="text-center">
                   <strong class="body-2 font-weight-bold grey--text">
                     Not enough data to generate analysis
                   </strong>
                 </v-flex>
-              </v-layout>
+              </div>
             </div>
           </div>
-        </v-layout>
+        </div>
 
         <!-- Driver Analysis -->
-        <v-layout row wrap class="mb-0">
+        <div class="mb-0 d-flex flex-row flex-wrap">
           <!-- <div class="overview-cards engagement-score" style="border-right: 0px;width:24%;max-width:24%">
             <p class="pa-3 score-card text-uppercase text-xs-center" style="font-weight:bold"> Total Chats Initiated </p>
             <div v-if="employee && employee.engagement_score" class="d-inline-flex w-100">
@@ -227,44 +227,44 @@
 
           <div class="overview-cards key-drivers engagement-score ml-3" style="border-right: 0px;width:100%;max-width:100%;margin:unset">
             <p class="pt-3 px-3 pb-0 mb-2 score-card text-capitalize text-xs-center" style="font-weight:bold"> Driver Analysis </p>
-            <v-layout row wrap v-if="employee && employee.latest_session_driver">
+            <div class="d-flex flex-row flex-wrap" v-if="employee && employee.latest_session_driver">
               <SmallKeyDrivers ref="SmallKeyDrivers" />
-            </v-layout>
+            </div>
 
-            <v-layout row wrap align-center justify-center fill-height v-else style="height:150px">
-              <v-flex text-xs-center>
+            <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" v-else style="height:150px">
+              <v-flex class="text-center">
                 <strong class="body-2 font-weight-bold grey--text">
                   Not enough data to generate analysis
                 </strong>
               </v-flex>
-            </v-layout>
+            </div>
           </div>
-        </v-layout>
+        </div>
       </v-flex>
-    </v-layout>
+    </div>
 
     <!-- Drivers Trend -->
-    <v-layout row wrap class="mb-0" v-if="!config.initialLoading" style="border-bottom: 1px solid #d0d0d0;">
+    <div class="mb-0 d-flex flex-row flex-wrap" v-if="!config.initialLoading" style="border-bottom: 1px solid #d0d0d0;">
       <div class="overview-cards heatmap-card" style="border-right: 0px;width:100%;max-width:100%">
         <p class="pa-3 score-card text-capitalize text-xs-center" style="font-weight:bold"> Drivers Trend </p>
-        <v-layout row wrap v-if="employee && employee.user_completed_session_driverwise_subdrivers &&
+        <div class="d-flex flex-row flex-wrap" v-if="employee && employee.user_completed_session_driverwise_subdrivers &&
         employee.user_completed_session_driverwise_subdrivers.length">
           <vue-anychart :id="`driver-heatmap`" class="driver-heatmap">
           </vue-anychart>
-        </v-layout>
+        </div>
 
-        <v-layout row wrap align-center justify-center fill-height v-else style="height:150px">
-          <v-flex text-xs-center>
+        <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" v-else style="height:150px">
+          <v-flex class="text-center">
             <strong class="body-2 font-weight-bold grey--text">
               Not enough data to generate analysis
             </strong>
           </v-flex>
-        </v-layout>
+        </div>
       </div>
-    </v-layout>
+    </div>
 
     <!-- Sentiment Analysis -->
-    <v-layout row wrap class="mb-0" v-if="!config.initialLoading">
+    <div class="mb-0 d-flex flex-row flex-wrap" v-if="!config.initialLoading">
       <div class="" style="border-right: 0px;width:100%;max-width:100%;height:unset;background-color:#fff;">
         <p class="pa-3 score-card text-capitalize text-xs-center" style="font-weight:bold"> Last Chat Transcript
           <span v-if="employee.latest_session_driverwise_subdrivers && employee.latest_session_driverwise_subdrivers.stage_title">
@@ -273,7 +273,10 @@
         </p>
         <div v-if="employee && employee.user_latest_session_interactions" class="w-100">
           <div class="response-list">
-            <v-layout :id="`response-${i}`" v-for="(t, i) in employee.user_latest_session_interactions" row wrap class="mb-0 px-3" :key="i"
+            <div
+              :id="`response-${i}`"
+              v-for="(t, i) in employee.user_latest_session_interactions" class="mb-0 px-3 d-flex flex-row flex-wrap"
+              :key="i"
             >
               <div class="active-response w-100"
               v-if="!t.parent_interaction_id"
@@ -295,18 +298,18 @@
                   </div>
                 </div>
               </div>
-            </v-layout>
+            </div>
           </div>
         </div>
-        <v-layout row wrap v-else align-center justify-center fill-height style="height:500px">
-          <v-flex text-xs-center class="py-5">
+        <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" v-else style="height:500px">
+          <v-flex class="py-5 text-center">
             <strong class="body-2 font-weight-bold grey--text">
               Not enough data to generate analysis
             </strong>
           </v-flex>
-        </v-layout>
+        </div>
       </div>
-    </v-layout>
+    </div>
     <v-dialog persistent
       v-model="highpotentialFalse"
       max-width="55%">
@@ -361,7 +364,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-layout>
+  </div>
 </template>
 
 <script>

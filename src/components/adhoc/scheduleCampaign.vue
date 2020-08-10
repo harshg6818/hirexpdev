@@ -7,13 +7,13 @@
     <v-card>
       <v-card-text>
         <h2> Schedule campaign </h2>
-        <v-layout>
+        <div class="d-flex">
           <div class="pa-5" style="width:100%">
               <h3 class="mb-3">
                 Set up your schedule
               </h3>
               <span>
-                <v-layout>
+                <div class="d-flex">
                   <v-flex xs12>
                   <v-menu
                     ref="dateMenu"
@@ -44,16 +44,15 @@
                     :min="minDate"
                     @input="menu.date = false"></v-date-picker>
                   </v-menu>
-
                   </v-flex>
-                </v-layout>
+                </div>
               </span>
 
               <h3 class="mb-3">
                 Delivery Time
               </h3>
               <span>
-                <v-layout>
+                <div class="d-flex">
                   <v-flex xs12>
                     <v-menu
                       ref="startTimeMenu"
@@ -86,16 +85,15 @@
                         full-width
                       ></v-time-picker>
                     </v-menu>
-
                   </v-flex>
-                </v-layout>
+                </div>
               </span>
           </div>
-        </v-layout>
+        </div>
 
       </v-card-text>
       <v-card-actions align-content-space->
-        <v-layout row wrap>
+        <div class="d-flex flex-row flex-wrap">
           <v-flex text-xs-left class="pl-4 ml-2">
             <v-btn color="error" flat @click="dialogs.scheduleCampaign=false;">Close</v-btn>
           </v-flex>
@@ -105,7 +103,7 @@
               Confirm
             </v-btn>
           </v-flex>
-        </v-layout>
+        </div>
       </v-card-actions>
     </v-card>
   </v-dialog>

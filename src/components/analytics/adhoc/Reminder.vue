@@ -1,8 +1,8 @@
 <template>
   <div class="reminderadHoc">
-    <v-layout class="pa-2">
+    <div class="pa-2 d-flex flex-row flex-wrap">
         <v-flex class="">
-            <v-layout class="">
+            <div class="d-flex flex-row flex-wrap">
                 <v-flex xs8>
                     <h2>Reminders</h2>
                     <small style="font-size:100%;">Reminders enables you reach out to the employees who haven't completed the campaign.</small>
@@ -18,21 +18,21 @@
                             Add reminder <v-icon style="font-size:12px;" small class="ml-3">fas fa-plus</v-icon>
                             </v-btn>
                         <v-list>
-                            <v-list-tile
+                            <v-list-item
                             class="followupList"
                             v-for="(item, index) in reminder_items"
                             :key="index"
                             @click="openDialog(item)"
                             >
-                            <v-list-tile-title >{{ item.title }}</v-list-tile-title>
-                            </v-list-tile>
+                            <v-list-item-title >{{ item.title }}</v-list-item-title>
+                            </v-list-item>
                         </v-list>
                         </v-menu>
                 </v-flex>
-            </v-layout>
-            <v-card v-if="reminderData.length == 0" class="elevation-0 text-xs-center" min-height="300" style="border:1px solid #4c3e9d;">
+            </div>
+            <v-card v-if="reminderData.length == 0" class="elevation-0 text-center" min-height="300" style="border:1px solid #4c3e9d;">
                 <v-card-title adhoc-title class="justify-center pb-0">
-                    <v-layout row wrap>
+                    <div class="d-flex flex-row flex-wrap">
                         <v-flex xs12>
                             <img :src="getImgUrl('amara_avatar')" class="blank-avatar-small" alt="">
                             <!-- <h2 class="headline">Welcome {{user.company_name}}!</h2> -->
@@ -47,20 +47,19 @@
                             Add reminder <v-icon style="font-size:12px;" small class="ml-3">fas fa-plus</v-icon>
                             </v-btn>
                         <v-list>
-                            <v-list-tile
+                            <v-list-item
                             class="followupList"
                             v-for="(item, index) in reminder_items"
                             :key="index"
                             @click="openDialog(item)"
                             >
-                            <v-list-tile-title >{{ item.title }}</v-list-tile-title>
-                            </v-list-tile>
+                            <v-list-item-title >{{ item.title }}</v-list-item-title>
+                            </v-list-item>
                         </v-list>
                         </v-menu>
                         </v-flex>
-                    </v-layout>
+                    </div>
                 </v-card-title>
-
                 <v-card-actions class="justify-center">
                 </v-card-actions>
             </v-card>
@@ -85,8 +84,8 @@
                 </v-flex>
             </v-layout> -->
             <!-- <v-layout v-if="reminderData.length > 0" v-for="(reminder, r) in reminderData" :key="r" class="campaign-row" -->
-            <v-layout v-for="(reminder, r) in reminderData" :key="r" class="campaign-row"
-              style="background:#fff; border-radius:6px; padding:10px 20px; margin:10px 0;" row wrap>
+            <div v-for="(reminder, r) in reminderData" :key="r" class="campaign-row d-flex flex-row flex-wrap"
+              style="background:#fff; border-radius:6px; padding:10px 20px; margin:10px 0;">
 
               <v-flex xs1>
                 <div :style="`background-color: ${getColor1(reminder.channel)}; display:inline-block;`" style="width:55px; height:55px; border-radius:6px;">
@@ -131,7 +130,7 @@
 
                         </v-btn>
                         <v-list>
-                          <v-list-tile
+                          <v-list-item
 
                             v-for="(item, index) in reminderActions"
                             :key="index"
@@ -140,27 +139,26 @@
                             || item.title == 'Delete' && (reminder.status !== 'draft' && reminder.status !== 'active')
                             ? 'd-none' : '' "
                           >
-                            <v-list-tile-title>
+                            <v-list-tile-item>
                               <!-- <v-icon class="mr-2">{{item.icon}}</v-icon> -->
                               {{ item.title }}&nbsp;<span v-if="item.title === 'Test'">{{reminder.channel}}</span>
-                            </v-list-tile-title>
-                          </v-list-tile>
+                            </v-list-tile-item>
+                          </v-list-item>
                         </v-list>
                       </v-menu>
                       </v-flex>
                       <v-flex xs12>
-                          <v-layout class="my-2 px-2 " style="background:#7b9fe042; border-radius:3px; color:#9e9e9e; max-width: fit-content;">
-
-              <span style="color:#EC6772; font-weight: bold;">Created by : &nbsp; </span> {{reminder.created_by }} |&nbsp; <span style="color:#EC6772; font-weight: bold;">Modified by : &nbsp; </span> {{reminder.last_update_by}}
-              </v-layout>
-                      </v-flex>
-            </v-layout>
+              <div class="my-2 px-2 d-flex" style="background:#7b9fe042; border-radius:3px; color:#9e9e9e; max-width: fit-content;">
+                <span style="color:#EC6772; font-weight: bold;">Created by : &nbsp; </span> {{reminder.created_by }} |&nbsp; <span style="color:#EC6772; font-weight: bold;">Modified by : &nbsp; </span> {{reminder.last_update_by}}
+              </div>
+            </v-flex>
+            </div>
         </v-flex>
-    </v-layout>
+    </div>
     <v-dialog v-model="dialog" class="" persistent max-width="800px">
       <v-card class="mediumDialog">
         <v-card-title class="pb-0">
-          <v-layout>
+          <div class="d-flex">
             <v-flex v-if="this.mediumSelected !== '' && (!editView || editView && testEmailData || testSmsData)" style="margin-top:-10px;">
           <v-btn flat icon @click="back();" >
             <v-icon  style="font-size:12px;" small class="">fas fa-arrow-left</v-icon>
@@ -174,19 +172,18 @@
             <v-icon  style="font-size:12px;" small class="">fas fa-times</v-icon>
             </v-btn>
             </v-flex>
-          </v-layout>
+          </div>
         </v-card-title>
         <v-card-text class="pb-0">
           <div v-if="this.mediumSelected === '' && !this.testEmailData && !this.testSmsData">
             <h3>Choose distribution channel</h3>
-            <v-layout row wrap style="border-bottom: 1px solid grey">
+            <div class="d-flex flex-row flex-wrap" style="border-bottom: 1px solid grey">
               <v-flex @click="selectedMedium('email')" xs6 style="border-right: 1px solid grey;  cursor: pointer;">
-                <v-layout>
+                <div class="d-flex w-100">
                     <v-flex sm1 class="mr-0 ml-3 mt-5 pt-2">
                         <v-radio :value='reminder.chooseRadio' v-model="reminder.chooseRadio"></v-radio>
                     </v-flex>
                   <v-flex xs3 class="py-4 pr-2">
-
                     <v-icon large color="#4c3e9d" class="audience-icon"> flaticon-006-email </v-icon>
                   </v-flex>
                   <v-flex class="py-4 px-2">
@@ -194,10 +191,10 @@
                     <small v-if="this.reminder.type === 'automated'">Use email as a channel to enable system generated reminders and the frequency.</small>
                     <small v-else>Send reminder emails to the employees who have not completed the campaign.</small>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
               <v-flex @click="selectedMedium('sms')" style=" cursor: pointer;" xs6>
-                <v-layout>
+                <div class="d-flex">
                     <v-flex sm1 class="mr-0 ml-3 mt-5 pt-2">
                         <v-radio v-model="reminder.chooseRadio1" value="top"></v-radio>
                     </v-flex>
@@ -209,12 +206,12 @@
                     <small v-if="this.reminder.type === 'automated'">Use SMS as a channel to enable system generated reminders and the frequency.</small>
                     <small v-else>Use SMS to remind employees to participate in the campaign.</small>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap >
+            </div>
+            <div class="d-flex flex-row flex-wrap">
               <v-flex xs6 style="border-right: 1px solid grey">
-                <v-layout>
+                <div class="d-flex">
                     <v-flex sm1 class="mr-0 ml-3 mt-5 pt-2">
                         <v-radio disabled v-model="reminder.chooseRadio" value="top"></v-radio>
                     </v-flex>
@@ -227,10 +224,10 @@
                     <small v-else>Remind the employees to complete the campaign using Whatsapp.</small>
                     <h5 style='color:#4c3e9d'>Cooming soon</h5>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
               <v-flex xs6>
-                <v-layout>
+                <div class="d-flex">
                     <v-flex sm1 class="mr-0 ml-3 mt-5 pt-2">
                         <v-radio disabled v-model="reminder.chooseRadio" value="top"></v-radio>
                     </v-flex>
@@ -243,12 +240,12 @@
                     <small v-else>Follow up with employees who have not responded using Slack.</small>
                     <h5 style='color:#4c3e9d'>Cooming soon</h5>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
-            </v-layout>
+            </div>
           </div>
           <v-container v-if="this.mediumSelected !== '' && !this.testEmailData && !this.testSmsData" class="pt-0 reminderEditor" grid-list-md>
-            <v-layout wrap>
+            <div class="d-flex flex-row flex-wrap">
               <v-flex sm6>
                 <v-select
                   solo
@@ -375,11 +372,10 @@
                 :error-messages="errors.collect('body')"
                 ></v-textarea>
               </v-flex>
-            </v-layout>
+            </div>
           </v-container>
           <v-container v-if="this.testEmailData || this.testSmsData" class="pt-0 reminderEditor" grid-list-md>
-            <v-layout wrap>
-
+            <div class="d-flex flex-row flex-wrap">
               <v-flex sm6>
                   <v-text-field
                   placeholder="Enter first name"
@@ -420,7 +416,7 @@
                     name="mobile"
                 ></v-text-field>
               </v-flex>
-            </v-layout>
+            </div>
           </v-container>
         </v-card-text>
         <v-card-actions class="px-4">
@@ -460,55 +456,55 @@
       <v-card v-if="mediumSelected === 'email'"  class="previewDialogemail" style="min-height:375px; background-color: transparent; box-shadow:none;">
         <v-card-text style="max-height:500px; min-height:350px;">
             <div style="max-height:450px; overflow-y:auto;overflow-x:hidden;">
-                <v-layout>
+                <div class="d-flex">
                     <v-flex xs12>
                         <v-btn icon flat style="float:right;" @click="closeEmailPreview()">
                             <v-icon style="font-size:12px;">fas fa-times
                             </v-icon>
                         </v-btn>
                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;">
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;">
                     <v-flex xs2>
                         <p>From : </p>
                     </v-flex>
-                     <v-flex xs9>
-                        <p>test@hirexp.com</p>
-                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;">
+                    <v-flex xs9>
+                      <p>test@hirexp.com</p>
+                    </v-flex>
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;">
                     <v-flex xs2>
                         <p>To : </p>
                     </v-flex>
                     <v-flex xs9>
-                        <p>amara@hirexp.com</p>
-                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;">
+                      <p>amara@hirexp.com</p>
+                    </v-flex>
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;">
                     <v-flex xs2>
                         <p>Date : </p>
                     </v-flex>
                     <v-flex xs9>
                         <p>{{currentTime}}</p>
-                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;">
+                    </v-flex>
+                </div>
+                <div class="d-flex" style="padding: 0px 40px;">
                     <v-flex xs2>
                         <p>Subject :</p>
                     </v-flex>
                     <v-flex xs9>
                         <p>{{reminder.subject}}</p>
-                     </v-flex>
-                </v-layout>
-                <v-layout  style="padding: 0px 40px;" wrap row>
+                    </v-flex>
+                </div>
+                <div class="d-flex flex-row flex-wrap" style="padding: 0px 40px;">
                     <v-flex xs12>
                         <p>Body :</p>
                     </v-flex>
                     <v-flex xs12 style="text-align:center">
                         <p style="overflow-wrap: break-word; text-align:left" v-html="this.bodyEmail"></p><br>
-                          <a href="#">Click here to start chat</a><br>
-                     </v-flex>
-                </v-layout>
+                        <a href="#">Click here to start chat</a><br>
+                    </v-flex>
+                </div>
             </div>
         </v-card-text>
         <v-card-actions class="px-5 pb-4">

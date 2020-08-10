@@ -1,22 +1,22 @@
 <template>
-  <v-layout row wrap px-2 class="companyprofile">
-    <v-flex px-2 class="">
+  <div class="companyprofile px-2 d-flex flex-row flex-wrap">
+    <v-flex class="px-2">
       <v-subheader class="py-0 px-0">
         <v-flex>
-            <strong  class="py-2 px-2"  style=" font-size:18px; color:grey;">
-              Company Profile
-            </strong>
+          <strong  class="py-2 px-2"  style=" font-size:18px; color:grey;">
+            Company Profile
+          </strong>
         </v-flex>
-        <v-flex text-sm-right>
+        <v-flex class="text-sm-right">
           <v-btn color="primary"
-          flat
+            text
             v-show="!config.editable"
             :disabled="!checkPermission(['update_company_profile'])"
             @click="editCompany();"
           >
             <v-icon class="mr-2" small>fas fa-edit</v-icon>edit
           </v-btn>
-          <v-btn flat color="error"
+          <v-btn text color="error"
             v-show="config.editable"
             @click="closeEditable()"
           >cancel
@@ -31,9 +31,9 @@
           </v-btn>
         </v-flex>
       </v-subheader>
-      <v-layout row wrap px-1 py-2>
-        <v-layout row wrap>
-          <v-flex sm4 px-2 text-xs-center>
+      <div class="d-flex flex-row flex-wrap px-1 py-2">
+        <div class="d-flex flex-row flex-wrap w-100">
+          <v-flex sm4 class="px-2 text-center">
             <v-avatar
               class="pa-2"
               v-if="!config.editable"
@@ -49,15 +49,12 @@
                 aspect-ratio="1"
                 style="background-color:transarent;"
               >
-                <v-layout
+                <div
                   slot="placeholder"
-                  fill-height
-                  align-center
-                  justify-center
-                  ma-0
+                  class="d-flex flex-row flex-wrap align-center justify-center fill-height ma-0"
                 >
                   <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                </v-layout>
+                </div>
               </v-img>
             </v-avatar>
             <v-avatar
@@ -69,13 +66,10 @@
                 id="logoUploader" @change="filesChange($event.target.files);"
                 accept="image/*" style="display: none;"
               >
-              <v-layout
+              <div
                 slot="placeholder"
                 @click="openFilePicker('logoUploader')"
-                class="cursor-pointer"
-                align-center
-                justify-center
-                ma-0
+                class="cursor-pointer d-flex flex-row flex-wrap align-center justify-center ma-0"
               >
                 <v-icon v-show="!config.logoPreview" class="mr-2">fas fa-upload</v-icon>
                 <span v-show="!config.logoPreview">Upload new logo</span>
@@ -90,39 +84,37 @@
                   style="background-color:transarent;"
                 ></v-img>
                 <span></span>
-              </v-layout>
+              </div>
             </v-avatar>
           </v-flex>
-          <v-flex sm8 px-4 v-show="!config.editable" text-xs-center>
+          <v-flex sm8 v-if="!config.editable" class="text-left px-4">
             <v-list two-line subheader class="transparent" v-show="!config.editable">
-                <v-list-tile-title style="font-size:30px; height:35px;">
-                  {{company.company_name}}
-                </v-list-tile-title>
-            <v-list-tile-sub-title class="text-sm-left" style="font-size:16px">
-              <span>Address : {{company.company_address}}</span>
-              <span v-if="company.company_address == null">-</span>
-            </v-list-tile-sub-title>
-            <v-list-tile-sub-title class="text-sm-left" style="font-size:16px">
-              <span>Company type : {{company.company_type}}</span>
-              <span v-if="company.company_address == null">-</span>
-            </v-list-tile-sub-title>
-            <v-list-tile-sub-title class="text-sm-left" style="font-size:16px">
-              <span>Strength : {{company.employee_strength}}</span>
-              <span v-if="company.company_address == null">-</span>
-            </v-list-tile-sub-title>
-            <v-list-tile-sub-title class="text-sm-left" style="font-size:16px">
-              <span>Brand name : {{company.brand_name}}</span>
-              <span v-if="company.company_address == null">-</span>
-            </v-list-tile-sub-title>
-            <v-list-tile-sub-title class="text-sm-left" style="font-size:16px">
-              <span>Country : {{company.country}}</span>
-              <span v-if="company.company_address == null">-</span>
-            </v-list-tile-sub-title>
-
+              <v-list-item-title style="font-size:30px; height:35px;">
+                {{company.company_name}}
+              </v-list-item-title>
+              <div class="text-sm-left" style="font-size:16px">
+                <span>Address : {{company.company_address}}</span>
+                <span v-if="company.company_address == null">-</span>
+              </div>
+              <div class="text-sm-left" style="font-size:16px">
+                <span>Company type : {{company.company_type}}</span>
+                <span v-if="company.company_address == null">-</span>
+              </div>
+              <div class="text-sm-left" style="font-size:16px">
+                <span>Strength : {{company.employee_strength}}</span>
+                <span v-if="company.company_address == null">-</span>
+              </div>
+              <div class="text-sm-left" style="font-size:16px">
+                <span>Brand name : {{company.brand_name}}</span>
+                <span v-if="company.company_address == null">-</span>
+              </div>
+              <div class="text-sm-left" style="font-size:16px">
+                <span>Country : {{company.country}}</span>
+                <span v-if="company.company_address == null">-</span>
+              </div>
             </v-list>
-
           </v-flex>
-          <v-flex sm7 px-2 v-show="config.editable" text-xs-center>
+          <v-flex sm7 v-if="config.editable" class="text-center px-2">
             <v-text-field
               maxlength="300"
               v-model="company.company_name"
@@ -205,16 +197,15 @@
             </v-text-field>
 
           </v-flex>
-        </v-layout>
-      </v-layout>
-      <v-layout row wrap px-1 py-2>
-        <v-card class="w-100  pt-2">
+        </div>
+      </div>
+      <div class="d-flex flex-row flex-wrap px-1 py-2">
+        <v-card class="w-100 pt-2">
           <strong style="padding:0 10px; font-size:18px; color:grey;">
-              Company details
+            Company details
           </strong>
-          <v-layout row wrap px-1>
-          <v-flex sm12 px-2>
-
+          <div class="d-flex flex-row flex-wrap px-1">
+          <v-flex sm12 class="px-2">
             <!-- <v-text-field
               maxlength="300"
               v-model="company.company_name"
@@ -242,7 +233,6 @@
               :outline="this.outline"
             >
             </v-text-field> -->
-
             <v-textarea
               style="min-height:100px;"
               maxlength="300"
@@ -266,18 +256,18 @@
               <VuePellEditor class="w-100" v-model="company.companyProfile" placeholder="Enter email description" />
             </v-card>
           </v-flex>
-          </v-layout>
+          </div>
         </v-card>
-      </v-layout>
+      </div>
 
       <!-- SPOC -->
-      <v-layout px-1 py-2>
+      <div class="d-flex flex-row flex-wrap px-1 py-2">
         <v-card class="w-100 pt-2">
           <strong style="padding:0 10px; font-size:18px; color:grey;">
-              SPOC details
+            SPOC details
           </strong>
-          <v-layout row wrap px-1>
-            <v-flex sm6 px-2>
+          <div class="d-flex flex-row flex-wrap px-1">
+            <v-flex sm6 class="px-2">
               <v-text-field
                 maxlength="300"
                 v-model="company.spoc_name"
@@ -307,7 +297,7 @@
               </v-text-field>
             </v-flex>
 
-            <v-flex sm6 px-2>
+            <v-flex sm6 class="px-2">
               <v-text-field
                 maxlength="300"
                 v-model="company.spoc_email"
@@ -322,12 +312,12 @@
               >
               </v-text-field>
             </v-flex>
-          </v-layout>
+          </div>
         </v-card>
-      </v-layout>
+      </div>
 
     </v-flex>
-  </v-layout>
+  </div>
 </template>
 
 <script>

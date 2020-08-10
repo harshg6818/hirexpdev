@@ -46,7 +46,7 @@
             :loading="table.loading"
             class="mb-3 b-top pt-2 audience-list"
             :pagination.sync="pagination"
-            :total-items="table.totalItems"
+            :server-items-length="table.totalItems"
             select-all
           >
             <template slot="headers" slot-scope="props">

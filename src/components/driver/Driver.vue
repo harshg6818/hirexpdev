@@ -1,13 +1,13 @@
 <template>
   <div class="">
-    <v-layout column class="bg-gradient py-0 pl-1">
+    <div class="bg-gradient py-0 pl-1 d-flex flex-column flex-wrap">
       <!-- Search Bar and Filters -->
-      <v-layout row wrap align-center style="border-bottom: 1px solid rgb(243, 241, 241);z-index:3;max-height:70px;">
+      <div style="border-bottom: 1px solid rgb(243, 241, 241);z-index:3;max-height:70px;" class="d-flex flex-row flex-wrap align-center">
         <v-flex xs2 class="mr-2">
           <v-btn class="elevation-0 ml-0 text-xs-right back-button"
             @click="goBack()"
             slot="activator"
-            flat fab
+            text fab
           >
             <v-icon> fas fa-arrow-left </v-icon>
           </v-btn>
@@ -39,20 +39,20 @@
           <v-icon style="font-size:16px; padding-right:10px;">fas fa-filter</v-icon> Filter
         </v-btn>
         </v-flex>
-      </v-layout>
+      </div>
 
       <!-- Dashboard -->
-      <v-layout row wrap>
+      <div class="d-flex flex-row flex-wrap">
         <v-flex xs12>
           <DriverOverview ref="DriverOverview" class="my-2" @updateEmpWithDriver="updateEmployeeWithDriverFilter"/>
         </v-flex>
-      </v-layout>
-      <v-layout row wrap>
+      </div>
+      <div class="d-flex flex-row flex-wrap">
         <v-flex xs12>
           <DriverEngagement ref="DriverEngagement" class="my-2" />
         </v-flex>
-      </v-layout>
-    </v-layout>
+      </div>
+    </div>
 
     <!-- <v-dialog v-model="showFilter" persistent max-width="65%" style="overflow-y: hidden;"> -->
     <v-navigation-drawer

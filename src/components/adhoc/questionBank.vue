@@ -14,10 +14,10 @@
             </v-tooltip>-->
           </h2>
           <p class="mb-3"> Click on a question type in the list on left hand side and then mark questions you want to copy from the list of questions on right hand side. </p>
-          <v-layout mx-2 mt-2 row wrap style="height:calc(100% - 50px)">
+          <div class="d-flex flex-row flex-wrap mx-2 mt-2" style="height:calc(100% - 50px)">
             <v-flex class="interactions pr-3" style="height:100%" v-if="config.initialLoading">
               <v-card class="elevation-0 mt-2 interaction-card" style="height:100%">
-                <v-layout style="height:100%">
+                <div class="d-flex" style="height:100%">
                   <v-flex xs4>
                     <ContentLoader
                       :height="50"
@@ -40,7 +40,7 @@
                       <rect x="0" y="0" rx="0" ry="0" width="48.46" height="25" />
                     </ContentLoader>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-card>
             </v-flex>
 
@@ -48,9 +48,9 @@
             <v-flex class="interactions pr-2" style="height:100%" v-if="!config.initialLoading">
               <v-card class="elevation-0 mt-2 interaction-card" style="height:100%">
 
-                <v-layout row wrap white class="drag-container" style="height:100%">
+                <div white class="d-flex flex-row flex-wrap drag-container" style="height:100%">
                   <v-flex xs12 style="height:100%">
-                    <v-layout v-if="table.questionTypes && table.questionTypes.length > 0" style="height:100%">
+                    <div class="d-flex" v-if="table.questionTypes && table.questionTypes.length > 0" style="height:100%">
                       <v-flex xs4 class="list-sections">
                         <div v-for="(qtype, qi) in table.questionTypes" class="pa-3 cursor-pointer b-bottom"
                         style="border-color:#f3f1f1" :key="qi"
@@ -84,7 +84,7 @@
                         <div v-for="(question, qi) in table.questions" class="py-2 px-3 d-inline-flex" :key="qi"
                         style="width:100%"
                         v-if="question.questions[0] && question.questions[0].text">
-                          <v-layout>
+                          <div class="d-flex">
                             <v-flex xs1>
                               <v-checkbox color="#4c3e9d" class="mt-0 mr-3 questions-custom-field no-margin" v-model="selectedQuestions[question.id]"
                               @change="updateQuestions(question)">
@@ -101,16 +101,16 @@
                                 {{question.type}}
                               </v-tooltip>
                             </v-flex>
-                          </v-layout>
+                          </div>
                         </div>
                       </v-flex>
-                    </v-layout>
+                    </div>
 
-                    <v-layout v-else>
+                    <div class="d-flex" v-else>
                       <v-flex xs12 class="">
                         <h2 class="mt-5 pt-5 px-4"> No Questions in the question bank </h2>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-flex>
 
                   <!--<v-flex class="b-left" xs3>
@@ -119,12 +119,12 @@
                       <p class="mb-3"> Click on a question type in the list on left hand side and then mark questions you want to copy from the list of questions on right hand side. </p>
                     </div>
                   </v-flex>-->
-                </v-layout>
+                </div>
 
               </v-card>
             </v-flex>
 
-          </v-layout>
+          </div>
         </v-card-text>
 
         <v-card-actions class="mt-4" align-content-space->

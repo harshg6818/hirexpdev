@@ -92,7 +92,7 @@
           }">
           <v-tab-item class="employeeToMeet" value="tab-snapshot-list" v-if="tabs.active === 'tab-snapshot-list'">
             <!-- Stats and Analysis -->
-            <v-layout row wrap class="mb-2"  v-show="stackedGraphs">
+            <div class="mb-2 d-flex flex-row flex-wrap" v-show="stackedGraphs">
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
                   <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading">
@@ -110,14 +110,14 @@
                     <p class="text-xs-center" style="font-weight:300;font-size:36px" v-if="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees > 0">
                       {{overall_disengaged_stats.disengaged_employees}}
                     </p>
-                    <v-layout row wrap align-center justify-center fill-height>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
                           <v-flex text-xs-center>
                             <strong v-show=" overall_disengaged_stats && overall_disengaged_stats.disengaged_employees == 0" class="body-2 font-weight-bold grey--text">
                               <p style="text-align:center; margin:0; font-size:20px;"> Yay! </p>
                               <p style="text-align:center; margin:0;"> You don’t have any disengaged employee </p>
                             </strong>
                           </v-flex>
-                      </v-layout>
+                      </div>
 
                     <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-if="overall_disengaged_stats && overall_disengaged_stats.employees_reached">
                       {{overall_disengaged_stats.disengaged_percentage}}% of {{overall_disengaged_stats.employees_reached}} employees spoken to are disengaged
@@ -132,13 +132,13 @@
                   </div>
 
                   <div style="height:170px" v-show="!overall_disengaged_stats || !overall_disengaged_stats.disengaged_employees">
-                    <v-layout row wrap align-center justify-center fill-height>
-                        <v-flex text-xs-center>
+                    <div class="d-flex flex-row flex-wrap justify-center align-center fill-height">
+                        <v-flex class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -181,13 +181,13 @@
                   </div>
 
                   <div style="height:170px" v-show="!resolved_disengaged_stats || !resolved_disengaged_stats.total_disengaged_employees">
-                    <v-layout row wrap align-center justify-center fill-height>
-                        <v-flex text-xs-center>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                        <v-flex class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -225,13 +225,13 @@
                   </div>
 
                   <div style="height:170px" v-show="!employee_to_meet_stats || !employee_to_meet_stats.total_employees_to_meet">
-                    <v-layout row wrap align-center justify-center fill-height>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
                         <v-flex text-xs-center>
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -268,13 +268,13 @@
                   </div>
 
                   <div style="height:170px" v-show="!disengaged_exited_employee_stats || !disengaged_exited_employee_stats.total_exited_employee">
-                    <v-layout row wrap align-center justify-center fill-height>
+                    <div class="d-flex flex-row flex-wrap align-center fill-height justify-center">
                         <v-flex text-xs-center>
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                    </v-layout>
+                    </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -286,9 +286,9 @@
                   ref="lineChart">
                 </vue-anychart>
               </div>-->
-            </v-layout>
+            </div>
 
-            <v-layout row wrap class="mb-2"  v-show="!stackedGraphs">
+            <div class="mb-2 d-flex flex-row flex-wrap" v-show="!stackedGraphs">
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
                   <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading">
@@ -300,13 +300,13 @@
                   </p>
 
                   <div style="height:170px">
-                    <v-layout row wrap align-center justify-center fill-height>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
                         <v-flex text-xs-center>
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                    </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -319,13 +319,13 @@
                   </p>
 
                   <div style="height:170px">
-                    <v-layout row wrap align-center justify-center fill-height>
-                        <v-flex text-xs-center>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                        <v-flex class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -338,13 +338,13 @@
                   </p>
 
                   <div style="height:170px">
-                    <v-layout row wrap align-center justify-center fill-height>
-                        <v-flex text-xs-center>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                        <v-flex class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                      </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -357,17 +357,17 @@
                   </p>
 
                   <div style="height:170px">
-                    <v-layout row wrap align-center justify-center fill-height>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
                         <v-flex text-xs-center>
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
                         </v-flex>
-                      </v-layout>
+                    </div>
                   </div>
                 </v-card>
               </v-flex>
-            </v-layout>
+            </div>
 
             <!-- Disengaged Drivers Breakdown -->
             <!-- <v-layout class="bg-white mb-0">
@@ -376,7 +376,7 @@
               </p>
             </v-layout>-->
 
-            <v-layout class="my-2" row wrap>
+            <div class="my-2 d-flex flex-row flex-wrap">
               <v-flex sm6>
               <!-- <div class="disengaged-employees-cards donut-charts"
                 v-for="i in 3" :key="i">
@@ -414,7 +414,7 @@
                       >
                         <v-card class="pa-2 elevation-0">
                           <div class="slide-content">
-                            <v-layout row wrap>
+                            <div class="d-flex flex-row flex-wrap">
                               <v-flex xs3>
                                 <v-tooltip bottom>
                                   <p class="heading-b mb-0" slot="activator">
@@ -427,32 +427,32 @@
                                 0.6 above
                                 <v-icon color="success">fas fa-long-arrow-alt-up</v-icon>
                               </v-flex>-->
-                            </v-layout>
+                            </div>
                             <p class="mb-3 mt-1  driver-title heading" style="min-height:50px;">
                               <span class="heading" v-if="d.driver"> {{d.driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} </span>
                             </p>
                             <v-divider class="mb-2"></v-divider>
                             <span class="caption" style="color:rgba(0,0,0,0.5) !important;">Subdriver Score</span>
                             <v-list class="pa-0 subdrivers-list">
-                              <v-list-tile
+                              <v-list-item
                                 class="subdriver-tile"
                                 v-for="(v, k) in d.sub_drivers"
                                 :key="k"
                               >
-                                <v-layout row wrap>
+                                <div class="d-flex flex-row flex-wrap">
                                   <v-flex xs9 class="overflow-wrap mr-2">
-                                    <v-list-tile-title class="text-capitalize">
+                                    <v-list-item-title class="text-capitalize">
                                       <span style="font-size:13px !important;" v-if="k"> {{k.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} </span>
-                                    </v-list-tile-title>
+                                    </v-list-item-title>
                                   </v-flex>
                                   <v-flex xs2 class="mr-2">
-                                    <v-list-tile-action style="font-size:13px !important;align-items:flex-end;" class="text-xs-right "
+                                    <v-list-item-action style="font-size:13px !important;align-items:flex-end;" class="text-xs-right "
                                     :style="`min-width:unset;border-bottom: 2px solid #f44336;border-color: ${getEngagementColor(v)} `">
                                       {{v}}
-                                    </v-list-tile-action>
+                                    </v-list-item-action>
                                   </v-flex>
-                                </v-layout>
-                              </v-list-tile>
+                                </div>
+                              </v-list-item>
                             </v-list>
                             <v-divider></v-divider>
                             <p class="mb-1 mt-2 heading-b">
@@ -476,17 +476,17 @@
                     </swiper>
                   </div>
 
-                  <div justify-center fill-height v-if="!disengagedDrivers || !disengagedDrivers.length" style="height:450px">
+                  <div class="align-center justify-center" v-if="!disengagedDrivers || !disengagedDrivers.length" style="height:450px">
                     <p class="py-3 score-card text-xs-center mb-0 heading" >
                       Top 3 drivers leading to disengagement at {{user.company_name}}
                     </p>
-                    <v-layout class="" style="height:390px">
-                      <v-flex text-xs-center align-self-center>
+                    <div class="d-flex flex-row" style="height:390px">
+                      <v-flex class="text-center align-self-center">
                         <strong class="body-2 font-weight-bold grey--text">
                           Not enough data to generate analysis
                         </strong>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </div>
                 </v-card>
               </div>
@@ -497,24 +497,23 @@
                     Average Resolution Time (Days)
                   </p>
                   <div id="monthwise_art" v-if="monthwise_art && monthwise_art.length > 0"></div>
-                  <v-layout class="" v-else style="height:390px">
-                    <v-flex text-xs-center align-self-center>
+                  <div class="d-flex flex-row" v-else style="height:390px">
+                    <v-flex class="text-center align-self-center">
                       <strong class="body-2 font-weight-bold grey--text">
                         Not enough data to generate analysis
                       </strong>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-card>
               </v-flex>
-            </v-layout>
+            </div>
 
-            <v-layout class="bg-white mb-0">
-              <p class="text-xs-center w-100 py-3 text-capitalize heading mb-0
-               ">
+            <div class="bg-white mb-0 d-flex flex-row">
+              <p class="text-xs-center w-100 py-3 text-capitalize heading mb-0">
                 Cases Resolution Insights
               </p>
-            </v-layout>
-            <v-layout class="caseResolution">
+            </div>
+            <div class="caseResolution d-flex flex-row">
               <v-data-table
               :headers="headers"
               :items="casesResolutions"
@@ -522,21 +521,20 @@
               class="elevation-1 w-100"
               :rows-per-page-items="[10, 15, 20]"
               >
-                <template slot="items" slot-scope="props">
-                  <tr class="py-2">
-                    <td class="text-xs-left">
-                      <p class="mb-0"> {{ props.item.user_name }} </p>
-                      <small class="text-muted grey--text"> {{ props.item.user_email }} </small>
+                <template v-slot:body="{items}">
+                  <tr class="py-2" v-for="(item, index) in items" :key="index">
+                    <td class="text-left">
+                      <p class="mb-0"> {{ item.user_name }} </p>
+                      <small class="text-muted grey--text"> {{ item.user_email }} </small>
                     </td>
-                    <td class="text-xs-center">{{ props.item.total }}</td>
-                    <td class="text-xs-center">{{ props.item.resolved }}</td>
-                    <td class="text-xs-center">{{ props.item.open }}</td>
-                    <td class="text-xs-center">{{ Math.round(props.item.average_resolution_time * 100) / 100 }}</td>
+                    <td class="text-xs-center">{{ item.total }}</td>
+                    <td class="text-xs-center">{{ item.resolved }}</td>
+                    <td class="text-xs-center">{{ item.open }}</td>
+                    <td class="text-xs-center">{{ Math.round(item.average_resolution_time * 100) / 100 }}</td>
                   </tr>
                 </template>
               </v-data-table>
-            </v-layout>
-
+            </div>
           </v-tab-item>
 
           <v-tab-item class="employeeToMeet" value="tab-disengaged-list" v-show="tabs.active === 'tab-disengaged-list'">
@@ -549,10 +547,10 @@
               class="employee-list"
               id="employee-list"
             >
-              <template slot="items" slot-scope="props">
-                <tr v-if="props.item" class="employeeTableRow">
+              <template v-slot:body="{items}">
+                <tr v-for="(item, index) in items" :key="index" class="employeeTableRow">
                   <td style="width:14%">
-                    <v-layout row wrap align-center>
+                    <div class="d-flex flex-row flex-wrap align-center">
                       <!-- <v-flex class="py-2" sm3>
                         <v-avatar size="30px" :color="getColor(props.item)">
                           <img src="src" alt="alt" v-show="false">
@@ -560,31 +558,31 @@
                         </v-avatar>
                       </v-flex> -->
                       <v-flex>
-                        <p class="mb-0" v-show="props.item.user_display_name || props.item.user__display_name">
+                        <p class="mb-0" v-show="item.user_display_name || item.user__display_name">
                           <span :class="{'hover-link cursor-pointer': $route.name !== 'ViewAdhoc'}"
-                          @click="viewEmployee(props.item);">
-                            {{props.item.user_display_name || props.item.user__display_name}}
+                          @click="viewEmployee(item);">
+                            {{item.user_display_name || item.user__display_name}}
                           </span>
                         </p>
                         <!-- <small class="text-truncate" style=" max-width: 120px; display: inline-block;">
                           {{props.item.email || props.item.user__email || props.item.user_email}}
                         </small> -->
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </td>
                   <td style="width:14%">
-                    <p class="mb-0" v-if="props.item.stage_title">
-                      {{props.item.stage_title || props.item.stage__title}}
+                    <p class="mb-0" v-if="item.stage_title">
+                      {{item.stage_title || item.stage__title}}
                     </p>
                     <p class="mb-0" v-else>
                       -
                     </p>
                   </td>
                   <td style="width:14%">
-                    <p class="" v-if="(props.item.completedAt && props.item.completedAt !== 'None')">
-                      {{dayjs(props.item.completedAt).from()}}
+                    <p class="" v-if="(item.completedAt && item.completedAt !== 'None')">
+                      {{dayjs(item.completedAt).from()}}
                     </p>
-                    <p v-if="(!props.item.completedAt || props.item.completedAt === 'None') && !activeDriver"
+                    <p v-if="(!item.completedAt || item.completedAt === 'None') && !activeDriver"
                     class="font-weight-bold grey--text">
                       -
                     </p>
@@ -607,7 +605,7 @@
                     }" class="ma-0" outline small v-if="props.item.driverAverage">{{props.item.driverAverage}}
                     </v-chip>-->
 
-                    <span class="" v-if="props.item.driverAverage"> {{props.item.driverAverage.toFixed(1)}} </span>
+                    <span class="" v-if="item.driverAverage"> {{item.driverAverage.toFixed(1)}} </span>
                     <span class="font-weight-bold grey--text" v-else>-</span>
                   </td>
                   <td class="text-xs-left px-0" style="width:15%" @click.stop v-if="!activeDriver">
@@ -623,17 +621,17 @@
                         :disabled="config.loading"
                         :loading="config.loading"
                         :class="{
-                          'primary primary--text': props.item.action_status === 'open',
-                          '#37b99c amara--text': props.item.action_status === 'scheduled',
-                          'info info--text': props.item.action_status === 'inProgress',
-                          'success success--text': props.item.action_status === 'resolved',
-                          'deep-orange deep-orange--text': props.item.action_status === 'acknowledged',
+                          'primary primary--text': item.action_status === 'open',
+                          '#37b99c amara--text': item.action_status === 'scheduled',
+                          'info info--text': item.action_status === 'inProgress',
+                          'success success--text': item.action_status === 'resolved',
+                          'deep-orange deep-orange--text': item.action_status === 'acknowledged',
                         }"
                         style="width:110px !important;height:40px !important;"
                         slot="activator"
                         class="status-chip elevation-0 mr-0 text-capitalize"
                         outline
-                        @click="config.actionMenu[props.item.id] = !config.actionMenu[props.item.id]"
+                        @click="config.actionMenu[item.id] = !config.actionMenu[item.id]"
                       >
                         <!--<v-icon class="mr-2" v-show="props.item.action_status === 'open'">
                           fas fa-exclamation-triangle
@@ -647,7 +645,7 @@
                         <v-icon class="mr-2" v-show="props.item.action_status === 'inProgress'">
                           flaticon-047-conversation
                         </v-icon>-->
-                        {{props.item.action_status}}
+                        {{item.action_status}}
                       </v-chip>
                       Current Status
                     </v-tooltip>
@@ -656,17 +654,17 @@
                       bottom
 
                     >
-                      <v-menu offset-y slot="activator" v-model="config.actionMenu[props.item.id]">
+                      <v-menu offset-y slot="activator" v-model="config.actionMenu[item.id]">
                         <v-btn
                           slot="activator"
                           :disabled="config.loading"
                           icon
                           :class="{
-                            'primary primary--text': props.item.action_status === 'open',
-                            '#37b99c amara--text': props.item.action_status === 'scheduled',
-                            'info info--text': props.item.action_status === 'inProgress',
-                            'success success--text': props.item.action_status === 'resolved',
-                            'deep-orange deep-orange--text': props.item.action_status === 'acknowledged',
+                            'primary primary--text': item.action_status === 'open',
+                            '#37b99c amara--text': item.action_status === 'scheduled',
+                            'info info--text': item.action_status === 'inProgress',
+                            'success success--text': item.action_status === 'resolved',
+                            'deep-orange deep-orange--text': item.action_status === 'acknowledged',
                           }"
                           class="dropdown-chip ml-0 b-left"
                           style="height:40px !important;"
@@ -675,15 +673,15 @@
                           <v-icon>fas fa-caret-down</v-icon>
                         </v-btn>
                         <v-list>
-                          <v-list-tile v-for="(item, i) in config.actions" :key="i"
-                          v-if="props.item.action_status !== item.status"
-                          @click="item.action(props.item, item.dialog || item.status)"
+                          <v-list-item v-for="(item, i) in config.actions" :key="i"
+                          v-if="item.action_status !== item.status"
+                          @click="item.action(item, item.dialog || item.status)"
                           :disabled="!item.action || !checkPermission(item.permission)">
-                            <v-list-tile-title>
+                            <v-list-item-title>
                               <v-icon class="mr-2">{{item.icon}}</v-icon>
                               {{ item.title }}
-                            </v-list-tile-title>
-                          </v-list-tile>
+                            </v-list-item-title>
+                          </v-list-item>
                         </v-list>
                       </v-menu>
                       Update status of this employee
@@ -719,38 +717,38 @@
                     ></v-select> -->
 
                     <v-chip
-                      :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || props.item.action_status === 'Na'"
+                      :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
                       slot="activator"
                       class="status-chip elevation-0 mr-0 text-capitalize assign-to-select"
                       style="width:110px !important;border: 1px solid #4c409d;height:40px !important;"
                       outline
                     >
-                      <span v-if="props.item.assignedTo_display_name">{{props.item.assignedTo_display_name}}</span>
+                      <span v-if="item.assignedTo_display_name">{{item.assignedTo_display_name}}</span>
                       <span v-else> Not assigned </span>
                     </v-chip>
 
                     <v-menu offset-y slot="activator">
                         <v-btn
                           slot="activator"
-                          :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || props.item.action_status === 'Na'"
+                          :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
                           icon
                           class="dropdown-chip ml-0 b-left"
                           small outline
                           style="border: 1px solid #4c409d;height:40px !important;"
                         >
-                          <v-icon @click="getAdminUsers(props.item)">fas fa-caret-down</v-icon>
+                          <v-icon @click="getAdminUsers(item)">fas fa-caret-down</v-icon>
                         </v-btn>
                         <v-list v-if="getAdminUsersList && getAdminUsersList.length > 0">
-                          <v-list-tile v-for="(item, i) in getAdminUsersList" :key="i" @click="updateStatus(props.item, null, item.user_id)">
-                            <v-list-tile-title>
+                          <v-list-item v-for="(item, i) in getAdminUsersList" :key="i" @click="updateStatus(item, null, item.user_id)">
+                            <v-list-item-title>
                               {{ item.display_name }}
-                            </v-list-tile-title>
-                          </v-list-tile>
+                            </v-list-item-title>
+                          </v-list-item>
                         </v-list>
                       </v-menu>
                   </td>
                   <td class="text-xs-left px-0" style="width:14%">
-                    <v-btn flat outline class="text-capitalize btn-text" color="primary" style="" @click.stop="viewEmployee(props.item);"> View employee </v-btn>
+                    <v-btn text outlined class="text-capitalize btn-text" color="primary" style="" @click.stop="viewEmployee(item);"> View employee </v-btn>
                   </td>
                 </tr>
               </template>
@@ -778,13 +776,13 @@
               <v-alert slot="no-data" :value="true" color="#fff" outline>
                 <span>
                   <div style="height:300px">
-                    <v-layout row wrap align-center justify-center fill-height>
-                      <v-flex text-xs-center>
+                    <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                      <v-flex class="text-center">
                         <strong class="body-2 font-weight-bold grey--text">
                           Not enough data to generate analysis
                         </strong>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </div>
                 </span>
               </v-alert>

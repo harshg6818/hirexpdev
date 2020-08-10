@@ -1,8 +1,10 @@
 <template>
   <div class="followUp amara-followup-tab">
-          <aside  style="background:#fff; min-height:100%; padding:10px " >
-        <v-layout style=" padding-left:10px; min-height:69vh" row class="">
-          <v-flex style="background:#f3f6fa; position: -webkit-sticky; position: sticky; top: 0;" xs3>
+      <aside style="background:#fff; min-height:100%; padding:10px " >
+        <div style="padding-left:10px; min-height:69vh" class="flex-row flex-wrap layout">
+          <v-row>
+            <v-col cols="3">
+              <v-flex style="background:#f3f6fa; position: -webkit-sticky; position: sticky; top: 0;">
             <v-list style="background:#f3f6fa;"  class=''>
               <template v-for="(item, index) in items" ref="items">
                 <v-subheader v-if="item.header" :key="index">{{ item.header }}</v-subheader>
@@ -23,13 +25,17 @@
               </template>
             </v-list>
           </v-flex>
-          <v-flex class="settings-left-flex px-2" style="background:#f3f6fa; min-height:100vh-200px;  margin-left:10px; margin-right:10px" xs9>
-            <Reminder ref="Reminder" v-if="tab == 'tab-reminder' || !tab " />
-            <Acknowledgment ref="Acknowledgment" v-if="tab == 'tab-acknowledgment' "/>
-          </v-flex>
-        </v-layout>
-        <v-layout>
-        </v-layout>
+            </v-col>
+            <v-col cols="9">
+              <v-flex class="settings-left-flex px-2" style="background:#f3f6fa; min-height:100vh-200px;  margin-left:10px; margin-right:10px">
+                <Reminder ref="Reminder" v-if="tab == 'tab-reminder' || !tab " />
+                <Acknowledgment ref="Acknowledgment" v-if="tab == 'tab-acknowledgment' "/>
+              </v-flex>
+            </v-col>
+          </v-row>
+        </div>
+        <!-- <v-layout>
+        </v-layout> -->
       </aside>
   </div>
 </template>

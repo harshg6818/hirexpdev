@@ -7,31 +7,31 @@
     <v-card>
       <v-card-text>
         <h2 class="mb-3"> Send campaign </h2>
-        <v-layout class="mb-2">
-          <v-flex xs12 text-xs-center>
+        <div class="mb-2 d-flex">
+          <v-flex xs12 class="text-center">
             <v-icon large color="#4c3e9d" style="font-size:800px" class="audience-icon"> fa fa-rocket </v-icon>
           </v-flex>
-        </v-layout>
-        <v-layout>
-          <v-flex xs12 text-xs-center class="mt-4">
+        </div>
+        <div class="d-flex">
+          <v-flex xs12 class="text-center mt-4">
             <h3> We are about to take off </h3>
             <!-- <h4> {{totalAudienceCount}} recipients </h4> -->
           </v-flex>
-        </v-layout>
+        </div>
 
       </v-card-text>
       <v-card-actions class="mt-3 mb-3" align-content-space->
-        <v-layout row wrap>
-          <v-flex xs6 text-xs-left class="pl-3">
+        <div class="d-flex flex-wrap flex-row">
+          <v-flex xs6 class="pl-3 text-left">
             <v-btn color="error" flat @click.stop="dialogs.confirmTrigger=false;">Close</v-btn>
           </v-flex>
-          <v-flex xs6 text-xs-right class="pr-3">
+          <v-flex xs6 class="pr-3 text-right">
             <v-btn color="adhoc" class="white--text"
               @click.stop="confirm()">
               Confirm
             </v-btn>
           </v-flex>
-        </v-layout>
+        </div>
       </v-card-actions>
     </v-card>
   </v-dialog>

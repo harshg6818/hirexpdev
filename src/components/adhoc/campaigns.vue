@@ -14,11 +14,10 @@
             </v-tooltip>-->
           </h2>
           <p class="mb-3"> Hover through the campaign list, click to select, questions appear on the right side simply mark them to copy. </p>
-          <v-layout mx-2 mt-2 row wrap style="height:calc(100% - 50px)">
-
+          <div style="height:calc(100% - 50px)" class="mx-2 mt-2 d-flex flex-row flex-wrap">
             <v-flex class="interactions pr-2" style="height:100%" v-if="config.initialLoading">
               <v-card class="elevation-0 mt-2 interaction-card" style="height:100%">
-                <v-layout style="height:100%">
+                <div style="height:100%" class="d-flex">
                   <v-flex xs4>
                     <ContentLoader
                       :height="34.5"
@@ -41,17 +40,16 @@
                       <rect x="0" y="0" rx="0" ry="0" width="48.46" height="25" />
                     </ContentLoader>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-card>
             </v-flex>
 
             <!-- Area to add elements -->
             <v-flex class="interactions pr-3" style="height:100%" v-if="!config.initialLoading">
               <v-card class="elevation-0 mt-2 interaction-card" style="height:100%">
-
-                <v-layout row wrap white class="drag-container" style="height:100%">
+                <div white class="drag-container d-flex flex-row flex-wrap" style="height:100%">
                   <v-flex xs12 style="height:100%">
-                    <v-layout v-if="table.stage && table.stage.length > 0" style="height:100%">
+                    <div v-if="table.stage && table.stage.length > 0" style="height:100%" class="d-flex">
                       <v-flex xs4 class="list-sections">
                         <div v-for="(campaign, ci) in table.stage" class="pa-3 cursor-pointer" :key="ci"
                         v-if="$route.params.stageId !== campaign.id"
@@ -86,9 +84,10 @@
                         </div>
 
                         <div v-for="(question, qi) in table.questions" class="py-2 px-3 d-inline-flex"
-                        style="width:100%" :key="qi"
-                        v-if="question.questions[0] && question.questions[0].text">
-                          <v-layout>
+                          style="width:100%" :key="qi"
+                          v-if="question.questions[0] && question.questions[0].text"
+                        >
+                          <div class="d-flex">
                             <v-flex xs1>
                               <v-checkbox color="#4c3e9d" class="mt-0 mr-3 questions-custom-field" v-model="selectedQuestions[question.interaction_id]"
                               @change="updateQuestions(question)">
@@ -105,7 +104,7 @@
                                 <span> {{question.type}} </span>
                               </v-tooltip>
                             </v-flex>
-                          </v-layout>
+                          </div>
                         </div>
                         <!--<div v-if="!table.questions || !table.questions.length">
                           <v-flex xs12 class="">
@@ -113,13 +112,13 @@
                           </v-flex>
                         </div>-->
                       </v-flex>
-                    </v-layout>
+                    </div>
 
-                    <v-layout v-else>
+                    <div class="d-flex" v-else>
                       <v-flex xs12 class="">
                         <h2 class="mt-5 pt-5 px-4"> No campaigns created </h2>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-flex>
 
                   <!--<v-flex class="b-left" xs3>
@@ -128,12 +127,12 @@
                       <p class="mb-3"> Click on a campaign name in the campaigns list on left hand side and then mark questions you want to copy from the list of questions on right hand side. </p>
                     </div>
                   </v-flex>-->
-                </v-layout>
+                </div>
 
               </v-card>
             </v-flex>
 
-          </v-layout>
+          </div>
         </v-card-text>
 
         <v-card-actions class="mt-4" align-content-space->
@@ -142,7 +141,7 @@
           </v-flex>
           <v-flex xs8>
           </v-flex>
-          <v-flex text-xs-right class="mr-3" xs2>
+          <v-flex class="mr-3 text-right" xs2>
             <v-btn color="adhoc" class="white--text" @click.stop="addQuestions()"> Import Questions</v-btn>
           </v-flex>
         </v-card-actions>

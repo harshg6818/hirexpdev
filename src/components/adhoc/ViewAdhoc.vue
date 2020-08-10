@@ -1,7 +1,7 @@
 <template>
   <div class="adhoc-app">
-    <v-layout column class="">
-      <v-layout class="py-2" row wrap align-center style="border-bottom:1px solid rgb(243, 241, 241)">
+    <div column class="d-flex flex-column">
+      <div class="py-2 d-flex flex-row flex-wrap align-center" style="border-bottom:1px solid rgb(243, 241, 241)">
         <v-flex xs1 style="border-right:1px solid rgb(243, 241, 241);max-width:5%">
           <v-tooltip bottom>
             <v-btn class="elevation-0 ml-0 text-xs-right back-button"
@@ -63,7 +63,6 @@
               <v-date-picker v-model="scheduleEndDate" no-title
               @input="menu.date = false"></v-date-picker>
             </v-menu>
-
           </div>
         </v-flex>
 
@@ -143,10 +142,10 @@
               &nbsp; &nbsp; Create new group
           </v-btn>
         </v-flex>-->
-      </v-layout>
+      </div>
 
-      <v-layout column class="hide-overflow">
-        <v-layout row wrap mt-0 pt-3 style="border-bottom:1px solid rgb(243, 241, 241);">
+      <div class="hide-overflow d-flex flex-column">
+        <div style="border-bottom:1px solid rgb(243, 241, 241);" class="d-flex flex-row flex-wrap mt-0 pt-3">
 
           <v-flex xs10 class="ml-4">
             <v-tabs
@@ -154,8 +153,9 @@
               v-model="config.activeTab"
               centered
               class="text-xs-center px-0 stepper-step-title"
-              color="transparent"
+              color="primary"
               slider-color="#4c3e9d"
+              height="fill-height"
             >
               <v-tab
                 class="stepper-step"
@@ -169,9 +169,9 @@
             </v-tabs>
           </v-flex>
 
-        </v-layout>
+        </div>
 
-        <v-layout row wrap class="viewAdhocQue">
+        <div class="viewAdhocQue d-flex flex-row flex-wrap">
 
           <v-flex style="background-color:#fff">
             <v-tabs-items v-model="config.activeTab">
@@ -197,10 +197,10 @@
             </v-tabs-items>
           </v-flex>
 
-        </v-layout>
-      </v-layout>
+        </div>
+      </div>
 
-    </v-layout>
+    </div>
   </div>
 </template>
 

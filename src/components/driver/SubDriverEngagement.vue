@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row wrap>
+    <div class="d-flex flex-row flex-wrap">
       <v-flex xs12 px-2>
         <div class="d-inline-flex w-100 mb-0 px-5 py-3" style="color:#808080;">
           <p class="text-xs-center heading"> Subdriver Analysis </p>
@@ -9,9 +9,9 @@
         </div>
 
         <div class="mt-0 pt-2" v-show="config.initialLoading">
-          <v-layout>
+          <div class="d-flex flex-row flex-wrap">
             <v-flex xs12 class="pr-1">
-              <v-layout class="my-2 py-0" row wrap>
+              <div class="my-2 py-0 d-flex flex-row flex-wrap">
                 <v-flex xs4>
                   <div class="">
                     <ContentLoader
@@ -22,7 +22,6 @@
                       secondaryColor="#fff"
                       >
                       <rect x="10" y="2" rx="2" ry="2"  width="60" height="20" />
-
                       <rect x="10" y="25"  rx="2" ry="2" width="80" height="40" />
                     </ContentLoader>
                   </div>
@@ -48,27 +47,27 @@
                     </ContentLoader>
                   </div>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-flex>
-          </v-layout>
+          </div>
         </div>
 
         <!-- After intial loading -->
         <div class="mt-0 pt-2" v-show="!config.initialLoading">
-            <v-layout xs12>
+            <div xs12>
               <v-flex xs12 class="pr-1">
-                <v-layout class="mt-2 py-0" row wrap>
-                  <v-flex xs12 text-xs-center>
+                <div class="mt-2 py-0 d-flex flex-row flex-wrap">
+                  <v-flex xs12 class="text-center">
                     <div class="engagement-cards">
                       <!-- <p class="pa-3 text-xs-left mb-0"> DRIVER-WISE ENGAGEMENT </p> -->
-                      <v-layout class="pb-4" v-if="report.length">
-                        <v-flex pa-5 mt-4 xs4 text-xs-left v-if="driver">
+                      <div class="pb-4 d-flex flex-row" v-if="report.length">
+                        <v-flex class="pa-5 mt-4 text-left" xs4 v-if="driver">
                           <v-img :src="getDriverImg(driver)" style="height:100px;width:100px;filter: grayscale(100%);"> </v-img>
                           <p class="pa-3 heading mb-0"> Key sub-drivers of {{ driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2') }} </p>
                           <p class="px-3 grey--text sub-heading"> Discover how satisfied employees are with the sub drivers of {{ driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2') }} at different touchpoints. </p>
                         </v-flex>
 
-                        <v-flex pa-5 mt-4 xs4 text-xs-left v-else>
+                        <v-flex class="pa-5 mt-4 text-xs-left" v-else xs4>
                           <p class="pa-3 heading mb-0"> Key sub-drivers of Driver </p>
                           <p class="px-3 grey--text sub-heading"> Discover how satisfied employees are with the sub drivers of Driver at different touchpoints. </p>
                         </v-flex>
@@ -106,18 +105,18 @@
                                 </td>
                               </tr>
                             </template>
-                            <template slot="items" slot-scope="props">
+                            <template v-slot:body="{items}">
                               <!--<v-card>-->
-                                <tr class="card mb-2">
+                                <tr class="card mb-2" v-for="(item, index) in items" :key="index">
                                   <td style="width:15%;max-width:15%" class="b-right text-xs-left">
                                     <p class="mb-0">
-                                        {{props.item.milestone}}
+                                        {{item.milestone}}
                                     </p>
                                   </td>
 
                                   <td style="width:15%;max-width:15%" class="text-xs-left" v-for="(subdriver, idx) in roles" :key="idx">
                                     <p class="mb-0">
-                                        {{props.item[subdriver]}}
+                                        {{item[subdriver]}}
                                     </p>
                                   </td>
                                 </tr>
@@ -131,13 +130,13 @@
                             <v-alert slot="no-data" :value="true" color="#fff" outline>
                               <span v-show="!table.searchString">
                                 <div style="height:300px">
-                                  <v-layout row wrap align-center justify-center fill-height>
-                                    <v-flex text-xs-center>
+                                  <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                                    <v-flex class="text-center">
                                       <strong class="body-2 font-weight-bold grey--text">
                                         Not enough data to generate analysis
                                       </strong>
                                     </v-flex>
-                                  </v-layout>
+                                  </div>
                                 </div>
                               </span>
                               <span v-show="table.searchString">
@@ -146,26 +145,25 @@
                             </v-alert>
                           </v-data-table>
                         </v-flex>
-                      </v-layout>
+                      </div>
 
                       <div v-else style="height:300px">
-                        <v-layout row wrap align-center justify-center fill-height>
-                          <v-flex text-xs-center>
+                        <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
+                          <v-flex class="text-center">
                             <strong class="body-2 font-weight-bold grey--text">
                               Not enough data to generate analysis
                             </strong>
                           </v-flex>
-                        </v-layout>
+                        </div>
                       </div>
                     </div>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-flex>
-
-            </v-layout>
+            </div>
         </div>
       </v-flex>
-    </v-layout>
+    </div>
   </div>
 </template>
 
