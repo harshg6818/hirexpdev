@@ -1,11 +1,11 @@
 <template>
   <div class="">
     <div class="d-flex flex-row flex-wrap">
-      <v-flex sm12 px-1>
+      <v-flex sm12 class="px-1">
         <div class="d-inline-flex w-100 mb-0 px-5 py-3" style="color:#6f7e95;">
-          <p class="text-xs-center main-heading"> Question Wise Analysis </p>
-          <!--<h2 class="text-xs-right" v-if="report && report.company_driver_average"> Score : {{report.company_driver_average}} / 5 </h2>
-          <h2 class="text-xs-right" v-else> Score : 0 / 5 </h2>-->
+          <p class="text-center main-heading"> Question Wise Analysis </p>
+          <!--<h2 class="text-right" v-if="report && report.company_driver_average"> Score : {{report.company_driver_average}} / 5 </h2>
+          <h2 class="text-right" v-else> Score : 0 / 5 </h2>-->
         </div>
 
         <div class="mb-4 d-flex flex-row flex-wrap">
@@ -30,7 +30,7 @@
 
           <!-- No questions -->
           <div class="w-100 px-5" v-show="!config.initialLoading && (!questions || !questions.length)">
-            <v-card class="elevation-0 text-xs-center" min-height="60vh">
+            <v-card class="elevation-0 text-center" min-height="60vh">
               <v-card-title primary-title class="justify-center">
                 <div class="d-flex flex-row flex-wrap">
                   <v-flex xs12>
@@ -50,7 +50,7 @@
               <!--<v-card class="w-100 mb-4 pa-3 elevation-0 d-inline-flex">
                 <v-layout>-->
                   <v-flex xs1>
-                    <p class="pt-0 px-3 mt-2 text-xs-center" style="border-radius:0px"> Q {{ qi+1 }} </p>
+                    <p class="pt-0 px-3 mt-2 text-center" style="border-radius:0px"> Q {{ qi+1 }} </p>
                   </v-flex>
                   <v-flex xs8>
                     <div class="w-100 d-inline-flex">
@@ -60,7 +60,7 @@
                       Qusetion Type : <v-icon> {{questiQuestion Wise AnalysisQuestion Wise AnalysisonIcon(q.type)}} </v-icon> {{q.type}}
                     </div>-->
                   </v-flex>
-                  <v-flex xs3 class="pr-3 text-right">
+                  <v-flex xs3 class="pr-3 text-right mt-3">
                     <v-btn color="primary"
                       style="border-radius:5px"
                       @click="switchQuestion(q.interaction_id, q.msg[0].text, qi, q.type)"

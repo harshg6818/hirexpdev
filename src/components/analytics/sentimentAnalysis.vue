@@ -5,8 +5,8 @@
           <v-flex xs10>
             <h2 class="mt-3"> Question : {{question}} </h2>
           </v-flex>
-          <v-flex xs2 text-xs-right>
-            <v-btn flat icon color="primary" @click.stop="closeModal()">
+          <v-flex xs2 class="text-right">
+            <v-btn text icon color="primary" @click.stop="closeModal()">
               <v-icon color="grey">fas fa-times</v-icon>
             </v-btn>
           </v-flex>
@@ -127,12 +127,12 @@
               </div>
             </v-tab-item>
 
-            <v-tab-item value="tab-sentiment-analysis" v-show="sentimentTab">
+            <v-tab-item value="tab-sentiment-analysis" v-if="sentimentTab">
               <!-- Sentiment Analysis -->
               <div class="my-1 d-flex flex-row flex-wrap" v-if="selectedQuestion && report">
               <!-- <v-layout row wrap class="my-1" v-if="selectedQuestion"> -->
                 <v-flex xs12>
-                  <div class="d-flex flex-row flex-wrap" v-show="report && wordCloudData && typeof wordCloudData === 'object' && Object.keys(wordCloudData).length > 0">
+                  <div class="d-flex flex-row flex-wrap" v-if="report && wordCloudData && typeof wordCloudData === 'object' && Object.keys(wordCloudData).length > 0">
                     <v-flex xs8>
                       <div :id="`wordCloudContainer_${containerId}`" class="wordCloud mt-0" />
                     </v-flex>
@@ -168,7 +168,7 @@
                   </div>
 
                   <!-- Exception message from API in case of no wordcloud responses -->
-                  <v-card class="my-2" v-if="report" v-show="wordCloudData && typeof wordCloudData === 'string'">
+                  <v-card class="my-2" v-if="report && wordCloudData && typeof wordCloudData === 'string'">
                     <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:200px" >
                       <v-flex class="py-5 text-center">
                         <strong class="display-1 font-weight-bold grey--text">
@@ -291,7 +291,7 @@
                                     </v-flex>
 
                                     <v-flex xs2>
-                                      <p class="grey--text text-xs-right mb-0 cursor-pointer hover-link"
+                                      <p class="grey--text text-right mb-0 cursor-pointer hover-link"
                                       style="padding-right:27px" @click="viewEmployee(t)">
                                         - {{t.user_name}}
                                       </p>
@@ -302,7 +302,7 @@
                                     <span v-if="t.user_department"> Department: {{t.user_department}} &nbsp; </span>
                                     <span v-if="t.user_location"> Location: {{t.user_location}} </span>
                                   </p>
-                                  <p class="grey--text text-xs-right mb-0 cursor-pointer hover-link"
+                                  <p class="grey--text text-right mb-0 cursor-pointer hover-link"
                                   style="padding-right:27px" @click="viewEmployee(t)">
                                     - {{t.user_name}}
                                   </p>
@@ -338,7 +338,7 @@
                                     </v-flex>
 
                                     <v-flex xs2>
-                                      <p class="grey--text text-xs-right mb-0 cursor-pointer hover-link"
+                                      <p class="grey--text text-right mb-0 cursor-pointer hover-link"
                                       style="padding-right:27px" @click="viewEmployee(t)">
                                         - {{t.user_name}}
                                       </p>
@@ -349,7 +349,7 @@
                                     <span v-if="t.user_department"> Department: {{t.user_department}} &nbsp; </span>
                                     <span v-if="t.user_location"> Location: {{t.user_location}} </span>
                                   </p>
-                                  <p class="grey--text text-xs-right mb-0 cursor-pointer hover-link"
+                                  <p class="grey--text text-right mb-0 cursor-pointer hover-link"
                                   style="padding-right:27px" @click="viewEmployee(t)">
                                     - {{t.user_name}}
                                   </p>
@@ -384,7 +384,7 @@
                                       <text-highlight :queries="queries">{{ t.formatted_response }}</text-highlight>
                                     </v-flex>
                                     <v-flex xs2>
-                                      <p class="grey--text text-xs-right mb-0 cursor-pointer hover-link"
+                                      <p class="grey--text text-right mb-0 cursor-pointer hover-link"
                                       style="padding-right:27px" @click="viewEmployee(t)">
                                         - {{t.user_name}}
                                       </p>
@@ -395,7 +395,7 @@
                                     <span v-if="t.user_department"> Department: {{t.user_department}} &nbsp; </span>
                                     <span v-if="t.user_location"> Location: {{t.user_location}} </span>
                                   </p>
-                                  <p class="grey--text text-xs-right mb-0 cursor-pointer hover-link"
+                                  <p class="grey--text text-right mb-0 cursor-pointer hover-link"
                                   style="padding-right:27px" @click="viewEmployee(t)">
                                     - {{t.user_name}}
                                   </p>
@@ -435,7 +435,7 @@
                                 <text-highlight :queries="queries">{{ t.formatted_response }}</text-highlight>
                               </v-flex>
                               <v-flex xs2>
-                                <p class="grey--text text-xs-right mb-0 cursor-pointer hover-link"
+                                <p class="grey--text text-right mb-0 cursor-pointer hover-link"
                                 style="padding-right:27px" @click="viewEmployee(t)">
                                   - {{t.user_name}}
                                 </p>
@@ -446,7 +446,7 @@
                               <span v-if="t.user_department"> Department: {{t.user_department}} &nbsp; </span>
                               <span v-if="t.user_location"> Location: {{t.user_location}} </span>
                             </p>
-                            <p class="grey--text text-xs-right mb-0 cursor-pointer hover-link"
+                            <p class="grey--text text-right mb-0 cursor-pointer hover-link"
                             style="padding-right:27px" @click="viewEmployee(t)">
                               - {{t.user_name}}
                             </p>
@@ -485,7 +485,7 @@
 
       <v-card-actions class="mt-3" v-if="dialogs.sentimentAnalysis" align-content-space->
         <v-flex xs2 class="ml-2">
-          <v-btn color="error" flat @click.stop="closeModal()">Close</v-btn>
+          <v-btn color="error" text @click.stop="closeModal()">Close</v-btn>
         </v-flex>
       </v-card-actions>
     </v-card>

@@ -56,7 +56,7 @@
           </v-btn>
           <div id="pdf"></div>
           <div id="pdf1"></div> -->
-      <v-tabs
+      <!-- <v-tabs
         id="employee-list-tab"
         ref="tabs"
         class="custom-dashboard-tabs"
@@ -66,6 +66,11 @@
         centered
         color="transparent"
         slider-color="primary"
+      > -->
+      <v-tabs
+        id="employee-list-tab"
+        ref="tabs"
+        v-model="tabs.active"
       >
         <v-tab
           class="mr-2 text-capitalize"
@@ -79,10 +84,14 @@
           <strong class="ml-2" v-if="t.count">
             {{t.count ? '('+t.count+')' : ''}}
           </strong>
-          <v-tooltip max-width="200" bottom v-show="t.about" class="ml-2">
-            <v-icon
-            slot="activator"
-            >fas fa-info-circle</v-icon>
+          <v-tooltip max-width="200" bottom v-if="t.about" class="ml-2">
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                v-bind="attrs"
+                v-on="on"
+              >fas fa-info-circle
+              </v-icon>
+            </template>
             {{t.about}}
           </v-tooltip>
         </v-tab>
@@ -92,10 +101,10 @@
           }">
           <v-tab-item class="employeeToMeet" value="tab-snapshot-list" v-if="tabs.active === 'tab-snapshot-list'">
             <!-- Stats and Analysis -->
-            <div class="mb-2 d-flex flex-row flex-wrap" v-show="stackedGraphs">
+            <div class="mb-2 d-flex flex-row flex-wrap" v-if="stackedGraphs">
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading">
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading">
                     Employee cases identified
                     <v-tooltip max-width="200" bottom class="ml-2">
                       <!-- <v-icon
@@ -107,11 +116,11 @@
                   </p>
 
                   <div v-show="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees">
-                    <p class="text-xs-center" style="font-weight:300;font-size:36px" v-if="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees > 0">
+                    <p class="text-center" style="font-weight:300;font-size:36px" v-if="overall_disengaged_stats && overall_disengaged_stats.disengaged_employees > 0">
                       {{overall_disengaged_stats.disengaged_employees}}
                     </p>
                     <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
-                          <v-flex text-xs-center>
+                          <v-flex text-center>
                             <strong v-show=" overall_disengaged_stats && overall_disengaged_stats.disengaged_employees == 0" class="body-2 font-weight-bold grey--text">
                               <p style="text-align:center; margin:0; font-size:20px;"> Yay! </p>
                               <p style="text-align:center; margin:0;"> You don’t have any disengaged employee </p>
@@ -119,10 +128,10 @@
                           </v-flex>
                       </div>
 
-                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-if="overall_disengaged_stats && overall_disengaged_stats.employees_reached">
+                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="overall_disengaged_stats && overall_disengaged_stats.employees_reached">
                       {{overall_disengaged_stats.disengaged_percentage}}% of {{overall_disengaged_stats.employees_reached}} employees spoken to are disengaged
                     </p>
-                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-else>
+                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
                       0% 0 employees spoken to are disengaged
                     </p>
 
@@ -146,7 +155,7 @@
               <!-- Issues Resolved -->
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading" >
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
                     Employee cases resolved
                     <!--<v-tooltip max-width="200" bottom class="ml-2">
                       <v-icon
@@ -158,20 +167,20 @@
                   </p>
 
                   <div v-show="resolved_disengaged_stats && resolved_disengaged_stats.total_disengaged_employees">
-                    <p class="text-xs-center" style="font-weight:300;font-size:36px" v-if="resolved_disengaged_stats && resolved_disengaged_stats.resolved_disengaged">
+                    <p class="text-center" style="font-weight:300;font-size:36px" v-if="resolved_disengaged_stats && resolved_disengaged_stats.resolved_disengaged">
                       {{resolved_disengaged_stats.resolved_disengaged}}
                     </p>
-                    <p class="text-xs-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
+                    <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
 
-                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-if="resolved_disengaged_stats && resolved_disengaged_stats.total_disengaged_employees">
+                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="resolved_disengaged_stats && resolved_disengaged_stats.total_disengaged_employees">
                       {{resolved_disengaged_stats.resolved_disengaged_percentage}}% of {{resolved_disengaged_stats.total_disengaged_employees}} disengaged employees
                     </p>
-                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-else>
+                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
                       0% 0 disengaged employees
                     </p>
 
-                    <p class="px-1 pt-3 mb-0 text-xs-center mt-4 sub-heading" v-if="resolved_disengaged_stats && resolved_disengaged_stats.average_resolution_time"> Average Resolution Time </p>
-                    <p class="px-1 score-card text-capitalize text-xs-center" style="font-weight:500" v-if="resolved_disengaged_stats && resolved_disengaged_stats.average_resolution_time">
+                    <p class="px-1 pt-3 mb-0 text-center mt-4 sub-heading" v-if="resolved_disengaged_stats && resolved_disengaged_stats.average_resolution_time"> Average Resolution Time </p>
+                    <p class="px-1 score-card text-capitalize text-center" style="font-weight:500" v-if="resolved_disengaged_stats && resolved_disengaged_stats.average_resolution_time">
                       {{ Math.round(resolved_disengaged_stats.average_resolution_time) }} days
                     </p>
 
@@ -195,7 +204,7 @@
               <!-- Employees to meet -->
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading">
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading">
                     Employee cases open
                     <!--<v-tooltip max-width="200" bottom class="ml-2">
                       <v-icon
@@ -207,15 +216,15 @@
                   </p>
 
                   <div v-show="employee_to_meet_stats && employee_to_meet_stats.total_employees_to_meet">
-                    <p class="text-xs-center" style="font-weight:300;font-size:36px" v-if="employee_to_meet_stats && employee_to_meet_stats.total_employees_to_meet">
+                    <p class="text-center" style="font-weight:300;font-size:36px" v-if="employee_to_meet_stats && employee_to_meet_stats.total_employees_to_meet">
                       {{employee_to_meet_stats.total_employees_to_meet}}
                     </p>
-                    <p class="text-xs-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
+                    <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
 
-                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-if="employee_to_meet_stats && employee_to_meet_stats.total_disengaged_employees">
+                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="employee_to_meet_stats && employee_to_meet_stats.total_disengaged_employees">
                       {{employee_to_meet_stats.total_employees_to_meet_percentage}}% of {{employee_to_meet_stats.total_disengaged_employees}} disengaged employees
                     </p>
-                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-else>
+                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
                       0% 0 disengaged employees
                     </p>
 
@@ -226,7 +235,7 @@
 
                   <div style="height:170px" v-show="!employee_to_meet_stats || !employee_to_meet_stats.total_employees_to_meet">
                     <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
-                        <v-flex text-xs-center>
+                        <v-flex text-center>
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
@@ -239,7 +248,7 @@
               <!-- Exited employees -->
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading" >
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
                     Disengaged employees who exited
                     <!--<v-tooltip max-width="200" bottom class="ml-2">
                       <v-icon
@@ -250,15 +259,15 @@
                   </p>
 
                   <div v-show="disengaged_exited_employee_stats && disengaged_exited_employee_stats.total_exited_employee">
-                    <p class="text-xs-center" style="font-weight:300;font-size:36px" v-if="disengaged_exited_employee_stats && disengaged_exited_employee_stats.total_exited_employee">
+                    <p class="text-center" style="font-weight:300;font-size:36px" v-if="disengaged_exited_employee_stats && disengaged_exited_employee_stats.total_exited_employee">
                       {{disengaged_exited_employee_stats.total_exited_employee}}
                     </p>
-                    <p class="text-xs-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
+                    <p class="text-center" style="font-weight:300;font-size:36px" v-else> 0 </p>
 
-                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-if="disengaged_exited_employee_stats && overall_disengaged_stats && overall_disengaged_stats.disengaged_employees">
+                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-if="disengaged_exited_employee_stats && overall_disengaged_stats && overall_disengaged_stats.disengaged_employees">
                       {{disengaged_exited_employee_stats.total_exited_employees_percentage}}% of {{overall_disengaged_stats.disengaged_employees}} disengaged employees
                     </p>
-                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-xs-center" v-else>
+                    <p style="color: rgba(0,0,0,0.7) !important" class="grey--text text-center" v-else>
                       0% 0 disengaged employees
                     </p>
 
@@ -269,7 +278,7 @@
 
                   <div style="height:170px" v-show="!disengaged_exited_employee_stats || !disengaged_exited_employee_stats.total_exited_employee">
                     <div class="d-flex flex-row flex-wrap align-center fill-height justify-center">
-                        <v-flex text-xs-center>
+                        <v-flex class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
@@ -288,10 +297,10 @@
               </div>-->
             </div>
 
-            <div class="mb-2 d-flex flex-row flex-wrap" v-show="!stackedGraphs">
+            <div class="mb-2 d-flex flex-row flex-wrap" v-if="!stackedGraphs">
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading">
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading">
                     Employee cases identified
                     <v-tooltip max-width="200" bottom class="ml-2">
                         Employees whose engagement score is less than or equal to 2.5 are High-risk employees.
@@ -301,7 +310,7 @@
 
                   <div style="height:170px">
                     <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
-                        <v-flex text-xs-center>
+                        <v-flex class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
@@ -314,7 +323,7 @@
               <!-- Issues Resolved -->
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading" >
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
                     Employee cases resolved
                   </p>
 
@@ -333,7 +342,7 @@
               <!-- Employees to meet -->
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading">
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading">
                     Employee cases open
                   </p>
 
@@ -352,13 +361,13 @@
               <!-- Exited employees -->
               <v-flex sm6 md3 class="disengaged-employees-cards">
                 <v-card class="elevation-0">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading" >
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
                     Disengaged employees who exited
                   </p>
 
                   <div style="height:170px">
                     <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">
-                        <v-flex text-xs-center>
+                        <v-flex class="text-center">
                           <strong class="body-2 font-weight-bold grey--text">
                             Not enough data to generate analysis
                           </strong>
@@ -371,7 +380,7 @@
 
             <!-- Disengaged Drivers Breakdown -->
             <!-- <v-layout class="bg-white mb-0">
-              <p class="text-xs-center w-100 py-3 heading">
+              <p class="text-center w-100 py-3 heading">
                 Top 3 drivers leading to disengagement at {{user.company_name}}
               </p>
             </v-layout>-->
@@ -382,14 +391,14 @@
                 v-for="i in 3" :key="i">
                   <v-card>
                     <div v-if="Object.keys(disengagedDrivers)[i-1]">
-                      <p class="pa-3 score-card text-xs-center mb-3 sub-heading" style=""> {{ (Object.keys(disengagedDrivers)[i-1]).replace(/([a-z0-9])([A-Z])/g, '$1 $2') }} </p>
+                      <p class="pa-3 score-card text-center mb-3 sub-heading" style=""> {{ (Object.keys(disengagedDrivers)[i-1]).replace(/([a-z0-9])([A-Z])/g, '$1 $2') }} </p>
 
                       <div :id="`donutChartdiv-${Object.keys(disengagedDrivers)[i-1]}`"
                       class="donutChart pb-4"> </div>
                     </div>
 
                     <v-layout row wrap align-center justify-center fill-height v-else>
-                      <v-flex text-xs-center>
+                      <v-flex text-center>
                         <strong class="body-2 font-weight-bold grey--text">
                           Not enough data to generate analysis
                         </strong>
@@ -401,7 +410,7 @@
                 <div class="disengaged-employees-cards drivers-breakdown">
                   <v-card>
                   <div v-if="disengagedDrivers && disengagedDrivers.length > 0">
-                    <p class="py-3 score-card text-xs-center mb-0 heading" >
+                    <p class="py-3 score-card text-center mb-0 heading" >
                       Top 3 drivers leading to disengagement at {{user.company_name}}
                     </p>
 
@@ -417,13 +426,15 @@
                             <div class="d-flex flex-row flex-wrap">
                               <v-flex xs3>
                                 <v-tooltip bottom>
-                                  <p class="heading-b mb-0" slot="activator">
-                                    {{d.average}}
-                                  </p>
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <p class="heading-b mb-0" v-bind="attrs" v-on="on">
+                                      {{d.average}}
+                                    </p>
+                                  </template>
                                   <span> Driver average </span>
                                 </v-tooltip>
                               </v-flex>
-                              <!--<v-flex class="success--text text-xs-right pt-3">
+                              <!--<v-flex class="success--text text-right pt-3">
                                 0.6 above
                                 <v-icon color="success">fas fa-long-arrow-alt-up</v-icon>
                               </v-flex>-->
@@ -446,7 +457,7 @@
                                     </v-list-item-title>
                                   </v-flex>
                                   <v-flex xs2 class="mr-2">
-                                    <v-list-item-action style="font-size:13px !important;align-items:flex-end;" class="text-xs-right "
+                                    <v-list-item-action style="font-size:13px !important;align-items:flex-end;" class="text-right "
                                     :style="`min-width:unset;border-bottom: 2px solid #f44336;border-color: ${getEngagementColor(v)} `">
                                       {{v}}
                                     </v-list-item-action>
@@ -463,8 +474,8 @@
                             </p>
                           </div>
                           <v-divider></v-divider>
-                          <div class="slide-actions text-xs-center">
-                            <v-btn color="primary" class="text-capitalize" outline small @click="viewDriver(d.driver)">View Details</v-btn>
+                          <div class="slide-actions text-center">
+                            <v-btn color="primary" class="text-capitalize" outlined small @click="viewDriver(d.driver)">View Details</v-btn>
                           </div>
                         </v-card>
                       </swiper-slide>
@@ -477,7 +488,7 @@
                   </div>
 
                   <div class="align-center justify-center" v-if="!disengagedDrivers || !disengagedDrivers.length" style="height:450px">
-                    <p class="py-3 score-card text-xs-center mb-0 heading" >
+                    <p class="py-3 score-card text-center mb-0 heading" >
                       Top 3 drivers leading to disengagement at {{user.company_name}}
                     </p>
                     <div class="d-flex flex-row" style="height:390px">
@@ -493,7 +504,7 @@
               </v-flex>
               <v-flex sm6 class="disengaged-employees-cards mb-0">
                 <v-card class="monthwise_art" style="height:350px">
-                  <p class="py-3 score-card text-xs-center mb-0 text-capitalize heading" >
+                  <p class="py-3 score-card text-center mb-0 text-capitalize heading" >
                     Average Resolution Time (Days)
                   </p>
                   <div id="monthwise_art" v-if="monthwise_art && monthwise_art.length > 0"></div>
@@ -509,7 +520,7 @@
             </div>
 
             <div class="bg-white mb-0 d-flex flex-row">
-              <p class="text-xs-center w-100 py-3 text-capitalize heading mb-0">
+              <p class="text-center w-100 py-3 text-capitalize heading mb-0">
                 Cases Resolution Insights
               </p>
             </div>
@@ -519,19 +530,21 @@
               :items="casesResolutions"
               item-key="name"
               class="elevation-1 w-100"
-              :rows-per-page-items="[10, 15, 20]"
+              footer-props.items-per-page-options="[10, 15, 20]"
               >
                 <template v-slot:body="{items}">
-                  <tr class="py-2" v-for="(item, index) in items" :key="index">
-                    <td class="text-left">
-                      <p class="mb-0"> {{ item.user_name }} </p>
-                      <small class="text-muted grey--text"> {{ item.user_email }} </small>
-                    </td>
-                    <td class="text-xs-center">{{ item.total }}</td>
-                    <td class="text-xs-center">{{ item.resolved }}</td>
-                    <td class="text-xs-center">{{ item.open }}</td>
-                    <td class="text-xs-center">{{ Math.round(item.average_resolution_time * 100) / 100 }}</td>
-                  </tr>
+                  <tbody>
+                    <tr class="py-2" v-for="(item, index) in items" :key="index">
+                      <td class="text-left">
+                        <p class="mb-0"> {{ item.user_name }} </p>
+                        <small class="text-muted grey--text"> {{ item.user_email }} </small>
+                      </td>
+                      <td class="text-center">{{ item.total }}</td>
+                      <td class="text-center">{{ item.resolved }}</td>
+                      <td class="text-center">{{ item.open }}</td>
+                      <td class="text-center">{{ Math.round(item.average_resolution_time * 100) / 100 }}</td>
+                    </tr>
+                  </tbody>
                 </template>
               </v-data-table>
             </div>
@@ -541,220 +554,222 @@
             <v-data-table
               :headers="table.headers"
               :items="table.team"
-              :pagination.sync="pagination"
-              :total-items="table.totalItems"
+              :options.sync="pagination"
+              :server-items-length="table.totalItems"
               :loading="table.loading"
               class="employee-list"
               id="employee-list"
             >
               <template v-slot:body="{items}">
-                <tr v-for="(item, index) in items" :key="index" class="employeeTableRow">
-                  <td style="width:14%">
-                    <div class="d-flex flex-row flex-wrap align-center">
-                      <!-- <v-flex class="py-2" sm3>
-                        <v-avatar size="30px" :color="getColor(props.item)">
-                          <img src="src" alt="alt" v-show="false">
-                          <span class="white--text">{{getAvatar(props.item)}}</span>
-                        </v-avatar>
-                      </v-flex> -->
-                      <v-flex>
-                        <p class="mb-0" v-show="item.user_display_name || item.user__display_name">
-                          <span :class="{'hover-link cursor-pointer': $route.name !== 'ViewAdhoc'}"
-                          @click="viewEmployee(item);">
-                            {{item.user_display_name || item.user__display_name}}
-                          </span>
-                        </p>
-                        <!-- <small class="text-truncate" style=" max-width: 120px; display: inline-block;">
-                          {{props.item.email || props.item.user__email || props.item.user_email}}
-                        </small> -->
-                      </v-flex>
-                    </div>
-                  </td>
-                  <td style="width:14%">
-                    <p class="mb-0" v-if="item.stage_title">
-                      {{item.stage_title || item.stage__title}}
-                    </p>
-                    <p class="mb-0" v-else>
-                      -
-                    </p>
-                  </td>
-                  <td style="width:14%">
-                    <p class="" v-if="(item.completedAt && item.completedAt !== 'None')">
-                      {{dayjs(item.completedAt).from()}}
-                    </p>
-                    <p v-if="(!item.completedAt || item.completedAt === 'None') && !activeDriver"
-                    class="font-weight-bold grey--text">
-                      -
-                    </p>
-                  </td>
-                  <!--<td class="text-sm-left">
-                    <span v-if="!props.item.overall_mood" class="font-weight-bold grey--text">-</span>
-                    <v-tooltip bottom v-if="props.item.overall_mood">
-                      <img
-                        slot="activator"
-                        height="30"
-                        :src="getImgUrl(`${props.item.overall_mood}`)"
-                      >
-                      Employee Vibe
-                    </v-tooltip>
-                  </td>-->
-                  <td class="text-xs-left" style="width:14%">
-                    <!--<v-chip :class="{
-                      'success success--text': props.item.driverAverage > 3,
-                      'error error--text': props.item.driverAverage <= 3
-                    }" class="ma-0" outline small v-if="props.item.driverAverage">{{props.item.driverAverage}}
-                    </v-chip>-->
+                <tbody>
+                  <tr v-for="(item, index) in items" :key="index" class="employeeTableRow">
+                    <td style="width:14%">
+                      <div class="d-flex flex-row flex-wrap align-center">
+                        <!-- <v-flex class="py-2" sm3>
+                          <v-avatar size="30px" :color="getColor(props.item)">
+                            <img src="src" alt="alt" v-show="false">
+                            <span class="white--text">{{getAvatar(props.item)}}</span>
+                          </v-avatar>
+                        </v-flex> -->
+                        <v-flex>
+                          <p class="mb-0" v-show="item.user_display_name || item.user__display_name">
+                            <span :class="{'hover-link cursor-pointer': $route.name !== 'ViewAdhoc'}"
+                            @click="viewEmployee(item);">
+                              {{item.user_display_name || item.user__display_name}}
+                            </span>
+                          </p>
+                          <!-- <small class="text-truncate" style=" max-width: 120px; display: inline-block;">
+                            {{props.item.email || props.item.user__email || props.item.user_email}}
+                          </small> -->
+                        </v-flex>
+                      </div>
+                    </td>
+                    <td style="width:14%">
+                      <p class="mb-0" v-if="item.stage_title">
+                        {{item.stage_title || item.stage__title}}
+                      </p>
+                      <p class="mb-0" v-else>
+                        -
+                      </p>
+                    </td>
+                    <td style="width:14%">
+                      <p class="" v-if="(item.completedAt && item.completedAt !== 'None')">
+                        {{dayjs(item.completedAt).from()}}
+                      </p>
+                      <p v-if="(!item.completedAt || item.completedAt === 'None') && !activeDriver"
+                      class="font-weight-bold grey--text">
+                        -
+                      </p>
+                    </td>
+                    <!--<td class="text-sm-left">
+                      <span v-if="!props.item.overall_mood" class="font-weight-bold grey--text">-</span>
+                      <v-tooltip bottom v-if="props.item.overall_mood">
+                        <img
+                          slot="activator"
+                          height="30"
+                          :src="getImgUrl(`${props.item.overall_mood}`)"
+                        >
+                        Employee Vibe
+                      </v-tooltip>
+                    </td>-->
+                    <td class="text-left" style="width:14%">
+                      <!--<v-chip :class="{
+                        'success success--text': props.item.driverAverage > 3,
+                        'error error--text': props.item.driverAverage <= 3
+                      }" class="ma-0" outline small v-if="props.item.driverAverage">{{props.item.driverAverage}}
+                      </v-chip>-->
 
-                    <span class="" v-if="item.driverAverage"> {{item.driverAverage.toFixed(1)}} </span>
-                    <span class="font-weight-bold grey--text" v-else>-</span>
-                  </td>
-                  <td class="text-xs-left px-0" style="width:15%" @click.stop v-if="!activeDriver">
-                    <!-- Schedule one on one -->
-                    <span v-if="activeDriver" class="font-weight-bold grey--text">
-                      -
-                    </span>
+                      <span class="" v-if="item.driverAverage"> {{item.driverAverage.toFixed(1)}} </span>
+                      <span class="font-weight-bold grey--text" v-else>-</span>
+                    </td>
+                    <td class="text-left px-0" style="width:15%" @click.stop v-if="!activeDriver">
+                      <!-- Schedule one on one -->
+                      <span v-if="activeDriver" class="font-weight-bold grey--text">
+                        -
+                      </span>
 
-                    <v-tooltip
-                      bottom
-                    >
-                      <v-chip
-                        :disabled="config.loading"
-                        :loading="config.loading"
-                        :class="{
-                          'primary primary--text': item.action_status === 'open',
-                          '#37b99c amara--text': item.action_status === 'scheduled',
-                          'info info--text': item.action_status === 'inProgress',
-                          'success success--text': item.action_status === 'resolved',
-                          'deep-orange deep-orange--text': item.action_status === 'acknowledged',
-                        }"
-                        style="width:110px !important;height:40px !important;"
-                        slot="activator"
-                        class="status-chip elevation-0 mr-0 text-capitalize"
-                        outline
-                        @click="config.actionMenu[item.id] = !config.actionMenu[item.id]"
-                      >
-                        <!--<v-icon class="mr-2" v-show="props.item.action_status === 'open'">
-                          fas fa-exclamation-triangle
-                        </v-icon>
-                        <v-icon class="mr-2" v-show="props.item.action_status === 'resolved'">
-                          fas fa-check
-                        </v-icon>
-                        <v-icon class="mr-2" v-show="props.item.action_status === 'scheduled'">
-                          flaticon-012-meeting
-                        </v-icon>
-                        <v-icon class="mr-2" v-show="props.item.action_status === 'inProgress'">
-                          flaticon-047-conversation
-                        </v-icon>-->
-                        {{item.action_status}}
-                      </v-chip>
-                      Current Status
-                    </v-tooltip>
-
-                    <v-tooltip
-                      bottom
-
-                    >
-                      <v-menu offset-y slot="activator" v-model="config.actionMenu[item.id]">
+                      <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          :disabled="config.loading"
-                          v-bind="attrs" v-on="on"
-                          icon
-                          :class="{
-                            'primary primary--text': item.action_status === 'open',
-                            '#37b99c amara--text': item.action_status === 'scheduled',
-                            'info info--text': item.action_status === 'inProgress',
-                            'success success--text': item.action_status === 'resolved',
-                            'deep-orange deep-orange--text': item.action_status === 'acknowledged',
-                          }"
-                          class="dropdown-chip ml-0 b-left"
-                          style="height:40px !important;"
-                          small outline
-                        >
-                          <v-icon>fas fa-caret-down</v-icon>
-                        </v-btn>
+                          <v-chip
+                            :disabled="config.loading"
+                            :loading="config.loading"
+                            :class="{
+                              'primary primary--text': item.action_status === 'open',
+                              '#37b99c amara--text': item.action_status === 'scheduled',
+                              'info info--text': item.action_status === 'inProgress',
+                              'success success--text': item.action_status === 'resolved',
+                              'deep-orange deep-orange--text': item.action_status === 'acknowledged',
+                            }"
+                            style="width:110px !important;height:40px !important;"
+                            v-bind="attrs"
+                            v-on="on"
+                            class="status-chip elevation-0 mr-0 text-capitalize"
+                            outlined
+                            @click="config.actionMenu[item.id] = !config.actionMenu[item.id]"
+                          >
+                            <!--<v-icon class="mr-2" v-show="props.item.action_status === 'open'">
+                              fas fa-exclamation-triangle
+                            </v-icon>
+                            <v-icon class="mr-2" v-show="props.item.action_status === 'resolved'">
+                              fas fa-check
+                            </v-icon>
+                            <v-icon class="mr-2" v-show="props.item.action_status === 'scheduled'">
+                              flaticon-012-meeting
+                            </v-icon>
+                            <v-icon class="mr-2" v-show="props.item.action_status === 'inProgress'">
+                              flaticon-047-conversation
+                            </v-icon>-->
+                            {{item.action_status}}
+                          </v-chip>
                         </template>
-                        <v-list>
-                          <v-list-item v-for="(item, i) in config.actions" :key="i"
-                          v-if="item.action_status !== item.status"
-                          @click="item.action(item, item.dialog || item.status)"
-                          :disabled="!item.action || !checkPermission(item.permission)">
-                            <v-list-item-title>
-                              <v-icon class="mr-2">{{item.icon}}</v-icon>
-                              {{ item.title }}
-                            </v-list-item-title>
-                          </v-list-item>
-                        </v-list>
-                      </v-menu>
-                      Update status of this employee
-                    </v-tooltip>
+                        Current Status
+                      </v-tooltip>
 
-                    <!-- View Chat -->
-                    <!-- <v-tooltip
-                      v-if="!activeDriver"
-                      bottom
-                    >
-                      <v-btn color="rgba(0,0,0,0.54)"
-                        slot="activator"
-                        small
-                        flat
-                        icon
-                        @click="props.expanded = !props.expanded;setInfo(props.item, props);"
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-menu offset-y v-bind="attrs" v-on="on" v-model="config.actionMenu[item.id]">
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-btn
+                                :disabled="config.loading"
+                                v-bind="attrs" v-on="on"
+                                icon
+                                :class="{
+                                  'primary primary--text': item.action_status === 'open',
+                                  '#37b99c amara--text': item.action_status === 'scheduled',
+                                  'info info--text': item.action_status === 'inProgress',
+                                  'success success--text': item.action_status === 'resolved',
+                                  'deep-orange deep-orange--text': item.action_status === 'acknowledged',
+                                }"
+                                class="dropdown-chip ml-0 b-left"
+                                style="height:40px !important;"
+                                small outlined
+                              >
+                                <v-icon>fas fa-caret-down</v-icon>
+                              </v-btn>
+                            </template>
+                            <v-list>
+                              <v-list-item v-for="(item, i) in config.actions" :key="i"
+                              v-if="item.action_status !== item.status"
+                              @click="item.action(item, item.dialog || item.status)"
+                              :disabled="!item.action || !checkPermission(item.permission)">
+                                <v-list-item-title>
+                                  <v-icon class="mr-2">{{item.icon}}</v-icon>
+                                  {{ item.title }}
+                                </v-list-item-title>
+                              </v-list-item>
+                            </v-list>
+                          </v-menu>
+                        </template>
+                        Update status of this employee
+                      </v-tooltip>
+
+                      <!-- View Chat -->
+                      <!-- <v-tooltip
+                        v-if="!activeDriver"
+                        bottom
                       >
-                        <v-icon small>fas fa-comments</v-icon>
-                      </v-btn>
-                      Chat Transcript
-                    </v-tooltip>-->
-                  </td>
-                  <td class="text-xs-left px-0">
-                    <!-- <v-select
-                      :items="getAdminUsersList"
-                      class="transparent assignee mr-2"
-                      @change="updateStatus(props.item, null, props.item.assignedTo)"
-                      :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || props.item.action_status === 'Na'"
-                      item-text="display_name"
-                      item-value="user_id"
-                      v-model="props.item.assignedTo"
-                      label=""
-                    ></v-select> -->
-
-                    <v-chip
-                      :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
-                      slot="activator"
-                      class="status-chip elevation-0 mr-0 text-capitalize assign-to-select"
-                      style="width:110px !important;border: 1px solid #4c409d;height:40px !important;"
-                      outline
-                    >
-                      <span v-if="item.assignedTo_display_name">{{item.assignedTo_display_name}}</span>
-                      <span v-else> Not assigned </span>
-                    </v-chip>
-
-                    <v-menu offset-y slot="activator">
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          v-bind="attrs" v-on="on"
-                          :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
+                        <v-btn color="rgba(0,0,0,0.54)"
+                          slot="activator"
+                          small
+                          flat
                           icon
-                          class="dropdown-chip ml-0 b-left"
-                          small outline
-                          style="border: 1px solid #4c409d;height:40px !important;"
+                          @click="props.expanded = !props.expanded;setInfo(props.item, props);"
                         >
-                          <v-icon @click="getAdminUsers(item)">fas fa-caret-down</v-icon>
+                          <v-icon small>fas fa-comments</v-icon>
                         </v-btn>
-                      </template>
-                        <v-list v-if="getAdminUsersList && getAdminUsersList.length > 0">
-                          <v-list-item v-for="(item, i) in getAdminUsersList" :key="i" @click="updateStatus(item, null, item.user_id)">
-                            <v-list-item-title>
-                              {{ item.display_name }}
-                            </v-list-item-title>
-                          </v-list-item>
-                        </v-list>
-                      </v-menu>
-                  </td>
-                  <td class="text-xs-left px-0" style="width:14%">
-                    <v-btn text outlined class="text-capitalize btn-text" color="primary" style="" @click.stop="viewEmployee(item);"> View employee </v-btn>
-                  </td>
-                </tr>
+                        Chat Transcript
+                      </v-tooltip>-->
+                    </td>
+                    <td class="text-left px-0">
+                      <!-- <v-select
+                        :items="getAdminUsersList"
+                        class="transparent assignee mr-2"
+                        @change="updateStatus(props.item, null, props.item.assignedTo)"
+                        :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || props.item.action_status === 'Na'"
+                        item-text="display_name"
+                        item-value="user_id"
+                        v-model="props.item.assignedTo"
+                        label=""
+                      ></v-select> -->
+
+                      <v-chip
+                        :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
+                        slot="activator"
+                        class="status-chip elevation-0 mr-0 text-capitalize assign-to-select"
+                        style="width:110px !important;border: 1px solid #4c409d;height:40px !important;"
+                        outlined
+                      >
+                        <span v-if="item.assignedTo_display_name">{{item.assignedTo_display_name}}</span>
+                        <span v-else> Not assigned </span>
+                      </v-chip>
+
+                      <v-menu offset-y slot="activator">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            v-bind="attrs" v-on="on"
+                            :disabled="!checkPermission(['reply_anonymous_message']) || config.loading || item.action_status === 'Na'"
+                            icon
+                            class="dropdown-chip ml-0 b-left"
+                            small outlined
+                            style="border: 1px solid #4c409d;height:40px !important;"
+                          >
+                            <v-icon @click="getAdminUsers(item)">fas fa-caret-down</v-icon>
+                          </v-btn>
+                        </template>
+                          <v-list v-if="getAdminUsersList && getAdminUsersList.length > 0">
+                            <v-list-item v-for="(item, i) in getAdminUsersList" :key="i" @click="updateStatus(item, null, item.user_id)">
+                              <v-list-item-title>
+                                {{ item.display_name }}
+                              </v-list-item-title>
+                            </v-list-item>
+                          </v-list>
+                        </v-menu>
+                    </td>
+                    <td class="text-left px-0" style="width:14%">
+                      <v-btn text outlined class="text-capitalize btn-text" color="primary" style="" @click.stop="viewEmployee(item);"> View employee </v-btn>
+                    </td>
+                  </tr>
+                </tbody>
               </template>
               <template slot="expand">
                 <div class="secondary px-4 py-2">
@@ -765,7 +780,7 @@
                   :indeterminate="true"></v-progress-linear>
                 </div>
               </template>
-              <!--<v-card slot="no-data" class="elevation-0 text-xs-center" min-height="60vh">
+              <!--<v-card slot="no-data" class="elevation-0 text-center" min-height="60vh">
                 <v-card-title primary-title class="justify-center">
                   <v-layout row wrap>
                     <v-flex xs12>
@@ -777,7 +792,7 @@
                   </v-layout>
                 </v-card-title>
               </v-card>-->
-              <v-alert slot="no-data" :value="true" color="#fff" outline>
+              <v-alert slot="no-data" :value="true" color="#fff" outlined>
                 <span>
                   <div style="height:300px">
                     <div class="d-flex flex-row flex-wrap align-center justify-center fill-height">

@@ -1,12 +1,12 @@
 <template>
   <div class="">
     <!-- Search Bar and Filters -->
-    <v-layout row wrap align-center style="border-bottom: 1px solid rgb(243, 241, 241);z-index:3;max-height:70px;">
+    <div class="flex-row d-flex flex-wrap align-center" style="border-bottom: 1px solid rgb(243, 241, 241);z-index:3;max-height:70px;">
         <v-flex xs2 class="mr-2">
           <v-btn class="elevation-0 ml-0 text-xs-right back-button"
             @click="goBack()"
             slot="activator"
-            flat fab
+            text fab
           >
             <v-icon> fas fa-arrow-left </v-icon>
           </v-btn>
@@ -22,15 +22,15 @@
 
       <v-flex xs2>
       </v-flex>
-    </v-layout>
+    </div>
 
-    <v-layout mt-1 row wrap style="z-index:2">
+    <div class="mt-1 d-flex flex-row flex-wrap" style="z-index:2">
       <v-flex>
         <v-btn style="right: 10%;
             position: absolute;
             float: right;
             z-index: 100 !important;" color="error"
-            flat
+            text
             v-show="checkForFilters"
             @click="resetStage"
             >
@@ -43,7 +43,7 @@
           <v-icon style="font-size:16px; padding-right:10px;">fas fa-filter</v-icon> Filter
         </v-btn>
         <v-card class="elevation-0 mb-2 no-border">
-          <v-tabs
+          <!-- <v-tabs
             ref="tabs"
             class="custom-dashboard-tabs"
             :class="config.activeTab === 'tab-overview' ? 'overview-active' : ''"
@@ -52,6 +52,10 @@
             centered
             color="transparent"
             slider-color="primary"
+          > -->
+          <v-tabs
+            ref="tabs"
+            v-model="config.activeTab"
           >
             <v-tab
               class="mr-2 text-capitalize"
@@ -60,15 +64,16 @@
               :href="`#tab-${t.value}`"
               @click="addRef(t.value)"
             >
-              <span v-if="ti === 0"> </span>
-              {{t.title}}
-              <strong class="ml-2" v-if="t.count">
-                {{t.count ? '('+t.count+')' : ''}}
-              </strong>
-              <v-tooltip max-width="200" bottom v-show="t.about" class="ml-2">
-                <v-icon
-                slot="activator"
-                >fas fa-info-circle</v-icon>
+              <span v-if="ti === 0"></span>
+                {{t.title}}
+                <strong class="ml-2" v-if="t.count">
+                  {{t.count ? '('+t.count+')' : ''}}
+                </strong>
+              <v-tooltip max-width="200" bottom v-if="t.about" class="ml-2">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon v-bind="attrs" v-on="on">fas fa-info-circle
+                  </v-icon>
+                </template>
                 {{t.about}}
               </v-tooltip>
             </v-tab>
@@ -79,28 +84,28 @@
               <!-- Overview Tab-->
               <v-tab-item value="tab-overview">
                 <!-- Main Stage Dashboard -->
-                <v-layout column class="hide-overflow">
-                  <v-layout row wrap>
+                <div class="d-flex flex-column hide-overflow">
+                  <div class="d-flex flex-row flex-wrap">
                     <v-flex xs12>
                       <ParticipationAnalysis ref="ParticipationAnalysis" class="my-2" />
                     </v-flex>
                     <!--<v-flex xs5>
                       <DailyResponse ref="DailyResponse" class="my-2" />
                     </v-flex>-->
-                  </v-layout>
-                  <v-layout row wrap>
-                    <v-flex xs12 px-2>
+                  </div>
+                  <div class="d-flex flex-row flex-wrap">
+                    <v-flex xs12 class="px-2">
                       <v-card class="elevation-0 ma-0" style="background-color: rgba(76, 62, 157, 0.1) !important;">
                         <DriverEngagement ref="DriverEngagement" />
                       </v-card>
                     </v-flex>
-                  </v-layout>
-                  <v-layout row wrap>
+                  </div>
+                  <div class="d-flex flex-row flex-wrap">
                     <v-flex xs12>
                       <QuestionAnalysis ref="QuestionAnalysis" class="my-2" />
                     </v-flex>
-                  </v-layout>
-                </v-layout>
+                  </div>
+                </div>
               </v-tab-item>
 
               <!-- Disengaged Employees Tab-->
@@ -191,13 +196,13 @@
         </v-expansion-panel>
         <v-card-actions>
 
-          <v-btn color="error" flat @click="showFilter = false">Close</v-btn>
+          <v-btn color="error" text @click="showFilter = false">Close</v-btn>
           <v-spacer></v-spacer>
           <v-btn @click="applyfilter()" class="white--text" color="primary" style="float:right">Apply</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    </v-layout>
+    </div>
 
     <DeleteStage ref="DeleteStage" />
   </div>

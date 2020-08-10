@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="d-flex flex-row flex-wrap">
-      <v-flex xs12 px-2>
-        <div class="d-inline-flex w-100 mb-0 py-2  grey--text text--darken-3">
+      <v-flex xs12 class="px-2">
+        <div class="d-inline-flex w-100 mb-0 py-2 grey--text text--darken-3">
           <p class="pt-1 mb-0 subheading" style=""> Driver Analysis </p>
           <!--<h2 class="text-xs-right" v-if="report && report.company_driver_average"> Score : {{report.company_driver_average}} / 5 </h2>
           <h2 class="text-xs-right" v-else> Score : 0 / 5 </h2>-->
@@ -105,7 +105,7 @@
                                 </v-flex>
 
                                 <v-flex xs2 class="overflow-wrap driver-score mr-2 mt-2">
-                                  <v-list-item-action style="align-items:flex-end;min-width:unset;font-size:13px !important;" class="text-xs-right "
+                                  <v-list-item-action style="align-items:flex-end;min-width:unset;font-size:13px !important;" class="text-right "
                                   :style="`border-bottom: 2px solid #f44336;border-color: ${getColor(v)} `">
                                     {{v.toFixed(1)}}
                                   </v-list-item-action>

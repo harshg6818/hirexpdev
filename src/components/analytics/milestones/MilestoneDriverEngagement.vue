@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="d-flex flex-row flex-wrap">
-      <v-flex xs12 px-2>
+      <v-flex xs12 class="px-2">
         <div class="d-inline-flex w-100 mb-0 py-2 px-3 grey--text text--darken-3">
-          <p class="pt-1 mb-0 subheading"> Driver Framework Analysis </p>
-          <!--<h2 class="text-xs-right" v-if="report && report.company_driver_average"> Score : {{report.company_driver_average}} / 5 </h2>
-          <h2 class="text-xs-right" v-else> Score : 0 / 5 </h2>-->
+          <p class="pt-1 mb-0 subheading"> Driver Analysis </p>
+          <!--<h2 class="text-right" v-if="report && report.company_driver_average"> Score : {{report.company_driver_average}} / 5 </h2>
+          <h2 class="text-right" v-else> Score : 0 / 5 </h2>-->
         </div>
 
         <div class="mt-0" v-if="config.initialLoading">
@@ -64,7 +64,7 @@
         <div class="mt-0" v-if="!config.initialLoading">
             <div class="d-flex" xs12>
               <v-flex xs12 class="pr-1 my-2">
-                <!-- <p class="pa-3 text-xs-left mb-0 font-weight-bold"> DRIVER-WISE ENGAGEMENT </p> -->
+                <!-- <p class="pa-3 text-left mb-0 font-weight-bold"> DRIVER-WISE ENGAGEMENT </p> -->
 
                 <div class="d-flex flex-row flex-wrap pa-1"
                   v-show="report && report.stats && report.company_drivers_breakdown"
@@ -83,7 +83,7 @@
                                 {{d.average}}
                               </p>
                             </v-flex>
-                            <!--<v-flex class="success--text text-xs-right pt-3">
+                            <!--<v-flex class="success--text text-right pt-3">
                               0.6 above
                               <v-icon color="success">fas fa-long-arrow-alt-up</v-icon>
                             </v-flex>-->
@@ -92,7 +92,7 @@
                             <span class="heading" v-if="d.driver"> {{d.driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} </span>
                           </p>
                           <v-divider class="mb-2"></v-divider>
-                          <span class="caption  grey--text">Subdriver Analysis</span>
+                          <span class="caption  grey--text">Subdriver Score</span>
                           <v-list class="pa-0">
                             <v-list-item
                               class="subdriver-tile"
@@ -106,7 +106,7 @@
                                   </v-list-item-title>
                                 </v-flex>
                                 <v-flex xs2 class="mr-2">
-                                  <v-list-item-action style="font-size:13px !important;align-items:flex-end;" class="text-xs-right "
+                                  <v-list-item-action style="font-size:13px !important;align-items:flex-end;" class="text-right "
                                   :style="`min-width:unset;border-bottom: 2px solid #f44336;border-color: ${getColor(v)} `">
                                     {{v}}
                                   </v-list-item-action>
@@ -122,8 +122,8 @@
                             Disengaged Employees
                           </p>
                           <v-divider></v-divider>
-                          <div class="slide-actions text-xs-center">
-                            <v-btn color="primary" class="text-capitalize" outline small @click="viewDriver(d.driver)">View Details</v-btn>
+                          <div class="slide-actions text-center">
+                            <v-btn color="primary" class="text-capitalize" outlined small @click="viewDriver(d.driver)">View Details</v-btn>
                           </div>
                         </v-card>
                       </swiper-slide>
@@ -149,15 +149,15 @@
 
               <!-- <v-flex xs6 class="pr-1">
                 <v-layout class="mt-2 py-0" row wrap>
-                  <v-flex xs12 text-xs-center>
+                  <v-flex xs12 text-center>
                     <div class="engagement-cards">
-                      <p class="pa-3 text-xs-left mb-0 text-capitalize"> Driver-Wise Engagement </p>
+                      <p class="pa-3 text-left mb-0 text-capitalize"> Driver-Wise Engagement </p>
                       <v-layout class="pb-0 driver-sunburst-card">
                         <v-flex xs12 class="custom-div-2">
                           <vue-anychart id="driverFramework" v-show="report && report.stats && report.company_drivers_breakdown" />
 
                           <v-layout class="driverFramework" v-if="!report || !report.stats || !report.company_drivers_breakdown" row wrap align-center justify-center fill-height>
-                            <v-flex text-xs-center>
+                            <v-flex text-center>
                               <strong class="body-2 font-weight-bold grey--text">
                                 Not enough data to generate analysis
                               </strong>
@@ -175,26 +175,26 @@
               <!-- Employee Vibes -->
               <v-flex xs6 class="pl-1">
                 <div class="mt-2 py-0 d-flex flex-row flex-wrap">
-                  <v-flex xs12 text-xs-center>
+                  <v-flex xs12 class="text-center">
                     <div class="engagement-cards">
-                      <p class="pa-3 text-xs-left mb-0  text-capitalize"> Employee Vibes </p>
+                      <p class="pa-3 text-left mb-0  text-capitalize"> Employee Vibes </p>
                       <div class="d-flex flex-row" v-if="report && report.stats">
                         <v-flex xs12 class="custom-div-2" v-show="report.mood_analysis && report.mood_analysis.company_mood_breakdown">
-                          <div class="px-2" v-for="(mood, di) in report.mood_analysis.company_mood_breakdown" v-if="mood.mood !== '0'" :key="di">
-                            <div class="w-100 d-flex">
+                          <div class="px-2 mb-3" v-for="(mood, di) in report.mood_analysis.company_mood_breakdown" v-if="mood.mood !== '0'" :key="di">
+                            <div class="w-100 d-flex flex-row">
                               <v-flex xs2 class="ml-3">
                                 <v-img class="mt-2" :src="getImgUrl(mood.mood)" style="height:40px;width:40px"> </v-img>
                               </v-flex>
 
                               <v-flex xs6>
                                 <div class="d-flex flex-row flex-wrap">
-                                  <v-flex xs3 class="text-xs-left d-inline-flex">
-                                    <h2 style="max-width:20px"> {{ mood.value }} </h2>
+                                  <v-flex xs3 class="text-left d-inline-flex">
+                                    <h2> {{ mood.value }} </h2>
                                     <small class="text-muted" style="position:relative;top:6px"> ({{mood.percent}} %) </small>
                                   </v-flex>
                                   <v-flex xs3>
                                   </v-flex>
-                                  <v-flex xs6 class="mt-3 grey--text text-xs-right">
+                                  <v-flex xs6 class="mt-3 grey--text text-right">
                                     {{getName(mood.mood)}}
                                   </v-flex>
                                 </div>
@@ -202,7 +202,7 @@
                               </v-flex>
 
                               <v-flex xs3 class="mx-3">
-                                <v-btn color="#4c3e9d" outline
+                                <v-btn color="#4c3e9d" outlined
                                   class="text-capitalize"
                                   style="position:relative;top:15px;height:30px"
                                   @click="listEmployees(mood.mood)">
@@ -240,7 +240,7 @@
                   <v-flex xs12 class="text-center">
                     <div class="engagement-cards">
                       <div class="d-inline-flex w-100">
-                        <p class="px-3 pt-3 mb-0 text-xs-left heading text-capitalize">
+                        <p class="px-3 pt-3 mb-0 text-left heading text-capitalize">
                           Engagement Over Time
                           <!-- <v-tooltip max-width="200" bottom class="ml-2">
                             <v-icon
@@ -251,7 +251,7 @@
                         </p>
                         <!-- <a class="cursor-pointer hover-link" @click="openDisengagedEmployees()"
                           v-if="report && report.high_risk_employees">
-                          <p class="px-3 pt-3 mb-0 text-xs-right"> View all disengaged employees </p>
+                          <p class="px-3 pt-3 mb-0 text-right"> View all disengaged employees </p>
                         </a>-->
                       </div>
 
@@ -272,7 +272,7 @@
                   <v-flex class="text-center">
                     <div>
                       <div class="d-inline-flex w-100">
-                        <p class="px-3 pt-3 mb-0 text-xs-left heading text-capitalize">
+                        <p class="px-3 pt-3 mb-0 text-left heading text-capitalize">
                           Engagement Over Time
                           <!-- <v-tooltip max-width="200" bottom class="ml-2">
                             <v-icon

@@ -361,31 +361,32 @@ export default {
       }
     },
     viewDriverWithFilter (driver) {
-      const t = this.updateEmployeeWithFilterSelected;
-      let tempAllFilters = {};
-      if (t.filters) {
-        this.$lodash.each(t.filters, (value, key) => {
-          if (value.length > 0) {
-            const tempObj = {
-              [key]: value.length > 1 ? value.join() : value[0]
-            };
-            tempAllFilters = { ...tempAllFilters, ...tempObj };
-          }
-        });
-      }
-      if (this.dateRangeOptions && this.dateRangeOptions.startDate && this.dateRangeOptions.endDate) {
-        tempAllFilters.startDate = this.dateRangeOptions.startDate;
-        tempAllFilters.endDate = this.dateRangeOptions.endDate;
-      }
-      if (this.highPotential.selected && this.highPotential.selected.length > 0) {
-        tempAllFilters.highPotential = this.highPotential.selected;
-      }
-      this.$router.push({
-        path: `/driver/view/${driver}`,
-        query: {
-          ...tempAllFilters
-        }
-      });
+      // const t = this.updateEmployeeWithFilterSelected;
+      // let tempAllFilters = {};
+      // if (t.filters) {
+      //   this.$lodash.each(t.filters, (value, key) => {
+      //     if (value.length > 0) {
+      //       const tempObj = {
+      //         [key]: value.length > 1 ? value.join() : value[0],
+      //       };
+      //       tempAllFilters = { ...tempAllFilters, ...tempObj };
+      //     }
+      //   });
+      // }
+      // if (this.dateRangeOptions && this.dateRangeOptions.startDate && this.dateRangeOptions.endDate) {
+      //   tempAllFilters.startDate = this.dateRangeOptions.startDate;
+      //   tempAllFilters.endDate = this.dateRangeOptions.endDate;
+      // }
+      // if (this.highPotential.selected && this.highPotential.selected.length > 0) {
+      //   tempAllFilters.highPotential = this.highPotential.selected;
+      // }
+      this.$router.push({ path: `/driver/view/${driver}` });
+      // this.$router.push({
+      //   path: `/driver/view/${driver}`,
+      //   query: {
+      //     ...tempAllFilters,
+      //   },
+      // });
     },
     getDashboardReport () {
       // this.config.initialLoading = true;
@@ -548,20 +549,18 @@ export default {
       });
     },
     updateEmployeeWithFilter (mood) {
-      let filters = '';
-      if (this.filters) {
-        filters = Object.assign({}, this.filters.selected);
-        if (filters && filters.activeTab) {
-          delete filters.activeTab;
-        }
-      }
+      // const filters = Object.assign({}, this.filters.selected);
+      const filters = Object.assign({}, this.updateDashboardFilters);
+      // if (filters && filters.activeTab) {
+      //   delete filters.activeTab;
+      // }
       const employeeFilters = {
         // high_potential_emp: this.highPotential.selected ? this.highPotential.selected : undefined,
         mood__in: mood,
         // user_session__initiated_date_start: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.startDate).format('YYYY-MM-DD') : undefined,
         // user_session__initiated_date_end: this.dateRangeOptions.startDate ? dayjs(this.dateRangeOptions.endDate).format('YYYY-MM-DD') : undefined,
         // dynamic filters
-        filters
+        ...filters
       };
       this.$store.dispatch('updateEmployeeFilters', employeeFilters);
       this.$router.push({
@@ -611,6 +610,7 @@ export default {
         }
       }
       .filter-bar {
+        margin-top: 8px;
         display: flex;
         // grid-template-columns: repeat(12, 1fr);
         // grid-gap: 20px;

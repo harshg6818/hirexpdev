@@ -44,21 +44,26 @@
               style="background-color:#fff !important;">
                 <p class="pa-3 score-card text-capitalize" style="font-size:16px;">
                   Engagement Score
-                  <v-tooltip max-width="200" bottom class="ml-2" >
-                    <v-icon
-                    data-html2canvas-ignore
-                    slot="activator"
-                    >fas fa-info-circle</v-icon>
+                  <v-tooltip max-width="200" bottom class="ml-2">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon
+                        v-bind="attrs"
+                        v-on="on"
+                        data-html2canvas-ignore
+                        slot="activator"
+                        >fas fa-info-circle
+                      </v-icon>
+                    </template>
                       <span v-if="$route.name === 'ViewLifecycle'"> This is the average engagement score of the company calculated based on the latest conversations with each employee at {{ stage_title }} touchpoint. </span>
                       <span v-else> This is the average engagement score of the company calculated based on the latest conversations with each employee. </span>
                   </v-tooltip>
                 </p>
                 <div v-if="report && report.engagement_score" class="d-inline-flex w-100">
-                  <h1 class="score-card heading text-xs-right pl-2 pr-3"
+                  <h1 class="score-card heading text-right pl-2 pr-3"
                     v-if="report && report.engagement_score">
                     {{report.engagement_score.toFixed(1)}}
                   </h1>
-                  <h1 class="display-1 text-xs-left pl-0" style="position: relative;left: -5%;"> /5 </h1>
+                  <h1 class="display-1 text-left pl-0" style="position: relative;left: -5%;"> /5 </h1>
                 </div>
                 <div v-else>
                   <div class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
@@ -84,10 +89,15 @@
                 <p class="pa-3 text-capitalize" style="font-size:16px;">
                   Employees’ Vibe
                   <v-tooltip max-width="200" bottom class="ml-2">
-                    <v-icon
-                    data-html2canvas-ignore
-                    slot="activator"
-                    >fas fa-info-circle</v-icon>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon
+                        v-bind="attrs"
+                        v-on="on"
+                        data-html2canvas-ignore
+                        slot="activator"
+                        >fas fa-info-circle
+                      </v-icon>
+                    </template>
                       <span v-if="$route.name === 'ViewLifecycle'">   This is the average of employees’ overall feelings at {{ stage_title }} touchpoint. </span>
                       <span v-else> This is the average of employees’ overall feelings about the tenure that they have spent in the organization. </span>
                   </v-tooltip>
@@ -124,10 +134,15 @@
                   <p class="px-3 pt-3 mb-0" style="font-size:16px;">
                     Disengaged Employees
                     <v-tooltip max-width="200" bottom class="ml-2">
-                      <v-icon
-                      data-html2canvas-ignore
-                      slot="activator"
-                      >fas fa-info-circle</v-icon>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                          v-bind="attrs"
+                          v-on="on"
+                          data-html2canvas-ignore
+                          slot="activator"
+                          >fas fa-info-circle
+                        </v-icon>
+                      </template>
                         Employees’ whose engagement score is less than or equal to 3 are disengaged.
                     </v-tooltip>
                   </p>
@@ -206,10 +221,15 @@
                 <p class="pa-3 text-capitalize" style="font-size:16px;">
                   Employees reached
                   <v-tooltip max-width="200" bottom class="ml-2">
-                    <v-icon
-                    data-html2canvas-ignore
-                    slot="activator"
-                    >fas fa-info-circle</v-icon>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon
+                        v-bind="attrs"
+                        v-on="on"
+                        data-html2canvas-ignore
+                        slot="activator"
+                        >fas fa-info-circle
+                      </v-icon>
+                    </template>
                       Percent of employees to whom Amara has reached out at least once.
                   </v-tooltip>
                 </p>
@@ -248,10 +268,15 @@
                 <p class="px-3 pt-3 mb-0" style="font-size:16px;">
                   Participation Rate
                   <v-tooltip max-width="200" bottom class="ml-2">
-                    <v-icon
-                    data-html2canvas-ignore
-                    slot="activator"
-                    >fas fa-info-circle</v-icon>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon
+                        v-bind="attrs"
+                        v-on="on"
+                        data-html2canvas-ignore
+                        slot="activator"
+                        >fas fa-info-circle
+                      </v-icon>
+                    </template>
                       Percent of chats completed of total chats initiated.
                   </v-tooltip>
                 </p>
