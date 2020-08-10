@@ -49,7 +49,7 @@
               <template v-for="(item, index) in items" ref="items">
                 <v-subheader v-if="item.header" :key="index">{{ item.header }}</v-subheader>
                 <v-divider v-else-if="item.divider" :key="index" :inset="item.inset" ></v-divider>
-                <v-list-item @click="updateTab(item.value)" class="settings-list"
+                <v-list-item @click="updateTab(item.value)" class="settings-list pa-4"
                     style="border-bottom:1px solid rgba(0,0,0,0.12);" v-else
                     :key="index"
                     avatar :class="{'tab' : tab == `tab-${item.value}`}"
