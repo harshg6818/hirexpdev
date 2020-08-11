@@ -8,32 +8,29 @@
           <h2 v-if="selectedQuesType && selectedQuesType[0] &&
           selectedQuesType[0].type === 'text'">  Create a statement </h2>
           <h2 v-else> Create New Question </h2>
-          <v-layout mx-2 mt-2 row wrap :reverse="ifSmall" v-show="selectedQuesType" style="max-height: calc( 100% - 30px);overflow-y: auto;">
+          <div class="mx-2 mt-2 d-flex flex-row flex-wrap" :reverse="ifSmall" v-if="selectedQuesType" style="max-height: calc( 100% - 30px);overflow-y: auto;">
             <!-- Area to add elements -->
             <v-flex class="interactions">
               <v-card class="elevation-0 mt-2 interaction-card">
 
-                <v-layout row wrap grey lighten-5 class="drag-container" style="height:100%">
+                <div class="d-flex flex-row flex-wrap grey lighten-5 drag-container" style="height:100%">
                   <v-flex xs1></v-flex>
-
                   <v-flex xs10>
                     <h3 class="ml-4 mt-3" v-if="selectedQuesType && selectedQuesType[0]">
                       {{selectedQuesType[0].title}}
                     </h3>
                     <div v-for="(q, qi) in selectedQuesType" :key="qi" v-if="qi === '0'">
-                      <v-layout class="draggable-item" style="max-height:350px;">
-                        <v-flex class="ma-4 action-card"
-                        text-xs-center sm12>
-                          <v-layout column class="title text-capitalize">
+                      <div class="flex-row d-flex draggable-item" style="max-height:350px;">
+                        <v-flex class="ma-4 action-card text-center" sm12>
+                          <div class="title text-capitalize d-flex flex-column">
                             {{q.title}}
-                          </v-layout>
-
+                          </div>
                           <v-card class="mb-1 elevation-0 " style="">
-                            <v-layout row wrap v-if="q.type !== 'text'">
-                              <v-flex xs2 v-if="questionIndex !== 0" class="font-weight-bold pl-2 pt-2 pl-2 mt-1 text-xs-left">
+                            <div v-if="q.type !== 'text'" class="d-flex flex-row flex-wrap">
+                              <v-flex xs2 v-if="questionIndex !== 0" class="font-weight-bold pl-2 pt-2 pl-2 mt-1 text-left">
                                 Driver
                               </v-flex>
-                              <v-flex lay class="text-xs-left" xs4>
+                              <v-flex lay class="text-left" xs4>
                                 <v-select
                                   v-if="questionIndex !== 0"
                                   class="remove-msg"
@@ -54,10 +51,10 @@
                                 ></v-select>
                               </v-flex>
 
-                              <v-flex xs2 v-if="questionIndex !== 0" class="font-weight-bold pl-2 pt-2 mt-1 text-xs-left">
+                              <v-flex xs2 v-if="questionIndex !== 0" class="font-weight-bold pl-2 pt-2 mt-1 text-left">
                                 Sub Driver
                               </v-flex>
-                              <v-flex lay class="text-xs-left pr-2" xs4>
+                              <v-flex lay class="text-left pr-2" xs4>
                                 <v-select
                                   v-if="questionIndex !== 0"
                                   class="remove-msg"
@@ -80,9 +77,9 @@
                               <v-flex xs12>
                                 <v-divider></v-divider>
                               </v-flex>
-                            </v-layout>
+                            </div>
 
-                            <v-layout row wrap align-center class="pt-4 pa-3">
+                            <div class="pt-4 pa-3 d-flex flex-row flex-wrap align-center">
 
                               <!-- Scale -->
                               <v-flex class="" xs10 offset-xs1 v-if="q.type === 'scale'">
@@ -102,20 +99,20 @@
                                 >
                                 </v-text-field>
 
-                                <v-layout row wrap
-                                v-if="q.msg && q.msg[0].scaleType === 'emoji'" justify-center>
-                                  <v-flex xs10 text-xs-center class="mb-3"
+                                <div class="d-flex flex-row flex-wrap justify-center"
+                                v-if="q.msg && q.msg[0].scaleType === 'emoji'">
+                                  <v-flex xs10 class="mb-3 text-center"
                                   v-for="(r, ri) in q.msg[0].scale" :key="ri">
-                                    <v-layout>
+                                    <div class="d-flex flex-row">
                                       <v-flex xs3>
                                         <v-btn class="emoji-btn"
                                           slot="activator"
-                                          fab flat round
+                                          fab text rounded
                                         >
                                           <img v-if="r.img" :src="getImgUrl(r.img)"
                                           class="emoji-container" />
                                         </v-btn>
-                                        <p class="text-xs-center mt-2">
+                                        <p class="text-center mt-2">
                                           {{r.title}}
                                         </p>
                                       </v-flex>
@@ -146,22 +143,22 @@
                                         ></v-text-field>
                                       </v-flex>
 
-                                    </v-layout>
+                                    </div>
 
                                   </v-flex>
-                                </v-layout>
+                                </div>
 
-                                <v-layout row wrap
-                                v-if="q.msg && q.msg[0].scaleType === 'number'" justify-center>
-                                  <v-flex xs10 text-xs-center class="mb-3"
+                                <div class="d-flex flex-row flex-wrap justify-center"
+                                v-if="q.msg && q.msg[0].scaleType === 'number'">
+                                  <v-flex xs10 class="mb-3 text-center"
                                   v-for="(r, ri) in q.msg[0].scale" :key="ri">
-                                    <v-layout>
+                                    <div class="d-flex flex-row">
                                       <v-flex xs3>
                                         <v-btn class="emoji-btn"
                                           :color="r.color"
                                           fab
-                                          outline
-                                          round
+                                          outlined
+                                          rounded
                                           slot="activator"
                                         >
                                           <strong class="headline">
@@ -169,7 +166,7 @@
                                           </strong>
                                         </v-btn>
 
-                                        <p class="text-xs-center">
+                                        <p class="text-center">
                                           {{r.title}}
                                         </p>
                                       </v-flex>
@@ -197,9 +194,9 @@
                                           label="Amara's response"
                                         ></v-text-field>
                                       </v-flex>
-                                    </v-layout>
+                                    </div>
                                   </v-flex>
-                                </v-layout>
+                                </div>
                               </v-flex>
 
                               <!-- Input from user -->
@@ -268,12 +265,9 @@
                                     aspect-ratio="1"
                                     class="grey lighten-2 mx-auto"
                                   >
-                                    <v-layout
+                                    <div
+                                      class="d-flex flex-row fill-height align-center justify-center ma-0"
                                       slot="placeholder"
-                                      fill-height
-                                      align-center
-                                      justify-center
-                                      ma-0
                                     >
                                       <div class="">
                                         <v-icon class="mr-2">fas fa-plus-square</v-icon>
@@ -284,7 +278,7 @@
                                       <v-progress-circular v-show="q.msg[0].imgUrl"
                                       indeterminate color="grey lighten-5">
                                       </v-progress-circular>
-                                    </v-layout>
+                                    </div>
                                   </v-img>
                                 </template>
                                   <v-list class="pa-3">
@@ -297,7 +291,7 @@
                                       name="url"
                                       label="Your image URL"
                                     ></v-text-field>
-                                    <v-flex xs12 class="text-xs-right">
+                                    <v-flex xs12 class="text-right">
                                       <v-btn color="#0d2c8d" class="white--text" small>Done</v-btn>
                                     </v-flex>
                                   </v-list>
@@ -328,12 +322,8 @@
                                       aspect-ratio="1"
                                       class="grey lighten-2 mx-auto"
                                     >
-                                      <v-layout
+                                      <div class="d-flex flex-row fill-height align-center justify-center ma-0"
                                         slot="placeholder"
-                                        fill-height
-                                        align-center
-                                        justify-center
-                                        ma-0
                                       >
                                         <div class="">
                                           <v-icon class="mr-2">fas fa-plus-square</v-icon>
@@ -344,7 +334,7 @@
                                         <v-progress-circular v-show="c.imgUrl"
                                         indeterminate color="grey lighten-5">
                                         </v-progress-circular>
-                                      </v-layout>
+                                      </div>
                                     </v-img>
                                   </template>
                                     <v-list class="pa-3">
@@ -357,7 +347,7 @@
                                         name="url"
                                         label="Your image URL"
                                       ></v-text-field>
-                                      <v-flex xs12 class="text-xs-right">
+                                      <v-flex xs12 class="text-right">
                                         <v-btn color="#0d2c8d" class="white--text" small>
                                           Done
                                         </v-btn>
@@ -388,7 +378,7 @@
                                   </div>
 
                                   <v-card-actions>
-                                    <div class="text-xs-left">
+                                    <div class="text-left">
                                       <v-menu v-for="(r, ri) in c.quickReplies" :key="ri"
                                         absolute
                                         offset-y
@@ -396,7 +386,7 @@
                                         style="width: 20em;"
                                       >
                                       <template v-slot:activator="{ on, attrs }">
-                                        <v-btn color="#0d2c8d" block outline slot="activator" v-bind="attrs" v-on="on">
+                                        <v-btn color="#0d2c8d" block outlined slot="activator" v-bind="attrs" v-on="on">
                                           {{r.title}}
                                         </v-btn>
                                       </template>
@@ -423,8 +413,8 @@
                                             label="Amara's response"
                                           ></v-text-field>
 
-                                          <v-flex xs12 class="text-xs-right">
-                                            <v-btn color="error" small flat
+                                          <v-flex xs12 class="text-right">
+                                            <v-btn color="error" small text
                                             @click="deleteReply(qi, ci, ri)">Delete</v-btn>
                                             <v-btn color="#0d2c8d" class="white--text" small>
                                               Done
@@ -437,7 +427,7 @@
                                       <p class="cursor-pointer mb-0 text-sm-center"
                                       v-if="c.quickReplies.length < 5"
                                       style="width: 20em;" @click="addReplies(qi, ci, 'Button')">
-                                        <v-btn color="accent" class="mr-2" small outline icon>
+                                        <v-btn color="accent" class="mr-2" small outlined icon>
                                           <v-icon small>fas fa-plus</v-icon>
                                         </v-btn>Add reply
                                       </p>
@@ -448,7 +438,7 @@
 
                               <!-- Carousel -->
                               <v-flex class="" v-if="q.type === 'carousel'">
-                                <v-layout row wrap>
+                                <div class="d-flex flex-wrap flex-row">
                                   <v-card class="mr-3" width="300"
                                     v-for="(c, ci) in q.msg" :key="ci"
                                   >
@@ -471,12 +461,9 @@
                                         aspect-ratio="1"
                                         class="grey lighten-2 mx-auto"
                                       >
-                                        <v-layout
+                                        <div
+                                          class="d-flex flex-row fill-height align-center justify-center ma-0"
                                           slot="placeholder"
-                                          fill-height
-                                          align-center
-                                          justify-center
-                                          ma-0
                                         >
                                           <div class="">
                                             <v-icon class="mr-2">fas fa-plus-square</v-icon>
@@ -487,7 +474,7 @@
                                           <v-progress-circular v-show="c.imgUrl"
                                           indeterminate color="grey lighten-5">
                                           </v-progress-circular>
-                                        </v-layout>
+                                        </div>
                                       </v-img>
                                     </template>
                                       <v-list class="pa-3">
@@ -500,7 +487,7 @@
                                           name="url"
                                           label="Your image URL"
                                         ></v-text-field>
-                                        <v-flex xs12 class="text-xs-right">
+                                        <v-flex xs12 class="text-right">
                                           <v-btn color="#0d2c8d" class="white--text" small>
                                             Done
                                           </v-btn>
@@ -531,7 +518,7 @@
                                     </div>
 
                                     <v-card-actions>
-                                      <div class="text-xs-left">
+                                      <div class="text-left">
                                         <v-menu v-for="(r, ri) in c.quickReplies" :key="ri"
                                           absolute
                                           offset-y
@@ -539,7 +526,7 @@
                                           style="width: 20em;"
                                         >
                                         <template v-slot:activator="{ on, attrs }">
-                                          <v-btn color="#0d2c8d" block outline slot="activator" v-bind="attrs" v-on="on">
+                                          <v-btn color="#0d2c8d" block outlined slot="activator" v-bind="attrs" v-on="on">
                                             {{r.title}}
                                           </v-btn>
                                         </template>
@@ -566,8 +553,8 @@
                                               label="Amara's response"
                                             ></v-text-field>
 
-                                            <v-flex xs12 class="text-xs-right">
-                                              <v-btn color="error" small flat
+                                            <v-flex xs12 class="text-right">
+                                              <v-btn color="error" small text
                                               @click="deleteReply(qi, ci, ri)">Delete</v-btn>
                                               <v-btn color="#0d2c8d" class="white--text" small>
                                                 Done
@@ -580,7 +567,7 @@
                                         <p class="cursor-pointer mb-0 text-sm-center"
                                         v-if="c.quickReplies.length < 5"
                                         style="width: 20em;" @click="addReplies(qi, ci, 'Button')">
-                                          <v-btn color="accent" class="mr-2" small outline icon>
+                                          <v-btn color="accent" class="mr-2" small outlined icon>
                                             <v-icon small>fas fa-plus</v-icon>
                                           </v-btn>Add reply
                                         </p>
@@ -592,12 +579,12 @@
                                     <p class="cursor-pointer mb-0 text-sm-center"
                                     v-if="q.msg.length < 5"
                                     style="width: 20em;" @click="addCard(qi)">
-                                      <v-btn color="accent" class="mr-2" small outline icon>
+                                      <v-btn color="accent" class="mr-2" small outlined icon>
                                         <v-icon small>fas fa-plus</v-icon>
                                       </v-btn>Add card
                                     </p>
                                   </v-card>
-                                </v-layout>
+                                </div>
                               </v-flex>
 
                               <!-- Quick replies -->
@@ -623,13 +610,14 @@
                                   </v-fade-transition>
                                 </v-text-field>
 
-                                <v-layout row wrap
-                                class="text-xs-left" v-if="q.msg" justify-center>
-                                  <v-flex xs10 text-xs-center class="mb-3"
+                                <div
+                                  class="d-flex flex-row flex-wrap text-left justify-center" v-if="q.msg"
+                                >
+                                  <v-flex xs10 class="mb-3 text-center"
                                     v-for="(c, ci) in q.msg[0].quickReplies" :key="ci">
-                                    <v-layout>
+                                    <div class="d-flex flex-row">
                                       <v-flex xs3>
-                                        <v-btn color="#0d2c8d" outline slot="activator">
+                                        <v-btn color="#0d2c8d" outlined slot="activator">
                                         {{c.title}}</v-btn>
                                       </v-flex>
                                       <v-flex xs9>
@@ -655,24 +643,24 @@
                                           label="Amara's response"
                                         ></v-text-field>
                                       </v-flex>
-                                    </v-layout>
+                                    </div>
                                   </v-flex>
 
                                   <!-- Add new quick reply -->
                                   <span class="cursor-pointer" @click="addReplies(qi, 0, 'Answer')"
                                   v-if="q.msg && q.msg[0].quickReplies.length < 5 &&
                                   q.type === 'quickReplies'">
-                                    <v-btn color="accent" small outline icon>
+                                    <v-btn color="accent" small outlined icon>
                                       <v-icon small>fas fa-plus</v-icon>
                                     </v-btn>Add reply
                                   </span>
-                                </v-layout>
+                                </div>
                               </v-flex>
 
-                            </v-layout>
+                            </div>
                           </v-card>
                         </v-flex>
-                      </v-layout>
+                      </div>
                     </div>
                   </v-flex>
 
@@ -693,21 +681,21 @@
                       </span>
                     </div>
                   </v-flex>-->
-                </v-layout>
+                </div>
 
               </v-card>
             </v-flex>
 
-          </v-layout>
+          </div>
         </v-card-text>
 
         <v-card-actions class="mt-3" align-content-space->
           <v-flex xs2>
-            <v-btn color="error" flat @click.stop="dialogs.newQuestion=false;">Close</v-btn>
+            <v-btn color="error" text @click.stop="dialogs.newQuestion=false;">Close</v-btn>
           </v-flex>
           <v-flex xs8>
           </v-flex>
-          <v-flex text-xs-right xs2 v-if="!editFlag">
+          <v-flex xs2 v-if="!editFlag" class="text-right">
             <v-btn color="primary" class="white--text" @click.stop="validateDetails()"
             v-if="selectedQuesType && selectedQuesType[0] &&
             selectedQuesType[0].type === 'text'"> Add Statement </v-btn>
@@ -715,7 +703,7 @@
               Add Question
             </v-btn>
           </v-flex>
-          <v-flex text-xs-right xs2 v-else>
+          <v-flex xs2 v-else class="text-right">
             <v-btn color="primary" class="white--text" @click.stop="validateDetails()"
             v-if="selectedQuesType && selectedQuesType[0] && selectedQuesType[0].type === 'text'">
               Update Statement

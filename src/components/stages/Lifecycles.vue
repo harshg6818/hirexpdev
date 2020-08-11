@@ -224,7 +224,7 @@
         :server-items-length="totalItems"
         :loading="table.loading"
         :options.sync="pagination"
-        class=""
+        disable-sort
       >
         <template slot="headers" slot-scope="props">
           <tr style="border-color:#f3f1f1">
@@ -240,6 +240,7 @@
 
         <template v-slot:body="{items}">
           <!--<v-card>-->
+          <tbody>
             <tr class="card mb-2" style="border-top:1px solid #f3f1f1;" v-for="(item, index) in items" :key="index">
               <td class="px-2" style="`border-right:1px solid #f3f1f1;width:5%;font-size:13px !important;`">
                 <p class="mb-0">
@@ -280,6 +281,7 @@
                 </v-btn>
               </td>
             </tr>
+          </tbody>
         </template>
       </v-data-table>
     </div>

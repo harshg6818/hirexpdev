@@ -1,26 +1,25 @@
 <template>
-  <v-layout>
+  <div class="d-flex flex-row w-100">
     <v-flex xs12>
-
-      <v-layout class="pa-3" v-show="!config.initialLoading">
+      <div class="pa-3 d-flex flex-row" v-if="!config.initialLoading">
         <v-flex xs4 class="px-3">
-          <v-layout row wrap align-center>
+          <div class="d-flex flex-row flex-wrap align-center">
             <v-flex>
               <h3 class="my-2">
                 Filters
               </h3>
             </v-flex>
             <v-flex class="text-sm-right">
-              <v-btn v-show="filtersApplied" @click="resetFilters"
-              color="error" class="mt-0" outline small>
+              <v-btn v-if="filtersApplied" @click="resetFilters"
+                color="error" class="mt-0" outlined small>
                 Remove filters
               </v-btn>
             </v-flex>
-          </v-layout>
-          <v-expansion-panel expand v-model="config.panel"
-          v-show="!config.initialLoadingFilters"
-          class="elevation-0 pr-2">
-            <v-expansion-panel-content v-for="(v, k) in filters.default" :key="k">
+          </div>
+          <!-- <v-expansion-panel expand v-model="config.panel"
+          v-if="!config.initialLoadingFilters"
+          class="elevation-0 pr-2"> -->
+            <!-- <v-expansion-panel-content v-for="(v, k) in filters.default" :key="k">
               <div slot="header">{{getName(k)}}</div>
               <v-card color="">
                 <v-card-text v-show="v.length > 0">
@@ -33,8 +32,30 @@
                   No filters available
                 </v-card-text>
               </v-card>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
+            </v-expansion-panel-content> -->
+          <!-- </v-expansion-panel> -->
+
+          <v-expansion-panels>
+            <v-expansion-panel
+              v-for="(v, k) in filters.default"
+              :key="k"
+            >
+              <v-expansion-panel-header>{{getName(k)}}</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                  <div v-if="v.length > 0">
+                    <v-checkbox color="primary" :label="`${chk[k]} (${chk.count})`"
+                      :value="chk[k]" v-model="newStage.audience[k]"
+                      @change="triggerUpdate"
+                      v-for="chk in v" :key="chk[k]"
+                    ></v-checkbox>
+                  </div>
+                  <div v-else-if="v.length === 0">
+                    No filters available
+                  </div>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
         </v-flex>
 
         <v-flex xs8>
@@ -42,27 +63,16 @@
             v-show="!config.initialLoading"
             :headers="table.headers"
             :items="table.team"
-            :rows-per-page-items="[10, 20]"
+            footer-props.items-per-page-options="[10, 20]"
             :loading="table.loading"
             class="mb-3 b-top pt-2 audience-list"
-            :pagination.sync="pagination"
+            :options="pagination"
             :server-items-length="table.totalItems"
-            select-all
           >
-            <template slot="headers" slot-scope="props">
+            <template v-slot:header="{headers}">
               <tr style="border-color:#f3f1f1">
-                <!--<th class="text-xs-left" v-if="showCheckBoxes">
-                  <v-checkbox
-                    :input-value="props.all"
-                    :indeterminate="props.indeterminate"
-                    primary
-                    hide-details
-                    :value="allSelected ? true : false"
-                    @change="toggleAll($event)"
-                  ></v-checkbox>
-                </th>-->
-                <th class="text-xs-left"
-                  v-for="header in props.headers"
+                <th class="text-left"
+                  v-for="header in headers"
                   :key="header.text"
                 >
                   {{ header.text }}
@@ -70,80 +80,82 @@
               </tr>
             </template>
 
-            <template slot="items" slot-scope="props">
-              <tr v-if="props.item" style="border-color:#f3f1f1">
-                <!--<td class="text-xs-left" v-if="showCheckBoxes">
-                  <v-checkbox color="primary"
-                    @change="updateSelectedAudience(props.item, $event)"
-                    :value="selectedAudience[props.item.id] || allSelected ? true : false"
-                    primary
-                    hide-details
-                    :unchecked-value="false">
-                  </v-checkbox>
-                </td>-->
-                <td class="text-xs-left">
-                  <v-layout row wrap align-center>
-                    <!--<v-flex class="py-2" sm3>
-                      <v-avatar size="30px" :color="getColor(props.item)">
-                        <img src="src" alt="alt" v-show="false">
-                        <span class="white--text">{{getAvatar(props.item)}}</span>
-                      </v-avatar>
-                    </v-flex>-->
-                    <v-flex>
-                      <p class="mb-0" v-show="props.item.user_display_name || props.item.display_name">
-                        <strong :class="'hover-link cursor-pointer'">
-                          {{props.item.user_display_name || props.item.display_name}}
-                        </strong>
-                      </p>
-                      <p class="mb-0" v-show="!props.item.user_display_name && !props.item.display_name && (props.item.first_name || props.item.last_name)">
-                        <strong :class="'hover-link cursor-pointer'">
-                          {{props.item.first_name}} {{props.item.last_name}}
-                        </strong>
-                      </p>
-                      <!--<small>
-                        {{props.item.email || props.item.user_email}}
-                      </small>-->
-                    </v-flex>
-                  </v-layout>
-                </td>
+            <template v-slot:body="{items}">
+              <tbody>
+                <tr style="border-color:#f3f1f1" v-for="(item, index) in items" :key="index">
+                  <!--<td class="text-left" v-if="showCheckBoxes">
+                    <v-checkbox color="primary"
+                      @change="updateSelectedAudience(props.item, $event)"
+                      :value="selectedAudience[props.item.id] || allSelected ? true : false"
+                      primary
+                      hide-details
+                      :unchecked-value="false">
+                    </v-checkbox>
+                  </td>-->
+                  <td class="text-left">
+                    <div class="d-flex flex-row flex-wrap align-center">
+                      <!--<v-flex class="py-2" sm3>
+                        <v-avatar size="30px" :color="getColor(props.item)">
+                          <img src="src" alt="alt" v-show="false">
+                          <span class="white--text">{{getAvatar(props.item)}}</span>
+                        </v-avatar>
+                      </v-flex>-->
+                      <v-flex>
+                        <p class="mb-0" v-show="item.user_display_name || item.display_name">
+                          <strong :class="'hover-link cursor-pointer'">
+                            {{item.user_display_name || item.display_name}}
+                          </strong>
+                        </p>
+                        <p class="mb-0" v-show="!item.user_display_name && !item.display_name && (item.first_name || item.last_name)">
+                          <strong :class="'hover-link cursor-pointer'">
+                            {{item.first_name}} {{item.last_name}}
+                          </strong>
+                        </p>
+                        <!--<small>
+                          {{props.item.email || props.item.user_email}}
+                        </small>-->
+                      </v-flex>
+                    </div>
+                  </td>
 
-                <td class="text-xs-left" v-show="props.item.email">
-                  {{props.item.email}}
-                </td>
-                <td class="text-xs-left" v-show="!props.item.email">
-                  --
-                </td>
+                  <td class="text-left" v-show="item.email">
+                    {{item.email}}
+                  </td>
+                  <td class="text-left" v-show="!item.email">
+                    --
+                  </td>
 
-                <td class="text-xs-left" v-show="props.item.phone || props.item.phoneNumber">
-                  {{props.item.phone || props.item.phoneNumber}}
-                </td>
-                <td class="text-xs-left" v-show="!props.item.phone && !props.item.phoneNumber">
-                  --
-                </td>
+                  <td class="text-left" v-show="item.phone || item.phoneNumber">
+                    {{item.phone || item.phoneNumber}}
+                  </td>
+                  <td class="text-left" v-show="!item.phone && !item.phoneNumber">
+                    --
+                  </td>
 
-                <td class="text-xs-left">
-                  {{props.item.gender}}
-                </td>
-              </tr>
+                  <td class="text-left">
+                    {{item.gender}}
+                  </td>
+                </tr>
+              </tbody>
             </template>
 
-            <v-card slot="no-data" class="elevation-0 text-xs-center" min-height="60vh">
+            <v-card slot="no-data" class="elevation-0 text-center" min-height="60vh">
               <v-card-title primary-title class="justify-center">
-                <v-layout row wrap>
+                <div class="d-flex flex-row flex-wrap">
                   <v-flex xs12>
                     <img :src="getImgUrl('amara_avatar')" class="blank-avatar" alt="">
                       <p>
                         No employees present.
                       </p>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-card-title>
             </v-card>
           </v-data-table>
         </v-flex>
-      </v-layout>
+      </div>
     </v-flex>
-  </v-layout>
+  </div>
 </template>
 
 <script>

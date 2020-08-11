@@ -1,11 +1,11 @@
 <template>
-  <v-dialog max-width="1q00px"
+  <v-dialog max-width="1000px"
       v-model="dialogs.question_bank"
       transition="dialog-transition"
     >
       <v-card class="template-card">
         <v-card-text style="height:calc(100% - 90px)">
-          <v-layout row wrap>
+          <div class="d-flex flex-row flex-wrap">
             <v-flex xs8>
               <h2>
                 Create using existing template
@@ -18,7 +18,7 @@
 
             <v-flex xs1> </v-flex>
 
-            <v-flex xs3 text-xs-right>
+            <v-flex xs3 class="text-right">
               <v-select
                 class="remove-msg"
                 :items="drivers"
@@ -30,12 +30,12 @@
                 label="Select driver"
               ></v-select>
             </v-flex>
-          </v-layout>
+          </div>
 
-          <v-layout row wrap style="height:calc(100% - 80px)">
+          <div class="d-flex flex-row flex-wrap" style="height:calc(100% - 80px)">
             <v-flex class="interactions pr-3" style="height:100%" v-if="config.initialLoading">
               <v-card class="elevation-0 mt-2 interaction-card pt-3" style="height:100%">
-                <v-layout class="pt-2" style="height: 20px">
+                <div class="pt-2 d-flex flex-row" style="height: 20px">
                   <v-flex xs8>
 
                   </v-flex>
@@ -51,9 +51,9 @@
                       <rect x="0" y="0" rx="0" ry="0" width="28.46" height="5" />
                     </ContentLoader>
                   </v-flex>
-                </v-layout>
+                </div>
 
-                <v-layout style="height:80%">
+                <div style="height:80%" class="d-flex flex-row">
                   <v-flex xs4>
                     <ContentLoader
                       :height="50"
@@ -76,16 +76,16 @@
                       <rect x="0" y="0" rx="0" ry="0" width="48.46" height="25" />
                     </ContentLoader>
                   </v-flex>
-                </v-layout>
+                </div>
               </v-card>
             </v-flex>
 
             <!-- Area to add elements -->
             <v-flex class="interactions pr-2" style="height:100%" v-if="!config.initialLoading">
               <v-card class="elevation-0 mt-2 interaction-card" style="height:100%">
-                <v-layout row wrap white class="drag-container" style="height: 100%">
+                <div white class="drag-container d-flex flex-row flex-wrap white" style="height: 100%">
                   <v-flex class="py-3" xs12 style="height:100%">
-                    <v-layout v-if="roles && roles.length > 0" style="height:100%">
+                    <div class="d-flex flex-row" v-if="roles && roles.length > 0" style="height:100%">
 
                       <!-- SubDrivers List -->
                       <v-flex xs4 class="list-sections px-3">
@@ -152,7 +152,7 @@
 
                             <div v-for="(question, qi) in table.questions" class="py-2 px-3 d-inline-flex" :key="qi"
                             style="width:100%">
-                              <v-layout>
+                              <div class="d-flex flex-row">
                                 <v-flex xs1>
                                   <v-checkbox color="#0d2c8d"
                                   class="mt-0 mr-3 questions-custom-field no-margin"
@@ -174,29 +174,29 @@
                                     {{question.type}}
                                   </v-tooltip>
                                 </v-flex>
-                              </v-layout>
+                              </div>
                             </div>
                           </div>
 
                           <!-- If no questions are selected -->
                           <div v-if="!table.questions || table.questions.length === 0">
-                            <v-layout row wrap align-center justify-center fill-height style="height:160px">
-                              <v-flex text-xs-center>
+                            <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:160px">
+                              <v-flex class="text-center">
                                 <strong class="body-2 font-weight-bold grey--text">
                                   No questions matching the selected driver and subdriver
                                 </strong>
                               </v-flex>
-                            </v-layout>
+                            </div>
                           </div>
                         </v-card>
                       </v-flex>
-                    </v-layout>
+                    </div>
 
-                    <v-layout v-else>
+                    <div class="d-flex flex-row" v-else>
                       <v-flex xs12 class="">
                         <h2 class="mt-5 pt-5 px-4"> No Questions in the question bank </h2>
                       </v-flex>
-                    </v-layout>
+                    </div>
                   </v-flex>
 
                   <!--<v-flex class="b-left" xs3>
@@ -208,21 +208,21 @@
                       </p>
                     </div>
                   </v-flex>-->
-                </v-layout>
+                </div>
 
               </v-card>
             </v-flex>
 
-          </v-layout>
+          </div>
         </v-card-text>
 
         <v-card-actions class="mt-3" align-content-space->
           <v-flex xs2 class="ml-2">
-            <v-btn color="error" flat @click.stop="closeModal()">Close</v-btn>
+            <v-btn color="error" text @click.stop="closeModal()">Close</v-btn>
           </v-flex>
           <v-flex xs8>
           </v-flex>
-          <v-flex text-xs-right class="mr-3" xs2>
+          <v-flex class="mr-3 text-right" xs2>
             <v-btn color="primary" class="white--text" @click.stop="addQuestions()">
               Import Questions
             </v-btn>

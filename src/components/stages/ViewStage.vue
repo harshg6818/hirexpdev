@@ -136,11 +136,14 @@
                         :value="t.range"
                       ></v-radio>
                       <v-menu full-width offset-y :close-on-content-click="false" v-model="config.dateMenu" bottom>
-                        <v-radio
-                          slot="activator"
-                          color="primary"
-                          label="Select Range"
-                        ></v-radio>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-radio
+                            v-bind="attrs"
+                            v-on="on"
+                            color="primary"
+                            label="Select Range"
+                          ></v-radio>
+                        </template>
                         <v-card>
                           <v-card-text>
                             <v-daterange

@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="mt-2 px-4">
-      <v-layout row wrap>
+      <div class="d-flex flex-row flex-wrap">
         <v-flex xs1>
         </v-flex>
         <v-flex>
           <h2 class="mb-5 grey--text ml-5"> Would you like to review your campaign before launch? </h2>
         </v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="b-top" style="border-color: #f3f1f1">
+      <div class="b-top d-flex flex-row flex-wrap" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
-        <v-flex xs1 text-xs-center>
+        <v-flex xs1 class="text-center">
           <v-icon large color="#4c3e9d" class="pt-4"> fa fa-check-circle </v-icon>
         </v-flex>
         <v-flex xs6>
@@ -31,12 +31,12 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="b-top" style="border-color: #f3f1f1">
+      <div class="b-top d-flex flex-row flex-wrap" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
-        <v-flex xs1 text-xs-center>
+        <v-flex xs1 class="text-center">
           <v-icon large color="#4c3e9d" class="pt-4"> fa fa-check-circle </v-icon>
         </v-flex>
         <v-flex xs6>
@@ -56,12 +56,12 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="b-top" style="border-color: #f3f1f1">
+      <div class="b-top d-flex flex-row flex-wrap" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
-        <v-flex xs1 text-xs-center>
+        <v-flex xs1 class="text-center">
           <v-icon large color="#4c3e9d" class="pt-4"> fa fa-check-circle </v-icon>
         </v-flex>
         <v-flex xs6>
@@ -81,12 +81,12 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout row wrap class="b-top" style="border-color: #f3f1f1">
+      <div class="b-top d-flex flex-row flex-wrap" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
-        <v-flex xs1 text-xs-center>
+        <v-flex xs1 class="text-center">
           <v-icon large color="#4c3e9d" class="pt-4"> fa fa-check-circle </v-icon>
         </v-flex>
         <v-flex xs6>
@@ -106,12 +106,12 @@
           </v-btn>
         </v-flex>
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout class="b-top" style="border-color: #f3f1f1">
+      <div class="b-top d-flex flex-row" style="border-color: #f3f1f1">
         <v-flex xs1>
         </v-flex>
-        <v-flex xs1 text-xs-center>
+        <v-flex xs1 class="text-center">
           <!--<v-icon color="#4c3e9d" class="text--white" class="pt-4"> fa fa-check-circle </v-icon>-->
         </v-flex>
         <v-flex xs6>
@@ -128,8 +128,10 @@
             max-width="290px"
             min-width="290px"
           >
+          <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              slot="activator"
+              v-bind="attrs"
+              v-on="on"
               class="grey--text text--lighten-2"
               maxlength="30"
               :value="newStage.schedule_end_at"
@@ -141,6 +143,7 @@
               name="date"
               label="Date *"
             ></v-text-field>
+          </template>
             <v-date-picker v-model="newStage.schedule_end_at" no-title
             @input="menu.date = false"></v-date-picker>
           </v-menu>
@@ -157,9 +160,9 @@
           </v-btn>
         </v-flex>-->
         <v-flex xs1></v-flex>
-      </v-layout>
+      </div>
 
-      <v-layout class="mt-4">
+      <div class="mt-4 d-flex flex-row">
         <v-flex xs2></v-flex>
         <v-flex xs2>
           <v-btn color="orange" class="elevation-0 white--text text-xs-right"
@@ -183,7 +186,7 @@
             Launch Campaign
           </v-btn>
         </v-flex>
-      </v-layout>
+      </div>
     </div>
 
   </div>

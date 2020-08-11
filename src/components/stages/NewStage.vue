@@ -1,25 +1,25 @@
 <template>
   <div class="">
-    <v-layout column class="hide-overflow">
-
+    <div class="hide-overflow d-flex flex-column">
       <!-- Stepper actions -->
-      <div class="new-lifecycle">
-        <v-layout row wrap class="b-bottom" v-show="unlockStepper" style="max-height:52px">
-          <v-flex xs4 d-inline-flex>
+      <!-- <div class="new-lifecycle"> -->
+      <div class="new-lifecycle-wrap">
+        <div class="b-bottom d-flex flex-row flex-wrap" v-if="unlockStepper" style="max-height:52px">
+          <v-flex xs4 class="d-inline-flex">
             <v-tooltip bottom style="max-width:70px">
               <template v-slot:activator="{ on }">
-              <v-btn color="grey" class="elevation-0 my-0 text-xs-right back-button b-right"
-                @click="previous()"
-                style="position:relative;top:5px;margin-left:22px;"
-                slot="activator"
-                v-on="on"
-                text fab
-                v-show="config.activeTab !== 'summary'"
-                :loading="config.savingStage"
-                :disabled="config.savingStage"
-              >
-                <v-icon> fas fa-arrow-left </v-icon>
-              </v-btn>
+                <v-btn color="grey" class="elevation-0 my-0 text-right back-button b-right"
+                  @click="previous()"
+                  style="position:relative;top:5px;margin-left:22px;"
+                  slot="activator"
+                  v-on="on"
+                  text fab
+                  v-show="config.activeTab !== 'summary'"
+                  :loading="config.savingStage"
+                  :disabled="config.savingStage"
+                >
+                  <v-icon> fas fa-arrow-left </v-icon>
+                </v-btn>
               </template>
               Back
             </v-tooltip>
@@ -37,10 +37,11 @@
               placeholder="Touchpoint Title (max 40 characters)"
             ></v-text-field>
           </v-flex>
-          <v-flex xs8 class="text-xs-right pr-3" style="position:relative;top:-10px;">
+          <!-- <v-flex xs8 class="text-right pr-3" style="position:relative;top:-10px;"> -->
+          <v-flex xs8 class="text-right pr-3">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-btn color="red" class="elevation-0 ml-0 text-xs-right back-button"
+                <v-btn color="red" class="elevation-0 ml-0 text-right back-button"
                   @click="discard()"
                   style="top:2px"
                   slot="activator"
@@ -53,7 +54,7 @@
               Discard
             </v-tooltip>
 
-            <v-btn color="primary" class="elevation-0 white--text text-xs-right"
+            <v-btn color="primary" class="elevation-0 white--text text-right mx-1"
               text outlined
               style="position:relative;top:5px"
               @click="next(false)"
@@ -64,7 +65,7 @@
               Save & Close
             </v-btn>
 
-            <v-btn color="primary" class="elevation-0 white--text text-xs-right"
+            <v-btn color="primary" class="elevation-0 white--text text-right mx-1"
               style="position:relative;top:5px"
               @click="next(true)"
               v-if="config.activeTab !== 'configure'"
@@ -74,7 +75,7 @@
               Continue
             </v-btn>
 
-            <v-btn color="primary" class="elevation-0 white--text text-xs-right"
+            <v-btn color="primary" class="elevation-0 white--text text-right mx-1"
               style="position:relative;top:5px"
               @click="next(true)"
               v-if="config.activeTab === 'configure'"
@@ -84,18 +85,26 @@
               Activate Touchpoint
             </v-btn>
           </v-flex>
-        </v-layout>
+        </div>
       </div>
 
       <!-- Stepper Tabs -->
-      <v-layout row wrap class="b-bottom custom-row" v-show="unlockStepper" style="position:absolute;top:4em;">
+      <!-- <div class="b-bottom custom-row d-flex flex-wrap" v-if="unlockStepper" style="position:absolute;top:4em;"> -->
+      <div class="b-bottom d-flex w-100 flex-wrap" v-if="unlockStepper">
         <v-flex xs8>
-          <v-tabs
+          <!-- <v-tabs
             style=""
             v-model="config.activeTab"
             centered
-            class="text-xs-center px-3 stepper-step-title"
+            class="text-center px-3 stepper-step-title"
             color="transparent"
+            slider-color="primary"
+          > -->
+          <v-tabs
+            v-model="config.activeTab"
+            centered
+            hide-slider
+            class="text-center px-3 stepper-step-title"
             slider-color="primary"
           >
             <v-tab
@@ -111,13 +120,15 @@
             </v-tab>
           </v-tabs>
         </v-flex>
-      </v-layout>
+      </div>
 
       <!-- Summary view outside Stepper -->
-      <v-layout row wrap class="custom-row" v-show="!unlockStepper">
-        <v-layout row wrap class="mt-5" style="position:absolute;top:14em;left:4vw;width:calc(100% - 3.8rem) !important">
+      <!-- <div class="d-flex flex-wrap flex-row" v-if="!unlockStepper"> -->
+      <div class="custom-row-wrap d-flex flex-wrap flex-row" v-if="!unlockStepper">
+        <!-- <div class="mt-5 d-flex flex-row flex-wrap" style="position:absolute;top:14em;left:4vw;width:calc(100% - 3.8rem) !important"> -->
+        <div class="mt-5 w-100 d-flex flex-row flex-wrap">
           <v-flex xs3></v-flex>
-          <v-flex xs6 class="text-xs-left d-inline-flex">
+          <v-flex xs6 class="text-left d-inline-flex">
             <div>
               <h2> Tell us about your touchpoint </h2>
               <!--<h4 class="grey--text"> Let us know little bit more about your touchpoint. This information will help us personalise your touchpoint.</h4>-->
@@ -133,7 +144,7 @@
                 placeholder="max 40 characters"
               ></v-text-field>
 
-              <v-layout row wrap>
+              <div class="d-flex flex-row flex-wrap">
                 <v-flex xs4>
                   <v-select
                     elevation-0
@@ -181,9 +192,9 @@
                     flat
                   ></v-select>
                 </v-flex>
-              </v-layout>
+              </div>
 
-              <div class="text-xs-center mt-2">
+              <div class="text-center mt-2">
                 <v-btn color="primary" class="elevation-0 white--text"
                   @click="proceed()"
                   :disabled="!newStage.title || !newStage.triggerTimeUnit || !newStage.triggerTimeDuration || !newStage.triggerTimeReference"
@@ -194,19 +205,19 @@
             </div>
           </v-flex>
           <v-flex xs3></v-flex>
-        </v-layout>
-      </v-layout>
+        </div>
+      </div>
 
       <!-- Stepper Tabs content -->
-      <v-layout class="custom-row" v-show="unlockStepper" style="position:absolute;top:8em;left:4vw;">
-        <v-flex>
-          <v-tabs-items v-model="config.activeTab">
+      <!-- <div class="custom-row d-flex flex-row" v-if="unlockStepper" style="position:absolute;top:8em;left:4vw;"> -->
+      <div class="w-100 d-flex flex-row" v-if="unlockStepper">
+        <!-- <v-flex> -->
+          <v-tabs-items v-model="config.activeTab" class="w-100">
             <!-- Summary Tab content -->
             <v-tab-item class="stepper-step-content" value="summary" v-if="config.activeTab === 'summary'">
-              <v-layout row wrap class="mb-3 step-content">
-
+              <div class="mb-3 step-content d-flex flex-wrap flex-row">
                 <v-flex xs3></v-flex>
-                <v-flex xs6 class="text-xs-left">
+                <v-flex xs6 class="text-left">
                   <div>
                     <v-text-field
                       class="campaign-title mt-3"
@@ -221,7 +232,7 @@
                     ></v-text-field>
                   </div>
 
-                  <v-layout row wrap>
+                  <div class="d-flex flex-wrap flex-row">
                     <v-flex xs4>
                       <v-select
                         elevation-0
@@ -269,37 +280,37 @@
                         flat
                       ></v-select>
                     </v-flex>
-                  </v-layout>
+                  </div>
                 </v-flex>
                 <v-flex xs3></v-flex>
-              </v-layout>
+              </div>
 
             </v-tab-item>
 
             <!-- Survey Tab content -->
-            <v-tab-item class="stepper-step-content" value="survey" v-if="config.activeTab === 'survey'">
-              <v-layout row wrap class="mb-3 step-content overflow-y-hidden">
-                <v-flex xs12 class="text-xs-left d-inline-flex">
+            <v-tab-item class="stepper-step-content w-100" value="survey" v-if="config.activeTab === 'survey'">
+              <div class="mb-3 step-content overflow-y-hidden d-flex flex-wrap flex-row">
+                <v-flex xs12 class="text-left d-inline-flex">
                   <newSurvey ref="survey"> </newSurvey>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-tab-item>
 
             <!-- Recipients Tab content -->
             <v-tab-item class="stepper-step-content" value="audience" v-if="config.activeTab === 'audience'">
-              <v-layout row wrap class="mb-3 step-content">
-                <v-layout>
+              <div class="mb-3 step-content d-flex flex-row flex-wrap">
+                <div class="d-flex flex-row flex-wrap w-100">
                   <audienceList ref="audienceList"> </audienceList>
-                </v-layout>
-              </v-layout>
+                </div>
+              </div>
             </v-tab-item>
 
             <!-- Configure Tab -->
             <v-tab-item class="stepper-step-content" value="configure" v-show="config.activeTab === 'configure'">
-              <v-layout row wrap class="mb-3 pa-5 step-content">
+              <div class="mb-3 pa-5 step-content d-flex flex-row flex-wrap">
                 <v-flex>
                   <!--<preview ref="preview">  </preview>-->
-                   <v-select
+                  <v-select
                     outline
                     :items="adminUsers"
                     class="pt-0 mt-0 elevation-0 grey--text text--lighten-2"
@@ -311,7 +322,7 @@
                     label="Chat on behalf of"
                   ></v-select>
 
-                   <v-select
+                  <v-select
                     :items="adminUsers"
                     chips
                     small-chips
@@ -326,13 +337,13 @@
                     label="Notifications"
                   ></v-select>
                 </v-flex>
-              </v-layout>
+              </div>
             </v-tab-item>
           </v-tabs-items>
-        </v-flex>
-      </v-layout>
+        <!-- </v-flex> -->
+      </div>
 
-    </v-layout>
+    </div>
   </div>
 </template>
 
