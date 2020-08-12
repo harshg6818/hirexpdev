@@ -48,8 +48,8 @@
               :items-per-page="10"
               :loading="table.loading"
               class="mb-3 b-top pt-2 audience-list"
-              :pagination.sync="pagination"
-              :rows-per-page-items="[10, 15, 20]"
+              :options="pagination"
+              footer-props.items-per-page-options="[10, 15, 20]"
               @update:pagination="update()"
             >
               <template slot="headers" slot-scope="props">
@@ -73,65 +73,67 @@
                 </tr>
               </template>
               <template v-slot:body="{ items }">
-                <tr
-                  v-for="(item, idx) in items"
-                  :key="idx"
-                  style="border-color:#f3f1f1"
-                >
-                  <!-- <td class="text-left" v-if="showCheckBoxes">
-                    <v-checkbox color="primary"
-                      @change="updateSelectedAudience(props.item, $event)"
-                      :value="selectedAudience[props.index] || allSelected ? true : false"
-                      primary
-                      hide-details
-                      :checked-value="true"
-                      :unchecked-value="false">
-                    </v-checkbox>
-                  </td>-->
-                  <td class="text-left">
-                    <div class="d-flex flex-row flex-wrap align-center">
-                      <!--<v-flex class="py-2" sm3>
-                        <v-avatar size="30px" :color="getColor(props.item)">
-                          <img src="src" alt="alt" v-show="false">
-                          <span class="white--text">{{getAvatar(props.item)}}</span>
-                        </v-avatar>
-                      </v-flex>-->
-                      <v-flex>
-                        <p class="mb-0" v-show="item.user_display_name || item.display_name">
-                          <strong :class="'hover-link cursor-pointer'">
-                            {{item.user_display_name || item.display_name}}
-                          </strong>
-                        </p>
-                        <p class="mb-0" v-show="!item.user_display_name && !item.display_name && (item.first_name || item.last_name)">
-                          <strong :class="'hover-link cursor-pointer'">
-                            {{item.first_name}} {{item.last_name}}
-                          </strong>
-                        </p>
-                        <!--<small>
-                          {{props.item.email || props.item.user_email}}
-                        </small>-->
-                      </v-flex>
-                    </div>
-                  </td>
+                <tbody>
+                  <tr
+                    v-for="(item, idx) in items"
+                    :key="idx"
+                    style="border-color:#f3f1f1"
+                  >
+                    <!-- <td class="text-left" v-if="showCheckBoxes">
+                      <v-checkbox color="primary"
+                        @change="updateSelectedAudience(props.item, $event)"
+                        :value="selectedAudience[props.index] || allSelected ? true : false"
+                        primary
+                        hide-details
+                        :checked-value="true"
+                        :unchecked-value="false">
+                      </v-checkbox>
+                    </td>-->
+                    <td class="text-left">
+                      <div class="d-flex flex-row flex-wrap align-center">
+                        <!--<v-flex class="py-2" sm3>
+                          <v-avatar size="30px" :color="getColor(props.item)">
+                            <img src="src" alt="alt" v-show="false">
+                            <span class="white--text">{{getAvatar(props.item)}}</span>
+                          </v-avatar>
+                        </v-flex>-->
+                        <v-flex>
+                          <p class="mb-0" v-show="item.user_display_name || item.display_name">
+                            <strong :class="'hover-link cursor-pointer'">
+                              {{item.user_display_name || item.display_name}}
+                            </strong>
+                          </p>
+                          <p class="mb-0" v-show="!item.user_display_name && !item.display_name && (item.first_name || item.last_name)">
+                            <strong :class="'hover-link cursor-pointer'">
+                              {{item.first_name}} {{item.last_name}}
+                            </strong>
+                          </p>
+                          <!--<small>
+                            {{props.item.email || props.item.user_email}}
+                          </small>-->
+                        </v-flex>
+                      </div>
+                    </td>
 
-                  <td class="text-left" v-show="item.email">
-                    {{item.email}}
-                  </td>
-                  <td class="text-left" v-show="!item.email">
-                    --
-                  </td>
+                    <td class="text-left" v-show="item.email">
+                      {{item.email}}
+                    </td>
+                    <td class="text-left" v-show="!item.email">
+                      --
+                    </td>
 
-                  <td class="text-left" v-show="item.phone || item.phoneNumber">
-                    {{item.phone || item.phoneNumber}}
-                  </td>
-                  <td class="text-left" v-show="!item.phone && !item.phoneNumber">
-                    --
-                  </td>
+                    <td class="text-left" v-show="item.phone || item.phoneNumber">
+                      {{item.phone || item.phoneNumber}}
+                    </td>
+                    <td class="text-left" v-show="!item.phone && !item.phoneNumber">
+                      --
+                    </td>
 
-                  <td class="text-left">
-                    {{item.gender}}
-                  </td>
-                </tr>
+                    <td class="text-left">
+                      {{item.gender}}
+                    </td>
+                  </tr>
+                </tbody>
               </template>
 
               <v-card slot="no-data" class="elevation-0 text-center" min-height="60vh">
@@ -153,15 +155,15 @@
     </div>
 
     <v-dialog v-model="showFilter"
-      v-show="showFilter" content-class="fixed-card-actions"
       class="filter-drawer"
       persistent
       max-width="90%"
     >
       <v-card class="filters-card pa-3">
-        <v-expansion-panel disabled expand v-model="config.panel"
+        <!-- <v-expansion-panels expand v-model="config.panel">
+        <v-expansion-panel
           class="elevation-0 employee-filters"
-        >
+        > -->
           <div class="d-flex flex-row flex-wrap">
             <v-flex>
               <h3 class="my-2">
@@ -170,13 +172,13 @@
             </v-flex>
             <v-flex class="text-sm-right">
               <v-btn v-show="filtersApplied" @click="resetFilters"
-              color="error" class="mt-0" flat small>
+              color="error" class="mt-0" text small>
                 Remove filters
               </v-btn>
             </v-flex>
           </div>
-          <div class="d-flex flex-row flex-wrap" style="height: 100%;">
-            <v-expansion-panel expand v-model="config.panel"
+          <div class="d-flex flex-row flex-wrap">
+            <!-- <v-expansion-panel expand v-model="config.panel"
             v-show="!config.initialLoadingFilters"
             class="elevation-0 pr-2">
               <div class="d-flex">
@@ -216,10 +218,56 @@
               </div>
             </v-expansion-panel>
           </div>
-        </v-expansion-panel>
+        </v-expansion-panel> -->
+
+        <v-expansion-panels accordion multiple v-if="!config.initialLoadingFilters" v-model="config.panel" class="d-flex flex-nowrap overflow-x-auto" style="display: -webkit-inline-box !important;">
+          <v-expansion-panel
+            v-for="(v, k) in filters.default"
+            :key="k"
+            v-if="v.length > 0"
+            class="flex"
+          >
+            <!-- <v-flex> -->
+              <v-expansion-panel-header class="text-capitalize">{{k}}</v-expansion-panel-header>
+              <v-expansion-panel-content style="height: calc(100vh - 100px);overflow-y: auto;">
+                <!-- <v-card color=""> -->
+                  <!-- <v-card-text v-if="v.length > 0" style="height: 100%; overflow: scroll"> -->
+                  <div v-if="v.length > 0">
+                    <v-checkbox color="primary" :ripple="false"
+                      :value="chk[k]" v-model="filters.selected[k]"
+                      v-for="chk in v" :key="chk[k]">
+                      <div class="" slot="label">
+                        <span v-if="k === 'mood'">
+                          <img
+                            v-if="chk[k] > 0"
+                            height="30"
+                            :src="getImgUrl(chk[k])"
+                          >
+                          <span v-if="chk[k] === 0">Not answered</span>
+                        </span>
+                        <span v-if="k !== 'mood'">
+                          {{chk[k]}}
+                        </span>
+                      </div>
+                    </v-checkbox>
+                  </div>
+                  <div v-else-if="v.length === 0">
+                    No filters available
+                  </div>
+                  <!-- </v-card-text> -->
+                  <!-- <v-card-text v-if="v.length === 0">
+                  </v-card-text> -->
+                <!-- </v-card> -->
+              </v-expansion-panel-content>
+            <!-- </v-flex> -->
+          </v-expansion-panel>
+        </v-expansion-panels>
+          </div>
+        <!-- </v-expansion-panel>
+        </v-expansion-panels> -->
 
         <v-card-actions>
-          <v-btn color="error" flat @click="showFilter = false">Close</v-btn>
+          <v-btn color="error" text @click="showFilter = false">Close</v-btn>
           <v-spacer></v-spacer>
           <v-btn @click="applyfilter()" class="white--text" color="primary" style="float:right">Apply</v-btn>
         </v-card-actions>
@@ -290,7 +338,7 @@ export default {
       },
       config: {
         filter: false,
-        panel: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+        panel: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
         initialLoading: false,
         initialLoadingFilters: true
       },

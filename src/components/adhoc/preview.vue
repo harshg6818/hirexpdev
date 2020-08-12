@@ -128,8 +128,10 @@
             max-width="290px"
             min-width="290px"
           >
+          <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              slot="activator"
+              v-bind="attrs"
+              v-on="on"
               class="grey--text text--lighten-2"
               maxlength="30"
               :value="formattedDate"
@@ -141,6 +143,7 @@
               name="date"
               label="Date *"
             ></v-text-field>
+          </template>
             <v-date-picker v-model="newCampaign.schedule_end_at" no-title
             format="DD-MM-YYYY"
             :min="nowDate"

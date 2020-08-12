@@ -23,7 +23,7 @@
       <v-card-actions class="mt-3 mb-3" align-content-space->
         <div class="d-flex flex-wrap flex-row">
           <v-flex xs6 class="pl-3 text-left">
-            <v-btn color="error" flat @click.stop="dialogs.confirmTrigger=false;">Close</v-btn>
+            <v-btn color="error" text @click.stop="dialogs.confirmTrigger=false;">Close</v-btn>
           </v-flex>
           <v-flex xs6 class="pr-3 text-right">
             <v-btn color="adhoc" class="white--text"

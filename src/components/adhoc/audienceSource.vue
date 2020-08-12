@@ -15,7 +15,7 @@
           </div>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" flat @click="dialog3=false">Close</v-btn>
+          <v-btn color="primary" text @click="dialog3=false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -185,7 +185,7 @@
                               slot="activator"
                               color="adhoc"
                               small
-                              flat
+                              text
                               icon
                               style="margin-left: -4px;"
                               @click="onClickDeleteCustom(h)"
@@ -221,7 +221,7 @@
                               slot="activator"
                               color="adhoc"
                               small
-                              flat
+                              text
                               icon
                               style="margin-left: -4px;"
                               @click="onClickDeleteCustomFields(index)"
@@ -280,7 +280,7 @@
                   >
                   Continue
                 </v-btn>
-                <v-btn flat @click="csvUploadStep = 1" > Upload new CSV </v-btn>
+                <v-btn text @click="csvUploadStep = 1" > Upload new CSV </v-btn>
 
             </v-stepper-content>
           </v-stepper>

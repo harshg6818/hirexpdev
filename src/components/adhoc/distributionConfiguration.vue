@@ -27,7 +27,7 @@
               @click.stop
             ></v-text-field>
           </v-layout>-->
-          <div v-show="!selectedTemplate.id && distMedium && distMedium.logo === 'email'" class="template-card d-flex">
+          <div v-if="!selectedTemplate.id && distMedium && distMedium.logo === 'email'" class="template-card d-flex">
             <v-flex xs7 class="pr-5">
               <div>
                 <ContentLoader
@@ -63,7 +63,7 @@
             </v-flex>
           </div>
 
-          <div v-show="!selectedTemplate.id && distMedium && distMedium.logo === 'sms'" class="template-sms-card d-flex">
+          <div v-if="!selectedTemplate.id && distMedium && distMedium.logo === 'sms'" class="template-sms-card d-flex">
             <v-flex xs1></v-flex>
             <v-flex xs10 class="pr-5">
               <div>
@@ -163,21 +163,31 @@
                         </v-flex>-->
                       </div>
 
-                      <div class="d-flex">
-                        <ckeditor
-                          style="width:100%"
+                      <div class="d-flex editor">
+                        <!-- <ckeditor
                           class="template-field"
                           id="ck-editor"
-                          :editor="editor" :config="editorConfig"
                           :placeholder="field.placeholder"
-                          @keyup.native="updatePreview()"
-                          @input="updatePreview()"
                           ref="myCKeditor"
                           :name="field.label" :data-vv-as="field.label"
                           v-model="field.value"
                           :class="{'is-invalid': errors.has(field.label) }"
-                          :v-validate="'required'">
-                        </ckeditor>
+                          :v-validate="'required'"
+                          >
+                        </ckeditor> -->
+                        <VuePellEditor
+                          @keyup.native="updatePreview()"
+                          @input="updatePreview()"
+                          :class="{'is-invalid': errors.has(field.label) }"
+                          class="w-100 template-field editor"
+                          v-model="field.value"
+                          ref="myCKeditor"
+                          :name="field.label"
+                          :data-vv-as="field.label"
+                          v-validate="'required'"
+                          :error-messages="errors.collect('body')"
+                          :placeholder="field.placeholder"
+                        />
                       </div>
                     </v-flex>
 
@@ -311,7 +321,7 @@
 
         <v-card-actions align-content-space->
           <v-flex xs2 class="ml-3 mb-3">
-            <v-btn color="error" flat @click.stop="closeModal()">Close</v-btn>
+            <v-btn color="error" text @click.stop="closeModal()">Close</v-btn>
           </v-flex>
           <v-flex xs8>
           </v-flex>
@@ -324,12 +334,13 @@
 </template>
 
 <script>
-// import Vue from 'vue';
+import Vue from 'vue';
 // import { VAlert, VMenu, VSlider, VTextarea, VSelect, VChip, VPagination, VCheckbox } from 'vuetify';
 // import { Container, Draggable } from 'vue-smooth-dnd';
 import { ContentLoader } from 'vue-content-loader';
 import { mapState } from 'vuex';
 import axios from 'axios';
+import VuePellEditor from 'vue-pell-editor';
 // import VueContentLoading from 'vue-content-loading';
 // import CKEditor from '@ckeditor/ckeditor5-vue';
 // import { Chrome, Material, Slider } from 'vue-color';
@@ -340,6 +351,7 @@ import axios from 'axios';
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 
 // Vue.use(CKEditor);
+Vue.use(VuePellEditor);
 
 // CKEditor.replace('ck-editor');
 
@@ -525,16 +537,16 @@ export default {
             this.$lodash.each(this.$parent.$parent.$parent.$parent.newCampaign.distribution, (dis, di) => {
               // console.log(dis.type);
               if (dis.type === 'email') {
-                console.log(dis.content.fields);
+                // console.log(dis.content.fields);
 
                 this.$lodash.each(this.newTemplate.fields, (nt, n) => {
                   if (nt.group === 'subject') {
                     nt.data[0].value = dis.content.fields.subject;
-                    console.log(dis.content.fields.di);
+                    // console.log(dis.content.fields.di);
                   }
                   if (nt.group === 'Body') {
                     nt.data[0].value = dis.content.fields.body;
-                    console.log(dis.content.fields.di);
+                    // console.log(dis.content.fields.di);
                   }
                   if (nt.group === 'button') {
                     this.$lodash.each(nt.data, (da, d) => {
@@ -610,7 +622,7 @@ export default {
     // },
     updatePreview () {
       let temp = this.tempContent;
-      console.log(this.newTemplate.fields);
+      // console.log(this.newTemplate.fields);
       this.$lodash.each(this.newTemplate.fields, (group, gi) => {
         this.$lodash.each(group.data, (field, fi) => {
           // console.log(field);

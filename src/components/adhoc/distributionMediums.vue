@@ -11,7 +11,7 @@
 
       <div class="mb-3 b-top pt-2 d-flex flex-wrap flex-row" v-for="(medium, mi) in distributionMediums" style="border-color: #f3f1f1" :key="mi">
         <v-flex xs1></v-flex>
-        <v-flex xs2 class="mr-2" text-xs-center>
+        <v-flex xs2 class="mr-2 text-center">
           <v-icon large color="#4c3e9d" class="audience-icon"> {{medium.icon}} </v-icon>
           <!--<v-img :src="getImgUrl(medium.logo)" class="distribution-mediums">  </v-img>-->
         </v-flex>

@@ -145,16 +145,16 @@ export default {
   width:calc(100% - 3.8rem)!important;
 }
 .adhoc-app {
-  font-family: 'Work Sans', sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  font-size: 13px;
+  // font-family: 'Work Sans', sans-serif !important;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
+  // color: #2c3e50;
+  // font-size: 13px;
   .headline {
-    font-family: 'Work Sans', sans-serif !important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
+    // font-family: 'Work Sans', sans-serif !important;
+    // -webkit-font-smoothing: antialiased;
+    // -moz-osx-font-smoothing: grayscale;
+    // color: #2c3e50;
   }
 
   .stepper-step-title {
