@@ -2,7 +2,7 @@
   <div class="dashboard-filter-drawer-wrap">
     <v-navigation-drawer
       class="employeeFilters"
-      style="position:fixed;"
+      style="position:fixed;right:0;"
       persistent
       v-model="showFilterDrawer"
       absolute
@@ -10,9 +10,9 @@
       right
       width="300"
     >
-      <v-card class="filters-card elevation-0">
+      <v-card class="filters-card elevation-0" style="padding-top:58px;">
         <v-expansion-panels accordion>
-          <v-expansion-panel>
+          <!-- <v-expansion-panel>
             <v-expansion-panel-header>
               <v-row>
                 <v-col>HiPos</v-col>
@@ -26,10 +26,14 @@
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
-            <!-- <v-expansion-panel-content>
-            </v-expansion-panel-content> -->
-          </v-expansion-panel>
-
+          </v-expansion-panel> -->
+          <div class="switch-filters" style="border-bottom:1px solid rgba(0, 0, 0, 0.12)">
+            <div class="switch-text">HiPos</div>
+            <div class="switch-btn">
+              <v-checkbox id="hipos" v-model="highPotentialSwitch" color="primary"
+              ></v-checkbox>
+            </div>
+          </div>
           <v-expansion-panel>
             <v-expansion-panel-header>
               Chat initiation date
@@ -442,6 +446,21 @@ export default {
     //     }
     //   }
     // }
+    .switch-filters {
+      display: grid;
+      width: 300px;
+      grid-template-columns: 1fr 1fr;
+      height: 60px;
+      align-items: center;
+      padding: 0px 24px;
+      .switch-text {
+        text-align: left;
+      }
+      .switch-btn {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
   }
 }
 </style>

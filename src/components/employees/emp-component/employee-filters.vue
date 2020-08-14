@@ -2,18 +2,17 @@
   <div class="employees-filters">
     <v-navigation-drawer
       class="employeeFilters"
-      style="height:100vh;position:fixed;padding-top: 55px;"
+      style="position:fixed;right:0;"
       persistent
       v-model="showFilterDrawer"
       absolute
       temporary
-      hide-overlay
       right
+      width="300"
     >
-      <v-card class="filters-card">
-        <v-expansion-panel class="elevation-0 employee-filters">
-          <v-flex sm12>
-            <!-- hipos -->
+      <v-card class="filters-card elevation-0" style="padding-top:58px;">
+        <!-- <v-expansion-panel class="elevation-0 employee-filters">
+
             <v-expansion-panel-content expand-icon="" class="employee-filters-list">
               <div slot="header" class="text-capitalize px-3 py-2">
                 <v-layout style="height:30px;">
@@ -30,7 +29,6 @@
               </div>
             </v-expansion-panel-content>
 
-            <!-- alert raised -->
             <v-expansion-panel-content expand-icon="" class="employee-filters-list">
               <div slot="header" class="text-capitalize px-3 py-2">
                 <v-layout style="height:30px;">
@@ -46,11 +44,52 @@
                 </v-layout>
               </div>
             </v-expansion-panel-content>
+        </v-expansion-panel> -->
+        <v-expansion-panels accordion focusable>
 
-            <!-- chat init date -->
-            <v-expansion-panel-content class="employee-filters-list">
-              <div slot="header" class="text-capitalize py-2 px-3">Chat initiation date
-              </div>
+          <!-- <v-expansion-panel>
+            <v-expansion-panel-header></v-expansion-panel-header>
+            <v-expansion-panel-content>
+              Lorem ipsum dolor sit amet
+            </v-expansion-panel-content>
+          </v-expansion-panel> -->
+          <div class="switch-filters" style="border-bottom:1px solid rgba(0, 0, 0, 0.12)">
+            <div class="switch-text">HiPos</div>
+            <div class="switch-btn">
+              <v-checkbox id="hipos" v-model="highPotentialSwitch" color="primary"
+              ></v-checkbox>
+            </div>
+          </div>
+          <div class="switch-filters">
+            <div class="switch-text">Alert raised</div>
+            <div class="switch-btn">
+              <v-checkbox id="alert" v-model="alertSwitch" color="primary"
+              ></v-checkbox>
+            </div>
+          </div>
+          <!-- alert raised -->
+          <!-- <v-expansion-panel>
+            <v-expansion-panel-header>
+              <v-flex xs11 style="padding-top: 5px;">Alert raised</v-flex>
+                <v-flex>
+                  <v-checkbox
+                    id="alert"
+                    style="position: absolute;right: 6px;"
+                    v-model="alertSwitch"
+                    color="primary"
+                  ></v-checkbox>
+                </v-flex>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+            </v-expansion-panel-content>
+          </v-expansion-panel> -->
+
+          <!-- chat init date -->
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              Chat initiation date
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
               <v-card color="">
                 <v-card-text>
                   <v-radio-group @change="updateInitDate">
@@ -84,11 +123,14 @@
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
+          </v-expansion-panel>
 
-            <!-- chat complete date -->
-            <v-expansion-panel-content class="employee-filters-list">
-              <div slot="header" class="text-capitalize px-3 py-2">Chat completion date
-              </div>
+          <!-- chat complete date -->
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              Chat completion date
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
               <v-card color="#fff" style="border-bottom:0px">
                 <v-card-text>
                   <v-radio-group @change="updateChatCompleteDate">
@@ -122,11 +164,12 @@
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
+          </v-expansion-panel>
 
-            <!-- join date -->
-            <v-expansion-panel-content style="" class="employee-filters-list">
-              <div slot="header" class="text-capitalize px-3 py-2">Joining Date
-              </div>
+          <!-- join date -->
+          <v-expansion-panel>
+            <v-expansion-panel-header>Joining Date</v-expansion-panel-header>
+            <v-expansion-panel-content>
               <v-card color="#fff" style="border-bottom:0px">
                 <v-card-text>
                   <v-radio-group @change="updateJoinDate">
@@ -160,17 +203,17 @@
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
+          </v-expansion-panel>
 
-            <!-- chat resolution status -->
-            <v-expansion-panel-content style="" class="employee-filters-list">
-              <div slot="header" class="text-capitalize px-3 py-2">
-                Chat Resolution Status
-                <span
-                  v-if="chatResolutionStatus.selected && chatResolutionStatus.selected.length > 0"
-                >
-                  <v-chip>{{chatResolutionStatus.selected.length}} Selected</v-chip>
-                </span>
-              </div>
+          <!-- chat resolution status -->
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              <span>Chat Resolution Status</span>
+              <span v-if="chatResolutionStatus.selected && chatResolutionStatus.selected.length > 0">
+                <v-chip>{{chatResolutionStatus.selected.length}} Selected</v-chip>
+              </span>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
               <v-card color="#fff" style="border-bottom:0px">
                 <v-card-text>
                   <v-checkbox color="primary" :ripple="false"
@@ -184,17 +227,17 @@
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
+          </v-expansion-panel>
 
-            <!-- chat status -->
-            <v-expansion-panel-content style="" class="employee-filters-list">
-              <div slot="header" class="text-capitalize px-3 py-2">
-                Chat Status
-                <span
-                  v-if="chatStatus.selected && chatStatus.selected.length > 0"
-                >
-                  <v-chip>{{chatStatus.selected.length}} Selected</v-chip>
-                </span>
-              </div>
+          <!-- chat status -->
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              <span>Chat Status</span>
+              <span v-if="chatStatus.selected && chatStatus.selected.length > 0">
+                <v-chip>{{chatStatus.selected.length}} Selected</v-chip>
+              </span>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
               <v-card color="#fff" style="border-bottom:0px">
                 <v-card-text>
                   <v-checkbox color="primary" :ripple="false"
@@ -214,11 +257,12 @@
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
+          </v-expansion-panel>
 
-            <!-- engagement -->
-            <v-expansion-panel-content style="" class="employee-filters-list">
-              <div slot="header" class="text-capitalize px-3 py-2">Engagement
-              </div>
+          <!-- engagement -->
+          <v-expansion-panel>
+            <v-expansion-panel-header>Engagement</v-expansion-panel-header>
+            <v-expansion-panel-content>
               <v-card color="#fff" style="border-bottom:0px">
                 <v-card-text>
                   <v-radio-group @change="updateEngagement">
@@ -233,17 +277,17 @@
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
+          </v-expansion-panel>
 
-            <!-- disengaged employee with drivers -->
-            <v-expansion-panel-content style="" class="employee-filters-list">
-              <div slot="header" class="text-capitalize px-3 py-2" @click="getDisengagedFromDriver">
-                Disengaged Employees With
-                <span
-                  v-if="disengagedFromDriver.selected && disengagedFromDriver.selected.length > 0"
-                >
-                  <v-chip>1 Selected</v-chip>
-                </span>
-              </div>
+          <!-- disengaged employee with drivers -->
+          <v-expansion-panel>
+            <v-expansion-panel-header @click="getDisengagedFromDriver">
+              <span>Disengaged Employees With</span>
+              <span v-if="disengagedFromDriver.selected && disengagedFromDriver.selected.length > 0">
+                <v-chip>1 Selected</v-chip>
+              </span>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
               <v-card color="#fff" style="border-bottom:0px">
                 <v-card-text>
                 </v-card-text>
@@ -251,7 +295,7 @@
                   v-for="(item,index) in disengagedFromDriversList"
                   :key="index" style="list-style: none;padding-left: 30px;"
                 >
-                  <v-layout>
+                  <div class="d-flex flex-row w-100">
                     <span>
                       <v-checkbox
                         v-model="disengagedFromDriver.selected"
@@ -263,7 +307,7 @@
                       >
                       </v-checkbox>
                     </span>
-                  </v-layout>
+                  </div>
                   <div
                     :ref="`child${index}`"
                     v-if="disengagedFromDriver.selected === item"
@@ -282,14 +326,17 @@
                 </li>
               </v-card>
             </v-expansion-panel-content>
+          </v-expansion-panel>
 
-            <!-- Mood -->
-            <v-expansion-panel-content style="" class="employee-filters-list">
-              <div slot="header" class="text-capitalize px-3 py-2">Mood
-                <span v-if="mood.selected && mood.selected.length > 0">
-                  <v-chip>{{mood.selected.length}} Selected</v-chip>
-                </span>
-              </div>
+          <!-- Mood -->
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              <span>Mood</span>
+              <span v-if="mood.selected && mood.selected.length > 0">
+                <v-chip>{{mood.selected.length}} Selected</v-chip>
+              </span>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
               <v-card color="#fff" style="border-bottom:0px">
                 <v-card-text>
                   <v-checkbox
@@ -315,55 +362,18 @@
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
+          </v-expansion-panel>
 
-            <!-- assigened to -->
-            <v-expansion-panel-content class="employee-filters-list" v-model="showAssignedTo">
-              <div slot="header" class="text-capitalize px-3 py-2"
-                @click="searchFilter = '';searchingAssignedTOfilter()"
-              >Assigned To
-                <span v-if="assignedTo.selected && assignedTo.selected.length > 0">
-                <v-chip>{{assignedTo.selected.length}} Selected</v-chip></span>
-              </div>
-              <v-card color="#fff" style="border-bottom:0px">
-                <v-text-field
-                  @keyup="searchingAssignedTOfilter()"
-                  v-model="searchFilter"
-                  prepend-inner-icon="fas fa-search"
-                  label="Search Assigned To"
-                  single-line
-                  hide-details
-                  class="filter-search-bar"
-                ></v-text-field>
-                <v-card-text>
-                  <v-checkbox color="primary" :ripple="false"
-                    v-for="(t, ti) in getAdminUsersList"
-                    :key="ti"
-                    @change="onChangeAssigned(t.email)"
-                  >
-                    <div class="" slot="label">
-                      <span>
-                        {{t.display_name}}
-                      </span>
-                    </div>
-                  </v-checkbox>
-                </v-card-text>
-              </v-card>
-            </v-expansion-panel-content>
-
-            <!-- dynamic filters -->
-            <v-expansion-panel-content
-              class="employee-filters-list"
-              v-for="(v, k) in filters.default"
-              :key="k" v-if="v && v.length > 0 && k !== 'mood'"
-            >
-              <div
-                @click="searchFilter='';getFilterData(k);"
-                class="py-2 px-3" slot="header">{{getName(v)}}
-                <span v-if="getSelectedFiltersCount(filters.selected, k) !== 0">
-                  <v-chip>{{filters.selected[k].length}} Selected</v-chip>
-                </span>
-              </div>
-              <v-card color="#fff" style="border-bottom:0px">
+          <!-- assigened to -->
+          <v-expansion-panel v-model="showAssignedTo">
+            <v-expansion-panel-header @click="searchFilter = '';searchingAssignedTOfilter()">
+              <span>Assigned To</span>
+              <span v-if="assignedTo.selected && assignedTo.selected.length > 0">
+                <v-chip>{{assignedTo.selected.length}} Selected</v-chip>
+              </span>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-card class="elevation-0 ma-0 pa-0" style="border:0 !important;">
                 <v-text-field
                   @keyup="searchingfilter(k)"
                   v-model="searchFilter"
@@ -375,7 +385,8 @@
                 ></v-text-field>
                 <v-card-text
                   v-show="searchingfilter(k) && searchingfilter(k).length > 0"
-                  style="height: 300px;"
+                  style="height: 350px;"
+                  class="overflow-y-auto pa-0"
                 >
                   <v-checkbox color="primary" :ripple="false"
                   :value="chk[k]" v-model="filters.selected[k]"
@@ -401,8 +412,64 @@
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
-          </v-flex>
-        </v-expansion-panel>
+          </v-expansion-panel>
+
+          <!-- dynamic filters -->
+          <v-expansion-panel
+            class="employee-filters-list"
+            v-for="(v, k) in filters.default"
+            :key="k" v-if="v && v.length > 0 && k !== 'mood'"
+          >
+            <v-expansion-panel-header @click="searchFilter='';getFilterData(k);">
+              <div >
+                {{getName(v)}}
+                <span v-if="getSelectedFiltersCount(filters.selected, k) !== 0">
+                  <v-chip>{{filters.selected[k].length}} Selected</v-chip>
+                </span>
+              </div>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-card class="elevation-0 ma-0 pa-0" style="border:0 !important;">
+                <v-text-field
+                  @keyup="searchingfilter(k)"
+                  v-model="searchFilter"
+                  prepend-inner-icon="fas fa-search"
+                  label="Search..."
+                  single-line
+                  hide-details
+                  class="filter-search-bar"
+                ></v-text-field>
+                <v-card-text
+                  v-show="searchingfilter(k) && searchingfilter(k).length > 0"
+                  style="height: 350px;"
+                  class="overflow-y-auto pa-0"
+                >
+                  <v-checkbox color="primary" :ripple="false"
+                  :value="chk[k]" v-model="filters.selected[k]"
+                  v-for="chk in searchingfilter(k)" :key="chk[k]"
+                  >
+                  <div class="" slot="label">
+                    <span v-if="k === 'mood'">
+                      <img
+                        v-if="chk[k] > 0"
+                        height="30"
+                        :src="getImgUrl(chk[k])"
+                      >
+                      <span v-if="chk[k] === 0">Not answered</span>
+                    </span>
+                    <span v-if="k !== 'mood'">
+                      {{chk[k]}}
+                    </span>
+                  </div>
+                </v-checkbox>
+                </v-card-text>
+                <v-card-text v-show="searchingfilter(k) && searchingfilter(k).length === 0">
+                  No filters available
+                </v-card-text>
+              </v-card>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
         <v-card-actions
           style="position:fixed;bottom:0;width:100%;border-top: 1px solid #ccc; box-shadow:1;"
           class="bg-white"
@@ -1045,10 +1112,25 @@ export default {
 
 <style lang="scss">
 .filters-card {
-  height: 92vh;
+  height: 93vh;
   overflow: auto;
   border: none;
   box-shadow: none;
+  .switch-filters {
+    display: grid;
+    width: 300px;
+    grid-template-columns: 1fr 1fr;
+    height: 60px;
+    align-items: center;
+    padding: 0px 24px;
+    .switch-text {
+      text-align: left;
+    }
+    .switch-btn {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
   .employee-filters {
     display: -webkit-inline-box;
     .employee-filters-list {
