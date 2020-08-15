@@ -141,7 +141,7 @@
         <div class="d-flex flex-row flex-wrap">
           <v-flex xs12>
             <ParticipationAnalysis
-              ref="ParticipationAnalysis" class="my-2"
+              ref="ParticipationAnalysis" class="ma-0"
               @disengagedEmployeesType="disengagedEmployeesType"
             />
           </v-flex>

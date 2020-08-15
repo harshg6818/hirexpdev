@@ -35,322 +35,328 @@
 
         <!-- After intial loading -->
         <div class="mt-3" v-show="!config.initialLoading">
-            <!-- <v-layout row wrap> -->
-            <div class="flex-row flex-wrap d-flex">
-              <!-- Engagement Score -->
-              <div class="am-overview-cards engagement-score"
-                :class="$route.name === 'ViewLifecycle' ? 'milestone-dashboard' : ''"
-                style="background-color:#fff !important;"
-              >
-                <p class="pa-3 score-card text-capitalize" style="font-size:16px;">
-                  Engagement Score
-                  <v-tooltip max-width="200" bottom class="ml-2">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        v-bind="attrs"
-                        v-on="on"
-                        data-html2canvas-ignore
-                        slot="activator"
-                        >fas fa-info-circle
-                      </v-icon>
-                    </template>
-                      <span v-if="$route.name === 'ViewLifecycle'"> This is the average engagement score of the company calculated based on the latest conversations with each employee at {{ stage_title }} touchpoint. </span>
-                      <span v-else> This is the average engagement score of the company calculated based on the latest conversations with each employee. </span>
-                  </v-tooltip>
-                </p>
-                <div v-if="report && report.engagement_score" class="d-inline-flex w-100">
-                  <h1 class="score-card heading text-right pl-2 pr-3"
-                    v-if="report && report.engagement_score">
-                    {{report.engagement_score.toFixed(1)}}
-                  </h1>
-                  <h1 class="display-1 text-left pl-0" style="position: relative;left: -5%;"> /5 </h1>
-                </div>
-                <div v-else>
-                  <div class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
-                    <v-flex text-center>
-                      <strong class="body-2 font-weight-bold grey--text">
-                        Not enough data to generate analysis
-                      </strong>
-                    </v-flex>
-                  </div>
-                </div>
-                <div v-if="report.engagement_score" class="card-footer text-capitalize score-card pt-3" style="font-size:14px"
-                :style="{
-                  background: `linear-gradient(0deg,
-                    ${getEngagementScore(report.engagement_score)}24 0%,
-                    #ffffff 100%)`
-                }">
-                {{ getEngagement(report.engagement_score) }}
-                </div>
-              </div>
-
-              <!-- Employee Vibe -->
-              <div class="am-overview-cards employee-vibe" :class="$route.name === 'ViewLifecycle' ? 'milestone-dashboard' : ''">
-                <p class="pa-3 text-capitalize" style="font-size:16px;">
-                  Employees’ Vibe
-                  <v-tooltip max-width="200" bottom class="ml-2">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        v-bind="attrs"
-                        v-on="on"
-                        data-html2canvas-ignore
-                        slot="activator"
-                        >fas fa-info-circle
-                      </v-icon>
-                    </template>
-                      <span v-if="$route.name === 'ViewLifecycle'">   This is the average of employees’ overall feelings at {{ stage_title }} touchpoint. </span>
-                      <span v-else> This is the average of employees’ overall feelings about the tenure that they have spent in the organization. </span>
-                  </v-tooltip>
-                </p>
-                <h1 v-if="report && report.employee_vibe"
-                  class="score-card score-card-img heading" style="">
-                  <v-img class="mb-1" :src="getImgUrl(`${Math.round(report.employee_vibe)}`)">
-                  </v-img>
-                </h1>
-                <div v-if="report && report.employee_vibe" class="card-footer">
-                  <div class="card-footer text-capitalize score-card pt-3" style="font-size:14px">
-                {{getMood(`${Math.round(report.employee_vibe)}`)}}
-                </div>
-                </div>
-                <div v-else>
-                  <div class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
-                    <v-flex text-center>
-                      <strong class="body-2 font-weight-bold grey--text">
-                        Not enough data to generate analysis
-                      </strong>
-                    </v-flex>
-                </div>
-                </div>
-              </div>
-
-              <!-- Disengaged Employees -->
-              <div class="am-overview-cards" :class="$route.name === 'ViewLifecycle' ? 'milestone-dashboard' : ''">
-                <div class="">
-                  <p class="px-3 pt-3 mb-0" style="font-size:16px;">
-                    Disengaged Employees
-                    <v-tooltip max-width="200" bottom class="ml-2">
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon
-                          v-bind="attrs"
-                          v-on="on"
-                          data-html2canvas-ignore
-                          slot="activator"
-                          >fas fa-info-circle
-                        </v-icon>
-                      </template>
-                        Employees’ whose engagement score is less than or equal to 3 are disengaged.
-                    </v-tooltip>
-                  </p>
-                </div>
-
-                <!-- <h1 class="score-card text-center"
-                  v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees > 0"
-                  style="font-size: 120px;font-weight:300;margin: 0 auto;top:-13%;
-                  position:relative;">
-                  {{report.disengaged_employees.disengaged_employees}}
-                </h1> -->
-
-                <div v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees > 0"
-                class="d-flex w-100 text-center justify-center"
-                style="border-bottom: 1px solid rgb(243, 241, 241);">
-                  <p class="score-card pa-2 ma-0">
-                    <!-- <br/> -->
-                    <span style="font-size:50px;" class="text-center">
-                      {{report.disengaged_employees.disengaged_employees}}
-                    </span>
-                  </p>
-                </div>
-
-                <div class="text-center" v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees > 0">
-                    <div class="flex-row flex-wrap d-flex">
-                      <v-flex xs6 class="text-center" style="border-right: 1px solid rgb(243, 241, 241);">
-                        <p class="mb-0 mt-1">
-                          Cases Open
-                        </p>
-                        <a class="cursor-pointer hover-link" @click="openDisengagedEmployees('open')">
-                          <strong> {{report.disengaged_employees.disengaged_cases_open}} </strong>
-                        </a>
-                      </v-flex>
-                      <v-flex xs6 class="text-center">
-                        <p class="mb-0 mt-1">
-                          Cases Resolved
-                        </p>
-                        <a class="cursor-pointer hover-link" @click="openDisengagedEmployees('resolved')">
-                          <strong> {{report.disengaged_employees.disengaged_cases_resolved}} </strong>
-                        </a>
-                      </v-flex>
+          <v-row class="px-1">
+            <v-col cols="7" class="pa-0">
+              <v-row class="ma-0">
+                <v-col>
+                  <!-- Engagement Score -->
+                  <div class="am-overview-cards engagement-score milestone-dashboard"
+                    style="background-color:#fff !important;"
+                  >
+                    <p class="pa-3 score-card text-capitalize" style="font-size:16px;">
+                      Engagement Score
+                      <v-tooltip max-width="200" bottom class="ml-2">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            v-bind="attrs"
+                            v-on="on"
+                            data-html2canvas-ignore
+                            slot="activator"
+                            >fas fa-info-circle
+                          </v-icon>
+                        </template>
+                          <span v-if="$route.name === 'ViewLifecycle'"> This is the average engagement score of the company calculated based on the latest conversations with each employee at {{ stage_title }} touchpoint. </span>
+                          <span v-else> This is the average engagement score of the company calculated based on the latest conversations with each employee. </span>
+                      </v-tooltip>
+                    </p>
+                    <div v-if="report && report.engagement_score" class="d-inline-flex w-100">
+                      <h1 class="score-card heading text-right pl-2 pr-3"
+                        v-if="report && report.engagement_score">
+                        {{report.engagement_score.toFixed(1)}}
+                      </h1>
+                      <h1 class="display-1 text-left pl-0" style="position: relative;left: -5%;"> /5 </h1>
                     </div>
-                </div>
-
-                <div v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees === 0"  class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
-                    <v-flex class="text-center">
-                      <strong class="body-2 font-weight-bold grey--text">
-                        <p style="text-align:center; margin:0; font-size:20px;"> Yay! </p>
-                        <p style="text-align:center; margin:0;"> You don’t have any disengaged employee </p>
-                      </strong>
-                    </v-flex>
-                </div>
-                <div v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees > 0"
-                class="card-footer">
-                  <p class="px-0 pt-2 mb-0 text-center" style="font-size:12px">
-                    {{report.disengaged_employees.disengaged_employees}}
-                    out of {{report.disengaged_employees.employees_reached}}
-                    employees interacted</p>
-                  <p data-html2canvas-ignore class="cursor-pointer hover-link primary--text mb-0 text-center" v-show="$route.name !== 'ViewLifecycle'"
-                    @click="openDisengagedEmployees()">
-                    View details
-                  </p>
-                </div>
-                <div v-if="!report || !report.disengaged_employees || !report.disengaged_employees.disengaged_employees === 0">
-                  <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:160px">
-                    <v-flex class="mt-5 pt-4 text-center">
-                      <strong class="body-2 font-weight-bold grey--text">
-                        Not enough data to generate analysis
-                      </strong>
-                    </v-flex>
-                </div>
-                </div>
-              </div>
-
-              <div class="am-overview-cards" v-if="$route.name !== 'ViewLifecycle'">
-                <p class="pa-3 text-capitalize" style="font-size:16px;">
-                  Employees reached
-                  <v-tooltip max-width="200" bottom class="ml-2">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        v-bind="attrs"
-                        v-on="on"
-                        data-html2canvas-ignore
-                        slot="activator"
-                        >fas fa-info-circle
-                      </v-icon>
-                    </template>
-                      Percent of employees to whom Amara has reached out at least once.
-                  </v-tooltip>
-                </p>
-
-                <div v-show="report && report.employees_reached
-                && report.employees_reached.employee_reach"
-                id="gaugeChartdiv" class="EmployeeReach"> </div>
-
-                <div v-if="report && report.employees_reached &&
-                report.employees_reached.employee_reach" class="card-footer">
-                  <p class="px-1 pt-2 mb-0">
-                    <a class="cursor-pointer hover-link" @click="listEmployees({user_has_interaction:true})">
-                      <strong> {{report.employees_reached.employee_reach}} </strong>
-                    </a>
-                    out of
-                    <a class="cursor-pointer hover-link" @click="listEmployees()">
-                      <strong> {{report.employees_reached.total_employees}} </strong>
-                    </a>
-                  employees have been reached out </p>
-                </div>
-
-                <div v-else>
-                  <div class="flex-row d-flex flex-wrap align-center justify-center fill-height" style="height:160px">
-                    <v-flex class="text-center">
-                      <strong class="body-2 font-weight-bold grey--text">
-                        Not enough data to generate analysis
-                      </strong>
-                    </v-flex>
-                </div>
-                </div>
-              </div>
-
-              <!-- Participation Rate -->
-              <div class="am-overview-cards"
-                :class="$route.name === 'ViewLifecycle' ? 'milestone-dashboard' : ''">
-                <p class="px-3 pt-3 mb-0" style="font-size:16px;">
-                  Participation Rate
-                  <v-tooltip max-width="200" bottom class="ml-2">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        v-bind="attrs"
-                        v-on="on"
-                        data-html2canvas-ignore
-                        slot="activator"
-                        >fas fa-info-circle
-                      </v-icon>
-                    </template>
-                      Percent of chats completed of total chats initiated.
-                  </v-tooltip>
-                </p>
-                <div v-if="report && report.chats_completed &&
-                report.chats_completed.chats_initiated"
-                class="d-inline-flex w-100 text-center justify-center"
-                style="border-bottom: 1px solid rgb(243, 241, 241);">
-                  <p class="score-card pa-2 ma-0">
-                    Aggregated participation rate <br/>
-                    <span :style="`font-size:14px;
-                    color:${getColor(report.chats_completed.participation_rate)}`">
-                      {{report.chats_completed.participation_rate}} %
-                    </span>
-                  </p>
-                </div>
-
-                <div v-if="report && report.chats_completed &&
-                  report.chats_completed.chats_initiated"
-                  class="text-center">
-                  <p class="mb-0 mt-1">
-                    Chats
-                  </p>
-                  <div class="px-2 pt-0 mt-1 mb-2 w-100" style="font-size:14px">
-                    <div class="flex-row d-flex flex-wrap">
-                      <v-flex xs3 class="text-center" style="border-right: 1px solid rgb(243, 241, 241);">
-                        <p class="mb-0 mt-1">
-                          Total
-                        </p>
-                        <a class="cursor-pointer hover-link"
-                        @click="listEmployees({status:'', stage__id: stageId}, 'session/list') ">
-                          <strong>{{report.chats_completed.chats_initiated}}</strong>
-                        </a>
-                      </v-flex>
-                      <v-flex xs5 class="text-center" style="border-right: 1px solid rgb(243, 241, 241);">
-                        <p class="mb-0 mt-1">
-                          In Progress
-                        </p>
-                        <a class="cursor-pointer hover-link"
-                        @click="listEmployees({status:'inProgress', stage__id: stageId}, 'session/list') ">
-                          <strong>{{report.chats_completed.chats_inProgress}}</strong>
-                        </a>
-                      </v-flex>
-                      <v-flex xs4 class="text-center">
-                        <p class="mb-0 mt-1">
-                          Completed
-                        </p>
-                        <a class="cursor-pointer hover-link"
-                        @click="listEmployees({status:'completed', stage__id: stageId}, 'session/list') ">
-                          <strong>{{report.chats_completed.chats_completed}}</strong>
-                        </a>
-                      </v-flex>
+                    <div v-else>
+                      <div class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
+                        <v-flex text-center>
+                          <strong class="body-2 font-weight-bold grey--text">
+                            Not enough data to generate analysis
+                          </strong>
+                        </v-flex>
+                      </div>
                     </div>
-                  </div>
-                  <div
+                    <div v-if="report.engagement_score" class="card-footer text-capitalize score-card pt-3" style="font-size:14px"
                     :style="{
                       background: `linear-gradient(0deg,
-                        ${getColor(report.chats_completed.participation_rate)}24 0%,
+                        ${getEngagementScore(report.engagement_score)}24 0%,
                         #ffffff 100%)`
-                    }"
-                    class="text-center card-footer">
-                    <p class="px-2 pt-2 mb-0"> Average score accuracy </p>
-                    <p class="px-2 text-capitalize mb-0"
-                      :style="`font-size:14px;
-                      color:${getColor(report.chats_completed.participation_rate)}`">
-                      {{scoreAccuracy(report.chats_completed.participation_rate)}}
-                    </p>
+                    }">
+                      {{ getEngagement(report.engagement_score) }}
+                    </div>
                   </div>
-                </div>
-                <div v-else style="position:relative;top:14%;">
-                  <div class="flex-row flex-wrap align-center justify-center fill-height" style="height:160px;">
-                    <v-flex class="text-center">
-                      <strong class="body-2 font-weight-bold grey--text">
-                        Not enough data to generate analysis
-                      </strong>
-                    </v-flex>
-                </div>
-                </div>
-              </div>
-            </div>
+                </v-col>
+                <v-col class="px-0">
+                  <!-- Employee Vibe -->
+                  <div class="am-overview-cards employee-vibe" :class="$route.name === 'ViewLifecycle' ? 'milestone-dashboard' : ''">
+                    <p class="pa-3 text-capitalize" style="font-size:16px;">
+                      Employees’ Vibe
+                      <v-tooltip max-width="200" bottom class="ml-2">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            v-bind="attrs"
+                            v-on="on"
+                            data-html2canvas-ignore
+                            slot="activator"
+                            >fas fa-info-circle
+                          </v-icon>
+                        </template>
+                          <span v-if="$route.name === 'ViewLifecycle'">   This is the average of employees’ overall feelings at {{ stage_title }} touchpoint. </span>
+                          <span v-else> This is the average of employees’ overall feelings about the tenure that they have spent in the organization. </span>
+                      </v-tooltip>
+                    </p>
+                    <h1 v-if="report && report.employee_vibe"
+                      class="score-card score-card-img heading" style="">
+                      <v-img class="mb-1" :src="getImgUrl(`${Math.round(report.employee_vibe)}`)">
+                      </v-img>
+                    </h1>
+                    <div v-if="report && report.employee_vibe" class="card-footer">
+                      <div class="card-footer text-capitalize score-card pt-3" style="font-size:14px">
+                    {{getMood(`${Math.round(report.employee_vibe)}`)}}
+                    </div>
+                    </div>
+                    <div v-else>
+                      <div class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
+                        <v-flex text-center>
+                          <strong class="body-2 font-weight-bold grey--text">
+                            Not enough data to generate analysis
+                          </strong>
+                        </v-flex>
+                    </div>
+                    </div>
+                  </div>
+                </v-col>
+                <v-col>
+                  <!-- Disengaged Employees -->
+                  <div class="am-overview-cards" :class="$route.name === 'ViewLifecycle' ? 'milestone-dashboard' : ''">
+                    <div class="">
+                      <p class="px-3 pt-3 mb-0" style="font-size:16px;">
+                        Disengaged Employees
+                        <v-tooltip max-width="200" bottom class="ml-2">
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                              v-bind="attrs"
+                              v-on="on"
+                              data-html2canvas-ignore
+                              slot="activator"
+                              >fas fa-info-circle
+                            </v-icon>
+                          </template>
+                            Employees’ whose engagement score is less than or equal to 3 are disengaged.
+                        </v-tooltip>
+                      </p>
+                    </div>
+
+                    <div v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees > 0"
+                    class="d-flex w-100 text-center justify-center"
+                    style="border-bottom: 1px solid rgb(243, 241, 241);">
+                      <p class="score-card pa-2 ma-0">
+                        <span style="font-size:50px;" class="text-center">
+                          {{report.disengaged_employees.disengaged_employees}}
+                        </span>
+                      </p>
+                    </div>
+
+                    <div class="text-center" v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees > 0">
+                        <div class="flex-row flex-wrap d-flex">
+                          <v-flex xs6 class="text-center" style="border-right: 1px solid rgb(243, 241, 241);">
+                            <p class="mb-0 mt-1">
+                              Cases Open
+                            </p>
+                            <a class="cursor-pointer hover-link" @click="openDisengagedEmployees('open')">
+                              <strong> {{report.disengaged_employees.disengaged_cases_open}} </strong>
+                            </a>
+                          </v-flex>
+                          <v-flex xs6 class="text-center">
+                            <p class="mb-0 mt-1">
+                              Cases Resolved
+                            </p>
+                            <a class="cursor-pointer hover-link" @click="openDisengagedEmployees('resolved')">
+                              <strong> {{report.disengaged_employees.disengaged_cases_resolved}} </strong>
+                            </a>
+                          </v-flex>
+                        </div>
+                    </div>
+
+                    <div v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees === 0"  class="flex-row flex-wrap d-flex align-center justify-center fill-height" style="height:160px">
+                        <v-flex class="text-center">
+                          <strong class="body-2 font-weight-bold grey--text">
+                            <p style="text-align:center; margin:0; font-size:20px;"> Yay! </p>
+                            <p style="text-align:center; margin:0;"> You don’t have any disengaged employee </p>
+                          </strong>
+                        </v-flex>
+                    </div>
+                    <div v-if="report && report.disengaged_employees && report.disengaged_employees.disengaged_employees > 0"
+                    class="card-footer">
+                      <p class="px-0 pt-2 mb-0 text-center" style="font-size:12px">
+                        {{report.disengaged_employees.disengaged_employees}}
+                        out of {{report.disengaged_employees.employees_reached}}
+                        employees interacted</p>
+                      <p data-html2canvas-ignore class="cursor-pointer hover-link primary--text mb-0 text-center" v-show="$route.name !== 'ViewLifecycle'"
+                        @click="openDisengagedEmployees()">
+                        View details
+                      </p>
+                    </div>
+                    <div v-if="!report || !report.disengaged_employees || !report.disengaged_employees.disengaged_employees === 0">
+                      <div class="d-flex flex-row flex-wrap align-center justify-center fill-height" style="height:160px">
+                        <v-flex class="mt-5 pt-4 text-center">
+                          <strong class="body-2 font-weight-bold grey--text">
+                            Not enough data to generate analysis
+                          </strong>
+                        </v-flex>
+                    </div>
+                    </div>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col cols="5" class="pa-0">
+              <v-row class="ma-0">
+                <v-col class="pl-0">
+                  <div class="am-overview-cards" v-if="$route.name !== 'ViewLifecycle'">
+                    <p class="pa-3 text-capitalize" style="font-size:16px;">
+                      Employees reached
+                      <v-tooltip max-width="200" bottom class="ml-2">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            v-bind="attrs"
+                            v-on="on"
+                            data-html2canvas-ignore
+                            slot="activator"
+                            >fas fa-info-circle
+                          </v-icon>
+                        </template>
+                          Percent of employees to whom Amara has reached out at least once.
+                      </v-tooltip>
+                    </p>
+
+                    <div v-show="report && report.employees_reached
+                      && report.employees_reached.employee_reach"
+                      id="gaugeChartdiv" class="EmployeeReach"
+                    ></div>
+
+                    <div v-if="report && report.employees_reached &&
+                      report.employees_reached.employee_reach" class="card-footer"
+                    >
+                      <p class="px-1 pt-2 mb-0">
+                        <a class="cursor-pointer hover-link" @click="listEmployees({user_has_interaction:true})">
+                          <strong> {{report.employees_reached.employee_reach}} </strong>
+                        </a>
+                        out of
+                        <a class="cursor-pointer hover-link" @click="listEmployees()">
+                          <strong> {{report.employees_reached.total_employees}} </strong>
+                        </a>
+                      employees have been reached out </p>
+                    </div>
+
+                    <div v-else>
+                      <div class="flex-row d-flex flex-wrap align-center justify-center fill-height" style="height:160px">
+                        <v-flex class="text-center">
+                          <strong class="body-2 font-weight-bold grey--text">
+                            Not enough data to generate analysis
+                          </strong>
+                        </v-flex>
+                      </div>
+                    </div>
+                  </div>
+                </v-col>
+                <v-col class="pl-0">
+                  <!-- Participation Rate -->
+                  <div class="am-overview-cards"
+                    :class="$route.name === 'ViewLifecycle' ? 'milestone-dashboard' : ''">
+                    <p class="px-3 pt-3 mb-0" style="font-size:16px;">
+                      Participation Rate
+                      <v-tooltip max-width="200" bottom class="ml-2">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            v-bind="attrs"
+                            v-on="on"
+                            data-html2canvas-ignore
+                            slot="activator"
+                            >fas fa-info-circle
+                          </v-icon>
+                        </template>
+                          Percent of chats completed of total chats initiated.
+                      </v-tooltip>
+                    </p>
+                    <div v-if="report && report.chats_completed &&
+                    report.chats_completed.chats_initiated"
+                    class="d-inline-flex w-100 text-center justify-center"
+                    style="border-bottom: 1px solid rgb(243, 241, 241);">
+                      <p class="score-card pa-2 ma-0">
+                        Aggregated participation rate <br/>
+                        <span :style="`font-size:14px;
+                        color:${getColor(report.chats_completed.participation_rate)}`">
+                          {{report.chats_completed.participation_rate}} %
+                        </span>
+                      </p>
+                    </div>
+
+                    <div v-if="report && report.chats_completed &&
+                      report.chats_completed.chats_initiated"
+                      class="text-center">
+                      <p class="mb-0 mt-1">
+                        Chats
+                      </p>
+                      <div class="px-2 pt-0 mt-1 mb-2 w-100" style="font-size:14px">
+                        <div class="flex-row d-flex flex-wrap">
+                          <v-flex xs3 class="text-center" style="border-right: 1px solid rgb(243, 241, 241);">
+                            <p class="mb-0 mt-1">
+                              Total
+                            </p>
+                            <a class="cursor-pointer hover-link"
+                            @click="listEmployees({status:'', stage__id: stageId}, 'session/list') ">
+                              <strong>{{report.chats_completed.chats_initiated}}</strong>
+                            </a>
+                          </v-flex>
+                          <v-flex xs5 class="text-center" style="border-right: 1px solid rgb(243, 241, 241);">
+                            <p class="mb-0 mt-1">
+                              In Progress
+                            </p>
+                            <a class="cursor-pointer hover-link"
+                            @click="listEmployees({status:'inProgress', stage__id: stageId}, 'session/list') ">
+                              <strong>{{report.chats_completed.chats_inProgress}}</strong>
+                            </a>
+                          </v-flex>
+                          <v-flex xs4 class="text-center">
+                            <p class="mb-0 mt-1">
+                              Completed
+                            </p>
+                            <a class="cursor-pointer hover-link"
+                            @click="listEmployees({status:'completed', stage__id: stageId}, 'session/list') ">
+                              <strong>{{report.chats_completed.chats_completed}}</strong>
+                            </a>
+                          </v-flex>
+                        </div>
+                      </div>
+                      <div
+                        :style="{
+                          background: `linear-gradient(0deg,
+                            ${getColor(report.chats_completed.participation_rate)}24 0%,
+                            #ffffff 100%)`
+                        }"
+                        class="text-center card-footer">
+                        <p class="px-2 pt-2 mb-0"> Average score accuracy </p>
+                        <p class="px-2 text-capitalize mb-0"
+                          :style="`font-size:14px;
+                          color:${getColor(report.chats_completed.participation_rate)}`">
+                          {{scoreAccuracy(report.chats_completed.participation_rate)}}
+                        </p>
+                      </div>
+                    </div>
+                    <div v-else style="position:relative;top:14%;">
+                      <div class="flex-row flex-wrap align-center justify-center fill-height" style="height:160px;">
+                        <v-flex class="text-center">
+                          <strong class="body-2 font-weight-bold grey--text">
+                            Not enough data to generate analysis
+                          </strong>
+                        </v-flex>
+                    </div>
+                    </div>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
         </div>
       </v-flex>
     </div>
@@ -702,7 +708,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .am-overview-cards {
-  width: 19.6%!important;
+  width: 100%!important;
   margin: 0 auto !important;
   height: 240px!important;
   background-color: #fff;
@@ -718,7 +724,7 @@ export default {
     height: 60px;
   }
   &.milestone-dashboard {
-    width: 24%!important;
+    width: 100%!important;
   }
   &.heatmap-card {
     height: 500px!important;
