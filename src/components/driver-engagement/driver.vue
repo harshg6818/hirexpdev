@@ -1,234 +1,68 @@
 <template>
-  <div class="drivers-wrap">
-    <driverTopBar></driverTopBar>
-    <!-- <div class="drivers-container">
-      <div class="drivers-container-wrap">
-        <div
-          class="driver-wrap"
-          v-for="(driver, index) in drivers"
-          :key="index"
-          @click="onClickViewDriver(driver.driver)"
-        >
-          <div class="driver-top">
-            <div class="driver-icon">
-              <img src="../../assets/Culture.png" alt="">
-            </div>
-            <div class="driver-name">{{driver.driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}}</div>
-          </div>
-          <div class="driver-body">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Omnis aspernatur veritatis.
-          </div>
-          <div class="driver-footer">
-            <div class="driver-average">
-              <div class="score">{{driver.average}}</div>
-              <div class="driver-sub">
-                Average score
-              </div>
-            </div>
-            <div class="driver-disengaged">
-              <div class="score">{{driver.disengaged_employees}}</div>
-              <div class="driver-sub">
-                Disengaged employees
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <div class="drivers-container">
-      <div class="left-side">
-        <div
-          class="ac"
-          v-for="(driver, index) in drivers"
-          :key="index"
-        >
-          <div class="driver-wrap">
-            <div class="driver-body">
-              <div class="driver-icon">
-                <img src="../../assets/Culture.png" alt="">
-              </div>
-              <div class="driver-title">
-                {{driver.driver.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}}
-              </div>
-              <div class="driver-avg">
-                <div class="score">
-                  {{driver.average}}
-                </div>
-                <div class="driver-sub">
-                  Average score
-                </div>
-              </div>
-              <div class="driver-disengaged">
-                <div class="score">
-                  {{driver.disengaged_employees}}
-                </div>
-                <div class="driver-sub">
-                  Disengaged employees
-                </div>
-              </div>
-            </div>
-            <!-- <div class="driver-desc">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Aspernatur animi, commodi in odio dolorum magnam deserunt atque.
-            </div> -->
-          </div>
-          <input class="ac-input" :id="index" :name="index" type="checkbox" />
-          <label class="ac-label" :for="index">
-            {{ Object.keys(driver.sub_drivers).length }} Subdrivers
-          </label>
-          <article class="ac-text">
-            <div class="ac-sub"
-              v-for="(sub, idx) in driver.sub_drivers"
-              :key="idx"
-            >
-              <div class="sub-driver-wrap">
-                <div class="driver-body">
-                  <div class="driver-title">
-                    {{idx.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}}
-                  </div>
-                  <div class="driver-avg">
-                    <div class="score">
-                      45
-                    </div>
-                    <div class="driver-sub">
-                      Average score
-                    </div>
-                  </div>
-                  <div class="driver-disengaged">
-                    <div class="score">
-                      23
-                    </div>
-                    <div class="driver-sub">
-                      Disengaged employees
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <input class="ac-input" :id="idx" :name="idx" type="checkbox" />
-              <!-- <label class="ac-sub-label" :for="idx">{{idx}}</label> -->
-              <label class="ac-sub-label" :for="idx">
-                View {{idx.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}} questions
-              </label>
-              <article class="ac-sub-text">
-                <p>My younger brother was in London when the Martians fell at Woking.
-                  He was a medical student working for an imminent examination, and
-                  he heard nothing of the arrival until Saturday morning.  The morning
-                  papers on Saturday contained, in addition to lengthy special articles
-                  on the planet Mars, on life in the planets, and so forth, a brief and
-                  vaguely worded telegram, all the more striking for its brevity.
-                </p>
-                <p>The Martians, alarmed by the approach of a crowd, had killed a number
-                  of people with a quick-firing gun, so the story ran. The telegram concluded
-                  with the words: "Formidable as they seem to be, the Martians have not moved
-                  from the pit into which they have fallen, and, indeed, seem incapable of
-                  doing so. Probably this is due to the relative strength of the earth's
-                  gravitational energy."
-                </p>
-              </article>
-            </div>
-          </article>
-        </div>
-
-        <!-- <div class="ac">
-          <div>harsh</div>
-          <input class="ac-input" id="ac-4" name="ac-4" type="checkbox" />
-          <label class="ac-label" for="ac-4">Item 2</label>
-          <article class="ac-text">
-            <div class="ac-sub">
-              <input class="ac-input" id="ac-5" name="ac-5" type="checkbox" />
-              <label class="ac-label" for="ac-5">I also love regular donuts</label>
-              <article class="ac-sub-text">
-                <p>But not only is the sea such a foe to man who is an alien to it,
-                  but it is also a fiend to its own off-spring; worse than the Persian
-                  host who murdered his own guests; sparing not the creatures which
-                  itself hath spawned. Like a savage tigress that tossing in the jungle
-                  overlays her own cubs, so the sea dashes even the mightiest whales
-                  against the rocks, and leaves them there side by side with the split
-                  wrecks of ships. No mercy, no power but its own controls it. Panting
-                  and snorting like a mad battle steed that has lost its rider,
-                  the masterless ocean overruns the globe.
-                </p>
-                <p>Consider the subtleness of the sea; how its most dreaded creatures
-                  glide under water, unapparent for the most part, and treacherously
-                  hidden beneath the loveliest tints of azure. Consider also the devilish
-                  brilliance and beauty of many of its most remorseless tribes, as the dainty
-                  embellished shape of many species of sharks. Consider, once more, the
-                  universal cannibalism of the sea; all whose creatures prey upon each other,
-                  carrying on eternal war since the world began.
-                </p>
-              </article>
-            </div>
-            <div class="ac-sub">
-              <input class="ac-input" id="ac-6" name="ac-6" type="checkbox" />
-              <label class="ac-label" for="ac-6">They are also delicious</label>
-              <article class="ac-sub-text">
-                <p>My younger brother was in London when the Martians fell at Woking.
-                  He was a medical student working for an imminent examination, and
-                  he heard nothing of the arrival until Saturday morning.  The morning
-                  papers on Saturday contained, in addition to lengthy special articles
-                  on the planet Mars, on life in the planets, and so forth, a brief and
-                  vaguely worded telegram, all the more striking for its brevity.
-                </p>
-                <p>The Martians, alarmed by the approach of a crowd, had killed a number
-                  of people with a quick-firing gun, so the story ran. The telegram concluded
-                  with the words: "Formidable as they seem to be, the Martians have not moved
-                  from the pit into which they have fallen, and, indeed, seem incapable of doing so.
-                  Probably this is due to the relative strength of the earth's gravitational energy."
-                  On that last text their leader-writer expanded very comfortingly.
-                </p>
-              </article>
-            </div>
-          </article>
-        </div> -->
-      </div>
-      <div class="right-side">
-        <div class="great-wrap">
-          <div class="great-title">
-            You're doing great with
-          </div>
-          <div class="great-body">
-            <ul>
-              <li>the driver Recognition strongly influences the engagement levels.</li>
-              <li>the driver Recognition strongly influences the engagement levels.</li>
-              <li>the driver Recognition strongly influences the engagement levels.</li>
-              <li>the driver Recognition strongly influences the engagement levels.</li>
-              <li>the driver Recognition strongly influences the engagement levels.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="loss-wrap">
-          <div class="loss-title">
-            Improve Your Focus On
-          </div>
-          <div class="loss-body">
-            <ul>
-              <li>the driver Culture strongly influences the engagement levels.</li>
-              <li>the driver Culture strongly influences the engagement levels.</li>
-              <li>the driver Culture strongly influences the engagement levels.</li>
-              <li>the driver Culture strongly influences the engagement levels.</li>
-              <li>the driver Culture strongly influences the engagement levels.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+  <div>
+    <div class="mt-2">
+      <v-row class="mx-2">
+        <v-col class="pb-0">
+          <div class="drivers-title">Driver Engagement Framework</div>
+        </v-col>
+        <v-col class="text-right pb-0">
+          <v-btn class="box-container zoom-in mx-2" color="primary">
+            Snapshot
+          </v-btn>
+          <v-btn class="box-container zoom-in mx-2">
+            Analytics
+          </v-btn>
+        </v-col>
+      </v-row>
     </div>
+
+    <driver-cards
+      :active-card="activeDriverView"
+      @onClickDriver="onClickDriverCard"
+    ></driver-cards>
+
+    <driver-stats></driver-stats>
+
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-card>
+            <driver-overtime-graph></driver-overtime-graph>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card>
+            <driver-by-subdriver
+              :active-card="activeDriverView"
+            ></driver-by-subdriver>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-import DriverTopBar from './driver-top-bar';
+// import DriverTopBar from './driver-top-bar';
+import DriverCards from './snapshot/driver-cards';
+import DriverStats from './snapshot/driver-stats';
+import DriverOvertimeGraph from './snapshot/driver-overtime-graph';
+import DriverBySubdriver from './snapshot/driver-by-subdriver';
 
 export default {
   name: 'Driver',
 
   components: {
-    DriverTopBar
+    // DriverTopBar,
+    DriverCards,
+    DriverStats,
+    DriverOvertimeGraph,
+    DriverBySubdriver
   },
 
   data () {
     return {
+      activeDriverView: 'CareerOpportunities',
       drivers: [{
         driver: 'CareerOpportunities', average: 3.6, disengaged_employees: 22, sub_drivers: { 'Growth Path': 4.2, GrowthPath: 3.6, LearningAndDevelopment: 3.5 }
       }, {
@@ -256,12 +90,20 @@ export default {
     onClickViewDriver (driver) {
       this.$router.push({ path: `/drivers/v/${driver}` });
       // this.$router.push({ path: `/drivers/${driver}` });
+    },
+    onClickDriverCard (driver) {
+      this.activeDriverView = driver;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.drivers-title {
+  font-weight: var(--heading-weight);
+  color: var(--color-text);
+  font-size: var(--heading-size);
+}
 .drivers-wrap {
   background-color: var(--bg-panel);
   // height: 100vh;

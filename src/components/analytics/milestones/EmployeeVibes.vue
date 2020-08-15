@@ -480,6 +480,7 @@ export default {
           ...v.engagement_stats
         });
       });
+      console.log('generateLineGraph -> formattedData', formattedData);
       window.AmCharts.makeChart('engagementChart', {
         type: 'serial',
         theme: 'none',
