@@ -178,7 +178,7 @@
       </li>
     </ul>
     </div>
-    <div class="filter-bar"
+    <div class="filter-bar mr-3 pt-2"
       v-if="activeDashView !== 'anonymous-snapshot'
         && activeDashView !== 'anonymous-message'"
     >

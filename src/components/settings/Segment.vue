@@ -1,6 +1,6 @@
 <template>
   <div class="segmentVue">
-    <v-container v-if="groupList">
+    <v-container v-if="groupList" class="px-0">
       <v-subheader style="margin-bottom:3%;">
         <v-flex>
           <v-list-item-title style="display:block">
@@ -321,7 +321,7 @@
         </v-flex>
         <v-flex class="text-sm-right">
           <v-btn color="primary" @click="openPermission()" :disabled="!checkPermission(['update_group'])">Permissions</v-btn>
-          <v-btn color="primary" @click="editGroup()" :disabled="!checkPermission(['update_group']) || groupDetail.master">
+          <v-btn color="primary" @click="editGroup()" :disabled="!checkPermission(['update_group']) || groupDetail.master"  class="ml-2">
             <v-icon class="mr-2" small>fas fa-edit</v-icon>
             Edit Group
           </v-btn>
@@ -340,66 +340,63 @@
           </v-alert>
         </v-flex>
       </v-container> -->
-      <div class="d-flex flex-row flex-wrap">
-        <v-flex style="display:inline-block; padding:0 10px 5%;  min-height:193px " v-for="(item, idx) in groupUsersDetail" :key="idx" sm4>
-          <v-card style="padding:2px 10px 7% 10px; box-shadow:none; webkit-box-shadow:none; height:100%;" class="delete-on-hover">
-            <v-list>
-            <div style="height:20px;" class="d-flex flex-row flex-wrap">
-              <v-flex sm12>
-                <img style="    position: relative;
-                top: -45px;
-                left: 37%;
-                width: 27%;"  src="../../assets/user.png">
-              </v-flex>
-              <v-flex class="delete-button" style="position: absolute; right: -5px; top: -5px;">
-                <v-tooltip bottom>
-                  <v-btn slot="activator" color="error" text icon @click="removeUser(item.id)"
-                  :disabled="!checkPermission(['remove_user_from_group']) || config.loading || item.type === 'SuperAdmin'">
-                    <v-icon >fas fa-times</v-icon>
-                  </v-btn>
-                    Remove user
-                    <!-- <span v-if="item.type !== 'SuperAdmin'"> Remove user </span>
-                    <span v-else> You are not allowed to remove Super Admin from the group.  </span> -->
-                </v-tooltip>
-              </v-flex>
-            </div>
-            <v-flex sm12>
-              <v-list-item style="text-align:center; height:30px;">
-                <p style="text-align:center; width:100%; margin:0;">{{item.display_name}}</p>
-              </v-list-item>
-
-              <p style="width:100%;  text-align:center; margin-bottom:0; text-transform: capitalize;" class="grey--text subtitle-1">{{item.type}}</p>
-              <p style="width:100%;  text-align:center; margin-bottom:0; overflow-wrap:break-word;" class="grey--text subtitle-1">{{item.email}}</p>
-              <p style="width:100%;  padding-left:20px; margin-bottom:0;" class="grey--text subtitle-1" v-if="item.department">Department : {{ item.department }}</p>
-              <p style="width:100%;  padding-left:20px; margin-bottom:0;" class="grey--text subtitle-1" v-else>Department : - </p>
-            </v-flex>
-            <v-flex sm12>
-            </v-flex>
-            </v-list>
-          </v-card>
-
-        </v-flex>
-        <v-flex style="display:inline-block; padding:2px 10px 5%; min-height:193px" sm4>
-        <v-card style=" box-shadow:none; webkit-box-shadow:none; cursor:pointer; height:100%;" class="addnewadmin" @click.native="addNewUser = true" :disabled="!checkPermission(['create_group'])">
-            <v-list>
-            <div class="d-flex flex-row" style="height:20px;">
-            </div>
-            <v-flex sm12>
-              <p style="width:100%;  text-align:center; margin-bottom:0; text-transform: capitalize;" class="grey--text subtitle-1">&nbsp;</p>
-              <p style="width:100%;  text-align:center; margin-bottom:0;" class="grey--text subtitle-1">
-                <v-icon class="mr-2" small>fas fa-plus</v-icon>
-              </p>
-              <v-list-item style="text-align:center; height:30px;">
+      <div class="d-flex flex-row flex-wrap" style="background-color: #f1f5f8;">
+        <v-row class="ma-0">
+          <v-col cols="4" style="min-height:200px" v-for="(item, idx) in groupUsersDetail" :key="idx">
+            <v-card class="delete-on-hover py-3"  outlined tile style="border-radius: 0.5rem !important;">
+              <v-row class="text-center">
+                <v-col>
+                  <img style="width: 27%;" src="../../assets/user.png">
+                </v-col>
+              </v-row>
+                <!-- <v-flex class="delete-button" style="position: absolute; right: -5px; top: -5px;">
+                  <v-tooltip bottom>
+                    <v-btn slot="activator" color="error" text icon @click="removeUser(item.id)"
+                      :disabled="!checkPermission(['remove_user_from_group']) || config.loading || item.type === 'SuperAdmin'">
+                      <v-icon >fas fa-times</v-icon>
+                    </v-btn>
+                      Remove user
+                  </v-tooltip>
+                </v-flex> -->
+                <v-row class="text-center ma-0">
+                  <v-col cols="12" class="pa-1">{{item.type}}</v-col>
+                  <v-col cols="12" class="pa-1 font-weight-bold">
+                    <!-- <v-icon class="mr-1" small>far fa-user</v-icon> -->
+                    {{item.display_name}}</v-col>
+                  <v-col cols="12" class="pa-1">
+                    <v-icon class="mr-1" small>far fa-envelope</v-icon>
+                    {{item.email}}
+                  </v-col>
+                  <v-col cols="12" class="pa-1">
+                    <v-icon class="mr-1" small>far fa-building</v-icon>
+                    <span v-if="item.department">{{ item.department }}</span>
+                    <span v-else>--</span>
+                  </v-col>
+                </v-row>
+                <v-row class="ma-0 text-center">
+                  <v-col>
+                    <v-btn
+                      color="error"
+                      text
+                      small
+                      @click="removeUser(item.id)"
+                      :disabled="!checkPermission(['remove_user_from_group']) || config.loading || item.type === 'SuperAdmin'"
+                    >Remove</v-btn>
+                  </v-col>
+                </v-row>
+            </v-card>
+          </v-col>
+          <v-col cols="4" style="min-height:200px">
+            <v-card style=" box-shadow:none; webkit-box-shadow:none; cursor:pointer; height:100%;" class="addnewadmin" @click.native="addNewUser = true" :disabled="!checkPermission(['create_group'])">
+              <div class="text-center" style="margin-top:85px">
+                <p class="w-100">
+                  <v-icon class="mr-2" small>fas fa-plus</v-icon>
+                </p>
                 <p style="text-align:center; width:100%; margin:0;">Add Admin</p>
-              </v-list-item>
-
-              <p style="width:100%;  padding-left:20px; margin-bottom:0;" class="grey--text subtitle-1">&nbsp;</p>
-            </v-flex>
-            <v-flex sm12>
-            </v-flex>
-            </v-list>
-          </v-card>
-        </v-flex>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
       </div>
     </v-container>
     <v-dialog persistent v-model="addNewUser" style="box-shadow: 0 3px 1px -2px red;" width="55%" min-height="600px">

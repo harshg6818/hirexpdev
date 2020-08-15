@@ -19,7 +19,7 @@
           <v-btn
             class="amara-nav-btn"
             value="dashboard"
-            @click="pushRouter('/')"
+            @click="pushRouter('/?tab=overview')"
           >
             <span>Dashboard</span>
             <v-icon>fas fa-chart-line</v-icon>

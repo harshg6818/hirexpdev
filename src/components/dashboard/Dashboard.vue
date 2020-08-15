@@ -75,12 +75,14 @@
           <v-btn
             class="box-container zoom-in mx-2"
             @click="dashboardTab = 'touchpoints-snapshot'"
+            :color="activeTab === 'touchpoints-snapshot' ? 'primary' : ''"
           >
             Snapshot
           </v-btn>
           <v-btn
             class="box-container zoom-in mx-2"
             @click="dashboardTab = 'touchpoints-analysis'"
+            :color="activeTab === 'touchpoints-analysis' ? 'primary' : ''"
           >
             Touchpoints analysis
           </v-btn>
@@ -93,18 +95,21 @@
           <v-btn
             class="box-container zoom-in mx-2"
             @click="dashboardTab = 'disengaged-snapshot'"
+            :color="activeTab === 'disengaged-snapshot' ? 'primary' : ''"
           >
             Snapshot
           </v-btn>
           <v-btn
             class="box-container zoom-in mx-2"
             @click="dashboardTab = 'disengaged-emp-to-meet'"
+            :color="activeTab === 'disengaged-emp-to-meet' ? 'primary' : ''"
           >
             Employees to meet
           </v-btn>
           <v-btn
             class="box-container zoom-in mx-2"
             @click="dashboardTab = 'disengaged-sentiment-analysis'"
+            :color="activeTab === 'disengaged-sentiment-analysis' ? 'primary' : ''"
           >
             Sentiment analysis
           </v-btn>
@@ -115,12 +120,14 @@
           <v-btn
             class="box-container zoom-in mx-2"
             @click="dashboardTab = 'anonymous-snapshot'"
+            :color="activeTab === 'anonymous-snapshot' ? 'primary' : ''"
           >
             Snapshot
           </v-btn>
           <v-btn
             class="box-container zoom-in mx-2"
             @click="dashboardTab = 'anonymous-message'"
+            :color="activeTab === 'anonymous-message' ? 'primary' : ''"
           >
             Messages
           </v-btn>
@@ -141,7 +148,12 @@
         </div>
         <div class="d-flex flex-row flex-wrap">
           <v-flex xs12 px-2>
-            <DriverEngagement ref="DriverEngagement"  @viewDriverWithFilter="viewDriverWithFilter"/>
+            <DriverOverview ref="DriverOverview" />
+          </v-flex>
+        </div>
+        <div class="d-flex flex-row flex-wrap">
+          <v-flex xs12 px-2>
+            <!-- <DriverEngagement ref="DriverEngagement"  @viewDriverWithFilter="viewDriverWithFilter"/> -->
           </v-flex>
         </div>
         <div class="d-flex flex-row flex-wrap">
@@ -226,8 +238,10 @@ import { mapState } from 'vuex';
 import DashboardTopBar from './dashboard-top-bar';
 import DashboardFilters from './dashboard-filters';
 
-import ParticipationAnalysis from '../analytics/milestones/ParticipationAnalysis';
-import DriverEngagement from '../analytics/milestones/DriverEngagement';
+// import ParticipationAnalysis from '../analytics/milestones/ParticipationAnalysis';
+import ParticipationAnalysis from './overview/participationAnalysis';
+import DriverOverview from './overview/driver-overview';
+// import DriverEngagement from '../analytics/milestones/DriverEngagement';
 import EmployeeVibes from '../analytics/milestones/EmployeeVibes';
 
 import TouchpointSnapshot from './touchpoints/snapshot';
@@ -249,7 +263,8 @@ export default {
     DashboardTopBar,
     DashboardFilters,
     ParticipationAnalysis,
-    DriverEngagement,
+    DriverOverview,
+    // DriverEngagement,
     EmployeeVibes,
     TouchpointSnapshot,
     TouchpointAnaysis,
@@ -450,6 +465,10 @@ export default {
             }
           }
 
+          if (this.$refs && this.$refs.DriverOverview) {
+            this.$refs.DriverOverview.driverBreakdown = response.data.driver_breakdown;
+          }
+
           if (this.$refs && this.$refs.DriverEngagement) {
             this.$refs.DriverEngagement.config.initialLoading = false;
             this.$refs.DriverEngagement.report.stats = false;
@@ -503,6 +522,7 @@ export default {
                 company_drivers_breakdown: temp2
               };
               this.$refs.DriverEngagement.generateDriverFramework(response.data.driver_breakdown);
+              this.$refs.DriverOverview.driverBreakdown = response.data.driver_breakdown;
 
               if (response.data.driver_breakdown) {
                 this.$refs.DriverEngagement.report.stats = true;
