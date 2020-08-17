@@ -38,20 +38,22 @@
               {{key.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}}
             </v-col>
             <v-col cols="2">
-              <v-row class="ml-4"><div>{{item}}</div></v-row>
+              <!-- <v-row class="ml-4"> -->
+                <div :style="`color:${getScoreColor(item)}`">{{item.toFixed(1)}}</div>
+              <!-- </v-row> -->
             </v-col>
           </v-row>
         </v-col>
         <v-col cols="6">
           <v-row class="text-left">
             <v-col>
-              <div class="stats-score ml-4">12</div>
+              <div class="stats-score ml-4" style="color:#f44336">23.3</div>
             </v-col>
             <v-col>
-              <div class="stats-score ml-4">35</div>
+              <div class="stats-score ml-4" style="color:#ff9800">45.3</div>
             </v-col>
             <v-col>
-              <div class="stats-score ml-4">86</div>
+              <div class="stats-score ml-4" style="color:#4caf50">12.4</div>
             </v-col>
           </v-row>
         </v-col>
@@ -96,6 +98,21 @@ export default {
         peerRelationship: 1
       }
     };
+  },
+  methods: {
+    getScoreColor (score) {
+      let color = '#fff';
+      if (score) {
+        if (score <= 3) {
+          color = '#f44336';
+        } else if (score <= 4) {
+          color = '#ff9800';
+        } else if (score <= 5) {
+          color = '#4caf50';
+        }
+      }
+      return color;
+    }
   }
 };
 </script>

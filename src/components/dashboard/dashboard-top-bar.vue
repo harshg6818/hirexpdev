@@ -25,7 +25,13 @@
               class="feather feather-activity">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
             </svg> -->
-            <v-icon color="#000">fas fa-bezier-curve</v-icon>
+            <svg id="light" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <g><path d="m15.5 18c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3zm0-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></g>
+              <g><path d="m20.5 24c-.3 0-.5-.2-.5-.5v-2c0-.8-.7-1.5-1.5-1.5h-6c-.8 0-1.5.7-1.5 1.5v2c0 .3-.2.5-.5.5s-.5-.2-.5-.5v-2c0-1.4 1.1-2.5 2.5-2.5h6c1.4 0 2.5 1.1 2.5 2.5v2c0 .3-.2.5-.5.5z"/></g>
+              <g><path d="m3.5 24c-.3 0-.5-.2-.5-.5v-23c0-.3.2-.5.5-.5s.5.2.5.5v23c0 .3-.2.5-.5.5z"/></g>
+              <g><path d="m16.5 10h-13c-.3 0-.5-.2-.5-.5v-9c0-.3.2-.5.5-.5h13c.2 0 .4.1.4.3s.1.4 0 .5l-2.8 4.2 2.8 4.2c.1.2.1.4 0 .5s-.2.3-.4.3zm-12.5-1h11.6l-2.5-3.7c-.1-.2-.1-.4 0-.6l2.5-3.7h-11.6z"/></g>
+            </svg>
+            <!-- <v-icon color="#000">fas fa-bezier-curve</v-icon> -->
           </div>
           <div class="top-menu__title"> Critical touchpoints
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down top-menu__sub-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>

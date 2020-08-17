@@ -54,19 +54,18 @@
                   <div class="login-input-field d-flex flex-wrap">
                     <v-flex px-1>
                       <v-text-field
-                      :autofocos="true"
-                      placeholder=""
-                      prepend-icon="fas fa-user"
-                      label="Email"
-                      v-model="email"
-                      required
-                      @keyup.native.enter="validateDetails"
+                        autofocus
+                        prepend-icon="fas fa-user"
+                        label="Email"
+                        v-model="email"
+                        required
+                        @keyup.native.enter="validateDetails"
+                        placeholder="Enter your email"
                       ></v-text-field>
                     </v-flex>
                     <v-flex px-1>
                       <v-text-field
-                        :autofocos="true"
-                        placeholder=""
+                        autofocus
                         prepend-icon="fas fa-lock"
                         :append-icon="e1 ? 'fas fa-eye-slash' : 'fas fa-eye'"
                         @click:append="(e1 = !e1)"
@@ -75,6 +74,7 @@
                         @keyup.native.enter="validateDetails"
                         required
                         label="Password"
+                        placeholder="Enter your password"
                       ></v-text-field>
                     </v-flex>
                   </div>

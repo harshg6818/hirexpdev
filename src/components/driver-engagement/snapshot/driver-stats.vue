@@ -25,8 +25,8 @@
         <v-col cols="8">
           <div class="amara-insights-wrap">
             <div class="insights-title">Amara Insights</div>
-            <div class="insights-1">Amara has <span>{{disengagedEmp}}%</span> contribution to disengaged employees.</div>
-            <div class="insights-2">Amara has <span>{{engScore}}%</span> contribution to engagement score.</div>
+            <div class="insights-1">Amara has <span><b>{{disengagedEmp}}%</b></span> contribution to disengaged employees.</div>
+            <div class="insights-2">Amara has <span><b>{{engScore}}%</b></span> contribution to engagement score.</div>
           </div>
         </v-col>
       </v-row>
@@ -70,6 +70,21 @@ export default {
       .stats-title {
         font-weight: var(--heading-weight);
         text-align: center;
+      }
+      .stats-negative {
+        .stats-score {
+          color: #f44336;
+        }
+      }
+      .stats-neutral {
+        .stats-score {
+          color: #ff9800;
+        }
+      }
+      .stats-positive {
+        .stats-score {
+          color: #4caf50;
+        }
       }
     }
   }
