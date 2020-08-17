@@ -2,7 +2,7 @@
   <div class="search-wrap">
     <div id="morphsearch" class="morphsearch" v-bind:class="{'open': searchOpen}">
       <form class="morphsearch-form">
-        <input class="morphsearch-input secondary" type="search" v-model="searchString" @blur="closeSearch" @keyup="globalSearchEmployee" @focus="openSearch" placeholder="Search employees"/>
+        <input class="morphsearch-input" type="search" v-model="searchString" @blur="closeSearch" @keyup="globalSearchEmployee" @focus="openSearch" placeholder="Search employees"/>
       </form>
         <v-row class="morphsearch-content">
           <v-col class="pa-2" cols="12">
@@ -161,7 +161,8 @@ export default {
   padding: 0 10% 0 10px;
   font-weight: 500;
   border: none;
-  background: transparent;
+  // background: transparent;
+  background: #fff;
   font-size: 16px;
   color: #0d2c8d;
   -webkit-transition: font-size 0.5s cubic-bezier(0.7,0,0.3,1);
@@ -180,8 +181,11 @@ export default {
 
 /* placeholder */
 .morphsearch-input::-webkit-input-placeholder {
-  color: #a7a6a6;
-  font-size: 13px;
+  // color: #a7a6a6;
+  // font-size: 13px;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .morphsearch-input:-moz-placeholder {

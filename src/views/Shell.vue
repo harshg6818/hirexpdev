@@ -8,6 +8,8 @@
       :clipped-left="false"
       app
       color="white"
+      class="am-app-bar"
+      :class="toggleSideBarState ? 'l-70': ''"
     >
       <v-app-bar-nav-icon
         @click.stop="toggleSideBarState = !toggleSideBarState"
@@ -17,19 +19,52 @@
       <v-spacer></v-spacer>
       <div class="text-right d-flex">
         <div>
-          <v-btn icon>
-            <v-icon>fas fa-question</v-icon>
-          </v-btn>
+          <!-- <v-divider></v-divider>
+            <div class="menu-title">
+              Account
+            </div>
+            <v-divider></v-divider> -->
+          <v-menu offset-y left bottom rounded="0">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon
+                v-bind="attrs"
+                v-on="on"
+              >
+                <i class="las la-question"></i>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item @click="goToSettings('/support-center')">
+                <v-list-item-title>
+                  Create support ticket
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item target="_blank" href="https://support.amara.ai/">
+                <v-list-item-title>
+                  knowledge base
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item target="_blank" href="https://support.amara.ai/">
+                <v-list-item-title>
+                  Documentation
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </div>
         <div>
-          <v-btn icon>
-            <v-icon>fas fa-bell</v-icon>
+          <v-btn icon
+            class="amara-nav-btn announcekit-widget bell-icon px-2" style="position:relative;"
+          >
+            <div style="position:absolute;top:20px; left:25px;" class="announcekit-widget"></div>
+            <i class="lar la-bell"></i>
+            <!-- <v-icon>fas fa-bell</v-icon> -->
           </v-btn>
         </div>
       </div>
       <div class="divider" style="border-left: 1px solid rgba(0,0,0,0.2);width: 15px;height: 100%;">&nbsp;</div>
-      <div>
-        <v-menu left bottom>
+      <div class="me-profile">
+        <v-menu offset-y max-width="310" rounded="0">
           <template v-slot:activator="{ on, attrs }">
             <v-row>
               <v-col cols="2"
@@ -42,6 +77,7 @@
                   </v-avatar>
                   <v-icon
                   >fas fa-caret-down</v-icon>
+                  <!-- <i class="las la-caret-down"></i> -->
                 </div>
               </v-col>
               <v-col class="text-left" cols="10">
@@ -51,7 +87,7 @@
             </v-row>
           </template>
           <v-card>
-            <v-list>
+            <v-list class="profile-section">
               <v-list-item>
                 <v-list-item-avatar>
                   <img :src="getImgUrl('male-avatar')">
@@ -67,7 +103,7 @@
                 <v-list-item-content>
                   <v-list-item-title>
                     <v-btn
-                      color="primary"
+                      color="white"
                       small
                       outlined
                       @click="goToSettings('/settings?tab=profile')"
@@ -77,7 +113,7 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            <v-divider></v-divider>
+            <!-- <v-divider></v-divider>
             <div class="menu-title">
               Account
             </div>
@@ -93,7 +129,7 @@
                   knowledge base
                 </v-list-item-title>
               </v-list-item>
-            </v-list>
+            </v-list> -->
             <v-divider></v-divider>
             <div class="menu-title">
               Manage
@@ -143,10 +179,11 @@
     <sidebar
       :toogle-bar="toggleSideBarState"
     ></sidebar>
-    <v-main>
+    <v-main class="am-main" :class="toggleSideBarState ? 'pl-70': ''">
       <v-container
         fluid
         :class="searchEmployees ? 'freeze-main' : ''"
+        class="pa-0"
       >
         <v-snackbar
           :timeout="6000"
@@ -306,7 +343,65 @@ export default {
 }
 </style>
 
+<style lang="scss" scoped>
+// .me-profile {
+  .menu-title {
+    padding: 8px 12px;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(0,0,0,.15);
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    background: #f3f6f8;
+  }
+  .menu-account {
+    a {
+      color: #000 !important;
+    }
+  }
+  .menu-manage {
+    a {
+      color: #000 !important;
+    }
+  }
+  .menu-logout {
+    padding: 12px 20px;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(0,0,0,.15);
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    &:hover {
+      background: #f3f6f8;
+    }
+  }
+  .username {
+    padding: 0 14px;
+    font-size: 16px;
+  }
+  .profile-section {
+    // background: linear-gradient(90deg,#61245e,#42276f 90%);
+    background: #4c3e9d;
+    border-radius: 0 !important;
+    .v-list-item__content {
+      .v-list-item__title, .v-list-item__subtitle {
+        color: #ffffff;
+      }
+    }
+  }
+// }
+</style>
+
 <style lang="scss">
+.am-main {
+  &.pl-70 {
+    padding-left: 70px !important;
+  }
+}
+.am-app-bar {
+  &.l-70 {
+    left: 70px !important;
+  }
+}
+.las, .lar {
+  font-size:24px !important;
+}
 // @import url('https://fonts.googleapis.com/css?family=Work+Sans:100,300,400,500,700,900&display=swap');
 .anychart-credits-text {
   display:none!important;
