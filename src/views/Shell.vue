@@ -1,16 +1,151 @@
 <template>
   <v-app>
-    <navbar
+    <!-- <navbar
       @toggleSideBar="toggleSideBar"
       @searchEmployees="searchEmployees = true;"
-    ></navbar>
+    ></navbar> -->
+    <v-app-bar
+      :clipped-left="false"
+      app
+      color="white"
+    >
+      <v-app-bar-nav-icon
+        @click.stop="toggleSideBarState = !toggleSideBarState"
+      ></v-app-bar-nav-icon>
+      <!-- <v-toolbar-title>Vuetify</v-toolbar-title> -->
+      <search></search>
+      <v-spacer></v-spacer>
+      <div class="text-right d-flex">
+        <div>
+          <v-btn icon>
+            <v-icon>fas fa-question</v-icon>
+          </v-btn>
+        </div>
+        <div>
+          <v-btn icon>
+            <v-icon>fas fa-bell</v-icon>
+          </v-btn>
+        </div>
+      </div>
+      <div class="divider" style="border-left: 1px solid rgba(0,0,0,0.2);width: 15px;height: 100%;">&nbsp;</div>
+      <div>
+        <v-menu left bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-row>
+              <v-col cols="2"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <div class="d-flex mt-2">
+                  <v-avatar size="32" class="profile-avatar">
+                    <v-img :src="getImgUrl('male-avatar')"></v-img>
+                  </v-avatar>
+                  <v-icon
+                  >fas fa-caret-down</v-icon>
+                </div>
+              </v-col>
+              <v-col class="text-left" cols="10">
+                <div>{{user.display_name}}</div>
+                <div>{{user.email}}</div>
+              </v-col>
+            </v-row>
+          </template>
+          <v-card>
+            <v-list>
+              <v-list-item>
+                <v-list-item-avatar>
+                  <img :src="getImgUrl('male-avatar')">
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title>{{user.display_name}}</v-list-item-title>
+                  <v-list-item-subtitle>{{user.email}}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-avatar>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <v-btn
+                      color="primary"
+                      small
+                      outlined
+                      @click="goToSettings('/settings?tab=profile')"
+                    >View Profile
+                    </v-btn>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+            <v-divider></v-divider>
+            <div class="menu-title">
+              Account
+            </div>
+            <v-divider></v-divider>
+            <v-list class="menu-account">
+              <v-list-item @click="goToSettings('/support-center')">
+                <v-list-item-title>
+                  Create support ticket
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item target="_blank" href="https://support.amara.ai/">
+                <v-list-item-title>
+                  knowledge base
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+            <v-divider></v-divider>
+            <div class="menu-title">
+              Manage
+            </div>
+            <v-divider></v-divider>
+            <v-list class="menu-manage">
+              <v-list-item @click="goToSettings('/settings?tab=company')">
+                <v-list-item-title>
+                  Company settings
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="goToSettings('/settings?tab=integrations')">
+                <v-list-item-title>
+                  Integrations
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="goToSettings('/settings?tab=milestones')">
+                <v-list-item-title>
+                  Critical Touchpoints
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="goToSettings('/settings?tab=users')">
+                <v-list-item-title>
+                  Manage Users
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="goToSettings('/settings?tab=alertWord')">
+                <v-list-item-title>
+                  Alert Words
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+            <v-divider></v-divider>
+            <div class="menu-title">
+              <a href="https://www.canxp.com/b/#/" target="_blank" style="text-decoration:none;">
+                Amara voice studio(beta)
+              </a>
+            </div>
+            <v-divider></v-divider>
+            <div class="cursor-pointer">
+              <div class="menu-logout" @click="logout()">Logout</div>
+            </div>
+          </v-card>
+        </v-menu>
+      </div>
+    </v-app-bar>
     <sidebar
       :toogle-bar="toggleSideBarState"
     ></sidebar>
     <v-main>
       <v-container
         fluid
-        class="app-main-wrap"
         :class="searchEmployees ? 'freeze-main' : ''"
       >
         <v-snackbar
@@ -30,21 +165,25 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapState } from 'vuex';
-import Navbar from './navbar/Navbar';
+// import Navbar from './navbar/Navbar';
 import Sidebar from './navbar/sidebar';
+import Search from './navbar/Search-old';
 // import Sidebar from './sidebar/Sidebar';
 // import SearchEmployees from './navbar/search-employees';
 
 export default {
   name: 'shell',
   components: {
-    Navbar,
+    // Navbar,
+    Search,
     Sidebar
     // SearchEmployees
   },
   data () {
     return {
+      searchString: '',
       clipped: false,
       drawer: true,
       fixed: false,
@@ -80,6 +219,10 @@ export default {
     })
   },
   methods: {
+    getImgUrl (pet) {
+      const images = require.context('@/assets', false, /\.png$/);
+      return images(`./${pet}.png`);
+    },
     toggleSideBar (val) {
       this.toggleSideBarState = val;
     },
@@ -97,6 +240,25 @@ export default {
       /* eslint-disable */
       window.announcekit = (window.announcekit || { queue: [], on: function(n, x) { window.announcekit.queue.push([n, x]); }, push: function(x) { window.announcekit.queue.push(x); } });
       this.bootAnnounceKit();
+    },
+    globalSearchEmployee () {
+      if (this.searchString && this.searchString.length > 2) {
+        const queryParams = {
+          fields: 'display_name,email,id',
+          raw_search_string: this.searchString
+        };
+        axios.get(`${process.env.VUE_APP_API_URL}users/list`, {
+          params: queryParams
+        }).then((response) => {
+          if (response && response.data) {
+            this.showSearchMenu = true;
+            this.items = response.data.data;
+          }
+        });
+      } else {
+        this.showSearchMenu = true;
+        this.items = [];
+      }
     },
     bootAnnounceKit() {
       /* eslint-disable */

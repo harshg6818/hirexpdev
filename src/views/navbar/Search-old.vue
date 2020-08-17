@@ -1,45 +1,43 @@
 <template>
-  <div id="morphsearch" class="morphsearch" v-bind:class="{'open': searchOpen}">
-    <form class="morphsearch-form">
-      <!-- <input class="morphsearch-input" type="search" v-model="searchString" @keyup="search(searchString)" @focus="openSearch" placeholder="Search for candidates and jobs"/> -->
-      <input class="morphsearch-input secondary" type="search" v-model="searchString" @blur="closeSearch(200)" @keyup="search(searchString)" @focus="openSearch" placeholder="Search for candidates"/>
-      <!-- <button class=""> -->
-      <!-- <font-awesome-icon :icon="['fas', 'search']" size="2x" class="mr-3 morphsearch-submit" /> -->
-      <!-- <font-awesome-icon :icon="['fas', 'search']" size="sm" class="mr-3 morphsearch-submit" /> -->
-      <!-- </button> -->
-    </form>
-    <v-layout row wrap class="morphsearch-content">
-      <v-flex xs12 class="pa-2">
-        <a class="dummy-media-object" v-for="cand in results.candidates" :key="cand.id" @click="openCandidate(cand.id)">
-          <div class="media">
-            <div class="media-body">
-              <h3>{{cand.display_name}}</h3>
-              <small class="text-muted">{{cand.email}}</small>
-            </div>
-          </div>
-        </a>
-      </v-flex>
-      <v-flex xs12 class="pa-2">
+  <div class="search-wrap">
+    <div id="morphsearch" class="morphsearch" v-bind:class="{'open': searchOpen}">
+      <form class="morphsearch-form">
+        <input class="morphsearch-input secondary" type="search" v-model="searchString" @blur="closeSearch" @keyup="globalSearchEmployee" @focus="openSearch" placeholder="Search employees"/>
+      </form>
+        <v-row class="morphsearch-content">
+          <v-col class="pa-2" cols="12">
+            <a class="dummy-media-object" v-for="cand in results.candidates" :key="cand.id" @click="openCandidate(cand.id)">
+              <div class="media">
+                <div class="media-body">
+                  <h3>{{cand.display_name}}</h3>
+                  <small class="text-muted">{{cand.email}}</small>
+                </div>
+              </div>
+            </a>
+          </v-col>
+          <v-col cols="12" class="pa-2">
+            <a class="dummy-media-object hover-link mt-5" v-if="results.candidates.length === 0">
+              No employees found.
+              <!-- <br><small>(jump to candidates tab.)</small> -->
+            </a>
+          </v-col>
+          <!-- <v-layout v-show="results.candidates.length === 0" class="px-2">
+            <v-flex>
+              We can't seem to find any candidate that match your search for "{{searchString}}", If you want to carry on your search you can go to
+              <a class="hover-link" href="#/candidates">
+                list of all candidates.
+              </a>
+            </v-flex>
+          </v-layout> -->
+        </v-row>
 
-        <a class="dummy-media-object hover-link mt-5" v-show="results.candidates.length === 0" href="#/candidates">
-          No candidates found. <br><small>(jump to candidates tab.)</small>
-        </a>
-      </v-flex>
-      <v-layout v-show="results.candidates.length === 0" class="px-2">
-        <v-flex>
-          We can't seem to find any candidate that match your search for "{{searchString}}", If you want to carry on your search you can go to
-          <a class="hover-link" href="#/candidates">
-            list of all candidates.
-          </a>
-        </v-flex>
-      </v-layout>
-    </v-layout>
-
-    <span class="morphsearch-close" @click="closeSearch"></span>
-  </div><!-- /morphsearch -->
+      <span class="morphsearch-close" @click="closeSearch"></span>
+    </div><!-- /morphsearch -->
+  </div>
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: 'search',
@@ -51,55 +49,47 @@ export default {
       searchString: '',
       onFocusValues: false,
       timeout: null,
+      items: null,
       results: {
         candidates: []
       }
     };
   },
   methods: {
-    openCandidate (id) {
-      this.searchString = '';
-      const path = `/candidates/view/${id}`;
-      this.$router.push(path);
-      this.$router.go();
-      // this.$store.dispatch('updateCandidate', id);
-    },
-    search (string) {
-      clearTimeout(this.timeout);
-      // Make a new timeout set to go off in 800ms
-      this.timeout = setTimeout(() => {
-        let tagString = '';
-        if (this.$lodash.includes(string, '#')) {
-          tagString = string.split('#')[1].split(' ')[0];
+    globalSearchEmployee () {
+      // if (this.searchString && this.searchString.length > 2) {
+      const queryParams = {
+        fields: 'display_name,email,id',
+        raw_search_string: this.searchString
+      };
+      axios.get(`${process.env.VUE_APP_API_URL}users/list`, {
+        params: queryParams
+      }).then((response) => {
+        if (response && response.data) {
+          this.showSearchMenu = true;
+          // this.items = response.data.data;
+          this.results.candidates = response.data.data;
         }
-        if ((string !== '#') || (tagString && tagString.length > 0)) {
-          this.$http.post(`${process.env.API_URL}Candidate/List`, {
-            search_by_tag: tagString ? [tagString.trim()] : undefined,
-            raw_search_string: string && (!tagString || tagString.length < 1)
-              ? [string.trim()] : undefined,
-            page_limit: '5',
-            page_offset: '1'
-          }).then((response) => {
-            if (response.data && response.data.message) {
-              this.results.candidates = response.data.message.data;
-            }
-          }, (response) => {
-            throw new Error(response);
-          });
-        }
-      }, 500);
+      });
+      // } else {
+      //   this.showSearchMenu = true;
+      //   this.items = [];
+      // }
     },
     openSearch () {
       this.searchOpen = true;
       if (!this.onFocusValues) {
-        this.search();
+        // this.search();
+        this.globalSearchEmployee();
         this.onFocusValues = true;
       }
     },
-    closeSearch (timeout) {
-      setTimeout(() => {
-        this.searchOpen = false;
-      }, timeout);
+    closeSearch () {
+      // setTimeout(() => {
+      this.results.candidates = [];
+      this.searchString = '';
+      this.searchOpen = false;
+      // }, timeout);
     }
   }
 };
@@ -107,15 +97,20 @@ export default {
 
 <style lang="scss" scoped>
 
-.morphsearch {
+.search-wrap {
+  position: relative;
   width: 40%;
-  min-height: 34px;
+}
+
+.morphsearch {
+  // width: 40%;
+  width: 100%;
+  // min-height: 34px;
   border-radius: 3px;
   background: #f4f8f9;
   position: absolute;
   z-index: 10000;
-  // top: 10px;
-  // right: 10%;
+  top: -15px;
   -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
   -webkit-transition-property: min-height, width, top, right;
@@ -127,11 +122,12 @@ export default {
 }
 
 .morphsearch.open {
-  width: 40%;
-  min-height: 366px;
+  width: 100%;
+  min-height: 400px;
   // top: 10px;
   // right: 0px;
-  box-shadow: 0px 1px 10px #000000;
+  // left: 50px;
+  box-shadow: 0px 1px 10px rgba(0,0,0,0.5);
   // right: 0px;
 }
 
@@ -153,20 +149,20 @@ export default {
 .morphsearch.open .morphsearch-form {
   // width: 80%;
   // height: 160px;
-  position: absolute;
-  top: -36px;
-  -webkit-transform: translate3d(0,3em,0);
-  transform: translate3d(0,3em,0);
+  // position: absolute;
+  // top: -36px;
+  // -webkit-transform: translate3d(0,3em,0);
+  // transform: translate3d(0,3em,0);
 }
 
 .morphsearch-input {
   width: 100%;
   height: 100%;
   padding: 0 10% 0 10px;
-  font-weight: 700;
+  font-weight: 500;
   border: none;
   background: transparent;
-  font-size: 13px;
+  font-size: 16px;
   color: #0d2c8d;
   -webkit-transition: font-size 0.5s cubic-bezier(0.7,0,0.3,1);
   transition: font-size 0.5s cubic-bezier(0.7,0,0.3,1);
@@ -302,7 +298,7 @@ input[type="search"] { /* reset normalize */
 
 .morphsearch-content {
   color: #333;
-  margin-top: 3em !important;
+  margin-top: 0 !important;
   margin-left: 0;
   margin-right: 0;
   width: 100%;
@@ -317,8 +313,8 @@ input[type="search"] { /* reset normalize */
 
 .morphsearch.open .morphsearch-content {
   opacity: 1;
-  height: auto;
-  overflow: visible; /* this breaks the transition of the children in FF: https://bugzilla.mozilla.org/show_bug.cgi?id=625289 */
+  height: 90%;
+  overflow-y: auto; /* this breaks the transition of the children in FF: https://bugzilla.mozilla.org/show_bug.cgi?id=625289 */
   pointer-events: auto;
   -webkit-transition: opacity 0.3s 0.5s;
   transition: opacity 0.3s 0.5s;
@@ -380,6 +376,7 @@ input[type="search"] { /* reset normalize */
   cursor: pointer;
   border-radius: 5px;
   background: rgba(118,117,128,0.05);
+  background-color: #ffffff;
 }
 
 .dummy-media-object:hover,
