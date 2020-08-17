@@ -1,6 +1,7 @@
 <template>
   <header class="amara-header">
     <v-toolbar color="primary">
+      <v-app-bar-nav-icon @click.stop="toggleSideBar()"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <v-img
           class="amara-logo"
@@ -195,7 +196,8 @@ export default {
       items: [],
       search: null,
       showSearchMenu: false,
-      userProfileMenu: false
+      userProfileMenu: false,
+      toggleSideBarState: false
     };
   },
   // mounted() {
@@ -232,6 +234,10 @@ export default {
     }
   },
   methods: {
+    toggleSideBar () {
+      this.$emit('toggleSideBar', this.toggleSideBarState);
+      this.toggleSideBarState = !this.toggleSideBarState;
+    },
     logout () {
       axios.post(`${process.env.API_URL}logout`).then((response) => {
         if (response && response.data.status === 200) {

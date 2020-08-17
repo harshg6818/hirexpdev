@@ -1,48 +1,47 @@
 <template>
   <v-app>
     <navbar
+      @toggleSideBar="toggleSideBar"
       @searchEmployees="searchEmployees = true;"
     ></navbar>
-    <v-main
-      class="app-main-wrap"
-      :class="searchEmployees ? 'freeze-main' : ''"
-    >
-      <SearchEmployees
-        :show-search="searchEmployees"
-        @closeSearch="searchEmployees = false;"
+    <sidebar
+      :toogle-bar="toggleSideBarState"
+    ></sidebar>
+    <v-main>
+      <v-container
+        fluid
+        class="app-main-wrap"
+        :class="searchEmployees ? 'freeze-main' : ''"
       >
-      </SearchEmployees>
-      <!-- <main class="content-sidebarOpen"> -->
-      <v-snackbar
-        :timeout="6000"
-        :color="snackbar.color"
-        :multi-line="snackbar.mode === 'multi-line'"
-        :vertical="snackbar.mode === 'vertical'"
-        v-model="snackbar.show"
-      >
-        {{ snackbar.text }}
-        <v-btn text @click.native="snackbar.show = false">Close</v-btn>
-      </v-snackbar>
-      <router-view />
+        <v-snackbar
+          :timeout="6000"
+          :color="snackbar.color"
+          :multi-line="snackbar.mode === 'multi-line'"
+          :vertical="snackbar.mode === 'vertical'"
+          v-model="snackbar.show"
+        >
+          {{ snackbar.text }}
+          <v-btn text @click.native="snackbar.show = false">Close</v-btn>
+        </v-snackbar>
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-// import Vue from 'vue';
 import { mapState } from 'vuex';
-// import { VSnackbar } from 'vuetify';
 import Navbar from './navbar/Navbar';
+import Sidebar from './navbar/sidebar';
 // import Sidebar from './sidebar/Sidebar';
-import SearchEmployees from './navbar/search-employees';
+// import SearchEmployees from './navbar/search-employees';
 
 export default {
   name: 'shell',
   components: {
-    // VSnackbar,
     Navbar,
-    // Sidebar,
-    SearchEmployees
+    Sidebar
+    // SearchEmployees
   },
   data () {
     return {
@@ -56,7 +55,19 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      searchEmployees: false
+      searchEmployees: false,
+      toggleSideBarState: true
+      // primaryDrawer: {
+      //   model: null,
+      //   type: 'default (no property)',
+      //   clipped: false,
+      //   floating: false,
+      //   mini: false
+      // },
+      // footer: {
+      //   inset: false
+      // },
+      // drawers: ['Default (no property)', 'Permanent', 'Temporary']
     };
   },
   computed: {
@@ -69,6 +80,9 @@ export default {
     })
   },
   methods: {
+    toggleSideBar (val) {
+      this.toggleSideBarState = val;
+    },
     getAllSettings () {
       this.$http.get(`${process.env.VUE_APP_BASE_API_URL}manage-company/company_console_settings/${this.user.company}`).then((response) => {
         if (response && response.data) {
