@@ -7,118 +7,6 @@
     class="am-sidebar"
     :class="toogleBar ? 'w-70' : 'w-225'"
   >
-  <!-- <v-list
-    dense
-    nav
-    class="py-0"
-  >
-    <v-list-item two-line :class="miniVariant && 'px-0'">
-      <div>
-        <img v-if="!toogleBar" :src="getImgUrl('amara_logo_white')" height="36" width="180">
-        <img v-if="toogleBar" :src="getImgUrl('amara_avatar')" height="40" width="40">
-      </div>
-    </v-list-item>
-    <v-divider></v-divider>
-    <v-list-item link to="/?tab=overview" class="py-1">
-      <v-list-item-icon class="ml-1">
-        <v-tooltip right v-if="toogleBar" color="primary">
-          <template v-slot:activator="{ on, attrs }">
-            <span
-              v-bind="attrs"
-              v-on="on"
-            >
-              <i class="las la-chart-line"
-                style="font-size: 32px;color:#9f88f1"
-              ></i>
-            </span>
-          </template>
-          <span>Dashboard</span>
-        </v-tooltip>
-        <i v-else class="las la-chart-line" style="font-size: 32px;color:#9f88f1"></i>
-      </v-list-item-icon>
-      <v-list-item-content style="color:#9f88f1" class="pt-3">
-        Dashboard
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item link to="/employees">
-      <v-list-item-icon class="ml-1">
-        <v-tooltip right v-if="toogleBar">
-          <template v-slot:activator="{ on, attrs }">
-            <span
-              v-bind="attrs"
-              v-on="on"
-            >
-              <i class="las la-users"
-                style="font-size: 32px;color:#9f88f1"
-              ></i>
-            </span>
-          </template>
-          <span>Employees</span>
-        </v-tooltip>
-        <i v-else class="las la-users" style="font-size: 32px;color:#9f88f1"></i>
-      </v-list-item-icon>
-      <v-list-item-content style="color:#9f88f1" class="pt-3">
-        Employees
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item link to="/ad-hoc">
-      <v-list-item-icon class="ml-1">
-        <v-tooltip right v-if="toogleBar">
-          <template v-slot:activator="{ on, attrs }">
-            <span
-              v-bind="attrs"
-              v-on="on"
-            >
-              <i class="las la-bezier-curve"
-                style="font-size: 32px;color:#9f88f1"
-              ></i>
-            </span>
-          </template>
-          <span>Ad-Hoc</span>
-        </v-tooltip>
-        <i v-else class="las la-bezier-curve" style="font-size: 32px;color:#9f88f1!important"></i>
-      </v-list-item-icon>
-      <v-list-item-content style="color:#9f88f1" class="pt-3">
-        Ad-Hoc
-      </v-list-item-content>
-    </v-list-item> -->
-        <!-- <ul class="nav-menu js-nav-built">
-          <v-list>
-            <v-list-item to="/analytics">
-              <a class=" waves-effect waves-themed" @click="showAnalyticsSubMenu = !showAnalyticsSubMenu">
-                <i class="las la-chart-bar" style="color:#9f88f1"></i>
-                <span class="nav-link-text" style="color:#9f88f1">Analytics</span>
-                <b class="collapse-sign">
-                  <em class="las la-angle-down" style="color:#9f88f1" v-if="!showAnalyticsSubMenu"></em>
-                  <em class="las la-angle-up" style="color:#9f88f1" v-if="showAnalyticsSubMenu"></em>
-                </b>
-              </a>
-              <ul :class="showAnalyticsSubMenu && !toogleBar ? 'd-block' : 'd-none'">
-                <li>
-                  <a href="/analytics/life-cycle" class="waves-effect waves-themed">
-                    <span class="nav-link-text">Employee Lifecycle</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/analytics/participation-rate" class="waves-effect waves-themed">
-                    <span class="nav-link-text">Chat Participation</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/analytics/response-rate" class="waves-effect waves-themed">
-                    <span class="nav-link-text">Employee Participation</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/analytics/diversity-report" class="waves-effect waves-themed">
-                    <span class="nav-link-text">Gender diversity</span>
-                  </a>
-                </li>
-              </ul>
-            </v-list-item>
-          </v-list>
-      </ul>
-  </v-list> -->
   <v-list
     nav
     avatar
@@ -126,18 +14,10 @@
   >
     <v-list-item-group>
       <v-list-item two-line :class="miniVariant && 'px-0'">
-        <!-- <div> -->
-          <img v-if="!toogleBar" :src="getImgUrl('amara_logo_white')" height="36" width="180">
-          <img v-if="toogleBar" :src="getImgUrl('amara_avatar')" height="40" width="40">
-        <!-- </div> -->
+        <img v-if="!toogleBar" :src="getImgUrl('amara_logo_white')" height="36" width="180">
+        <img v-if="toogleBar" :src="getImgUrl('amara_avatar')" height="40" width="40">
       </v-list-item>
-      <v-list-item
-        v-for="(item, i) in items"
-        :key="i"
-        :to="item.to"
-        link
-        :class="item.title === 'Analytics' && !toogleBar ? 'd-none' : ''"
-      >
+      <v-list-item to="/?tab=overview" link>
         <v-list-item-avatar>
           <v-menu open-on-hover offset-x right v-if="toogleBar" content-class="dashboard-tooltip">
             <template v-slot:activator="{ on, attrs }">
@@ -145,57 +25,177 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                <i :class="item.icon" style="color:#9f88f1"></i>
+                <i class="las la-home" style="color:#9f88f1"></i>
               </span>
             </template>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>{{item.title}}</v-list-item-title>
-              </v-list-item>
-            </v-list>
+            <div class="tooltip-box">
+              <div class="tooltip">
+                <span class="tooltip-text">Dashboard</span>
+              </div>
+            </div>
           </v-menu>
-          <v-icon v-else v-text="item.icon" color="#9f88f1"></v-icon>
-          <!-- <v-tooltip right v-if="toogleBar" color="#4c3e9d">
-            <template v-slot:activator="{ on, attrs }">
-              <span
-                v-bind="attrs"
-                v-on="on"
-              >
-                <i :class="item.icon" style="color:#9f88f1"></i>
-              </span>
-            </template>
-            <span style="color: #fff">{{item.title}}</span>
-          </v-tooltip>
-          <v-icon v-else v-text="item.icon" color="#9f88f1"></v-icon> -->
+          <v-icon v-else color="#9f88f1">las la-home</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title v-text="item.title"></v-list-item-title>
+          <v-list-item-title>Dashboard</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-    </v-list-item-group>
-    <div style="position: fixed;bottom: 15px;">
-      <v-list-item link to="/settings">
-        <v-list-item-icon class="ml-1">
-          <v-tooltip right v-if="toogleBar">
+
+      <v-list-item to="/employees" link>
+        <v-list-item-avatar>
+          <v-menu open-on-hover offset-x right v-if="toogleBar" content-class="employees-tooltip">
             <template v-slot:activator="{ on, attrs }">
               <span
                 v-bind="attrs"
                 v-on="on"
               >
-                <i class="las la-cog"
-                  style="font-size: 32px;color:#9f88f1"
-                ></i>
+                <i class="las la-user-friends" style="color:#9f88f1"></i>
               </span>
             </template>
-            <span>Settings</span>
-          </v-tooltip>
-          <i v-else class="las la-cog" style="font-size: 32px;color:#9f88f1!important"></i>
-        </v-list-item-icon>
-        <v-list-item-content style="color:#9f88f1" class="pt-3">
-          Settings
+            <div class="tooltip-box">
+              <div class="tooltip">
+                <span class="tooltip-text">Employees</span>
+              </div>
+            </div>
+          </v-menu>
+          <v-icon v-else color="#9f88f1">las la-user-friends</v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>Employees</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+
+      <v-list-item to="/ad-hoc" link>
+        <v-list-item-avatar>
+          <v-menu open-on-hover offset-x right v-if="toogleBar" content-class="adhoc-tooltip">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+              >
+                <i class="las la-bezier-curve" style="color:#9f88f1"></i>
+              </span>
+            </template>
+            <div class="tooltip-box">
+              <div class="tooltip">
+                <span class="tooltip-text">Ad-Hoc</span>
+              </div>
+            </div>
+          </v-menu>
+          <v-icon v-else color="#9f88f1">las la-bezier-curve</v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>Ad-Hoc</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item to="/analytics" link>
+        <v-list-item-avatar>
+          <v-menu open-on-hover offset-x right v-if="toogleBar" content-class="analytics-tooltip">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+              >
+                <i class="las la-chart-bar" style="color:#9f88f1"></i>
+              </span>
+            </template>
+            <div class="tooltip-box">
+              <div class="tooltip">
+                <span class="tooltip-text">Analytics</span>
+              </div>
+            </div>
+          </v-menu>
+          <v-icon v-else color="#9f88f1">las la-chart-bar</v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>Analytics</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <!-- <v-list-item to="/analytics" link>
+        <v-list-item-avatar @mouseover="showSubMenu = true;" @mouseleave="closeSubMenu()">
+          <v-menu offset-x right v-if="toogleBar" content-class="analytics-tooltip" v-model="showSubMenu">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+              >
+                <i class="las la-chart-bar" style="color:#9f88f1"></i>
+              </span>
+            </template>
+            <div class="tooltip-box">
+              <div class="tooltip">
+                <span class="tooltip-text">Analytics</span>
+              </div>
+              <div class="sub-menu">
+                <ul>
+                  <li>report1</li>
+                  <li>report1</li>
+                  <li>report1</li>
+                </ul>
+              </div>
+            </div>
+          </v-menu>
+          <v-icon v-else color="#9f88f1">las la-chart-bar</v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>Analytics</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item> -->
+    </v-list-item-group>
+    <div style="position: fixed;bottom: 15px;">
+      <v-list-item to="/settings" link>
+        <v-list-item-avatar>
+          <v-menu open-on-hover offset-x right v-if="toogleBar" content-class="settings-tooltip">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+              >
+                <i class="las la-cog" style="color:#9f88f1"></i>
+              </span>
+            </template>
+            <div class="tooltip-box">
+              <div class="tooltip">
+                <span class="tooltip-text">Settings</span>
+              </div>
+            </div>
+          </v-menu>
+          <v-icon v-else color="#9f88f1">las la-cog</v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>Settings</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
       <v-list-item link>
+        <v-list-item-avatar>
+          <v-menu open-on-hover offset-x right v-if="toogleBar" content-class="profile-tooltip">
+            <template v-slot:activator="{ on, attrs }">
+              <!-- <span>
+                <i class="las la-cog" style="color:#9f88f1"></i>
+              </span> -->
+              <v-avatar size="30" class="profile-avatar" v-bind="attrs" v-on="on">
+                <v-img src="../../assets/male-avatar.png"></v-img>
+              </v-avatar>
+            </template>
+            <div class="tooltip-box">
+              <div class="tooltip">
+                <span class="tooltip-text">Your profile</span>
+              </div>
+            </div>
+          </v-menu>
+          <v-avatar size="30" class="profile-avatar" v-else>
+            <v-img src="../../assets/male-avatar.png"></v-img>
+          </v-avatar>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>{{user.display_name}}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <!-- <v-list-item link>
         <v-list-item-icon class="ml-0">
           <v-avatar size="30" class="profile-avatar">
             <v-img src="../../assets/male-avatar.png"></v-img>
@@ -204,10 +204,10 @@
         <v-list-item-content style="color:#9f88f1;margin-left:-6px;" class="pt-3">
           {{user.display_name}}
         </v-list-item-content>
-      </v-list-item>
+      </v-list-item> -->
     </div>
   </v-list>
-  <v-list
+  <!-- <v-list
     v-if="!toogleBar"
     nav
     avatar
@@ -237,7 +237,7 @@
         </v-list-item-content>
       </v-list-item>
     </v-list-group>
-  </v-list>
+  </v-list> -->
   </v-navigation-drawer>
 </template>
 
@@ -257,8 +257,7 @@ export default {
 
   data () {
     return {
-      showAnalyticsSubMenu: false,
-      drawers: ['Default (no property)', 'Permanent', 'Temporary'],
+      showSubMenu: false,
       primaryDrawer: {
         model: true,
         type: 'default (no property)',
@@ -266,30 +265,13 @@ export default {
         floating: false,
         mini: false
       },
-      drawer: true,
-      items: [
-        { title: 'Dashboard', icon: 'las la-home', to: '/?tab=overview' },
-        { title: 'Employees', icon: 'las la-user-friends', to: '/employees' },
-        { title: 'Ad-Hoc', icon: 'las la-bezier-curve', to: '/ad-hoc' },
-        { title: 'Analytics', icon: 'las la-chart-bar', to: '/analytics' }
-      ],
-      color: 'primary',
-      colors: [
-        'primary',
-        'blue',
-        'success',
-        'red',
-        'teal'
-      ],
-      right: false,
-      permanent: true,
+      // items: [
+      //   { title: 'Dashboard', icon: 'las la-home', to: '/?tab=overview' },
+      //   { title: 'Employees', icon: 'las la-user-friends', to: '/employees' },
+      //   { title: 'Ad-Hoc', icon: 'las la-bezier-curve', to: '/ad-hoc' },
+      //   { title: 'Analytics', icon: 'las la-chart-bar', to: '/analytics' }
+      // ],
       miniVariant: false,
-      expandOnHover: false,
-      background: false,
-      admins: [
-        ['Management', 'people_outline'],
-        ['Settings', 'settings']
-      ],
       items1: [
         {
           action: 'fas fa-chart-bar',
@@ -320,6 +302,11 @@ export default {
     getImgUrl (pet) {
       const images = require.context('@/assets/logo', false, /\.png$/);
       return images(`./${pet}.png`);
+    },
+    closeSubMenu () {
+      setTimeout(() => {
+        this.showSubMenu = false;
+      }, 3000);
     }
   }
 };
@@ -477,10 +464,6 @@ export default {
       color: #fff !important;
     }
   }
-  .dashboard-tooltip {
-    top: 74px;
-    left: 80px;
-  }
 }
 </style>
 
@@ -542,6 +525,89 @@ export default {
         border: 1px solid #333;
         border-radius: 50%;
         z-index: 1;
+      }
+    }
+  }
+}
+.tooltip {
+  width: 200px;
+  background: #4c3e9d;
+  color: #ffffff;
+  text-align: left;
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+  top: 50%;
+  left: calc(100% + 11px);
+  transform: translate(8%, 0%);
+  font-weight: 500;
+  .tooltip-text {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 30%;
+      left: -16px;
+      margin-left: 0;
+      border-width: 8px;
+      transform: rotate(90deg);
+      border-style: solid;
+      border-color: #4c3e9d transparent transparent transparent;
+    }
+  }
+}
+.tooltip-box {
+  position: relative
+}
+.dashboard-tooltip {
+  box-shadow: none !important;
+  top: 84px !important;
+  left: 68px !important;
+}
+.employees-tooltip {
+  box-shadow: none !important;
+  top: 148px !important;
+  left: 68px !important;
+}
+.adhoc-tooltip {
+  box-shadow: none !important;
+  top: 214px !important;
+  left: 68px !important;
+}
+.profile-tooltip {
+  box-shadow: none !important;
+  // top: 214px !important;
+  left: 68px !important;
+}
+.settings-tooltip {
+  box-shadow: none !important;
+  // top: 214px !important;
+  left: 68px !important;
+}
+.analytics-tooltip {
+  .tooltip {
+    border-radius: 10px 10px 0 0;
+  }
+  box-shadow: none !important;
+  top: 280px !important;
+  left: 68px !important;
+  .sub-menu {
+    background: #4c3e9d;
+    width: 184px;
+    margin-left: 16px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    ul {
+      list-style: none;
+      padding-bottom: 8px;
+      padding-left: 0px !important;
+      li {
+        padding: 4px 0;
+        padding-left: 24px !important;
+        color: #9f88f1;
+        &:hover {
+          background: rgba(0,0,0,0.1);
+          color: #ffffff;
+          transition: 0.25s ease all;
+        }
       }
     }
   }

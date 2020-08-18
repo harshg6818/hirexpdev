@@ -16,6 +16,7 @@
       ></v-app-bar-nav-icon> -->
       <div style="border: 1.3px solid #d4d4d4;padding: 7px 12px;width: 50px;height: 40px;border-radius: 6px;background: #f1f5f8;"
         @click.stop="toggleSideBarState = !toggleSideBarState"
+        class="cursor-pointer"
       >
         <img v-if="toggleSideBarState" src="../assets/sidebar-open.png" alt="sidebar-open" height="24px" width="24px">
         <img v-if="!toggleSideBarState" src="../assets/sidebar-close.png" alt="sidebar-open"  height="24px" width="24px">
@@ -24,58 +25,52 @@
       <search></search>
       <v-spacer></v-spacer>
       <div class="text-right d-flex">
-        <v-row class="ma-0">
-          <v-col>
-            <div>
-              <v-menu fixed offset-y bottom rounded="0" content-class="help-center">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <i class="las la-question"></i>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item @click="goToSettings('/support-center')">
-                    <v-list-item-icon class="mr-4">
-                      <img src="../assets/support-ticket.png" height="24px" width="24px">
-                    </v-list-item-icon>
-                    <v-list-item-title>
-                      Raise support request
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-list-item target="_blank" href="https://support.amara.ai/">
-                    <v-list-item-icon class="mr-4">
-                      <img src="../assets/help-center.png" height="24px" width="24px">
-                    </v-list-item-icon>
-                    <v-list-item-title>
-                      Help center
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-list-item target="_blank" href="https://support.amara.ai/">
-                    <v-list-item-icon class="mr-4">
-                      <img src="../assets/knowledge-base.png" height="24px" width="24px">
-                    </v-list-item-icon>
-                    <v-list-item-title>
-                      Knowledge base
-                    </v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-          </v-col>
-          <v-col>
-            <div>
+        <div>
+          <v-menu fixed offset-y bottom rounded="0" content-class="help-center">
+            <template v-slot:activator="{ on, attrs }">
               <v-btn icon
-                class="amara-nav-btn announcekit-widget bell-icon px-2" style="position:relative;"
+                v-bind="attrs"
+                v-on="on"
               >
-                <div style="position:absolute;top:20px; left:25px;" class="announcekit-widget"></div>
-                <i class="lar la-bell"></i>
+                <i class="las la-question"></i>
               </v-btn>
-            </div>
-          </v-col>
-        </v-row>
+            </template>
+            <v-list>
+              <v-list-item @click="goToSettings('/support-center')">
+                <v-list-item-icon class="mr-4">
+                  <img src="../assets/support-ticket.png" height="24px" width="24px">
+                </v-list-item-icon>
+                <v-list-item-title>
+                  Raise support request
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item target="_blank" href="https://support.amara.ai/">
+                <v-list-item-icon class="mr-4">
+                  <img src="../assets/help-center.png" height="24px" width="24px">
+                </v-list-item-icon>
+                <v-list-item-title>
+                  Help center
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item target="_blank" href="https://support.amara.ai/">
+                <v-list-item-icon class="mr-4">
+                  <img src="../assets/knowledge-base.png" height="24px" width="24px">
+                </v-list-item-icon>
+                <v-list-item-title>
+                  Knowledge base
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
+        <div>
+          <v-btn icon
+            class="amara-nav-btn announcekit-widget bell-icon px-2" style="position:relative;"
+          >
+            <div style="position:absolute;top:20px; left:25px;" class="announcekit-widget"></div>
+            <i class="lar la-bell"></i>
+          </v-btn>
+        </div>
       </div>
       <div class="divider" style="border-left: 1px solid rgba(0,0,0,0.2);width:1px;height:100%;margin: 0 16px;">&nbsp;</div>
       <div class="me-profile">
