@@ -291,7 +291,7 @@ export default {
     top:20px;
     left:25px;
     margin-left: -16px;
-    margin-top: -32px;
+    margin-top: -16px;
   }
 }
 .v-list.bottom {

@@ -8,81 +8,94 @@
       :clipped-left="false"
       app
       color="white"
-      class="am-app-bar"
+      class="am-app-bar elevation-1"
       :class="toggleSideBarState ? 'l-70': ''"
     >
-      <v-app-bar-nav-icon
+      <!-- <v-app-bar-nav-icon
         @click.stop="toggleSideBarState = !toggleSideBarState"
-      ></v-app-bar-nav-icon>
+      ></v-app-bar-nav-icon> -->
+      <div style="border: 1.3px solid #d4d4d4;padding: 7px 12px;width: 50px;height: 40px;border-radius: 6px;background: #f1f5f8;"
+        @click.stop="toggleSideBarState = !toggleSideBarState"
+      >
+        <img v-if="toggleSideBarState" src="../assets/sidebar-open.png" alt="sidebar-open" height="24px" width="24px">
+        <img v-if="!toggleSideBarState" src="../assets/sidebar-close.png" alt="sidebar-open"  height="24px" width="24px">
+      </div>
       <!-- <v-toolbar-title>Vuetify</v-toolbar-title> -->
       <search></search>
       <v-spacer></v-spacer>
       <div class="text-right d-flex">
-        <div>
-          <!-- <v-divider></v-divider>
-            <div class="menu-title">
-              Account
+        <v-row class="ma-0">
+          <v-col>
+            <div>
+              <v-menu fixed offset-y bottom rounded="0" content-class="help-center">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <i class="las la-question"></i>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item @click="goToSettings('/support-center')">
+                    <v-list-item-icon class="mr-4">
+                      <img src="../assets/support-ticket.png" height="24px" width="24px">
+                    </v-list-item-icon>
+                    <v-list-item-title>
+                      Raise support request
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-list-item target="_blank" href="https://support.amara.ai/">
+                    <v-list-item-icon class="mr-4">
+                      <img src="../assets/help-center.png" height="24px" width="24px">
+                    </v-list-item-icon>
+                    <v-list-item-title>
+                      Help center
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-list-item target="_blank" href="https://support.amara.ai/">
+                    <v-list-item-icon class="mr-4">
+                      <img src="../assets/knowledge-base.png" height="24px" width="24px">
+                    </v-list-item-icon>
+                    <v-list-item-title>
+                      Knowledge base
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </div>
-            <v-divider></v-divider> -->
-          <v-menu offset-y left bottom rounded="0">
-            <template v-slot:activator="{ on, attrs }">
+          </v-col>
+          <v-col>
+            <div>
               <v-btn icon
-                v-bind="attrs"
-                v-on="on"
+                class="amara-nav-btn announcekit-widget bell-icon px-2" style="position:relative;"
               >
-                <i class="las la-question"></i>
+                <div style="position:absolute;top:20px; left:25px;" class="announcekit-widget"></div>
+                <i class="lar la-bell"></i>
               </v-btn>
-            </template>
-            <v-list>
-              <v-list-item @click="goToSettings('/support-center')">
-                <v-list-item-title>
-                  Create support ticket
-                </v-list-item-title>
-              </v-list-item>
-              <v-list-item target="_blank" href="https://support.amara.ai/">
-                <v-list-item-title>
-                  knowledge base
-                </v-list-item-title>
-              </v-list-item>
-              <v-list-item target="_blank" href="https://support.amara.ai/">
-                <v-list-item-title>
-                  Documentation
-                </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </div>
-        <div>
-          <v-btn icon
-            class="amara-nav-btn announcekit-widget bell-icon px-2" style="position:relative;"
-          >
-            <div style="position:absolute;top:20px; left:25px;" class="announcekit-widget"></div>
-            <i class="lar la-bell"></i>
-            <!-- <v-icon>fas fa-bell</v-icon> -->
-          </v-btn>
-        </div>
+            </div>
+          </v-col>
+        </v-row>
       </div>
-      <div class="divider" style="border-left: 1px solid rgba(0,0,0,0.2);width: 15px;height: 100%;">&nbsp;</div>
+      <div class="divider" style="border-left: 1px solid rgba(0,0,0,0.2);width:1px;height:100%;margin: 0 16px;">&nbsp;</div>
       <div class="me-profile">
         <v-menu offset-y max-width="310" rounded="0">
           <template v-slot:activator="{ on, attrs }">
-            <v-row>
-              <v-col cols="2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <div class="d-flex mt-2">
+            <v-row
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-col class="text-left" cols="10">
+                <div class="mt-2">{{user.display_name}}</div>
+                <!-- <div>{{user.email}}</div>   -->
+              </v-col>
+              <v-col cols="2" style="margin-left: -30px">
+                <div class="d-flex mt-1">
                   <v-avatar size="32" class="profile-avatar">
                     <v-img :src="getImgUrl('male-avatar')"></v-img>
                   </v-avatar>
-                  <v-icon
-                  >fas fa-caret-down</v-icon>
-                  <!-- <i class="las la-caret-down"></i> -->
+                  <v-icon>fas fa-caret-down</v-icon>
                 </div>
-              </v-col>
-              <v-col class="text-left" cols="10">
-                <div>{{user.display_name}}</div>
-                <div>{{user.email}}</div>
               </v-col>
             </v-row>
           </template>
@@ -93,25 +106,29 @@
                   <img :src="getImgUrl('male-avatar')">
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title>{{user.display_name}}</v-list-item-title>
+                  <v-list-item-title class="pb-1">{{user.display_name}}</v-list-item-title>
                   <v-list-item-subtitle>{{user.email}}</v-list-item-subtitle>
+                  <!-- <v-list-item-subtitle>
+                    <span>
+                      View Profile
+                    </span>
+                  </v-list-item-subtitle> -->
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
-                <v-list-item-avatar>
-                </v-list-item-avatar>
+              <!-- <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title>
                     <v-btn
                       color="white"
                       small
-                      outlined
+                      text
                       @click="goToSettings('/settings?tab=profile')"
-                    >View Profile
+                    >
+                      View Profile
                     </v-btn>
                   </v-list-item-title>
                 </v-list-item-content>
-              </v-list-item>
+              </v-list-item> -->
             </v-list>
             <!-- <v-divider></v-divider>
             <div class="menu-title">
@@ -136,31 +153,55 @@
             </div>
             <v-divider></v-divider>
             <v-list class="menu-manage">
+              <v-list-item @click="goToSettings('/settings?tab=profile')">
+                <v-list-item-icon class="mr-4">
+                  <i class="lar la-user"></i>
+                </v-list-item-icon>
+                <v-list-item-title>
+                  Your profile
+                </v-list-item-title>
+              </v-list-item>
               <v-list-item @click="goToSettings('/settings?tab=company')">
+                <v-list-item-icon class="mr-4">
+                  <i class="lar la-building"></i>
+                </v-list-item-icon>
                 <v-list-item-title>
                   Company settings
                 </v-list-item-title>
               </v-list-item>
               <v-list-item @click="goToSettings('/settings?tab=integrations')">
+                <v-list-item-icon class="mr-4">
+                  <i class="las la-cogs"></i>
+                </v-list-item-icon>
                 <v-list-item-title>
                   Integrations
                 </v-list-item-title>
               </v-list-item>
               <v-list-item @click="goToSettings('/settings?tab=milestones')">
+                <v-list-item-icon class="mr-4">
+                  <i class="las la-route"></i>
+                  <!-- <i class="las la-bezier-curve"></i> -->
+                </v-list-item-icon>
                 <v-list-item-title>
-                  Critical Touchpoints
+                  Critical touchpoints
                 </v-list-item-title>
               </v-list-item>
               <v-list-item @click="goToSettings('/settings?tab=users')">
+                <v-list-item-icon class="mr-4">
+                  <i class="las la-users-cog"></i>
+                </v-list-item-icon>
                 <v-list-item-title>
-                  Manage Users
+                  Manage users
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item @click="goToSettings('/settings?tab=alertWord')">
+              <!-- <v-list-item @click="goToSettings('/settings?tab=alertWord')">
+              <v-list-item-icon class="mr-4">
+                  <i class="lar la-building"></i>
+                </v-list-item-icon>
                 <v-list-item-title>
                   Alert Words
                 </v-list-item-title>
-              </v-list-item>
+              </v-list-item> -->
             </v-list>
             <v-divider></v-divider>
             <div class="menu-title">
@@ -170,7 +211,12 @@
             </div>
             <v-divider></v-divider>
             <div class="cursor-pointer">
-              <div class="menu-logout" @click="logout()">Logout</div>
+              <div class="menu-logout" @click="logout()">
+                <span class="mr-3">
+                  <i class="las la-sign-out-alt"></i>
+                </span>
+                Logout
+              </div>
             </div>
           </v-card>
         </v-menu>
@@ -256,6 +302,11 @@ export default {
     })
   },
   methods: {
+    goToSettings (path) {
+      this.$router.push({
+        path
+      });
+    },
     getImgUrl (pet) {
       const images = require.context('@/assets', false, /\.png$/);
       return images(`./${pet}.png`);
@@ -344,6 +395,13 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.help-center {
+  top: 64px !important;
+  left: 1200px !important;
+}
+.me-profile {
+  margin-right: 12px;
+}
 // .me-profile {
   .menu-title {
     padding: 8px 12px;
@@ -363,8 +421,8 @@ export default {
     }
   }
   .menu-logout {
-    padding: 12px 20px;
-    text-transform: uppercase;
+    padding: 12px 16px;
+    // text-transform: uppercase;
     border-top: 1px solid rgba(0,0,0,.15);
     border-bottom: 1px solid rgba(0,0,0,.15);
     &:hover {
@@ -376,8 +434,10 @@ export default {
     font-size: 16px;
   }
   .profile-section {
-    // background: linear-gradient(90deg,#61245e,#42276f 90%);
-    background: #4c3e9d;
+    // background: linear-gradient(90deg,#42276f, #61245e 90%);
+    background: rgb(52,43,126);
+    background: linear-gradient(125deg, rgba(52,43,126,1) 0%, rgba(84,72,189,1) 70%, rgba(143,72,189,1) 100%, rgba(197,36,55,1) 100%);
+    // background: #4c3e9d;
     border-radius: 0 !important;
     .v-list-item__content {
       .v-list-item__title, .v-list-item__subtitle {
@@ -390,11 +450,13 @@ export default {
 
 <style lang="scss">
 .am-main {
+  background: #faf8fb !important;
   &.pl-70 {
     padding-left: 70px !important;
   }
 }
 .am-app-bar {
+  z-index: 99 !important;
   &.l-70 {
     left: 70px !important;
   }

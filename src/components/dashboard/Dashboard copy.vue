@@ -1211,7 +1211,7 @@ export default {
   a {
     color: white !important;
     margin-left: -16px;
-    margin-top: -32px;
+    margin-top: -16px;
   }
 }
 .dashboardView {

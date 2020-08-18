@@ -1,8 +1,14 @@
 <template>
   <div class="search-wrap">
+    <!-- <div><i class="las la-search"></i></div> -->
     <div id="morphsearch" class="morphsearch" v-bind:class="{'open': searchOpen}">
       <form class="morphsearch-form">
-        <input class="morphsearch-input" type="search" v-model="searchString" @blur="closeSearch" @keyup="globalSearchEmployee" @focus="openSearch" placeholder="Search employees"/>
+        <div class="input-container">
+          <span class="search-icon">
+            <i class="las la-search"></i>
+          </span>
+          <input class="morphsearch-input" type="search" v-model="searchString" @blur="closeSearch" @keyup="globalSearchEmployee" @focus="openSearch" placeholder="Search employees"/>
+        </div>
       </form>
         <v-row class="morphsearch-content">
           <v-col class="pa-2" cols="12">
@@ -97,20 +103,29 @@ export default {
 
 <style lang="scss" scoped>
 
+.search-icon {
+  background: #fff;
+  padding-top: 6px;
+  padding-left: 10px;
+}
+
 .search-wrap {
   position: relative;
   width: 40%;
 }
 
+.input-container {
+  display: flex;
+}
+
 .morphsearch {
-  // width: 40%;
   width: 100%;
-  // min-height: 34px;
   border-radius: 3px;
   background: #f4f8f9;
   position: absolute;
   z-index: 10000;
-  top: -15px;
+  top: -18px;
+  left: 15px;
   -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
   -webkit-transition-property: min-height, width, top, right;
@@ -157,7 +172,8 @@ export default {
 
 .morphsearch-input {
   width: 100%;
-  height: 100%;
+  // height: 100%;
+  height: 34px;
   padding: 0 10% 0 10px;
   font-weight: 500;
   border: none;
