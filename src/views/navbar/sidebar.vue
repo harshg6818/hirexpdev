@@ -139,20 +139,34 @@
         :class="item.title === 'Analytics' && !toogleBar ? 'd-none' : ''"
       >
         <v-list-item-avatar>
-          <v-tooltip right v-if="toogleBar" color="#4c3e9d">
+          <v-menu open-on-hover offset-x right v-if="toogleBar" content-class="dashboard-tooltip">
             <template v-slot:activator="{ on, attrs }">
               <span
                 v-bind="attrs"
                 v-on="on"
               >
-                <!-- <v-icon v-text="item.icon" color="#9f88f1"></v-icon> -->
+                <i :class="item.icon" style="color:#9f88f1"></i>
+              </span>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title>{{item.title}}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+          <v-icon v-else v-text="item.icon" color="#9f88f1"></v-icon>
+          <!-- <v-tooltip right v-if="toogleBar" color="#4c3e9d">
+            <template v-slot:activator="{ on, attrs }">
+              <span
+                v-bind="attrs"
+                v-on="on"
+              >
                 <i :class="item.icon" style="color:#9f88f1"></i>
               </span>
             </template>
             <span style="color: #fff">{{item.title}}</span>
           </v-tooltip>
-          <!-- <i v-else class="las la-bezier-curve" style="font-size: 32px;color:#9f88f1!important"></i> -->
-          <v-icon v-else v-text="item.icon" color="#9f88f1"></v-icon>
+          <v-icon v-else v-text="item.icon" color="#9f88f1"></v-icon> -->
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title v-text="item.title"></v-list-item-title>
@@ -462,6 +476,10 @@ export default {
     .v-list-item__content {
       color: #fff !important;
     }
+  }
+  .dashboard-tooltip {
+    top: 74px;
+    left: 80px;
   }
 }
 </style>

@@ -58,7 +58,8 @@
                     || (item.value === 'milestones' && !checkPermission(['manage_milestone']))"
                 >
                   <v-list-item-action class="">
-                      <v-icon>{{ item.icon }}</v-icon>
+                      <!-- <v-icon>{{ item.icon }}</v-icon> -->
+                      <i :class="item.icon"></i>
                     </v-list-item-action>
                   <v-list-item-content>
                     <v-list-item-title v-html="item.title"></v-list-item-title>
@@ -127,22 +128,26 @@ export default {
   data () {
     return {
       items: [{
-        icon: 'fas fa-user',
+        // icon: 'fas fa-user',
+        icon: 'lar la-user',
         title: 'Your Profile',
         value: 'profile',
         subtitle: 'Edit your profile/Change password'
       }, {
-        icon: 'fas fa-building',
+        // icon: 'fas fa-building',
+        icon: 'lar la-building',
         title: 'Your Company',
         value: 'company',
         subtitle: 'Edit company information'
       }, {
-        icon: 'fas fa-cogs',
+        // icon: 'fas fa-cogs',
+        icon: 'las la-cogs',
         title: 'Manage Integrations',
         value: 'integrations',
         subtitle: 'Integrate Amara with third party applications'
       }, {
-        icon: 'fas fa-bezier-curve',
+        // icon: 'fas fa-bezier-curve',
+        icon: 'las la-route',
         title: 'Manage Critical Touchpoints',
         value: 'milestones',
         subtitle: 'Set up critical touchpoints at which Amara will chat with employees'
@@ -152,7 +157,8 @@ export default {
         //   value: 'exit',
         //   subtitle: 'Set up exit touchpoints at which Amara will chat with employees',
       }, {
-        icon: 'fas fa-address-card',
+        // icon: 'fas fa-address-card',
+        icon: 'las la-users-cog',
         title: 'Manage Users',
         value: 'users',
         subtitle: 'Create groups, set up admins and give access rights to dashboard'
@@ -164,12 +170,14 @@ export default {
       // subtitle: 'Create your templates',
       // },
       {
-        icon: 'far fa-bell',
+        // icon: 'far fa-bell',
+        icon: 'lar la-bell',
         title: 'Alert words',
         value: 'alertWord',
         subtitle: 'Manage alert words'
       }, {
-        icon: 'fas fa-history',
+        // icon: 'fas fa-history',
+        icon: 'las la-history',
         title: 'Audit log',
         value: 'auditLog',
         subtitle: 'Audit logs of uploaded employees'
