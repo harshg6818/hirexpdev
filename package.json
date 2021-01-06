@@ -14,7 +14,7 @@
     "@fortawesome/fontawesome-free": "^5.8.2",
     "amcharts3": "^3.21.15",
     "anychart": "^8.8.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "date-fns": "^2.15.0",
     "dayjs": "^1.8.31",
